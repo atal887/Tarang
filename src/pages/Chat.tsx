@@ -5,10 +5,9 @@ import { ChatBubble } from "../components/ui/ChatBubble";
 import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoader";
 import { detectIntent } from "../services/intentService";
 import { generateResponse } from "../services/demoResponseService";
-import { detectLanguage, getLocaleForLanguage } from "../services/languageService";
+import { detectLanguage } from "../services/languageService";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { demoData } from "../data/demoData";
-import { AudioPlayer } from "../components/ui/AudioPlayer";
+import { useProfile } from "../store/profile";
 
 type Message = {
   id: number;
@@ -16,14 +15,13 @@ type Message = {
   isBot: boolean;
   action: string | null;
   component?: React.ReactNode;
-  audioText?: string;
-  detectedLang?: string;
 };
 
 export function Chat() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { profile } = useProfile();
 
   const [messages, setMessages] = useState<Message[]>([
     { 
@@ -93,7 +91,7 @@ export function Chat() {
     setTimeout(() => {
       const lang = detectLanguage(text);
       const intent = detectIntent(text);
-      const response = generateResponse(intent, demoData.user.location, lang);
+      const response = generateResponse(intent, profile.location, lang);
       
       let component = undefined;
       if (response.action?.startsWith("VIEW_MAP")) {
@@ -123,11 +121,10 @@ export function Chat() {
         return;
       }
 
+      // Text-only bot message — no audioText, no AudioPlayer
       setMessages(prev => [...prev, { 
         id: Date.now() + Math.random(), 
-        text: response.answerComponent, 
-        audioText: response.audioText,
-        detectedLang: lang,
+        text: response.answerComponent,
         isBot: true,
         action: response.action || null,
         component
@@ -148,8 +145,8 @@ export function Chat() {
         component: (
           <div className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-4">
             <div className="grid grid-cols-2 gap-4 text-sm text-slate-700">
-              <div><span className="text-slate-400 block text-xs uppercase mb-1">Location</span><span className="font-semibold text-slate-900">{demoData.user.location}</span></div>
-              <div><span className="text-slate-400 block text-xs uppercase mb-1">Boat Type</span><span className="font-semibold text-slate-900">{demoData.user.vesselType}</span></div>
+              <div><span className="text-slate-400 block text-xs uppercase mb-1">Location</span><span className="font-semibold text-slate-900">{profile.location}</span></div>
+              <div><span className="text-slate-400 block text-xs uppercase mb-1">Boat Type</span><span className="font-semibold text-slate-900">{profile.vesselType}</span></div>
               <div><span className="text-slate-400 block text-xs uppercase mb-1">Duration</span><span className="font-semibold text-slate-900">3 days</span></div>
               <div><span className="text-slate-400 block text-xs uppercase mb-1">Start Time</span><span className="font-semibold text-slate-900">Tomorrow, 6:00 AM</span></div>
             </div>
@@ -174,7 +171,7 @@ export function Chat() {
       if (last.action === "demo_confirm") {
         last.component = (
            <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 mt-3 space-y-2 text-sm text-slate-500">
-            <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Confirmed {demoData.user.location}, 3 days</div>
+            <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Confirmed {profile.location}, 3 days</div>
            </div>
         );
       }
@@ -198,10 +195,7 @@ export function Chat() {
             <ChatBubble 
               text={
                 <div className="flex flex-col gap-3">
-                  {msg.isBot && msg.audioText && msg.detectedLang && (
-                     <AudioPlayer audioText={msg.audioText} locale={getLocaleForLanguage(msg.detectedLang as any)} />
-                  )}
-                  {(!msg.isBot || typeof msg.text !== 'string' || !msg.audioText) && msg.text}
+                  {msg.text}
                   {msg.component}
                 </div>
               } 

@@ -1,20 +1,18 @@
 import { MapComponent } from "../components/map/MapComponent";
-import { demoData } from "../data/demoData";
+import { demoData, getLocationMapConfig } from "../data/demoData";
 import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ShieldCheck, Route, Clock, ArrowRight, Anchor, Navigation2, AlertTriangle, Lock } from "lucide-react";
 
-type MapCoordKey = keyof typeof demoData.mapCoordinates;
-
 export function Map() {
   const { profile } = useProfile();
   const navigate = useNavigate();
-  const userLocation = profile.location;
   const [searchParams, setSearchParams] = useSearchParams();
-  const locKey = userLocation.toLowerCase() as MapCoordKey;
-  const centerCoord = demoData.mapCoordinates[locKey] ?? demoData.mapCoordinates.kochi;
   const mode = searchParams.get("mode") || "explore";
+
+  // ── Derive all map data from the user's selected location ──────────────────
+  const mapCfg = getLocationMapConfig(profile.location);
 
   const renderPanel = () => {
     switch(mode) {
@@ -23,7 +21,7 @@ export function Map() {
           <div className="absolute bottom-4 left-4 right-4 md:bottom-auto md:left-6 md:top-6 md:right-auto md:w-80 z-[1000] bg-white p-5 rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 flex flex-col">
             <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Recommended Zone</h2>
             <h3 className="text-xl font-bold text-slate-900 mb-4">{demoData.recommendedZone.name}</h3>
-            
+
             <div className="space-y-4 mb-6">
               <div className="flex justify-between items-center">
                 <span className="text-sm font-semibold text-slate-500">Distance</span>
@@ -38,18 +36,18 @@ export function Map() {
                 <span className="text-sm font-bold text-ocean-700 bg-ocean-50 px-2 py-0.5 rounded">High</span>
               </div>
             </div>
-            
+
             <Button size="lg" className="w-full text-sm" onClick={() => setSearchParams({ mode: "route" })}>
               View Safe Route
             </Button>
           </div>
         );
-      
+
       case "route":
         return (
           <div className="absolute bottom-4 left-4 right-4 md:bottom-auto md:left-6 md:top-6 md:right-auto md:w-80 z-[1000] bg-white p-5 rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 flex flex-col">
             <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Safe Route</h2>
-            
+
             <div className="flex items-start gap-4 mb-5 relative">
               <div className="flex flex-col items-center mt-1">
                 <div className="w-2.5 h-2.5 rounded-full border-2 border-slate-900 bg-white z-10" />
@@ -71,18 +69,18 @@ export function Map() {
             <div className="grid grid-cols-3 gap-2 bg-slate-50 rounded-xl p-3 mb-5 border border-slate-100">
               <div className="text-center">
                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5"><Route className="w-3 h-3 inline mr-0.5" /> Dist</p>
-                <p className="text-sm font-bold text-slate-900">{demoData.routeData.distance}</p>
+                <p className="text-sm font-bold text-slate-900">18.4 km</p>
               </div>
               <div className="text-center border-l border-slate-200">
                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-0.5"><Clock className="w-3 h-3 inline mr-0.5" /> Time</p>
-                <p className="text-sm font-bold text-slate-900">{demoData.routeData.estimatedTime}</p>
+                <p className="text-sm font-bold text-slate-900">1h 12m</p>
               </div>
               <div className="text-center border-l border-slate-200">
                 <p className="text-[10px] font-bold text-status-safe uppercase tracking-wider mb-0.5"><ShieldCheck className="w-3 h-3 inline mr-0.5" /> Risk</p>
-                <p className="text-sm font-bold text-status-safeText">{demoData.routeData.risk.split(' ')[0]}</p>
+                <p className="text-sm font-bold text-status-safeText">Low</p>
               </div>
             </div>
-            
+
             <Button size="lg" className="w-full text-sm shadow-lg shadow-ocean-600/20" onClick={() => navigate("/active-trip")}>
               Start Trip <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
@@ -114,7 +112,6 @@ export function Map() {
         );
 
       default:
-        // Explore Mode
         return (
           <div className="absolute bottom-4 left-4 right-4 md:bottom-auto md:left-6 md:top-6 md:right-auto md:w-80 z-[1000] bg-white p-5 rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 flex flex-col">
             <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Explore {profile.location}</h2>
@@ -141,51 +138,41 @@ export function Map() {
     }
   };
 
+  // ── Build markers / zones / routes from location-specific data ─────────────
   const getMapData = () => {
+    const harbourMarker = { id: "1", position: mapCfg.harbour, label: `${profile.location} Harbour`, type: "start" as const };
+    const zoneMarker    = { id: "2", position: mapCfg.zone,    label: mapCfg.zoneLabel,              type: "destination" as const };
+
     switch(mode) {
       case "fishing":
         return {
-          markers: [
-            { id: "1", position: centerCoord, label: `${profile.location} Harbour`, type: "start" as const },
-            { id: "2", position: demoData.mapCoordinates.zoneAlpha, label: demoData.recommendedZone.name, type: "destination" as const }
-          ],
-          zones: [{ id: "z1", center: demoData.mapCoordinates.zoneAlpha, radius: 4000, type: "safe" as const, label: demoData.recommendedZone.name }],
+          markers: [harbourMarker, zoneMarker],
+          zones: [{ id: "z1", center: mapCfg.zone, radius: 4000, type: "safe" as const, label: mapCfg.zoneLabel }],
           routes: []
         };
       case "route":
         return {
-          markers: [
-            { id: "1", position: centerCoord, label: `${profile.location} Harbour`, type: "start" as const },
-            { id: "2", position: demoData.mapCoordinates.zoneAlpha, label: demoData.recommendedZone.name, type: "destination" as const }
-          ],
-          zones: [
-            { id: "z2", center: demoData.mapCoordinates.hazardZone, radius: 3500, type: "caution" as const, label: "Caution Area" }
-          ],
-          routes: [{ id: "r1", positions: demoData.routeData.positions, color: "#0284c7" }]
+          markers: [harbourMarker, zoneMarker],
+          zones: [{ id: "z2", center: mapCfg.hazard, radius: 3500, type: "caution" as const, label: "Caution Area" }],
+          routes: [{ id: "r1", positions: mapCfg.route, color: "#0284c7" }]
         };
       case "risk":
         return {
-          markers: [{ id: "1", position: centerCoord, label: `${profile.location} Harbour`, type: "start" as const }],
+          markers: [harbourMarker],
           zones: [
-            { id: "z2", center: demoData.mapCoordinates.hazardZone, radius: 4000, type: "caution" as const, label: "Caution Area" },
-            { id: "z3", center: [9.85, 76.10] as [number, number], radius: 6000, type: "danger" as const, label: "High Risk Area" }
+            { id: "z2", center: mapCfg.hazard,     radius: 4000, type: "caution" as const,  label: "Caution Area" },
+            { id: "z3", center: mapCfg.zone,        radius: 6000, type: "danger" as const,   label: "High Risk Area" }
           ],
           routes: []
         };
       case "restricted":
         return {
-          markers: [{ id: "1", position: centerCoord, label: `${profile.location} Harbour`, type: "start" as const }],
-          zones: [
-            { id: "z4", center: [9.90, 76.12] as [number, number], radius: 3000, type: "restricted" as const, label: "Restricted Area" }
-          ],
+          markers: [harbourMarker],
+          zones: [{ id: "z4", center: mapCfg.restricted, radius: 3000, type: "restricted" as const, label: "Restricted Area" }],
           routes: []
         };
       default:
-        return {
-          markers: [{ id: "1", position: centerCoord, label: `${profile.location} Harbour`, type: "start" as const }],
-          zones: [],
-          routes: []
-        };
+        return { markers: [harbourMarker], zones: [], routes: [] };
     }
   };
 
@@ -195,14 +182,14 @@ export function Map() {
     <div className="flex flex-col h-full bg-slate-50 relative">
       {renderPanel()}
       <div className="flex-1 w-full h-full relative z-0">
-         <MapComponent 
-            center={centerCoord}
-            zoom={10.5}
-            mode={mode as any}
-            markers={mapData.markers}
-            zones={mapData.zones}
-            routes={mapData.routes}
-         />
+        <MapComponent
+          center={mapCfg.centre}
+          zoom={mapCfg.zoom}
+          mode={mode as any}
+          markers={mapData.markers}
+          zones={mapData.zones}
+          routes={mapData.routes}
+        />
       </div>
     </div>
   );

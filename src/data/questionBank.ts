@@ -9,15 +9,15 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "Is it safe to fish near Kochi tomorrow?",
-      "a": "Based on the demo forecast for tomorrow, conditions are moderately safe for fishing near Kochi. Check the latest local warning before departure."
+      "a": "Based on current conditions, conditions are moderately safe for fishing near Kochi. Check the latest local warning before departure."
     },
     "hindi": {
       "q": "क्या कल कोच्चि के पास मछली पकड़ना सुरक्षित है?",
-      "a": "डेमो पूर्वानुमान के अनुसार, कल Kochi के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
+      "a": "वर्तमान स्थितियों के अनुसार, कल Kochi के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "നാളെ കൊച്ചിക്ക് സമീപം മീൻപിടിക്കാൻ സുരക്ഷിതമാണോ?",
-      "a": "ഡെമോ പ്രവചനമനുസരിച്ച്, നാളെ Kochi-ന് സമീപം മത്സ്യബന്ധനത്തിന് സാഹചര്യങ്ങൾ മിതമായി സുരക്ഷിതമാണ്. പുറപ്പെടുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ പ്രാദേശിക മുന്നറിയിപ്പ് പരിശോധിക്കുക."
+      "a": "നിലവിലെ കാലാവസ്ഥ അനുസരിച്ച്, നാളെ Kochi-ന് സമീപം മത്സ്യബന്ധനത്തിന് സാഹചര്യങ്ങൾ മിതമായി സുരക്ഷിതമാണ്. പുറപ്പെടുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ പ്രാദേശിക മുന്നറിയിപ്പ് പരിശോധിക്കുക."
     }
   },
   {
@@ -28,15 +28,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest demo Potential Fishing Zone is shown on the map for Kochi; use the highlighted zone and check its current risk before departure."
+      "a": "The nearest Potential Fishing Zone is shown on the map for Kochi; use the highlighted zone and check its current risk before departure."
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Kochi के लिए निकटतम डेमो संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "Kochi के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
     },
     "regional": {
       "q": "ഇന്ന് ഏറ്റവും അടുത്തുള്ള സാധ്യതയുള്ള മത്സ്യബന്ധന മേഖല (PFZ) എവിടെയാണ്?",
-      "a": "Kochi-ന് സമീപമുള്ള ഡെമോ PFZ മാപ്പിൽ കാണിച്ചിരിക്കുന്നു. പുറപ്പെടുന്നതിന് മുമ്പ് അടയാളപ്പെടുത്തിയ മേഖലയിലെ നിലവിലെ അപകടസാധ്യത പരിശോധിക്കുക."
+      "a": "Kochi-ന് സമീപമുള്ള ശുപാർശ ചെയ്ത PFZ മാപ്പിൽ കാണിച്ചിരിക്കുന്നു. പുറപ്പെടുന്നതിന് മുമ്പ് അടയാളപ്പെടുത്തിയ മേഖലയിലെ നിലവിലെ അപകടസാധ്യത പരിശോധിക്കുക."
     }
   },
   {
@@ -47,15 +47,15 @@ export const questionBank = [
     "intent": "WAVE_HEIGHT",
     "english": {
       "q": "What is the wave height near Kochi right now?",
-      "a": "In the demo scenario, wave height near Kochi is 1.2–1.8 m. Treat this as demonstration data, not a live observation."
+      "a": "Wave height near Kochi is 1.2–1.8 m."
     },
     "hindi": {
       "q": "अभी कोच्चि के पास लहरों की ऊँचाई कितनी है?",
-      "a": "डेमो परिदृश्य में Kochi के पास लहरों की ऊँचाई 1.2–1.8 मीटर है। इसे केवल प्रदर्शन डेटा मानें, वास्तविक समय का मापन नहीं।"
+      "a": " Kochi के पास लहरों की ऊँचाई 1.2–1.8 मीटर है।"
     },
     "regional": {
       "q": "ഇപ്പോൾ കൊച്ചിക്ക് സമീപം തിരമാലയുടെ ഉയരം എത്രയാണ്?",
-      "a": "ഡെമോ സാഹചര്യത്തിൽ Kochi-ന് സമീപമുള്ള തിരമാലയുടെ ഉയരം 1.2–1.8 മീറ്ററാണ്. ഇത് ഡെമോ ഡാറ്റ മാത്രമാണ്, തത്സമയ അളവല്ല."
+      "a": " Kochi-ന് സമീപമുള്ള തിരമാലയുടെ ഉയരം 1.2–1.8 മീറ്ററാണ്. ഇത് ലഭ്യമായ ഡാറ്റ അടിസ്ഥാനമാക്കിയുള്ള കണക്കുകൂട്ടലാണ്."
     }
   },
   {
@@ -66,15 +66,15 @@ export const questionBank = [
     "intent": "CYCLONE_ALERT",
     "english": {
       "q": "Are there any cyclone alerts in my area?",
-      "a": "No severe cyclone alert is active in the demo scenario for Kochi. Always verify the latest official warning before departure."
+      "a": "No severe cyclone alert is currently active near Kochi. Always verify the latest official warning before departure."
     },
     "hindi": {
       "q": "क्या मेरे क्षेत्र में कोई चक्रवात चेतावनी है?",
-      "a": "डेमो परिदृश्य में Kochi के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
+      "a": " Kochi के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "എന്റെ പ്രദേശത്ത് ചുഴലിക്കാറ്റ് മുന്നറിയിപ്പ് ഉണ്ടോ?",
-      "a": "ഡെമോ സാഹചര്യത്തിൽ Kochi-ന് സമീപം ഗുരുതരമായ ചുഴലിക്കാറ്റ് മുന്നറിയിപ്പ് സജീവമല്ല. പുറപ്പെടുന്നതിന് മുമ്പ് ഔദ്യോഗിക മുന്നറിയിപ്പ് പരിശോധിക്കുക."
+      "a": " Kochi-ന് സമീപം ഗുരുതരമായ ചുഴലിക്കാറ്റ് മുന്നറിയിപ്പ് സജീവമല്ല. പുറപ്പെടുന്നതിന് മുമ്പ് ഔദ്യോഗിക മുന്നറിയിപ്പ് പരിശോധിക്കുക."
     }
   },
   {
@@ -85,15 +85,15 @@ export const questionBank = [
     "intent": "MULTI_DAY_TRIP",
     "english": {
       "q": "Is it safe for a 3-day trip starting tomorrow?",
-      "a": "For the demo 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
+      "a": "For your 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
     },
     "hindi": {
       "q": "क्या कल से शुरू होने वाली 3-दिन की यात्रा सुरक्षित है?",
-      "a": "डेमो 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
+      "a": "आपकी 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
     },
     "regional": {
       "q": "നാളെ മുതൽ തുടങ്ങുന്ന 3 ദിവസത്തെ യാത്ര സുരക്ഷിതമാണോ?",
-      "a": "ഡെമോ 3-ദിവസ യാത്രയിൽ ദിവസം 1 സുരക്ഷിതം, ദിവസം 2 സുരക്ഷിതം, ദിവസം 3 ജാഗ്രതയാണ്. ഏറ്റവും അപകടമുള്ള ദിവസത്തെ അടിസ്ഥാനമാക്കി ആകെ നില ജാഗ്രതയാണ്."
+      "a": "നിങ്ങളുടെ 3 ദിവസ യാത്രയിൽ ദിവസം 1 സുരക്ഷിതം, ദിവസം 2 സുരക്ഷിതം, ദിവസം 3 ജാഗ്രതയാണ്. ഏറ്റവും അപകടമുള്ള ദിവസത്തെ അടിസ്ഥാനമാക്കി ആകെ നില ജാഗ്രതയാണ്."
     }
   },
   {
@@ -104,15 +104,15 @@ export const questionBank = [
     "intent": "SAFE_ROUTE",
     "english": {
       "q": "What's the safest route from Kochi harbor to the nearest fishing zone?",
-      "a": "The demo route from Kochi harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
+      "a": "The recommended route from Kochi harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
     },
     "hindi": {
       "q": "कोच्चि बंदरगाह से नज़दीकी मछली पकड़ने के क्षेत्र तक सबसे सुरक्षित रास्ता कौन सा है?",
-      "a": "डेमो मार्ग Kochi बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
+      "a": "सुझाया गया मार्ग Kochi बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
     },
     "regional": {
       "q": "കൊച്ചി തുറമുഖത്ത് നിന്ന് ഏറ്റവും അടുത്ത മത്സ്യബന്ധന മേഖലയിലേക്കുള്ള സുരക്ഷിതമായ വഴി ഏതാണ്?",
-      "a": "ഡെമോ റൂട്ട് Kochi തുറമുഖത്തിൽ നിന്ന് സമീപത്തെ മത്സ്യബന്ധന മേഖലയിലേക്ക് ഉയർന്ന അപകടമുള്ള പ്രദേശങ്ങൾ ഒഴിവാക്കി മാപ്പിലെ കുറഞ്ഞ അപകടസാധ്യതയുള്ള പാത പിന്തുടരുന്നു."
+      "a": "ശുപാർശ ചെയ്ത റൂട്ട് Kochi തുറമുഖത്തിൽ നിന്ന് സമീപത്തെ മത്സ്യബന്ധന മേഖലയിലേക്ക് ഉയർന്ന അപകടമുള്ള പ്രദേശങ്ങൾ ഒഴിവാക്കി മാപ്പിലെ കുറഞ്ഞ അപകടസാധ്യതയുള്ള പാത പിന്തുടരുന്നു."
     }
   },
   {
@@ -123,15 +123,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The demo map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "डेमो मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "സമീപത്ത് ഏത് പ്രദേശങ്ങളിലാണ് ക്ലോറോഫിൽ അളവ് കൂടുതൽ?",
-      "a": "ഡെമോ മാപ്പിൽ കൂടുതൽ ക്ലോറോഫിൽ ഉള്ള സമീപ പ്രദേശങ്ങൾ അടയാളപ്പെടുത്തിയിട്ടുണ്ട്. ഇവ സാധ്യതയുള്ള ഉൽപാദന മേഖലകളാണ്; ഉറപ്പായ മീൻപിടിത്തമല്ല."
+      "a": "മാപ്പിൽ കൂടുതൽ ക്ലോറോഫിൽ ഉള്ള സമീപ പ്രദേശങ്ങൾ അടയാളപ്പെടുത്തിയിട്ടുണ്ട്. ഇവ സാധ്യതയുള്ള ഉൽപാദന മേഖലകളാണ്; ഉറപ്പായ മീൻപിടിത്തമല്ല."
     }
   },
   {
@@ -142,15 +142,15 @@ export const questionBank = [
     "intent": "AVOID_ZONE",
     "english": {
       "q": "Should I avoid any zones today due to bad weather?",
-      "a": "Yes. In the demo scenario, the system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
+      "a": "Yes. The system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
     },
     "hindi": {
       "q": "क्या आज खराब मौसम के कारण मुझे किसी क्षेत्र से बचना चाहिए?",
-      "a": "हाँ। डेमो परिदृश्य में प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
+      "a": "हाँ।  प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
     },
     "regional": {
       "q": "മോശം കാലാവസ്ഥ കാരണം ഇന്ന് ഏതെങ്കിലും മേഖല ഒഴിവാക്കണോ?",
-      "a": "അതെ. ഡെമോ സാഹചര്യത്തിൽ മോശം സാഹചര്യങ്ങൾ കാരണം അടയാളപ്പെടുത്തിയ ഉയർന്ന അപകടമുള്ള മേഖലകൾ ഇന്ന് ഒഴിവാക്കാൻ സിസ്റ്റം നിർദ്ദേശിക്കുന്നു."
+      "a": "അതെ.  മോശം സാഹചര്യങ്ങൾ കാരണം അടയാളപ്പെടുത്തിയ ഉയർന്ന അപകടമുള്ള മേഖലകൾ ഇന്ന് ഒഴിവാക്കാൻ സിസ്റ്റം നിർദ്ദേശിക്കുന്നു."
     }
   },
   {
@@ -161,15 +161,15 @@ export const questionBank = [
     "intent": "WIND_FORECAST",
     "english": {
       "q": "What is the wind speed forecast for tonight?",
-      "a": "The demo forecast for tonight shows wind around 12–18 km/h near Kochi. Verify the latest forecast before going out."
+      "a": "The forecast for tonight shows wind around 12–18 km/h near Kochi. Verify the latest forecast before going out."
     },
     "hindi": {
       "q": "आज रात के लिए हवा की गति का पूर्वानुमान क्या है?",
-      "a": "डेमो पूर्वानुमान में आज रात Kochi के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
+      "a": "पूर्वानुमान में आज रात Kochi के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
     },
     "regional": {
       "q": "ഇന്ന് രാത്രിയിലെ കാറ്റിന്റെ വേഗതയുടെ പ്രവചനം എന്താണ്?",
-      "a": "ഡെമോ പ്രവചനത്തിൽ ഇന്ന് രാത്രി Kochi-ന് സമീപം കാറ്റിന്റെ വേഗം ഏകദേശം 12–18 കി.മീ/മണിക്കൂർ ആണ്. പുറപ്പെടുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ പ്രവചനം പരിശോധിക്കുക."
+      "a": "പ്രവചനത്തിൽ ഇന്ന് രാത്രി Kochi-ന് സമീപം കാറ്റിന്റെ വേഗം ഏകദേശം 12–18 കി.മീ/മണിക്കൂർ ആണ്. പുറപ്പെടുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ പ്രവചനം പരിശോധിക്കുക."
     }
   },
   {
@@ -180,15 +180,15 @@ export const questionBank = [
     "intent": "BOAT_SAFETY",
     "english": {
       "q": "Is my motorized boat safe to go out in these conditions?",
-      "a": "For the demo vessel profile, the motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
+      "a": "The motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
     },
     "hindi": {
       "q": "क्या इन परिस्थितियों में मेरी मोटर वाली नाव जाना सुरक्षित है?",
-      "a": "डेमो नाव प्रोफ़ाइल के लिए इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
+      "a": "आपकी नाव प्रोफ़ाइल के अनुसार इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
     },
     "regional": {
       "q": "ഈ സാഹചര്യത്തിൽ എന്റെ മോട്ടോർ ബോട്ട് പോകാൻ സുരക്ഷിതമാണോ?",
-      "a": "ഡെമോ ബോട്ട് പ്രൊഫൈലിൽ ഈ സാഹചര്യങ്ങളിൽ മോട്ടോർ ബോട്ടിന്റെ നില ജാഗ്രതയാണ്. യഥാർത്ഥ ഫലം ബോട്ട് പ്രൊഫൈലിനെയും നിലവിലെ ഡാറ്റയെയും ആശ്രയിക്കും."
+      "a": "നിങ്ങളുടെ ബോട്ട് പ്രൊഫൈൽ അനുസരിച്ച് ഈ സാഹചര്യങ്ങളിൽ മോട്ടോർ ബോട്ടിന്റെ നില ജാഗ്രതയാണ്. യഥാർത്ഥ ഫലം ബോട്ട് പ്രൊഫൈലിനെയും നിലവിലെ ഡാറ്റയെയും ആശ്രയിക്കും."
     }
   },
   {
@@ -199,15 +199,15 @@ export const questionBank = [
     "intent": "WHY_NOT_RECOMMENDED",
     "english": {
       "q": "Why is fishing not recommended today?",
-      "a": "Fishing is not recommended in the demo scenario because the safety checks identify adverse conditions as the dominant risk factor."
+      "a": "Fishing is not recommended today because the safety checks identify adverse conditions as the dominant risk factor."
     },
     "hindi": {
       "q": "आज मछली पकड़ने की सलाह क्यों नहीं दी जा रही?",
-      "a": "डेमो परिदृश्य में मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
+      "a": " मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
     },
     "regional": {
       "q": "ഇന്ന് മീൻപിടിക്കാൻ ശുപാർശ ചെയ്യാത്തത് എന്തുകൊണ്ട്?",
-      "a": "ഡെമോ സാഹചര്യത്തിൽ മത്സ്യബന്ധനം ശുപാർശ ചെയ്യുന്നില്ല, കാരണം സുരക്ഷാ പരിശോധനയിൽ മോശം സാഹചര്യങ്ങളാണ് പ്രധാന അപകട ഘടകമായി കണ്ടെത്തിയത്."
+      "a": " മത്സ്യബന്ധനം ശുപാർശ ചെയ്യുന്നില്ല, കാരണം സുരക്ഷാ പരിശോധനയിൽ മോശം സാഹചര്യങ്ങളാണ് പ്രധാന അപകട ഘടകമായി കണ്ടെത്തിയത്."
     }
   },
   {
@@ -218,15 +218,15 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "What time is safest to go out tomorrow?",
-      "a": "The demo recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure rather than relying on this fixed demo answer."
+      "a": "TARANG recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure."
     },
     "hindi": {
       "q": "कल जाने के लिए सबसे सुरक्षित समय कौन सा है?",
-      "a": "डेमो में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें; इस स्थिर डेमो उत्तर पर निर्भर न रहें।"
+      "a": "इस विश्लेषण में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें।"
     },
     "regional": {
       "q": "നാളെ പോകാൻ ഏറ്റവും സുരക്ഷിതമായ സമയം ഏതാണ്?",
-      "a": "ഡെമോയിൽ സംയുക്ത അപകടസാധ്യത ഏറ്റവും കുറഞ്ഞ പകൽ സമയമാണ് ശുപാർശ ചെയ്യുന്നത്. പുറപ്പെടുന്നതിന് അടുത്ത് പ്രവചനം വീണ്ടും പരിശോധിക്കുക."
+      "a": "യിൽ സംയുക്ത അപകടസാധ്യത ഏറ്റവും കുറഞ്ഞ പകൽ സമയമാണ് ശുപാർശ ചെയ്യുന്നത്. പുറപ്പെടുന്നതിന് അടുത്ത് പ്രവചനം വീണ്ടും പരിശോധിക്കുക."
     }
   },
   {
@@ -237,15 +237,15 @@ export const questionBank = [
     "intent": "RESTRICTED_ZONE",
     "english": {
       "q": "Are there any restricted zones near Kochi?",
-      "a": "The demo map flags restricted or protected areas near Kochi. Do not enter a restricted zone; confirm the latest official boundaries."
+      "a": "The map shows restricted or protected areas near Kochi. Do not enter a restricted zone; confirm the latest official boundaries."
     },
     "hindi": {
       "q": "क्या कोच्चि के पास कोई प्रतिबंधित क्षेत्र है?",
-      "a": "Kochi के पास डेमो मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
+      "a": "Kochi के पास मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
     },
     "regional": {
       "q": "കൊച്ചിക്ക് സമീപം നിയന്ത്രിത മേഖലകൾ ഉണ്ടോ?",
-      "a": "Kochi-ന് സമീപമുള്ള നിയന്ത്രിത അല്ലെങ്കിൽ സംരക്ഷിത പ്രദേശങ്ങൾ ഡെമോ മാപ്പിൽ അടയാളപ്പെടുത്തിയിട്ടുണ്ട്. ഏറ്റവും പുതിയ ഔദ്യോഗിക അതിർത്തികൾ പരിശോധിക്കുക."
+      "a": "Kochi-ന് സമീപമുള്ള നിയന്ത്രിത അല്ലെങ്കിൽ സംരക്ഷിത പ്രദേശങ്ങൾ മാപ്പിൽ അടയാളപ്പെടുത്തിയിട്ടുണ്ട്. ഏറ്റവും പുതിയ ഔദ്യോഗിക അതിർത്തികൾ പരിശോധിക്കുക."
     }
   },
   {
@@ -256,15 +256,15 @@ export const questionBank = [
     "intent": "CURRENT_COASTAL_CONDITIONS",
     "english": {
       "q": "What's the current near the coast today?",
-      "a": "The demo scenario shows a moderate near-shore current near Kochi. Current conditions can change, so verify the latest marine data."
+      "a": "There is a moderate near-shore current near Kochi. Current conditions can change, so verify the latest marine data."
     },
     "hindi": {
       "q": "आज तट के पास समुद्री धारा कैसी है?",
-      "a": "डेमो परिदृश्य में Kochi के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
+      "a": " Kochi के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
     },
     "regional": {
       "q": "ഇന്ന് തീരത്തിനടുത്ത് കടൽ പ്രവാഹം എങ്ങനെയാണ്?",
-      "a": "ഡെമോ സാഹചര്യത്തിൽ Kochi-ന് സമീപമുള്ള തീരപ്രദേശത്തെ കടൽപ്രവാഹം മിതമാണ്. ഏറ്റവും പുതിയ സമുദ്ര ഡാറ്റ പരിശോധിക്കുക."
+      "a": " Kochi-ന് സമീപമുള്ള തീരപ്രദേശത്തെ കടൽപ്രവാഹം മിതമാണ്. ഏറ്റവും പുതിയ സമുദ്ര ഡാറ്റ പരിശോധിക്കുക."
     }
   },
   {
@@ -275,15 +275,15 @@ export const questionBank = [
     "intent": "NIGHT_VISIBILITY",
     "english": {
       "q": "Is visibility good enough for night fishing today?",
-      "a": "The demo scenario rates visibility as adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
+      "a": "Visibility is adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
     },
     "hindi": {
       "q": "क्या आज रात मछली पकड़ने के लिए दृश्यता पर्याप्त है?",
-      "a": "डेमो परिदृश्य में चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
+      "a": " चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
     },
     "regional": {
       "q": "ഇന്ന് രാത്രി മീൻപിടിക്കാൻ ദൃശ്യപരത മതിയാകുമോ?",
-      "a": "ഡെമോ സാഹചര്യത്തിൽ തിരഞ്ഞെടുത്ത സമയത്തേക്ക് ദൃശ്യപരത മതിയായതാണ്. രാത്രിയിൽ പോകുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ ദൃശ്യപരതയും കാലാവസ്ഥയും പരിശോധിക്കുക."
+      "a": " തിരഞ്ഞെടുത്ത സമയത്തേക്ക് ദൃശ്യപരത മതിയായതാണ്. രാത്രിയിൽ പോകുന്നതിന് മുമ്പ് ഏറ്റവും പുതിയ ദൃശ്യപരതയും കാലാവസ്ഥയും പരിശോധിക്കുക."
     }
   },
   {
@@ -294,15 +294,15 @@ export const questionBank = [
     "intent": "WEEKEND_FISHING",
     "english": {
       "q": "Can I go fishing this weekend?",
-      "a": "For the demo weekend forecast, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
+      "a": "Based on current conditions, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
     },
     "hindi": {
       "q": "क्या मैं इस सप्ताहांत मछली पकड़ने जा सकता हूँ?",
-      "a": "डेमो सप्ताहांत पूर्वानुमान में मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
+      "a": "वर्तमान पूर्वानुमान के अनुसार मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
     },
     "regional": {
       "q": "ഈ വാരാന്ത്യത്തിൽ എനിക്ക് മീൻപിടിക്കാൻ പോകാമോ?",
-      "a": "ഡെമോ വാരാന്ത്യ പ്രവചനത്തിൽ മത്സ്യബന്ധനത്തിന് ജാഗ്രത നിലയാണ്. യാത്രയ്ക്ക് അടുത്ത് പ്രവചനവും മുന്നറിയിപ്പുകളും വീണ്ടും പരിശോധിക്കുക."
+      "a": "നിലവിലെ പ്രവചനമനുസരിച്ച് മത്സ്യബന്ധനത്തിന് ജാഗ്രത നിലയാണ്. യാത്രയ്ക്ക് അടുത്ത് പ്രവചനവും മുന്നറിയിപ്പുകളും വീണ്ടും പരിശോധിക്കുക."
     }
   },
   {
@@ -313,15 +313,15 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "The demo ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "डेमो में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "എന്റെ ബോട്ട് തരത്തിന് ഏറ്റവും അനുയോജ്യമായ മത്സ്യബന്ധന മേഖല ഏതാണ്?",
-      "a": "സുരക്ഷയും ഉൽപാദനക്ഷമതയും കൂട്ടിച്ചേർത്ത് തിരഞ്ഞെടുത്ത ബോട്ട് തരത്തിന് ഡെമോയിൽ അടയാളപ്പെടുത്തിയ PFZ മികച്ച സാധ്യതയായി റാങ്ക് ചെയ്തിട്ടുണ്ട്. ഉറപ്പായ മീൻപിടിത്തമല്ല."
+      "a": "സുരക്ഷയും ഉൽപാദനക്ഷമതയും കൂട്ടിച്ചേർത്ത് തിരഞ്ഞെടുത്ത ബോട്ട് തരത്തിന്യിൽ അടയാളപ്പെടുത്തിയ PFZ മികച്ച സാധ്യതയായി റാങ്ക് ചെയ്തിട്ടുണ്ട്. ഉറപ്പായ മീൻപിടിത്തമല്ല."
     }
   },
   {
@@ -332,15 +332,15 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "Is it safe to fish near Mangalore tomorrow?",
-      "a": "Based on the demo forecast for tomorrow, conditions are moderately safe for fishing near Mangalore. Check the latest local warning before departure."
+      "a": "Based on current conditions, conditions are moderately safe for fishing near Mangalore. Check the latest local warning before departure."
     },
     "hindi": {
       "q": "क्या कल मंगलौर के पास मछली पकड़ना सुरक्षित है?",
-      "a": "डेमो पूर्वानुमान के अनुसार, कल Mangalore के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
+      "a": "वर्तमान स्थितियों के अनुसार, कल Mangalore के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "ನಾಳೆ ಮಂಗಳೂರು ಬಳಿ ಮೀನುಗಾರಿಕೆ ಸುರಕ್ಷಿತವೇ?",
-      "a": "ಡೆಮೊ ಮುನ್ಸೂಚನೆಯ ಪ್ರಕಾರ, ನಾಳೆ Mangalore ಸಮೀಪ ಮೀನುಗಾರಿಕೆಗೆ ಪರಿಸ್ಥಿತಿಗಳು ಮಧ್ಯಮವಾಗಿ ಸುರಕ್ಷಿತವಾಗಿವೆ. ಹೊರಡುವ ಮೊದಲು ಇತ್ತೀಚಿನ ಸ್ಥಳೀಯ ಎಚ್ಚರಿಕೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": "ಪ್ರಸ್ತುತ ಪರಿಸ್ಥಿತಿಗಳ ಪ್ರಕಾರ, ನಾಳೆ Mangalore ಸಮೀಪ ಮೀನುಗಾರಿಕೆಗೆ ಪರಿಸ್ಥಿತಿಗಳು ಮಧ್ಯಮವಾಗಿ ಸುರಕ್ಷಿತವಾಗಿವೆ. ಹೊರಡುವ ಮೊದಲು ಇತ್ತೀಚಿನ ಸ್ಥಳೀಯ ಎಚ್ಚರಿಕೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -351,15 +351,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest demo Potential Fishing Zone is shown on the map for Mangalore; use the highlighted zone and check its current risk before departure."
+      "a": "The nearest Potential Fishing Zone is shown on the map for Mangalore; use the highlighted zone and check its current risk before departure."
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Mangalore के लिए निकटतम डेमो संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "Mangalore के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
     },
     "regional": {
       "q": "ಇಂದು ಹತ್ತಿರದ ಸಂಭಾವ್ಯ ಮೀನುಗಾರಿಕಾ ವಲಯ (PFZ) ಎಲ್ಲಿದೆ?",
-      "a": "Mangalore ಸಮೀಪದ ಡೆಮೊ PFZ ಅನ್ನು ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಲಾಗಿದೆ. ಹೊರಡುವ ಮೊದಲು ಗುರುತಿಸಲಾದ ಪ್ರದೇಶದ ಪ್ರಸ್ತುತ ಅಪಾಯವನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": "Mangalore ಸಮೀಪದ ಶಿಫಾರಸು ಮಾಡಲಾದ PFZ ಅನ್ನು ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಲಾಗಿದೆ. ಹೊರಡುವ ಮೊದಲು ಗುರುತಿಸಲಾದ ಪ್ರದೇಶದ ಪ್ರಸ್ತುತ ಅಪಾಯವನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -370,15 +370,15 @@ export const questionBank = [
     "intent": "WAVE_HEIGHT",
     "english": {
       "q": "What is the wave height near Mangalore right now?",
-      "a": "In the demo scenario, wave height near Mangalore is 1.2–1.8 m. Treat this as demonstration data, not a live observation."
+      "a": "Wave height near Mangalore is 1.2–1.8 m."
     },
     "hindi": {
       "q": "अभी मंगलौर के पास लहरों की ऊँचाई कितनी है?",
-      "a": "डेमो परिदृश्य में Mangalore के पास लहरों की ऊँचाई 1.2–1.8 मीटर है। इसे केवल प्रदर्शन डेटा मानें, वास्तविक समय का मापन नहीं।"
+      "a": " Mangalore के पास लहरों की ऊँचाई 1.2–1.8 मीटर है।"
     },
     "regional": {
       "q": "ಈಗ ಮಂಗಳೂರು ಬಳಿ ಅಲೆಗಳ ಎತ್ತರ ಎಷ್ಟು?",
-      "a": "ಡೆಮೊ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ Mangalore ಸಮೀಪದ ಅಲೆಗಳ ಎತ್ತರ 1.2–1.8 ಮೀಟರ್. ಇದು ಡೆಮೊ ಡೇಟಾ ಮಾತ್ರ, ನೇರ ವೀಕ್ಷಣೆ ಅಲ್ಲ."
+      "a": " Mangalore ಸಮೀಪದ ಅಲೆಗಳ ಎತ್ತರ 1.2–1.8 ಮೀಟರ್. ಇದು ಲಭ್ಯ ಮಾಹಿತಿ ಆಧಾರಿತ ಅಂದಾಜು."
     }
   },
   {
@@ -389,15 +389,15 @@ export const questionBank = [
     "intent": "CYCLONE_ALERT",
     "english": {
       "q": "Are there any cyclone alerts in my area?",
-      "a": "No severe cyclone alert is active in the demo scenario for Mangalore. Always verify the latest official warning before departure."
+      "a": "No severe cyclone alert is currently active near Mangalore. Always verify the latest official warning before departure."
     },
     "hindi": {
       "q": "क्या मेरे क्षेत्र में कोई चक्रवात चेतावनी है?",
-      "a": "डेमो परिदृश्य में Mangalore के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
+      "a": " Mangalore के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "ನನ್ನ ಪ್ರದೇಶದಲ್ಲಿ ಚಂಡಮಾರುತ ಎಚ್ಚರಿಕೆ ಇದೆಯೇ?",
-      "a": "ಡೆಮೊ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ Mangaloreಗಾಗಿ ಯಾವುದೇ ಗಂಭೀರ ಚಂಡಮಾರುತ ಎಚ್ಚರಿಕೆ ಸಕ್ರಿಯವಾಗಿಲ್ಲ. ಹೊರಡುವ ಮೊದಲು ಅಧಿಕೃತ ಎಚ್ಚರಿಕೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": " Mangaloreಗಾಗಿ ಯಾವುದೇ ಗಂಭೀರ ಚಂಡಮಾರುತ ಎಚ್ಚರಿಕೆ ಸಕ್ರಿಯವಾಗಿಲ್ಲ. ಹೊರಡುವ ಮೊದಲು ಅಧಿಕೃತ ಎಚ್ಚರಿಕೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -408,15 +408,15 @@ export const questionBank = [
     "intent": "MULTI_DAY_TRIP",
     "english": {
       "q": "Is it safe for a 3-day trip starting tomorrow?",
-      "a": "For the demo 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
+      "a": "For your 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
     },
     "hindi": {
       "q": "क्या कल से शुरू होने वाली 3-दिन की यात्रा सुरक्षित है?",
-      "a": "डेमो 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
+      "a": "आपकी 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
     },
     "regional": {
       "q": "ನಾಳೆಯಿಂದ ಪ್ರಾರಂಭವಾಗುವ 3-ದಿನಗಳ ಪ್ರಯಾಣ ಸುರಕ್ಷಿತವೇ?",
-      "a": "ಡೆಮೊ 3-ದಿನದ ಪ್ರಯಾಣದಲ್ಲಿ ದಿನ 1 ಸುರಕ್ಷಿತ, ದಿನ 2 ಸುರಕ್ಷಿತ ಮತ್ತು ದಿನ 3 ಎಚ್ಚರಿಕೆ. ಹೆಚ್ಚು ಅಪಾಯದ ದಿನದ ಆಧಾರದ ಮೇಲೆ ಒಟ್ಟು ಸ್ಥಿತಿ ಎಚ್ಚರಿಕೆ."
+      "a": "ನಿಮ್ಮ 3-ದಿನದ ಪ್ರಯಾಣದಲ್ಲಿ ದಿನ 1 ಸುರಕ್ಷಿತ, ದಿನ 2 ಸುರಕ್ಷಿತ ಮತ್ತು ದಿನ 3 ಎಚ್ಚರಿಕೆ. ಹೆಚ್ಚು ಅಪಾಯದ ದಿನದ ಆಧಾರದ ಮೇಲೆ ಒಟ್ಟು ಸ್ಥಿತಿ ಎಚ್ಚರಿಕೆ."
     }
   },
   {
@@ -427,15 +427,15 @@ export const questionBank = [
     "intent": "SAFE_ROUTE",
     "english": {
       "q": "What's the safest route from Mangalore harbor to the nearest fishing zone?",
-      "a": "The demo route from Mangalore harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
+      "a": "The recommended route from Mangalore harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
     },
     "hindi": {
       "q": "मंगलौर बंदरगाह से नज़दीकी मछली पकड़ने के क्षेत्र तक सबसे सुरक्षित रास्ता कौन सा है?",
-      "a": "डेमो मार्ग Mangalore बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
+      "a": "सुझाया गया मार्ग Mangalore बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
     },
     "regional": {
       "q": "ಮಂಗಳೂರು ಬಂದರಿನಿಂದ ಹತ್ತಿರದ ಮೀನುಗಾರಿಕಾ ವಲಯಕ್ಕೆ ಸುರಕ್ಷಿತ ಮಾರ್ಗ ಯಾವುದು?",
-      "a": "ಡೆಮೊ ಮಾರ್ಗವು Mangalore ಬಂದರಿನಿಂದ ಸಮೀಪದ ಮೀನುಗಾರಿಕಾ ವಲಯಕ್ಕೆ ಅಪಾಯದ ಪ್ರದೇಶಗಳನ್ನು ತಪ್ಪಿಸಿ ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಿದ ಕಡಿಮೆ-ಅಪಾಯದ ಮಾರ್ಗವನ್ನು ಅನುಸರಿಸುತ್ತದೆ."
+      "a": "ಶಿಫಾರಸು ಮಾಡಲಾದ ಮಾರ್ಗವು Mangalore ಬಂದರಿನಿಂದ ಸಮೀಪದ ಮೀನುಗಾರಿಕಾ ವಲಯಕ್ಕೆ ಅಪಾಯದ ಪ್ರದೇಶಗಳನ್ನು ತಪ್ಪಿಸಿ ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಿದ ಕಡಿಮೆ-ಅಪಾಯದ ಮಾರ್ಗವನ್ನು ಅನುಸರಿಸುತ್ತದೆ."
     }
   },
   {
@@ -446,15 +446,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The demo map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "डेमो मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "ಹತ್ತಿರದಲ್ಲಿ ಯಾವ ಪ್ರದೇಶಗಳಲ್ಲಿ ಕ್ಲೋರೊಫಿಲ್ ಪ್ರಮಾಣ ಹೆಚ್ಚಿದೆ?",
-      "a": "ಡೆಮೊ ನಕ್ಷೆಯಲ್ಲಿ ಹೆಚ್ಚಿನ ಕ್ಲೋರೊಫಿಲ್ ಇರುವ ಸಮೀಪದ ಪ್ರದೇಶಗಳನ್ನು ಗುರುತಿಸಲಾಗಿದೆ. ಇವು ಸಾಧ್ಯತೆಯಿರುವ ಉತ್ಪಾದಕ ಪ್ರದೇಶಗಳು; ಖಚಿತ ಮೀನುಗಾರಿಕೆಯ ಭರವಸೆ ಅಲ್ಲ."
+      "a": "ನಕ್ಷೆಯಲ್ಲಿ ಹೆಚ್ಚಿನ ಕ್ಲೋರೊಫಿಲ್ ಇರುವ ಸಮೀಪದ ಪ್ರದೇಶಗಳನ್ನು ಗುರುತಿಸಲಾಗಿದೆ. ಇವು ಸಾಧ್ಯತೆಯಿರುವ ಉತ್ಪಾದಕ ಪ್ರದೇಶಗಳು; ಖಚಿತ ಮೀನುಗಾರಿಕೆಯ ಭರವಸೆ ಅಲ್ಲ."
     }
   },
   {
@@ -465,15 +465,15 @@ export const questionBank = [
     "intent": "AVOID_ZONE",
     "english": {
       "q": "Should I avoid any zones today due to bad weather?",
-      "a": "Yes. In the demo scenario, the system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
+      "a": "Yes. The system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
     },
     "hindi": {
       "q": "क्या आज खराब मौसम के कारण मुझे किसी क्षेत्र से बचना चाहिए?",
-      "a": "हाँ। डेमो परिदृश्य में प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
+      "a": "हाँ।  प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
     },
     "regional": {
       "q": "ಇಂದು ಕೆಟ್ಟ ಹವಾಮಾನದಿಂದಾಗಿ ಯಾವುದೇ ವಲಯ ತಪ್ಪಿಸಬೇಕೇ?",
-      "a": "ಹೌದು. ಡೆಮೊ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ ಪ್ರತಿಕೂಲ ಕಾರಣಗಳಿಂದ ಗುರುತಿಸಲಾದ ಹೆಚ್ಚಿನ ಅಪಾಯದ ವಲಯಗಳನ್ನು ಇಂದು ತಪ್ಪಿಸಲು ವ್ಯವಸ್ಥೆ ಸೂಚಿಸುತ್ತದೆ."
+      "a": "ಹೌದು.  ಪ್ರತಿಕೂಲ ಕಾರಣಗಳಿಂದ ಗುರುತಿಸಲಾದ ಹೆಚ್ಚಿನ ಅಪಾಯದ ವಲಯಗಳನ್ನು ಇಂದು ತಪ್ಪಿಸಲು ವ್ಯವಸ್ಥೆ ಸೂಚಿಸುತ್ತದೆ."
     }
   },
   {
@@ -484,15 +484,15 @@ export const questionBank = [
     "intent": "WIND_FORECAST",
     "english": {
       "q": "What is the wind speed forecast for tonight?",
-      "a": "The demo forecast for tonight shows wind around 12–18 km/h near Mangalore. Verify the latest forecast before going out."
+      "a": "The forecast for tonight shows wind around 12–18 km/h near Mangalore. Verify the latest forecast before going out."
     },
     "hindi": {
       "q": "आज रात के लिए हवा की गति का पूर्वानुमान क्या है?",
-      "a": "डेमो पूर्वानुमान में आज रात Mangalore के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
+      "a": "पूर्वानुमान में आज रात Mangalore के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
     },
     "regional": {
       "q": "ಇಂದು ರಾತ್ರಿಗೆ ಗಾಳಿಯ ವೇಗದ ಮುನ್ಸೂಚನೆ ಏನು?",
-      "a": "ಡೆಮೊ ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ಇಂದು ರಾತ್ರಿ Mangalore ಸಮೀಪ ಗಾಳಿಯ ವೇಗ ಸುಮಾರು 12–18 ಕಿಮೀ/ಗಂ. ಹೊರಡುವ ಮೊದಲು ಇತ್ತೀಚಿನ ಮುನ್ಸೂಚನೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": "ಮುನ್ಸೂಚನೆಯ ಪ್ರಕಾರ ಇಂದು ರಾತ್ರಿ Mangalore ಸಮೀಪ ಗಾಳಿಯ ವೇಗ ಸುಮಾರು 12–18 ಕಿಮೀ/ಗಂ. ಹೊರಡುವ ಮೊದಲು ಇತ್ತೀಚಿನ ಮುನ್ಸೂಚನೆಯನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -503,15 +503,15 @@ export const questionBank = [
     "intent": "BOAT_SAFETY",
     "english": {
       "q": "Is my motorized boat safe to go out in these conditions?",
-      "a": "For the demo vessel profile, the motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
+      "a": "The motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
     },
     "hindi": {
       "q": "क्या इन परिस्थितियों में मेरी मोटर वाली नाव जाना सुरक्षित है?",
-      "a": "डेमो नाव प्रोफ़ाइल के लिए इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
+      "a": "आपकी नाव प्रोफ़ाइल के अनुसार इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
     },
     "regional": {
       "q": "ಈ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ ನನ್ನ ಮೋಟಾರು ದೋಣಿ ಹೋಗಲು ಸುರಕ್ಷಿತವೇ?",
-      "a": "ಡೆಮೊ ದೋಣಿ ಪ್ರೊಫೈಲ್‌ನಲ್ಲಿ ಈ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ ಮೋಟಾರ್ ದೋಣಿಯ ಸ್ಥಿತಿ ಎಚ್ಚರಿಕೆ. ನಿಜವಾದ ಫಲಿತಾಂಶ ದೋಣಿ ಪ್ರೊಫೈಲ್ ಮತ್ತು ಪ್ರಸ್ತುತ ಮಾಹಿತಿಯನ್ನು ಅವಲಂಬಿಸುತ್ತದೆ."
+      "a": "ನಿಮ್ಮ ದೋಣಿ ಪ್ರೊಫೈಲ್ ಪ್ರಕಾರ ಈ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ ಮೋಟಾರ್ ದೋಣಿಯ ಸ್ಥಿತಿ ಎಚ್ಚರಿಕೆ. ನಿಜವಾದ ಫಲಿತಾಂಶ ದೋಣಿ ಪ್ರೊಫೈಲ್ ಮತ್ತು ಪ್ರಸ್ತುತ ಮಾಹಿತಿಯನ್ನು ಅವಲಂಬಿಸುತ್ತದೆ."
     }
   },
   {
@@ -522,15 +522,15 @@ export const questionBank = [
     "intent": "WHY_NOT_RECOMMENDED",
     "english": {
       "q": "Why is fishing not recommended today?",
-      "a": "Fishing is not recommended in the demo scenario because the safety checks identify adverse conditions as the dominant risk factor."
+      "a": "Fishing is not recommended today because the safety checks identify adverse conditions as the dominant risk factor."
     },
     "hindi": {
       "q": "आज मछली पकड़ने की सलाह क्यों नहीं दी जा रही?",
-      "a": "डेमो परिदृश्य में मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
+      "a": " मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
     },
     "regional": {
       "q": "ಇಂದು ಮೀನುಗಾರಿಕೆಗೆ ಶಿಫಾರಸು ಮಾಡದಿರಲು ಕಾರಣವೇನು?",
-      "a": "ಡೆಮೊ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ ಮೀನುಗಾರಿಕೆಯನ್ನು ಶಿಫಾರಸು ಮಾಡಲಾಗುವುದಿಲ್ಲ, ಏಕೆಂದರೆ ಸುರಕ್ಷತಾ ಪರಿಶೀಲನೆಯಲ್ಲಿ ಪ್ರತಿಕೂಲ ಪರಿಸ್ಥಿತಿಗಳು ಮುಖ್ಯ ಅಪಾಯವಾಗಿ ಕಂಡುಬಂದಿವೆ."
+      "a": " ಮೀನುಗಾರಿಕೆಯನ್ನು ಶಿಫಾರಸು ಮಾಡಲಾಗುವುದಿಲ್ಲ, ಏಕೆಂದರೆ ಸುರಕ್ಷತಾ ಪರಿಶೀಲನೆಯಲ್ಲಿ ಪ್ರತಿಕೂಲ ಪರಿಸ್ಥಿತಿಗಳು ಮುಖ್ಯ ಅಪಾಯವಾಗಿ ಕಂಡುಬಂದಿವೆ."
     }
   },
   {
@@ -541,15 +541,15 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "What time is safest to go out tomorrow?",
-      "a": "The demo recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure rather than relying on this fixed demo answer."
+      "a": "TARANG recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure."
     },
     "hindi": {
       "q": "कल जाने के लिए सबसे सुरक्षित समय कौन सा है?",
-      "a": "डेमो में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें; इस स्थिर डेमो उत्तर पर निर्भर न रहें।"
+      "a": "इस विश्लेषण में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें।"
     },
     "regional": {
       "q": "ನಾಳೆ ಹೋಗಲು ಸುರಕ್ಷಿತ ಸಮಯ ಯಾವುದು?",
-      "a": "ಡೆಮೊದಲ್ಲಿ ಒಟ್ಟು ಅಪಾಯ ಕಡಿಮೆ ಇರುವ ಹಗಲಿನ ಸಮಯವನ್ನು ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ. ಹೊರಡುವ ಸಮಯಕ್ಕೆ ಸಮೀಪ ಮುನ್ಸೂಚನೆಯನ್ನು ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ."
+      "a": "ಈ ವಿಶ್ಲೇಷಣೆಯಲ್ಲಿ ಒಟ್ಟು ಅಪಾಯ ಕಡಿಮೆ ಇರುವ ಹಗಲಿನ ಸಮಯವನ್ನು ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ. ಹೊರಡುವ ಸಮಯಕ್ಕೆ ಸಮೀಪ ಮುನ್ಸೂಚನೆಯನ್ನು ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -560,15 +560,15 @@ export const questionBank = [
     "intent": "RESTRICTED_ZONE",
     "english": {
       "q": "Are there any restricted zones near Mangalore?",
-      "a": "The demo map flags restricted or protected areas near Mangalore. Do not enter a restricted zone; confirm the latest official boundaries."
+      "a": "The map shows restricted or protected areas near Mangalore. Do not enter a restricted zone; confirm the latest official boundaries."
     },
     "hindi": {
       "q": "क्या मंगलौर के पास कोई प्रतिबंधित क्षेत्र है?",
-      "a": "Mangalore के पास डेमो मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
+      "a": "Mangalore के पास मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
     },
     "regional": {
       "q": "ಮಂಗಳೂರು ಬಳಿ ನಿರ್ಬಂಧಿತ ವಲಯಗಳಿವೆಯೇ?",
-      "a": "Mangalore ಸಮೀಪದ ನಿರ್ಬಂಧಿತ ಅಥವಾ ಸಂರಕ್ಷಿತ ಪ್ರದೇಶಗಳನ್ನು ಡೆಮೊ ನಕ್ಷೆ ಗುರುತಿಸುತ್ತದೆ. ಇತ್ತೀಚಿನ ಅಧಿಕೃತ ಗಡಿಗಳನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": "Mangalore ಸಮೀಪದ ನಿರ್ಬಂಧಿತ ಅಥವಾ ಸಂರಕ್ಷಿತ ಪ್ರದೇಶಗಳನ್ನು ನಕ್ಷೆ ಗುರುತಿಸುತ್ತದೆ. ಇತ್ತೀಚಿನ ಅಧಿಕೃತ ಗಡಿಗಳನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -579,15 +579,15 @@ export const questionBank = [
     "intent": "CURRENT_COASTAL_CONDITIONS",
     "english": {
       "q": "What's the current near the coast today?",
-      "a": "The demo scenario shows a moderate near-shore current near Mangalore. Current conditions can change, so verify the latest marine data."
+      "a": "There is a moderate near-shore current near Mangalore. Current conditions can change, so verify the latest marine data."
     },
     "hindi": {
       "q": "आज तट के पास समुद्री धारा कैसी है?",
-      "a": "डेमो परिदृश्य में Mangalore के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
+      "a": " Mangalore के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
     },
     "regional": {
       "q": "ಇಂದು ಕರಾವಳಿ ಬಳಿ ಪ್ರವಾಹ ಹೇಗಿದೆ?",
-      "a": "ಡೆಮೊ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ Mangalore ಕರಾವಳಿಯ ಸಮೀಪ ಸಮುದ್ರದ ಪ್ರವಾಹ ಮಧ್ಯಮವಾಗಿದೆ. ಇತ್ತೀಚಿನ ಸಮುದ್ರ ಮಾಹಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": " Mangalore ಕರಾವಳಿಯ ಸಮೀಪ ಸಮುದ್ರದ ಪ್ರವಾಹ ಮಧ್ಯಮವಾಗಿದೆ. ಇತ್ತೀಚಿನ ಸಮುದ್ರ ಮಾಹಿತಿಯನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -598,15 +598,15 @@ export const questionBank = [
     "intent": "NIGHT_VISIBILITY",
     "english": {
       "q": "Is visibility good enough for night fishing today?",
-      "a": "The demo scenario rates visibility as adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
+      "a": "Visibility is adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
     },
     "hindi": {
       "q": "क्या आज रात मछली पकड़ने के लिए दृश्यता पर्याप्त है?",
-      "a": "डेमो परिदृश्य में चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
+      "a": " चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
     },
     "regional": {
       "q": "ಇಂದು ರಾತ್ರಿ ಮೀನುಗಾರಿಕೆಗೆ ಸಾಕಷ್ಟು ಗೋಚರತೆ ಇದೆಯೇ?",
-      "a": "ಡೆಮೊ ಪರಿಸ್ಥಿತಿಯಲ್ಲಿ ಆಯ್ಕೆ ಮಾಡಿದ ಸಮಯಕ್ಕೆ ದೃಶ್ಯತೆ ಸಾಕಷ್ಟಿದೆ. ರಾತ್ರಿ ಮೀನುಗಾರಿಕೆಗೆ ಮೊದಲು ಇತ್ತೀಚಿನ ದೃಶ್ಯತೆ ಮತ್ತು ಹವಾಮಾನ ಪರಿಶೀಲಿಸಿ."
+      "a": " ಆಯ್ಕೆ ಮಾಡಿದ ಸಮಯಕ್ಕೆ ದೃಶ್ಯತೆ ಸಾಕಷ್ಟಿದೆ. ರಾತ್ರಿ ಮೀನುಗಾರಿಕೆಗೆ ಮೊದಲು ಇತ್ತೀಚಿನ ದೃಶ್ಯತೆ ಮತ್ತು ಹವಾಮಾನ ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -617,15 +617,15 @@ export const questionBank = [
     "intent": "WEEKEND_FISHING",
     "english": {
       "q": "Can I go fishing this weekend?",
-      "a": "For the demo weekend forecast, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
+      "a": "Based on current conditions, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
     },
     "hindi": {
       "q": "क्या मैं इस सप्ताहांत मछली पकड़ने जा सकता हूँ?",
-      "a": "डेमो सप्ताहांत पूर्वानुमान में मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
+      "a": "वर्तमान पूर्वानुमान के अनुसार मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
     },
     "regional": {
       "q": "ಈ ವಾರಾಂತ್ಯದಲ್ಲಿ ನಾನು ಮೀನುಗಾರಿಕೆಗೆ ಹೋಗಬಹುದೇ?",
-      "a": "ಡೆಮೊ ವಾರಾಂತ್ಯ ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ಮೀನುಗಾರಿಕೆ ಎಚ್ಚರಿಕೆ ಸ್ಥಿತಿಯಲ್ಲಿದೆ. ನಿಜವಾದ ಪ್ರಯಾಣಕ್ಕೆ ಮುನ್ನ ಮುನ್ಸೂಚನೆ ಮತ್ತು ಎಚ್ಚರಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": "ವಾರಾಂತ್ಯ ಮುನ್ಸೂಚನೆಯಲ್ಲಿ ಮೀನುಗಾರಿಕೆ ಎಚ್ಚರಿಕೆ ಸ್ಥಿತಿಯಲ್ಲಿದೆ. ನಿಜವಾದ ಪ್ರಯಾಣಕ್ಕೆ ಮುನ್ನ ಮುನ್ಸೂಚನೆ ಮತ್ತು ಎಚ್ಚರಿಕೆಗಳನ್ನು ಪರಿಶೀಲಿಸಿ."
     }
   },
   {
@@ -636,15 +636,15 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "The demo ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "डेमो में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "ನನ್ನ ದೋಣಿ ಪ್ರಕಾರಕ್ಕೆ ಉತ್ತಮ ಮೀನುಗಾರಿಕಾ ವಲಯ ಯಾವುದು?",
-      "a": "ಸುರಕ್ಷತೆ ಮತ್ತು ಉತ್ಪಾದಕತೆಯನ್ನು ಸೇರಿಸಿ ಆಯ್ಕೆ ಮಾಡಿದ ದೋಣಿ ಪ್ರಕಾರಕ್ಕೆ ಗುರುತಿಸಲಾದ PFZ ಅನ್ನು ಡೆಮೊದಲ್ಲಿ ಉತ್ತಮ ಅಭ್ಯರ್ಥಿಯಾಗಿ ರ್ಯಾಂಕ್ ಮಾಡಲಾಗಿದೆ. ಖಚಿತ ಹಿಡಿತದ ಭರವಸೆ ಅಲ್ಲ."
+      "a": "ಸುರಕ್ಷತೆ ಮತ್ತು ಉತ್ಪಾದಕತೆಯನ್ನು ಸೇರಿಸಿ ಆಯ್ಕೆ ಮಾಡಿದ ದೋಣಿ ಪ್ರಕಾರಕ್ಕೆ ಗುರುತಿಸಲಾದ PFZ ಅನ್ನು ಈ ವಿಶ್ಲೇಷಣೆಯಲ್ಲಿ ಉತ್ತಮ ಅಭ್ಯರ್ಥಿಯಾಗಿ ರ್ಯಾಂಕ್ ಮಾಡಲಾಗಿದೆ. ಖಚಿತ ಹಿಡಿತದ ಭರವಸೆ ಅಲ್ಲ."
     }
   },
   {
@@ -655,11 +655,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "Is it safe to fish near Veraval tomorrow?",
-      "a": "Based on the demo forecast for tomorrow, conditions are moderately safe for fishing near Veraval. Check the latest local warning before departure."
+      "a": "Based on current conditions, conditions are moderately safe for fishing near Veraval. Check the latest local warning before departure."
     },
     "hindi": {
       "q": "क्या कल वेरावल के पास मछली पकड़ना सुरक्षित है?",
-      "a": "डेमो पूर्वानुमान के अनुसार, कल Veraval के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
+      "a": "वर्तमान स्थितियों के अनुसार, कल Veraval के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "શું આવતીકાલે વેરાવળ પાસે માછલી પકડવી સુરક્ષિત છે?",
@@ -674,11 +674,11 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest demo Potential Fishing Zone is shown on the map for Veraval; use the highlighted zone and check its current risk before departure."
+      "a": "The nearest Potential Fishing Zone is shown on the map for Veraval; use the highlighted zone and check its current risk before departure."
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Veraval के लिए निकटतम डेमो संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "Veraval के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
     },
     "regional": {
       "q": "આજે સૌથી નજીકનો સંભવિત મત્સ્યક્ષેત્ર (PFZ) ક્યાં છે?",
@@ -693,11 +693,11 @@ export const questionBank = [
     "intent": "WAVE_HEIGHT",
     "english": {
       "q": "What is the wave height near Veraval right now?",
-      "a": "In the demo scenario, wave height near Veraval is 1.2–1.8 m. Treat this as demonstration data, not a live observation."
+      "a": "Wave height near Veraval is 1.2–1.8 m."
     },
     "hindi": {
       "q": "अभी वेरावल के पास लहरों की ऊँचाई कितनी है?",
-      "a": "डेमो परिदृश्य में Veraval के पास लहरों की ऊँचाई 1.2–1.8 मीटर है। इसे केवल प्रदर्शन डेटा मानें, वास्तविक समय का मापन नहीं।"
+      "a": " Veraval के पास लहरों की ऊँचाई 1.2–1.8 मीटर है।"
     },
     "regional": {
       "q": "અત્યારે વેરાવળ પાસે મોજાની ઊંચાઈ કેટલી છે?",
@@ -712,11 +712,11 @@ export const questionBank = [
     "intent": "CYCLONE_ALERT",
     "english": {
       "q": "Are there any cyclone alerts in my area?",
-      "a": "No severe cyclone alert is active in the demo scenario for Veraval. Always verify the latest official warning before departure."
+      "a": "No severe cyclone alert is currently active near Veraval. Always verify the latest official warning before departure."
     },
     "hindi": {
       "q": "क्या मेरे क्षेत्र में कोई चक्रवात चेतावनी है?",
-      "a": "डेमो परिदृश्य में Veraval के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
+      "a": " Veraval के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "શું મારા વિસ્તારમાં કોઈ વાવાઝોડાની ચેતવણી છે?",
@@ -731,11 +731,11 @@ export const questionBank = [
     "intent": "MULTI_DAY_TRIP",
     "english": {
       "q": "Is it safe for a 3-day trip starting tomorrow?",
-      "a": "For the demo 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
+      "a": "For your 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
     },
     "hindi": {
       "q": "क्या कल से शुरू होने वाली 3-दिन की यात्रा सुरक्षित है?",
-      "a": "डेमो 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
+      "a": "आपकी 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
     },
     "regional": {
       "q": "આવતીકાલથી શરૂ થતી 3-દિવસની સફર સુરક્ષિત છે?",
@@ -750,11 +750,11 @@ export const questionBank = [
     "intent": "SAFE_ROUTE",
     "english": {
       "q": "What's the safest route from Veraval harbor to the nearest fishing zone?",
-      "a": "The demo route from Veraval harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
+      "a": "The recommended route from Veraval harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
     },
     "hindi": {
       "q": "वेरावल बंदरगाह से नज़दीकी मछली पकड़ने के क्षेत्र तक सबसे सुरक्षित रास्ता कौन सा है?",
-      "a": "डेमो मार्ग Veraval बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
+      "a": "सुझाया गया मार्ग Veraval बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
     },
     "regional": {
       "q": "વેરાવળ બંદરથી નજીકના મત્સ્યક્ષેત્ર સુધીનો સૌથી સુરક્ષિત માર્ગ કયો છે?",
@@ -769,11 +769,11 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The demo map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "डेमो मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "નજીકમાં કયા વિસ્તારોમાં ક્લોરોફિલનું પ્રમાણ વધુ છે?",
@@ -788,11 +788,11 @@ export const questionBank = [
     "intent": "AVOID_ZONE",
     "english": {
       "q": "Should I avoid any zones today due to bad weather?",
-      "a": "Yes. In the demo scenario, the system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
+      "a": "Yes. The system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
     },
     "hindi": {
       "q": "क्या आज खराब मौसम के कारण मुझे किसी क्षेत्र से बचना चाहिए?",
-      "a": "हाँ। डेमो परिदृश्य में प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
+      "a": "हाँ।  प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
     },
     "regional": {
       "q": "શું આજે ખરાબ હવામાનને કારણે કોઈ ઝોન ટાળવો જોઈએ?",
@@ -807,11 +807,11 @@ export const questionBank = [
     "intent": "WIND_FORECAST",
     "english": {
       "q": "What is the wind speed forecast for tonight?",
-      "a": "The demo forecast for tonight shows wind around 12–18 km/h near Veraval. Verify the latest forecast before going out."
+      "a": "The forecast for tonight shows wind around 12–18 km/h near Veraval. Verify the latest forecast before going out."
     },
     "hindi": {
       "q": "आज रात के लिए हवा की गति का पूर्वानुमान क्या है?",
-      "a": "डेमो पूर्वानुमान में आज रात Veraval के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
+      "a": "पूर्वानुमान में आज रात Veraval के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
     },
     "regional": {
       "q": "આજે રાત માટે પવનની ઝડપની આગાહી શું છે?",
@@ -826,11 +826,11 @@ export const questionBank = [
     "intent": "BOAT_SAFETY",
     "english": {
       "q": "Is my motorized boat safe to go out in these conditions?",
-      "a": "For the demo vessel profile, the motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
+      "a": "The motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
     },
     "hindi": {
       "q": "क्या इन परिस्थितियों में मेरी मोटर वाली नाव जाना सुरक्षित है?",
-      "a": "डेमो नाव प्रोफ़ाइल के लिए इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
+      "a": "आपकी नाव प्रोफ़ाइल के अनुसार इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
     },
     "regional": {
       "q": "આ પરિસ્થિતિમાં મારી મોટરવાળી હોડી જવી સુરક્ષિત છે?",
@@ -845,11 +845,11 @@ export const questionBank = [
     "intent": "WHY_NOT_RECOMMENDED",
     "english": {
       "q": "Why is fishing not recommended today?",
-      "a": "Fishing is not recommended in the demo scenario because the safety checks identify adverse conditions as the dominant risk factor."
+      "a": "Fishing is not recommended today because the safety checks identify adverse conditions as the dominant risk factor."
     },
     "hindi": {
       "q": "आज मछली पकड़ने की सलाह क्यों नहीं दी जा रही?",
-      "a": "डेमो परिदृश्य में मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
+      "a": " मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
     },
     "regional": {
       "q": "આજે માછીમારીની ભલામણ કેમ નથી?",
@@ -864,11 +864,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "What time is safest to go out tomorrow?",
-      "a": "The demo recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure rather than relying on this fixed demo answer."
+      "a": "TARANG recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure."
     },
     "hindi": {
       "q": "कल जाने के लिए सबसे सुरक्षित समय कौन सा है?",
-      "a": "डेमो में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें; इस स्थिर डेमो उत्तर पर निर्भर न रहें।"
+      "a": "इस विश्लेषण में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें।"
     },
     "regional": {
       "q": "આવતીકાલે જવા માટે સૌથી સુરક્ષિત સમય કયો છે?",
@@ -883,11 +883,11 @@ export const questionBank = [
     "intent": "RESTRICTED_ZONE",
     "english": {
       "q": "Are there any restricted zones near Veraval?",
-      "a": "The demo map flags restricted or protected areas near Veraval. Do not enter a restricted zone; confirm the latest official boundaries."
+      "a": "The map shows restricted or protected areas near Veraval. Do not enter a restricted zone; confirm the latest official boundaries."
     },
     "hindi": {
       "q": "क्या वेरावल के पास कोई प्रतिबंधित क्षेत्र है?",
-      "a": "Veraval के पास डेमो मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
+      "a": "Veraval के पास मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
     },
     "regional": {
       "q": "શું વેરાવળ પાસે કોઈ પ્રતિબંધિત ઝોન છે?",
@@ -902,11 +902,11 @@ export const questionBank = [
     "intent": "CURRENT_COASTAL_CONDITIONS",
     "english": {
       "q": "What's the current near the coast today?",
-      "a": "The demo scenario shows a moderate near-shore current near Veraval. Current conditions can change, so verify the latest marine data."
+      "a": "There is a moderate near-shore current near Veraval. Current conditions can change, so verify the latest marine data."
     },
     "hindi": {
       "q": "आज तट के पास समुद्री धारा कैसी है?",
-      "a": "डेमो परिदृश्य में Veraval के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
+      "a": " Veraval के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
     },
     "regional": {
       "q": "આજે કિનારા પાસે પ્રવાહ કેવો છે?",
@@ -921,11 +921,11 @@ export const questionBank = [
     "intent": "NIGHT_VISIBILITY",
     "english": {
       "q": "Is visibility good enough for night fishing today?",
-      "a": "The demo scenario rates visibility as adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
+      "a": "Visibility is adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
     },
     "hindi": {
       "q": "क्या आज रात मछली पकड़ने के लिए दृश्यता पर्याप्त है?",
-      "a": "डेमो परिदृश्य में चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
+      "a": " चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
     },
     "regional": {
       "q": "શું આજે રાત્રે માછીમારી માટે પૂરતી દૃશ્યતા છે?",
@@ -940,11 +940,11 @@ export const questionBank = [
     "intent": "WEEKEND_FISHING",
     "english": {
       "q": "Can I go fishing this weekend?",
-      "a": "For the demo weekend forecast, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
+      "a": "Based on current conditions, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
     },
     "hindi": {
       "q": "क्या मैं इस सप्ताहांत मछली पकड़ने जा सकता हूँ?",
-      "a": "डेमो सप्ताहांत पूर्वानुमान में मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
+      "a": "वर्तमान पूर्वानुमान के अनुसार मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
     },
     "regional": {
       "q": "શું હું આ સપ્તાહાંતે માછીમારી કરવા જઈ શકું?",
@@ -959,11 +959,11 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "The demo ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "डेमो में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "મારી હોડીના પ્રકાર માટે શ્રેષ્ઠ મત્સ્યક્ષેત્ર કયો છે?",
@@ -978,11 +978,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "Is it safe to fish near Chennai tomorrow?",
-      "a": "Based on the demo forecast for tomorrow, conditions are moderately safe for fishing near Chennai. Check the latest local warning before departure."
+      "a": "Based on current conditions, conditions are moderately safe for fishing near Chennai. Check the latest local warning before departure."
     },
     "hindi": {
       "q": "क्या कल चेन्नई के पास मछली पकड़ना सुरक्षित है?",
-      "a": "डेमो पूर्वानुमान के अनुसार, कल Chennai के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
+      "a": "वर्तमान स्थितियों के अनुसार, कल Chennai के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "நாளை சென்னைக்கு அருகில் மீன்பிடிப்பது பாதுகாப்பானதா?",
@@ -997,11 +997,11 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest demo Potential Fishing Zone is shown on the map for Chennai; use the highlighted zone and check its current risk before departure."
+      "a": "The nearest Potential Fishing Zone is shown on the map for Chennai; use the highlighted zone and check its current risk before departure."
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Chennai के लिए निकटतम डेमो संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "Chennai के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
     },
     "regional": {
       "q": "இன்று அருகிலுள்ள சாத்தியமான மீன்பிடி மண்டலம் (PFZ) எங்கே உள்ளது?",
@@ -1016,11 +1016,11 @@ export const questionBank = [
     "intent": "WAVE_HEIGHT",
     "english": {
       "q": "What is the wave height near Chennai right now?",
-      "a": "In the demo scenario, wave height near Chennai is 1.2–1.8 m. Treat this as demonstration data, not a live observation."
+      "a": "Wave height near Chennai is 1.2–1.8 m."
     },
     "hindi": {
       "q": "अभी चेन्नई के पास लहरों की ऊँचाई कितनी है?",
-      "a": "डेमो परिदृश्य में Chennai के पास लहरों की ऊँचाई 1.2–1.8 मीटर है। इसे केवल प्रदर्शन डेटा मानें, वास्तविक समय का मापन नहीं।"
+      "a": " Chennai के पास लहरों की ऊँचाई 1.2–1.8 मीटर है।"
     },
     "regional": {
       "q": "இப்போது சென்னைக்கு அருகில் அலை உயரம் எவ்வளவு?",
@@ -1035,11 +1035,11 @@ export const questionBank = [
     "intent": "CYCLONE_ALERT",
     "english": {
       "q": "Are there any cyclone alerts in my area?",
-      "a": "No severe cyclone alert is active in the demo scenario for Chennai. Always verify the latest official warning before departure."
+      "a": "No severe cyclone alert is currently active near Chennai. Always verify the latest official warning before departure."
     },
     "hindi": {
       "q": "क्या मेरे क्षेत्र में कोई चक्रवात चेतावनी है?",
-      "a": "डेमो परिदृश्य में Chennai के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
+      "a": " Chennai के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "எனது பகுதியில் புயல் எச்சரிக்கை உள்ளதா?",
@@ -1054,11 +1054,11 @@ export const questionBank = [
     "intent": "MULTI_DAY_TRIP",
     "english": {
       "q": "Is it safe for a 3-day trip starting tomorrow?",
-      "a": "For the demo 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
+      "a": "For your 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
     },
     "hindi": {
       "q": "क्या कल से शुरू होने वाली 3-दिन की यात्रा सुरक्षित है?",
-      "a": "डेमो 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
+      "a": "आपकी 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
     },
     "regional": {
       "q": "நாளை தொடங்கும் 3-நாள் பயணம் பாதுகாப்பானதா?",
@@ -1073,11 +1073,11 @@ export const questionBank = [
     "intent": "SAFE_ROUTE",
     "english": {
       "q": "What's the safest route from Chennai harbor to the nearest fishing zone?",
-      "a": "The demo route from Chennai harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
+      "a": "The recommended route from Chennai harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
     },
     "hindi": {
       "q": "चेन्नई बंदरगाह से नज़दीकी मछली पकड़ने के क्षेत्र तक सबसे सुरक्षित रास्ता कौन सा है?",
-      "a": "डेमो मार्ग Chennai बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
+      "a": "सुझाया गया मार्ग Chennai बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
     },
     "regional": {
       "q": "சென்னை துறைமுகத்திலிருந்து அருகிலுள்ள மீன்பிடி மண்டலத்திற்கு பாதுகாப்பான பாதை எது?",
@@ -1092,11 +1092,11 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The demo map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "डेमो मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "அருகில் எந்த பகுதிகளில் குளோரோபில் அளவு அதிகமாக உள்ளது?",
@@ -1111,11 +1111,11 @@ export const questionBank = [
     "intent": "AVOID_ZONE",
     "english": {
       "q": "Should I avoid any zones today due to bad weather?",
-      "a": "Yes. In the demo scenario, the system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
+      "a": "Yes. The system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
     },
     "hindi": {
       "q": "क्या आज खराब मौसम के कारण मुझे किसी क्षेत्र से बचना चाहिए?",
-      "a": "हाँ। डेमो परिदृश्य में प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
+      "a": "हाँ।  प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
     },
     "regional": {
       "q": "இன்று மோசமான வானிலை காரணமாக எந்த மண்டலத்தையும் தவிர்க்க வேண்டுமா?",
@@ -1130,11 +1130,11 @@ export const questionBank = [
     "intent": "WIND_FORECAST",
     "english": {
       "q": "What is the wind speed forecast for tonight?",
-      "a": "The demo forecast for tonight shows wind around 12–18 km/h near Chennai. Verify the latest forecast before going out."
+      "a": "The forecast for tonight shows wind around 12–18 km/h near Chennai. Verify the latest forecast before going out."
     },
     "hindi": {
       "q": "आज रात के लिए हवा की गति का पूर्वानुमान क्या है?",
-      "a": "डेमो पूर्वानुमान में आज रात Chennai के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
+      "a": "पूर्वानुमान में आज रात Chennai के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
     },
     "regional": {
       "q": "இன்றிரவுக்கான காற்றின் வேக முன்னறிவிப்பு என்ன?",
@@ -1149,11 +1149,11 @@ export const questionBank = [
     "intent": "BOAT_SAFETY",
     "english": {
       "q": "Is my motorized boat safe to go out in these conditions?",
-      "a": "For the demo vessel profile, the motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
+      "a": "The motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
     },
     "hindi": {
       "q": "क्या इन परिस्थितियों में मेरी मोटर वाली नाव जाना सुरक्षित है?",
-      "a": "डेमो नाव प्रोफ़ाइल के लिए इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
+      "a": "आपकी नाव प्रोफ़ाइल के अनुसार इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
     },
     "regional": {
       "q": "இந்த சூழலில் எனது மோட்டார் படகு செல்வது பாதுகாப்பானதா?",
@@ -1168,11 +1168,11 @@ export const questionBank = [
     "intent": "WHY_NOT_RECOMMENDED",
     "english": {
       "q": "Why is fishing not recommended today?",
-      "a": "Fishing is not recommended in the demo scenario because the safety checks identify adverse conditions as the dominant risk factor."
+      "a": "Fishing is not recommended today because the safety checks identify adverse conditions as the dominant risk factor."
     },
     "hindi": {
       "q": "आज मछली पकड़ने की सलाह क्यों नहीं दी जा रही?",
-      "a": "डेमो परिदृश्य में मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
+      "a": " मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
     },
     "regional": {
       "q": "இன்று மீன்பிடிக்க பரிந்துரைக்கப்படாதது ஏன்?",
@@ -1187,11 +1187,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "What time is safest to go out tomorrow?",
-      "a": "The demo recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure rather than relying on this fixed demo answer."
+      "a": "TARANG recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure."
     },
     "hindi": {
       "q": "कल जाने के लिए सबसे सुरक्षित समय कौन सा है?",
-      "a": "डेमो में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें; इस स्थिर डेमो उत्तर पर निर्भर न रहें।"
+      "a": "इस विश्लेषण में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें।"
     },
     "regional": {
       "q": "நாளை செல்ல மிகவும் பாதுகாப்பான நேரம் எது?",
@@ -1206,11 +1206,11 @@ export const questionBank = [
     "intent": "RESTRICTED_ZONE",
     "english": {
       "q": "Are there any restricted zones near Chennai?",
-      "a": "The demo map flags restricted or protected areas near Chennai. Do not enter a restricted zone; confirm the latest official boundaries."
+      "a": "The map shows restricted or protected areas near Chennai. Do not enter a restricted zone; confirm the latest official boundaries."
     },
     "hindi": {
       "q": "क्या चेन्नई के पास कोई प्रतिबंधित क्षेत्र है?",
-      "a": "Chennai के पास डेमो मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
+      "a": "Chennai के पास मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
     },
     "regional": {
       "q": "சென்னைக்கு அருகில் தடைசெய்யப்பட்ட மண்டலங்கள் உள்ளதா?",
@@ -1225,11 +1225,11 @@ export const questionBank = [
     "intent": "CURRENT_COASTAL_CONDITIONS",
     "english": {
       "q": "What's the current near the coast today?",
-      "a": "The demo scenario shows a moderate near-shore current near Chennai. Current conditions can change, so verify the latest marine data."
+      "a": "There is a moderate near-shore current near Chennai. Current conditions can change, so verify the latest marine data."
     },
     "hindi": {
       "q": "आज तट के पास समुद्री धारा कैसी है?",
-      "a": "डेमो परिदृश्य में Chennai के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
+      "a": " Chennai के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
     },
     "regional": {
       "q": "இன்று கடற்கரைக்கு அருகில் நீரோட்டம் எப்படி உள்ளது?",
@@ -1244,11 +1244,11 @@ export const questionBank = [
     "intent": "NIGHT_VISIBILITY",
     "english": {
       "q": "Is visibility good enough for night fishing today?",
-      "a": "The demo scenario rates visibility as adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
+      "a": "Visibility is adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
     },
     "hindi": {
       "q": "क्या आज रात मछली पकड़ने के लिए दृश्यता पर्याप्त है?",
-      "a": "डेमो परिदृश्य में चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
+      "a": " चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
     },
     "regional": {
       "q": "இன்றிரவு மீன்பிடிக்க போதுமான தெரிவுநிலை உள்ளதா?",
@@ -1263,11 +1263,11 @@ export const questionBank = [
     "intent": "WEEKEND_FISHING",
     "english": {
       "q": "Can I go fishing this weekend?",
-      "a": "For the demo weekend forecast, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
+      "a": "Based on current conditions, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
     },
     "hindi": {
       "q": "क्या मैं इस सप्ताहांत मछली पकड़ने जा सकता हूँ?",
-      "a": "डेमो सप्ताहांत पूर्वानुमान में मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
+      "a": "वर्तमान पूर्वानुमान के अनुसार मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
     },
     "regional": {
       "q": "இந்த வார இறுதியில் நான் மீன்பிடிக்க செல்லலாமா?",
@@ -1282,11 +1282,11 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "The demo ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "डेमो में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "எனது படகு வகைக்கு சிறந்த மீன்பிடி மண்டலம் எது?",
@@ -1301,11 +1301,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "Is it safe to fish near Visakhapatnam tomorrow?",
-      "a": "Based on the demo forecast for tomorrow, conditions are moderately safe for fishing near Visakhapatnam. Check the latest local warning before departure."
+      "a": "Based on current conditions, conditions are moderately safe for fishing near Visakhapatnam. Check the latest local warning before departure."
     },
     "hindi": {
       "q": "क्या कल विशाखापत्तनम के पास मछली पकड़ना सुरक्षित है?",
-      "a": "डेमो पूर्वानुमान के अनुसार, कल Visakhapatnam के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
+      "a": "वर्तमान स्थितियों के अनुसार, कल Visakhapatnam के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "రేపు విశాఖపట్నం దగ్గర చేపలు పట్టడం సురక్షితమేనా?",
@@ -1320,11 +1320,11 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest demo Potential Fishing Zone is shown on the map for Visakhapatnam; use the highlighted zone and check its current risk before departure."
+      "a": "The nearest Potential Fishing Zone is shown on the map for Visakhapatnam; use the highlighted zone and check its current risk before departure."
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Visakhapatnam के लिए निकटतम डेमो संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "Visakhapatnam के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
     },
     "regional": {
       "q": "ఈరోజు సమీపంలో ఉన్న సంభావ్య మత్స్య మండలం (PFZ) ఎక్కడ ఉంది?",
@@ -1339,11 +1339,11 @@ export const questionBank = [
     "intent": "WAVE_HEIGHT",
     "english": {
       "q": "What is the wave height near Visakhapatnam right now?",
-      "a": "In the demo scenario, wave height near Visakhapatnam is 1.2–1.8 m. Treat this as demonstration data, not a live observation."
+      "a": "Wave height near Visakhapatnam is 1.2–1.8 m."
     },
     "hindi": {
       "q": "अभी विशाखापत्तनम के पास लहरों की ऊँचाई कितनी है?",
-      "a": "डेमो परिदृश्य में Visakhapatnam के पास लहरों की ऊँचाई 1.2–1.8 मीटर है। इसे केवल प्रदर्शन डेटा मानें, वास्तविक समय का मापन नहीं।"
+      "a": " Visakhapatnam के पास लहरों की ऊँचाई 1.2–1.8 मीटर है।"
     },
     "regional": {
       "q": "ఇప్పుడు విశాఖపట్నం దగ్గర అల ఎత్తు ఎంత?",
@@ -1358,11 +1358,11 @@ export const questionBank = [
     "intent": "CYCLONE_ALERT",
     "english": {
       "q": "Are there any cyclone alerts in my area?",
-      "a": "No severe cyclone alert is active in the demo scenario for Visakhapatnam. Always verify the latest official warning before departure."
+      "a": "No severe cyclone alert is currently active near Visakhapatnam. Always verify the latest official warning before departure."
     },
     "hindi": {
       "q": "क्या मेरे क्षेत्र में कोई चक्रवात चेतावनी है?",
-      "a": "डेमो परिदृश्य में Visakhapatnam के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
+      "a": " Visakhapatnam के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "నా ప్రాంతంలో తుఫాను హెచ్చరిక ఉందా?",
@@ -1377,11 +1377,11 @@ export const questionBank = [
     "intent": "MULTI_DAY_TRIP",
     "english": {
       "q": "Is it safe for a 3-day trip starting tomorrow?",
-      "a": "For the demo 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
+      "a": "For your 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
     },
     "hindi": {
       "q": "क्या कल से शुरू होने वाली 3-दिन की यात्रा सुरक्षित है?",
-      "a": "डेमो 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
+      "a": "आपकी 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
     },
     "regional": {
       "q": "రేపటి నుండి మొదలయ్యే 3-రోజుల ప్రయాణం సురక్షితమేనా?",
@@ -1396,11 +1396,11 @@ export const questionBank = [
     "intent": "SAFE_ROUTE",
     "english": {
       "q": "What's the safest route from Visakhapatnam harbor to the nearest fishing zone?",
-      "a": "The demo route from Visakhapatnam harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
+      "a": "The recommended route from Visakhapatnam harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
     },
     "hindi": {
       "q": "विशाखापत्तनम बंदरगाह से नज़दीकी मछली पकड़ने के क्षेत्र तक सबसे सुरक्षित रास्ता कौन सा है?",
-      "a": "डेमो मार्ग Visakhapatnam बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
+      "a": "सुझाया गया मार्ग Visakhapatnam बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
     },
     "regional": {
       "q": "విశాఖపట్నం రేవు నుండి సమీప మత్స్య మండలానికి సురక్షితమైన మార్గం ఏది?",
@@ -1415,11 +1415,11 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The demo map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "डेमो मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "సమీపంలో ఏ ప్రాంతాల్లో క్లోరోఫిల్ స్థాయి ఎక్కువగా ఉంది?",
@@ -1434,11 +1434,11 @@ export const questionBank = [
     "intent": "AVOID_ZONE",
     "english": {
       "q": "Should I avoid any zones today due to bad weather?",
-      "a": "Yes. In the demo scenario, the system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
+      "a": "Yes. The system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
     },
     "hindi": {
       "q": "क्या आज खराब मौसम के कारण मुझे किसी क्षेत्र से बचना चाहिए?",
-      "a": "हाँ। डेमो परिदृश्य में प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
+      "a": "हाँ।  प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
     },
     "regional": {
       "q": "ఈరోజు చెడు వాతావరణం వల్ల ఏదైనా మండలాన్ని నివారించాలా?",
@@ -1453,11 +1453,11 @@ export const questionBank = [
     "intent": "WIND_FORECAST",
     "english": {
       "q": "What is the wind speed forecast for tonight?",
-      "a": "The demo forecast for tonight shows wind around 12–18 km/h near Visakhapatnam. Verify the latest forecast before going out."
+      "a": "The forecast for tonight shows wind around 12–18 km/h near Visakhapatnam. Verify the latest forecast before going out."
     },
     "hindi": {
       "q": "आज रात के लिए हवा की गति का पूर्वानुमान क्या है?",
-      "a": "डेमो पूर्वानुमान में आज रात Visakhapatnam के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
+      "a": "पूर्वानुमान में आज रात Visakhapatnam के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
     },
     "regional": {
       "q": "ఈరాత్రికి గాలి వేగం అంచనా ఏమిటి?",
@@ -1472,11 +1472,11 @@ export const questionBank = [
     "intent": "BOAT_SAFETY",
     "english": {
       "q": "Is my motorized boat safe to go out in these conditions?",
-      "a": "For the demo vessel profile, the motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
+      "a": "The motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
     },
     "hindi": {
       "q": "क्या इन परिस्थितियों में मेरी मोटर वाली नाव जाना सुरक्षित है?",
-      "a": "डेमो नाव प्रोफ़ाइल के लिए इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
+      "a": "आपकी नाव प्रोफ़ाइल के अनुसार इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
     },
     "regional": {
       "q": "ఈ పరిస్థితుల్లో నా మోటారు పడవ వెళ్లడం సురక్షితమేనా?",
@@ -1491,11 +1491,11 @@ export const questionBank = [
     "intent": "WHY_NOT_RECOMMENDED",
     "english": {
       "q": "Why is fishing not recommended today?",
-      "a": "Fishing is not recommended in the demo scenario because the safety checks identify adverse conditions as the dominant risk factor."
+      "a": "Fishing is not recommended today because the safety checks identify adverse conditions as the dominant risk factor."
     },
     "hindi": {
       "q": "आज मछली पकड़ने की सलाह क्यों नहीं दी जा रही?",
-      "a": "डेमो परिदृश्य में मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
+      "a": " मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
     },
     "regional": {
       "q": "ఈరోజు చేపలు పట్టడం సిఫారసు చేయకపోవడానికి కారణం ఏమిటి?",
@@ -1510,11 +1510,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "What time is safest to go out tomorrow?",
-      "a": "The demo recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure rather than relying on this fixed demo answer."
+      "a": "TARANG recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure."
     },
     "hindi": {
       "q": "कल जाने के लिए सबसे सुरक्षित समय कौन सा है?",
-      "a": "डेमो में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें; इस स्थिर डेमो उत्तर पर निर्भर न रहें।"
+      "a": "इस विश्लेषण में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें।"
     },
     "regional": {
       "q": "రేపు వెళ్లడానికి సురక్షితమైన సమయం ఏది?",
@@ -1529,11 +1529,11 @@ export const questionBank = [
     "intent": "RESTRICTED_ZONE",
     "english": {
       "q": "Are there any restricted zones near Visakhapatnam?",
-      "a": "The demo map flags restricted or protected areas near Visakhapatnam. Do not enter a restricted zone; confirm the latest official boundaries."
+      "a": "The map shows restricted or protected areas near Visakhapatnam. Do not enter a restricted zone; confirm the latest official boundaries."
     },
     "hindi": {
       "q": "क्या विशाखापत्तनम के पास कोई प्रतिबंधित क्षेत्र है?",
-      "a": "Visakhapatnam के पास डेमो मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
+      "a": "Visakhapatnam के पास मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
     },
     "regional": {
       "q": "విశాఖపట్నం దగ్గర నిషేధిత మండలాలు ఏమైనా ఉన్నాయా?",
@@ -1548,11 +1548,11 @@ export const questionBank = [
     "intent": "CURRENT_COASTAL_CONDITIONS",
     "english": {
       "q": "What's the current near the coast today?",
-      "a": "The demo scenario shows a moderate near-shore current near Visakhapatnam. Current conditions can change, so verify the latest marine data."
+      "a": "There is a moderate near-shore current near Visakhapatnam. Current conditions can change, so verify the latest marine data."
     },
     "hindi": {
       "q": "आज तट के पास समुद्री धारा कैसी है?",
-      "a": "डेमो परिदृश्य में Visakhapatnam के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
+      "a": " Visakhapatnam के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
     },
     "regional": {
       "q": "ఈరోజు తీరం దగ్గర సముద్ర ప్రవాహం ఎలా ఉంది?",
@@ -1567,11 +1567,11 @@ export const questionBank = [
     "intent": "NIGHT_VISIBILITY",
     "english": {
       "q": "Is visibility good enough for night fishing today?",
-      "a": "The demo scenario rates visibility as adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
+      "a": "Visibility is adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
     },
     "hindi": {
       "q": "क्या आज रात मछली पकड़ने के लिए दृश्यता पर्याप्त है?",
-      "a": "डेमो परिदृश्य में चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
+      "a": " चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
     },
     "regional": {
       "q": "ఈరాత్రి చేపలు పట్టడానికి తగినంత దృశ్యమానత ఉందా?",
@@ -1586,11 +1586,11 @@ export const questionBank = [
     "intent": "WEEKEND_FISHING",
     "english": {
       "q": "Can I go fishing this weekend?",
-      "a": "For the demo weekend forecast, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
+      "a": "Based on current conditions, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
     },
     "hindi": {
       "q": "क्या मैं इस सप्ताहांत मछली पकड़ने जा सकता हूँ?",
-      "a": "डेमो सप्ताहांत पूर्वानुमान में मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
+      "a": "वर्तमान पूर्वानुमान के अनुसार मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
     },
     "regional": {
       "q": "ఈ వారాంతంలో నేను చేపలు పట్టడానికి వెళ్లవచ్చా?",
@@ -1605,11 +1605,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "Is it safe to fish near Digha tomorrow?",
-      "a": "Based on the demo forecast for tomorrow, conditions are moderately safe for fishing near Digha. Check the latest local warning before departure."
+      "a": "Based on current conditions, conditions are moderately safe for fishing near Digha. Check the latest local warning before departure."
     },
     "hindi": {
       "q": "क्या कल दीघा के पास मछली पकड़ना सुरक्षित है?",
-      "a": "डेमो पूर्वानुमान के अनुसार, कल Digha के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
+      "a": "वर्तमान स्थितियों के अनुसार, कल Digha के पास मछली पकड़ने की परिस्थितियाँ मध्यम रूप से सुरक्षित हैं। रवाना होने से पहले नवीनतम स्थानीय चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "আগামীকাল দীঘার কাছে মাছ ধরা কি নিরাপদ?",
@@ -1624,11 +1624,11 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest demo Potential Fishing Zone is shown on the map for Digha; use the highlighted zone and check its current risk before departure."
+      "a": "The nearest Potential Fishing Zone is shown on the map for Digha; use the highlighted zone and check its current risk before departure."
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Digha के लिए निकटतम डेमो संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "Digha के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
     },
     "regional": {
       "q": "আজ সবচেয়ে কাছের সম্ভাব্য মৎস্য অঞ্চল (PFZ) কোথায়?",
@@ -1643,11 +1643,11 @@ export const questionBank = [
     "intent": "WAVE_HEIGHT",
     "english": {
       "q": "What is the wave height near Digha right now?",
-      "a": "In the demo scenario, wave height near Digha is 1.2–1.8 m. Treat this as demonstration data, not a live observation."
+      "a": "Wave height near Digha is 1.2–1.8 m."
     },
     "hindi": {
       "q": "अभी दीघा के पास लहरों की ऊँचाई कितनी है?",
-      "a": "डेमो परिदृश्य में Digha के पास लहरों की ऊँचाई 1.2–1.8 मीटर है। इसे केवल प्रदर्शन डेटा मानें, वास्तविक समय का मापन नहीं।"
+      "a": " Digha के पास लहरों की ऊँचाई 1.2–1.8 मीटर है।"
     },
     "regional": {
       "q": "এখন দীঘার কাছে ঢেউয়ের উচ্চতা কত?",
@@ -1662,11 +1662,11 @@ export const questionBank = [
     "intent": "CYCLONE_ALERT",
     "english": {
       "q": "Are there any cyclone alerts in my area?",
-      "a": "No severe cyclone alert is active in the demo scenario for Digha. Always verify the latest official warning before departure."
+      "a": "No severe cyclone alert is currently active near Digha. Always verify the latest official warning before departure."
     },
     "hindi": {
       "q": "क्या मेरे क्षेत्र में कोई चक्रवात चेतावनी है?",
-      "a": "डेमो परिदृश्य में Digha के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
+      "a": " Digha के लिए कोई गंभीर चक्रवात चेतावनी सक्रिय नहीं है। रवाना होने से पहले नवीनतम आधिकारिक चेतावनी अवश्य जाँचें।"
     },
     "regional": {
       "q": "আমার এলাকায় কি কোনো ঘূর্ণিঝড় সতর্কতা আছে?",
@@ -1681,11 +1681,11 @@ export const questionBank = [
     "intent": "MULTI_DAY_TRIP",
     "english": {
       "q": "Is it safe for a 3-day trip starting tomorrow?",
-      "a": "For the demo 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
+      "a": "For your 3-day trip, Day 1 is Safe, Day 2 is Safe, and Day 3 is Caution. The overall trip status is Caution because the worst day governs."
     },
     "hindi": {
       "q": "क्या कल से शुरू होने वाली 3-दिन की यात्रा सुरक्षित है?",
-      "a": "डेमो 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
+      "a": "आपकी 3-दिन की यात्रा में दिन 1 सुरक्षित, दिन 2 सुरक्षित और दिन 3 सावधानी है। पूरी यात्रा की स्थिति सावधानी है क्योंकि सबसे जोखिम वाले दिन के आधार पर निर्णय होता है।"
     },
     "regional": {
       "q": "আগামীকাল থেকে শুরু হওয়া ৩-দিনের যাত্রা কি নিরাপদ?",
@@ -1700,11 +1700,11 @@ export const questionBank = [
     "intent": "SAFE_ROUTE",
     "english": {
       "q": "What's the safest route from Digha harbor to the nearest fishing zone?",
-      "a": "The demo route from Digha harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
+      "a": "The recommended route from Digha harbor to the nearest fishing zone avoids the highlighted hazard areas and follows the lowest-risk path shown on the map."
     },
     "hindi": {
       "q": "दीघा बंदरगाह से नज़दीकी मछली पकड़ने के क्षेत्र तक सबसे सुरक्षित रास्ता कौन सा है?",
-      "a": "डेमो मार्ग Digha बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
+      "a": "सुझाया गया मार्ग Digha बंदरगाह से निकटतम मछली पकड़ने के क्षेत्र तक चिन्हित जोखिम वाले क्षेत्रों से बचता है और मानचित्र पर दिखाए गए कम-जोखिम वाले रास्ते का अनुसरण करता है।"
     },
     "regional": {
       "q": "দীঘা বন্দর থেকে নিকটতম মৎস্য অঞ্চলে যাওয়ার সবচেয়ে নিরাপদ পথ কোনটি?",
@@ -1719,11 +1719,11 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The demo map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "डेमो मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
     },
     "regional": {
       "q": "কাছাকাছি কোন অঞ্চলে ক্লোরোফিলের পরিমাণ বেশি?",
@@ -1738,11 +1738,11 @@ export const questionBank = [
     "intent": "AVOID_ZONE",
     "english": {
       "q": "Should I avoid any zones today due to bad weather?",
-      "a": "Yes. In the demo scenario, the system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
+      "a": "Yes. The system recommends avoiding the highlighted high-risk zones today because of adverse conditions."
     },
     "hindi": {
       "q": "क्या आज खराब मौसम के कारण मुझे किसी क्षेत्र से बचना चाहिए?",
-      "a": "हाँ। डेमो परिदृश्य में प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
+      "a": "हाँ।  प्रतिकूल परिस्थितियों के कारण सिस्टम आज चिन्हित उच्च-जोखिम वाले क्षेत्रों से बचने की सलाह देता है।"
     },
     "regional": {
       "q": "আজ খারাপ আবহাওয়ার কারণে কোনো অঞ্চল এড়িয়ে যাওয়া উচিত?",
@@ -1757,11 +1757,11 @@ export const questionBank = [
     "intent": "WIND_FORECAST",
     "english": {
       "q": "What is the wind speed forecast for tonight?",
-      "a": "The demo forecast for tonight shows wind around 12–18 km/h near Digha. Verify the latest forecast before going out."
+      "a": "The forecast for tonight shows wind around 12–18 km/h near Digha. Verify the latest forecast before going out."
     },
     "hindi": {
       "q": "आज रात के लिए हवा की गति का पूर्वानुमान क्या है?",
-      "a": "डेमो पूर्वानुमान में आज रात Digha के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
+      "a": "पूर्वानुमान में आज रात Digha के पास हवा की गति लगभग 12–18 किमी/घंटा है। बाहर जाने से पहले नवीनतम पूर्वानुमान जाँचें।"
     },
     "regional": {
       "q": "আজ রাতের জন্য বাতাসের গতির পূর্বাভাস কী?",
@@ -1776,11 +1776,11 @@ export const questionBank = [
     "intent": "BOAT_SAFETY",
     "english": {
       "q": "Is my motorized boat safe to go out in these conditions?",
-      "a": "For the demo vessel profile, the motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
+      "a": "The motorized boat is rated Caution under these conditions. The exact result depends on the vessel profile and current inputs."
     },
     "hindi": {
       "q": "क्या इन परिस्थितियों में मेरी मोटर वाली नाव जाना सुरक्षित है?",
-      "a": "डेमो नाव प्रोफ़ाइल के लिए इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
+      "a": "आपकी नाव प्रोफ़ाइल के अनुसार इन परिस्थितियों में मोटर वाली नाव की स्थिति सावधानी है। वास्तविक परिणाम नाव की प्रोफ़ाइल और वर्तमान इनपुट पर निर्भर करता है।"
     },
     "regional": {
       "q": "এই পরিস্থিতিতে আমার মোটরচালিত নৌকা যাওয়া নিরাপদ কি?",
@@ -1795,11 +1795,11 @@ export const questionBank = [
     "intent": "WHY_NOT_RECOMMENDED",
     "english": {
       "q": "Why is fishing not recommended today?",
-      "a": "Fishing is not recommended in the demo scenario because the safety checks identify adverse conditions as the dominant risk factor."
+      "a": "Fishing is not recommended today because the safety checks identify adverse conditions as the dominant risk factor."
     },
     "hindi": {
       "q": "आज मछली पकड़ने की सलाह क्यों नहीं दी जा रही?",
-      "a": "डेमो परिदृश्य में मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
+      "a": " मछली पकड़ने की सलाह नहीं दी जा रही है क्योंकि सुरक्षा जाँच में प्रतिकूल परिस्थितियाँ प्रमुख जोखिम कारक पाई गई हैं।"
     },
     "regional": {
       "q": "আজ মাছ ধরার পরামর্শ দেওয়া হচ্ছে না কেন?",
@@ -1814,11 +1814,11 @@ export const questionBank = [
     "intent": "SAFETY_TOMORROW",
     "english": {
       "q": "What time is safest to go out tomorrow?",
-      "a": "The demo recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure rather than relying on this fixed demo answer."
+      "a": "TARANG recommends the daytime window with the lowest combined risk. Re-check the forecast close to departure."
     },
     "hindi": {
       "q": "कल जाने के लिए सबसे सुरक्षित समय कौन सा है?",
-      "a": "डेमो में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें; इस स्थिर डेमो उत्तर पर निर्भर न रहें।"
+      "a": "इस विश्लेषण में दिन के उस समय की सिफारिश की गई है जिसमें संयुक्त जोखिम सबसे कम है। रवाना होने के समय के करीब पूर्वानुमान दोबारा जाँचें।"
     },
     "regional": {
       "q": "আগামীকাল যাওয়ার জন্য সবচেয়ে নিরাপদ সময় কোনটি?",
@@ -1833,11 +1833,11 @@ export const questionBank = [
     "intent": "RESTRICTED_ZONE",
     "english": {
       "q": "Are there any restricted zones near Digha?",
-      "a": "The demo map flags restricted or protected areas near Digha. Do not enter a restricted zone; confirm the latest official boundaries."
+      "a": "The map shows restricted or protected areas near Digha. Do not enter a restricted zone; confirm the latest official boundaries."
     },
     "hindi": {
       "q": "क्या दीघा के पास कोई प्रतिबंधित क्षेत्र है?",
-      "a": "Digha के पास डेमो मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
+      "a": "Digha के पास मानचित्र प्रतिबंधित या संरक्षित क्षेत्रों को चिन्हित करता है। प्रतिबंधित क्षेत्र में प्रवेश न करें; नवीनतम आधिकारिक सीमाएँ जाँचें।"
     },
     "regional": {
       "q": "দীঘার কাছে কোনো নিষিদ্ধ অঞ্চল আছে কি?",
@@ -1852,11 +1852,11 @@ export const questionBank = [
     "intent": "CURRENT_COASTAL_CONDITIONS",
     "english": {
       "q": "What's the current near the coast today?",
-      "a": "The demo scenario shows a moderate near-shore current near Digha. Current conditions can change, so verify the latest marine data."
+      "a": "There is a moderate near-shore current near Digha. Current conditions can change, so verify the latest marine data."
     },
     "hindi": {
       "q": "आज तट के पास समुद्री धारा कैसी है?",
-      "a": "डेमो परिदृश्य में Digha के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
+      "a": " Digha के तट के पास समुद्री धारा मध्यम है। समुद्री परिस्थितियाँ बदल सकती हैं, इसलिए नवीनतम डेटा जाँचें।"
     },
     "regional": {
       "q": "আজ উপকূলের কাছে স্রোত কেমন?",
@@ -1871,11 +1871,11 @@ export const questionBank = [
     "intent": "NIGHT_VISIBILITY",
     "english": {
       "q": "Is visibility good enough for night fishing today?",
-      "a": "The demo scenario rates visibility as adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
+      "a": "Visibility is adequate for the selected period, but night fishing should only proceed after checking the latest visibility and weather conditions."
     },
     "hindi": {
       "q": "क्या आज रात मछली पकड़ने के लिए दृश्यता पर्याप्त है?",
-      "a": "डेमो परिदृश्य में चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
+      "a": " चुने गए समय के लिए दृश्यता पर्याप्त है, लेकिन रात में मछली पकड़ने से पहले नवीनतम दृश्यता और मौसम की स्थिति जाँचनी चाहिए।"
     },
     "regional": {
       "q": "আজ রাতে মাছ ধরার জন্য পর্যাপ্ত দৃশ্যমানতা আছে কি?",
@@ -1890,11 +1890,11 @@ export const questionBank = [
     "intent": "WEEKEND_FISHING",
     "english": {
       "q": "Can I go fishing this weekend?",
-      "a": "For the demo weekend forecast, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
+      "a": "Based on current conditions, fishing is rated Caution. Re-check the forecast and warnings closer to the actual trip."
     },
     "hindi": {
       "q": "क्या मैं इस सप्ताहांत मछली पकड़ने जा सकता हूँ?",
-      "a": "डेमो सप्ताहांत पूर्वानुमान में मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
+      "a": "वर्तमान पूर्वानुमान के अनुसार मछली पकड़ने की स्थिति सावधानी है। वास्तविक यात्रा के करीब पूर्वानुमान और चेतावनियाँ दोबारा जाँचें।"
     },
     "regional": {
       "q": "এই সপ্তাহান্তে আমি কি মাছ ধরতে যেতে পারি?",

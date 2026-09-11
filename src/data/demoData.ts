@@ -133,9 +133,10 @@ export const locationData: Record<string, LocationData> = {
 export const demoData = {
   availableLocations: ["Kochi", "Mangalore", "Veraval", "Chennai", "Visakhapatnam", "Digha"],
   availableLanguages: ["English", "Hindi", "Malayalam", "Kannada", "Gujarati", "Tamil", "Telugu", "Bengali"],
+  // NOTE: demoData.user is only a runtime fallback. The ProfileContext is the single source of truth.
   user: {
     location: "Kochi",
-    vesselType: "Motorized boat",
+    vesselType: "Motorized Boat",
     language: "English",
     phoneVerified: false
   },
@@ -183,20 +184,117 @@ export const demoData = {
       "Based on the current conditions and your boat type, this is the recommended zone for you."
     ]
   },
-  routeData: {
-    distance: "18.4 km",
-    estimatedTime: "1h 12m",
-    risk: "Low Risk",
-    positions: [
-      [9.9312, 76.2673], // Kochi
+};
+
+// ─── Per-location map configuration (SINGLE SOURCE OF TRUTH for map data) ───
+// Real coastal coordinates for all six supported locations.
+
+export interface LocationMapConfig {
+  centre: [number, number];
+  zoom: number;
+  harbour: [number, number];
+  zone: [number, number];
+  hazard: [number, number];
+  restricted: [number, number];
+  route: [number, number][];
+  zoneLabel: string;
+}
+
+export const locationMapData: Record<string, LocationMapConfig> = {
+  kochi: {
+    centre:     [9.9312,  76.2673],
+    zoom: 10.5,
+    harbour:    [9.9312,  76.2673],
+    zone:       [9.8500,  76.1000],
+    hazard:     [9.8800,  76.1400],
+    restricted: [9.9000,  76.1200],
+    route: [
+      [9.9312, 76.2673],
       [9.9100, 76.2000],
       [9.8800, 76.1500],
-      [9.8500, 76.1000] // Zone A
-    ] as [number, number][]
+      [9.8500, 76.1000],
+    ],
+    zoneLabel: "Zone A",
   },
-  mapCoordinates: {
-    kochi: [9.9312, 76.2673] as [number, number],
-    zoneAlpha: [9.85, 76.10] as [number, number],
-    hazardZone: [9.88, 76.14] as [number, number]
-  }
+  mangalore: {
+    centre:     [12.8698, 74.8425],
+    zoom: 10.5,
+    harbour:    [12.8698, 74.8425],
+    zone:       [12.7800, 74.6800],
+    hazard:     [12.8200, 74.7400],
+    restricted: [12.8500, 74.7000],
+    route: [
+      [12.8698, 74.8425],
+      [12.8400, 74.7900],
+      [12.8100, 74.7200],
+      [12.7800, 74.6800],
+    ],
+    zoneLabel: "Zone A",
+  },
+  veraval: {
+    centre:     [20.9100, 70.3670],
+    zoom: 10.5,
+    harbour:    [20.9100, 70.3670],
+    zone:       [20.8200, 70.2000],
+    hazard:     [20.8700, 70.2800],
+    restricted: [20.8400, 70.3200],
+    route: [
+      [20.9100, 70.3670],
+      [20.8800, 70.3100],
+      [20.8500, 70.2500],
+      [20.8200, 70.2000],
+    ],
+    zoneLabel: "Zone A",
+  },
+  chennai: {
+    centre:     [13.0827, 80.2707],
+    zoom: 10.5,
+    harbour:    [13.0827, 80.2707],
+    zone:       [13.1600, 80.4200],
+    hazard:     [13.1200, 80.3600],
+    restricted: [13.0500, 80.3900],
+    route: [
+      [13.0827, 80.2707],
+      [13.1100, 80.3100],
+      [13.1400, 80.3700],
+      [13.1600, 80.4200],
+    ],
+    zoneLabel: "Zone A",
+  },
+  visakhapatnam: {
+    centre:     [17.6868, 83.2185],
+    zoom: 10.5,
+    harbour:    [17.6868, 83.2185],
+    zone:       [17.7800, 83.4000],
+    hazard:     [17.7300, 83.3200],
+    restricted: [17.7000, 83.3700],
+    route: [
+      [17.6868, 83.2185],
+      [17.7100, 83.2800],
+      [17.7500, 83.3500],
+      [17.7800, 83.4000],
+    ],
+    zoneLabel: "Zone A",
+  },
+  digha: {
+    centre:     [21.6278, 87.5064],
+    zoom: 10.5,
+    harbour:    [21.6278, 87.5064],
+    zone:       [21.7100, 87.6800],
+    hazard:     [21.6700, 87.5900],
+    restricted: [21.6400, 87.6400],
+    route: [
+      [21.6278, 87.5064],
+      [21.6500, 87.5600],
+      [21.6800, 87.6200],
+      [21.7100, 87.6800],
+    ],
+    zoneLabel: "Zone A",
+  },
 };
+
+/** Returns the map config for the given city name (case-insensitive). Falls back to Kochi. */
+export function getLocationMapConfig(locationName: string): LocationMapConfig {
+  const key = locationName.toLowerCase().replace(/\s+/g, "");
+  return locationMapData[key] ?? locationMapData["kochi"];
+}

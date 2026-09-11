@@ -2,17 +2,15 @@ import { questionBank, type IntentCategory } from "../data/questionBank";
 
 export type Language = "English" | "Hindi" | "Malayalam" | "Kannada" | "Gujarati" | "Tamil" | "Telugu" | "Bengali";
 
-export interface DemoResponse {
+export interface ChatResponse {
   answerComponent: React.ReactNode;
-  audioText: string;
   action: "NONE" | "VIEW_MAP_FISHING" | "VIEW_MAP_RISK" | "VIEW_MAP_RESTRICTED" | "VIEW_ROUTE" | "DEMO_CONFIRM";
 }
 
-export function generateResponse(intent: IntentCategory, location: string, language: string): DemoResponse {
+export function generateResponse(intent: IntentCategory, location: string, language: string): ChatResponse {
   if (intent === "UNKNOWN") {
      return {
        answerComponent: "I can help with sea safety, fishing zones, weather conditions, trip planning and safer routes. Try asking me about one of these.",
-       audioText: "I can help with sea safety, fishing zones, weather conditions, trip planning and safer routes. Try asking me about one of these.",
        action: "NONE"
      };
   }
@@ -20,7 +18,6 @@ export function generateResponse(intent: IntentCategory, location: string, langu
   if (intent === "MULTI_DAY_TRIP") {
      return {
        answerComponent: "",
-       audioText: "",
        action: "DEMO_CONFIRM"
      };
   }
@@ -33,8 +30,7 @@ export function generateResponse(intent: IntentCategory, location: string, langu
   const match = locationItems.find(q => q.intent === intent);
   if (!match) {
     return { 
-      answerComponent: "I couldn't find data for that specific request in this demo location.", 
-      audioText: "I couldn't find data for that specific request in this demo location.",
+      answerComponent: "I couldn't find information for that request. Please try rephrasing your question.", 
       action: "NONE" 
     };
   }
@@ -43,17 +39,6 @@ export function generateResponse(intent: IntentCategory, location: string, langu
   if (language === "Hindi") rawText = match.hindi.a;
   else if (language !== "English") rawText = match.regional.a;
 
-  // Generate clean text for audio
-  let cleanText = rawText
-    .replace(/in the demo scenario,?/gi, "")
-    .replace(/demo forecast/gi, "forecast")
-    .replace(/demo /gi, "")
-    .replace(/Treat this as demonstration data, not a live observation\.?/gi, "")
-    .replace(/for the selected demo period/gi, "for the selected period")
-    .trim();
-    
-  // Capitalize first letter if it got messed up
-  const audioText = cleanText.charAt(0).toUpperCase() + cleanText.slice(1);
   let answerComponent: React.ReactNode = rawText;
 
   // Create structured responses for key intents
@@ -152,11 +137,11 @@ export function generateResponse(intent: IntentCategory, location: string, langu
      );
   }
 
-  let action: DemoResponse["action"] = "NONE";
+  let action: ChatResponse["action"] = "NONE";
   if (intent === "NEAREST_PFZ" || intent === "BEST_FISHING_ZONE" || intent === "CHLOROPHYLL_ZONE") action = "VIEW_MAP_FISHING";
   else if (intent === "AVOID_ZONE") action = "VIEW_MAP_RISK";
   else if (intent === "RESTRICTED_ZONE") action = "VIEW_MAP_RESTRICTED";
   else if (intent === "SAFE_ROUTE") action = "VIEW_ROUTE";
 
-  return { answerComponent, audioText, action };
+  return { answerComponent, action };
 }
