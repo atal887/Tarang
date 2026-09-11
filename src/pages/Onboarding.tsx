@@ -71,14 +71,14 @@ export function Onboarding() {
               <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Let's get you started</h1>
               <p className="text-slate-500">Enter your mobile number to continue with TARANG.</p>
             </div>
-            <div className="flex gap-3">
-              <div className="w-16 h-14 bg-white border border-slate-200 rounded-xl flex items-center justify-center font-bold text-slate-700 shadow-sm">+91</div>
+            <div className="flex gap-4">
+              <div className="w-[76px] shrink-0 h-14 bg-white border border-slate-200 rounded-xl flex items-center justify-center font-bold text-slate-700 shadow-sm">+91</div>
               <input
                 type="tel"
                 maxLength={10}
                 value={phone}
                 onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
-                className="flex-1 h-14 bg-white border border-slate-200 rounded-xl px-4 text-lg font-semibold focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/20 outline-none shadow-sm transition-all"
+                className="flex-1 min-w-0 h-14 bg-white border border-slate-200 rounded-xl px-5 text-lg font-semibold focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/20 outline-none shadow-sm transition-all"
                 placeholder="Enter mobile number"
               />
             </div>

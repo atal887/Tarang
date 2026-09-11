@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Clock } from "lucide-react";
+import { BookOpen, Clock, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { trainingLessons, type Language } from "../data/trainingContent";
 
@@ -11,13 +11,22 @@ export function Training() {
     <div className="flex flex-col min-h-[100dvh] bg-slate-50 pb-safe">
       <div className="p-4 md:p-6 max-w-3xl mx-auto w-full animate-in fade-in">
         <header className="mb-6 flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-              {lang === "en" ? "Learn with TARANG" : "तरंग के साथ सीखें"}
-            </h1>
-            <p className="text-sm text-slate-500 mt-1">
-              {lang === "en" ? "Simple guides for safer fishing." : "सुरक्षित मछली पकड़ने के लिए सरल मार्गदर्शिका।"}
-            </p>
+          <div className="flex items-start gap-3">
+            <button 
+              onClick={() => navigate("/home")} 
+              className="mt-1 shrink-0 p-1.5 -ml-1.5 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-200 transition-colors"
+              aria-label="Back to Home"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div>
+              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight leading-none pt-1">
+                {lang === "en" ? "Learn with TARANG" : "तरंग के साथ सीखें"}
+              </h1>
+              <p className="text-sm text-slate-500 mt-2">
+                {lang === "en" ? "Simple guides for safer fishing." : "सुरक्षित मछली पकड़ने के लिए सरल मार्गदर्शिका।"}
+              </p>
+            </div>
           </div>
           <div className="flex bg-slate-100 rounded-lg p-1 shrink-0 ml-2">
             <button 

@@ -292,7 +292,7 @@ export function Chat() {
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleUserMessage(input)}
               placeholder="Ask TARANG about your trip..."
-              className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-5 py-3 text-sm focus:border-ocean-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-ocean-500/20 transition-all"
+              className="flex-1 min-w-0 rounded-full border border-slate-200 bg-slate-50 px-5 py-3 text-sm focus:border-ocean-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-ocean-500/20 transition-all"
             />
             <button aria-label="Send message" onClick={() => handleUserMessage(input)} className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 bg-ocean-600 text-white hover:bg-ocean-700 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:ring-offset-2">
               <Send className="w-4 h-4 ml-0.5" />
