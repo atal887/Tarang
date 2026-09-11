@@ -89,7 +89,16 @@ export function Chat() {
       const lang = detectLanguage(text);
       const intent = detectIntent(text, lang);
       const resolvedLocation = detectLocationInQuery(text, profile.location);
-      const response = generateResponse(intent, resolvedLocation, lang);
+      
+      const context = {
+        query: text,
+        language: lang,
+        location: resolvedLocation,
+        boatType: profile.vesselType,
+        intent
+      };
+      
+      const response = generateResponse(context);
       
       if (response.action === "DEMO_CONFIRM") {
         setAnalysis({ active: false, type: null, duration: 0 });

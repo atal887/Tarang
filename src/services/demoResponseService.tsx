@@ -1,5 +1,6 @@
 import { type IntentCategory } from "../data/questionBank";
 import { getAnswerForLanguageAndLocation } from "./multilingualHelper";
+import { getDynamicContextSuffix } from "./dynamicDataTemplates";
 import type { SupportedLanguage } from "./languageService";
 
 export interface ChatResponse {
@@ -8,7 +9,17 @@ export interface ChatResponse {
   intent: string | null;
 }
 
-export function generateResponse(intent: IntentCategory, location: string, language: SupportedLanguage): ChatResponse {
+export interface ChatContext {
+  query: string;
+  language: SupportedLanguage;
+  location: string;
+  boatType: string;
+  intent: IntentCategory;
+}
+
+export function generateResponse(ctx: ChatContext): ChatResponse {
+  const { language, location, boatType, intent } = ctx;
+
   if (intent === "UNKNOWN") {
     // English fallback
     let text = "I can help with sea safety, fishing zones, weather conditions, trip planning and safer routes. Try asking me about one of these.";
@@ -36,9 +47,9 @@ export function generateResponse(intent: IntentCategory, location: string, langu
      };
   }
 
-  const answer = getAnswerForLanguageAndLocation(intent, location, language);
+  const baseAnswer = getAnswerForLanguageAndLocation(intent, location, language);
   
-  if (!answer) {
+  if (!baseAnswer) {
     return { 
       text: "I couldn't find information for that request. Please try rephrasing your question.", 
       action: "NONE",
@@ -46,11 +57,15 @@ export function generateResponse(intent: IntentCategory, location: string, langu
     };
   }
 
+  // Inject dynamic location data
+  const dynamicSuffix = getDynamicContextSuffix(location, boatType, language, intent);
+  const finalAnswer = baseAnswer + dynamicSuffix;
+
   let action: ChatResponse["action"] = "NONE";
   if (intent === "NEAREST_PFZ" || intent === "BEST_FISHING_ZONE" || intent === "CHLOROPHYLL_ZONE") action = "VIEW_MAP_FISHING";
   else if (intent === "AVOID_ZONE") action = "VIEW_MAP_RISK";
   else if (intent === "RESTRICTED_ZONE") action = "VIEW_MAP_RESTRICTED";
   else if (intent === "SAFE_ROUTE") action = "VIEW_ROUTE";
 
-  return { text: answer, action, intent };
+  return { text: finalAnswer, action, intent };
 }
