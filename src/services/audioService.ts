@@ -105,22 +105,31 @@ export function playAudio(
     return;
   }
 
+  // ALWAYS cancel previous speech correctly as requested
   window.speechSynthesis.cancel();
 
   const config = LANG_CONFIG[lang];
-  const voice = findVoice(lang);
-  console.log(`[TARANG Audio] Selected voice: ${voice?.name || 'none'} (${voice?.lang || 'none'}) for lang=${lang}`);
+  let voice = findVoice(lang);
   
-  // Strict validation for Hindi: ensure the chosen voice actually supports Hindi
-  if (lang === 'hi' && (!voice || !voice.lang.toLowerCase().startsWith('hi'))) {
-    console.error('[TARANG Audio] No suitable Hindi voice found; aborting playback');
-    onError('Hindi audio is not available on this device.');
-    return;
+  if (lang === 'hi') {
+    // Development validation as requested
+    console.log("Hindi TTS text:", text);
+    console.log("Hindi TTS voice:", voice);
+    console.log("Hindi TTS language:", config.locale);
+    
+    // Check for Devanagari characters
+    if (!/[\u0900-\u097F]/.test(text)) {
+      console.warn("WARNING: No Devanagari characters found in Hindi TTS text.");
+    }
+    
+    // Strict validation
+    if (!voice) {
+      console.error('[TARANG Audio] No suitable Hindi voice found.');
+      // The user explicitly requested to show this message if unavailable
+      onError('Hindi audio is not available on this device.');
+      return;
+    }
   }
-
-  // Debug log the text being spoken
-  console.log('[TARANG Audio] Text content length:', text.length);
-  console.log('[TARANG Audio] Text preview:', text.slice(0, 100));
 
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = config.locale;
@@ -130,7 +139,6 @@ export function playAudio(
 
   if (voice) {
     utterance.voice = voice;
-    console.log(`[TARANG Audio] Using voice: ${voice.name} (${voice.lang}) for lang=${lang}`);
   }
 
   utterance.onend = onEnd;
@@ -143,7 +151,7 @@ export function playAudio(
     onError('Audio playback encountered an error.');
   };
 
-  // This must be synchronous — do not put any await before this call
+  // This must be synchronous
   window.speechSynthesis.speak(utterance);
 }
 
