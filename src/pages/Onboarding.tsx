@@ -3,15 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
 import type { Language } from "../store/profile";
-
-const LANGUAGE_MAP: Record<string, Language> = {
-  "Kochi, Kerala":                    "ml",
-  "Mangalore, Karnataka":             "kn",
-  "Veraval, Gujarat":                 "gu",
-  "Chennai, Tamil Nadu":              "ta",
-  "Visakhapatnam, Andhra Pradesh":    "te",
-  "Digha, West Bengal":               "bn",
-};
+import { SUPPORTED_LANGUAGES } from "../data/languages";
 
 export function Onboarding() {
   const navigate = useNavigate();
@@ -22,6 +14,7 @@ export function Onboarding() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [location, setLocation] = useState("");
   const [customLocation, setCustomLocation] = useState("");
+  const [language, setLanguage] = useState<Language | "">("");
   const [boatType, setBoatType] = useState("");
 
   const locations = [
@@ -46,6 +39,10 @@ export function Onboarding() {
     setStep(4);
   };
 
+  const handleLanguageSubmit = () => {
+    setStep(5);
+  };
+
   const handleBoatSubmit = () => {
     // Derive the city name (first part before comma) for the profile
     const cityName =
@@ -53,14 +50,11 @@ export function Onboarding() {
         ? customLocation
         : location.split(",")[0].trim();
 
-    // Derive best default language from location
-    const defaultLang: Language = LANGUAGE_MAP[location] ?? "en";
-
     setProfile({
       phone: `+91 ${phone}`,
       location: cityName,
       vesselType: boatType,
-      language: defaultLang,
+      language: language as Language,
       phoneVerified: true,
     });
 
@@ -160,6 +154,28 @@ export function Onboarding() {
         {step === 4 && (
           <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
             <div>
+              <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Choose your language</h1>
+              <p className="text-slate-500">Select the language you want TARANG to use.</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {SUPPORTED_LANGUAGES.map(lang => (
+                <button
+                  key={lang.id}
+                  onClick={() => setLanguage(lang.id)}
+                  className={`w-full text-left p-4 rounded-xl border transition-all ${language === lang.id ? 'border-ocean-500 bg-ocean-50 text-ocean-700 font-bold shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'}`}
+                >
+                  <div className="font-bold">{lang.native}</div>
+                  <div className="text-xs text-slate-500">{lang.label}</div>
+                </button>
+              ))}
+            </div>
+            <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleLanguageSubmit} disabled={!language}>Continue</Button>
+          </div>
+        )}
+
+        {step === 5 && (
+          <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
+            <div>
               <h1 className="text-2xl font-extrabold text-slate-900 mb-2">What type of boat do you use?</h1>
               <p className="text-slate-500">Your boat type helps TARANG provide more relevant safety recommendations.</p>
             </div>
@@ -174,7 +190,7 @@ export function Onboarding() {
                 </button>
               ))}
             </div>
-            <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleBoatSubmit} disabled={!boatType}>Continue</Button>
+            <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleBoatSubmit} disabled={!boatType}>Complete Setup</Button>
           </div>
         )}
 

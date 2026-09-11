@@ -3,6 +3,7 @@ import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
 import type { Language } from "../store/profile";
 import { demoData } from "../data/demoData";
+import { SUPPORTED_LANGUAGES } from "../data/languages";
 
 export function Settings() {
   const { profile, setProfile } = useProfile();
@@ -78,8 +79,8 @@ export function Settings() {
               onChange={e => setLanguage(e.target.value as Language)}
               className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-ocean-500 outline-none"
             >
-              {demoData.availableLanguages.map(lang => (
-                <option key={lang} value={lang}>{lang}</option>
+              {SUPPORTED_LANGUAGES.map(lang => (
+                <option key={lang.id} value={lang.id}>{lang.native} ({lang.label})</option>
               ))}
             </select>
           </div>
