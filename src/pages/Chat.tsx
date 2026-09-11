@@ -6,6 +6,7 @@ import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoad
 import { detectIntent } from "../services/intentService";
 import { generateResponse } from "../services/demoResponseService";
 import { detectLanguage } from "../services/languageService";
+import { detectLocationInQuery } from "../services/multilingualHelper";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useProfile } from "../store/profile";
 import { useChatStore, type Message } from "../store/chatStore";
@@ -86,8 +87,9 @@ export function Chat() {
 
     setTimeout(() => {
       const lang = detectLanguage(text);
-      const intent = detectIntent(text);
-      const response = generateResponse(intent, profile.location, lang);
+      const intent = detectIntent(text, lang);
+      const resolvedLocation = detectLocationInQuery(text, profile.location);
+      const response = generateResponse(intent, resolvedLocation, lang);
       
       if (response.action === "DEMO_CONFIRM") {
         setAnalysis({ active: false, type: null, duration: 0 });
