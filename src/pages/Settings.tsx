@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
 import type { Language } from "../store/profile";
-import { demoData } from "../data/demoData";
 import { SUPPORTED_LANGUAGES } from "../data/languages";
+import { MapPin, Search, Loader2 } from "lucide-react";
 
 export function Settings() {
   const { profile, setProfile } = useProfile();
@@ -16,7 +16,63 @@ export function Settings() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [showManualSearch, setShowManualSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState("");
+
   const boats = ["Motorized Boat", "Traditional / Non-Motorized Boat", "Small Fishing Vessel", "Other"];
+
+  useEffect(() => {
+    if (!showManualSearch || searchQuery.length < 3) {
+      setSearchResults([]);
+      setSearchError("");
+      return;
+    }
+    
+    const timer = setTimeout(async () => {
+      setIsSearching(true);
+      setSearchError("");
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&addressdetails=1&limit=5&countrycodes=in`, {
+          headers: {
+            "Accept-Language": "en-US,en;q=0.9",
+          }
+        });
+        if (!res.ok) throw new Error("Network error");
+        const data = await res.json();
+        setSearchResults(data);
+        if (data.length === 0) {
+          setSearchError("No locations found. Try a different search.");
+        }
+      } catch (err) {
+        console.error(err);
+        setSearchError("Location search is temporarily unavailable. Please try again or use your current location.");
+      } finally {
+        setIsSearching(false);
+      }
+    }, 450);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, showManualSearch]);
+
+  const handleManualLocationSelect = (result: any) => {
+    const lat = parseFloat(result.lat);
+    const lon = parseFloat(result.lon);
+    
+    // Construct a sensible display name
+    let placeName = result.display_name;
+    const parts = result.display_name.split(",").map((p: string) => p.trim());
+    if (parts.length > 3) {
+      placeName = `${parts[0]}, ${parts[1]}, ${parts[parts.length - 1]}`;
+    }
+    
+    setLocation(placeName);
+    setLocationMode("manual");
+    setGpsCoords({ latitude: lat, longitude: lon, accuracy: 100 });
+    setShowManualSearch(false);
+  };
 
   const handleLocationChange = async (val: string) => {
     setErrorMsg("");
@@ -69,14 +125,10 @@ export function Settings() {
         }
         
         setErrorMsg(errMsg);
-        setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
         setLocationMode("manual");
       } finally {
         setIsLoading(false);
       }
-    } else {
-      setLocation(val);
-      setLocationMode("manual");
     }
   };
 
@@ -85,7 +137,7 @@ export function Settings() {
       ...profile,
       location,
       locationMode,
-      coordinates: locationMode === "gps" && gpsCoords ? gpsCoords : undefined,
+      coordinates: gpsCoords ? gpsCoords : undefined,
       vesselType: boatType,
       language,
     });
@@ -116,17 +168,96 @@ export function Settings() {
             <label className="block text-xs font-bold text-slate-500 uppercase mb-1">
               Location {isLoading && <span className="text-ocean-600 font-medium ml-2 animate-pulse">(Detecting...)</span>}
             </label>
-            <select
-              value={location}
-              disabled={isLoading}
-              onChange={e => handleLocationChange(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-ocean-500 outline-none"
-            >
-              <option value="Current location">Use my current location</option>
-              {demoData.availableLocations.map(loc => (
-                <option key={loc} value={loc}>{loc}</option>
-              ))}
-            </select>
+            
+            {showManualSearch ? (
+              <div className="space-y-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Search for a city, village, or harbour"
+                    className="w-full h-14 bg-white border border-slate-200 rounded-xl pl-10 pr-4 text-base focus:ring-2 focus:ring-ocean-500/20 outline-none shadow-sm transition-all"
+                    autoFocus
+                  />
+                  {isSearching && (
+                    <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ocean-600 animate-spin" />
+                  )}
+                </div>
+                
+                {searchError && (
+                  <p className="text-red-500 text-sm font-semibold">{searchError}</p>
+                )}
+
+                {searchResults.length > 0 && (
+                  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    {searchResults.map((res, i) => (
+                      <button
+                        key={res.place_id || i}
+                        onClick={() => handleManualLocationSelect(res)}
+                        className="w-full text-left p-4 hover:bg-slate-50 border-b border-slate-100 last:border-0 transition-colors"
+                      >
+                        <div className="font-semibold text-slate-900">{res.display_name.split(",")[0]}</div>
+                        <div className="text-xs text-slate-500 mt-1 line-clamp-1">{res.display_name}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                
+                <button
+                  onClick={() => setShowManualSearch(false)}
+                  className="w-full py-3 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+                >
+                  Cancel search
+                </button>
+              </div>
+            ) : locationMode === 'manual' && gpsCoords ? (
+              <div className="space-y-4">
+                <div className="p-4 bg-ocean-50 border border-ocean-200 rounded-xl">
+                  <div className="text-xs font-semibold text-ocean-600 uppercase tracking-wider mb-1">Selected Location</div>
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-5 h-5 text-ocean-600 shrink-0 mt-0.5" />
+                    <div className="font-semibold text-slate-900">{location}</div>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleLocationChange("Current location")}
+                    disabled={isLoading}
+                    className="flex-1 py-3 text-sm font-semibold text-ocean-600 hover:text-ocean-700 transition-colors bg-white border border-ocean-100 rounded-xl shadow-sm"
+                  >
+                    Use GPS
+                  </button>
+                  <button
+                    onClick={() => setShowManualSearch(true)}
+                    disabled={isLoading}
+                    className="flex-1 py-3 text-sm font-semibold text-slate-600 hover:text-slate-700 transition-colors bg-white border border-slate-200 rounded-xl shadow-sm"
+                  >
+                    Search again
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <button
+                  onClick={() => handleLocationChange("Current location")}
+                  disabled={isLoading}
+                  className="w-full text-left p-4 rounded-xl border transition-all border-slate-200 bg-white text-slate-700 hover:border-slate-300 flex items-center gap-2"
+                >
+                  <MapPin className="w-5 h-5 text-ocean-600" />
+                  <span className="font-semibold">{isLoading ? "Detecting location..." : (locationMode === 'gps' ? "Using Current Location" : "Use my current location")}</span>
+                </button>
+                <button
+                  onClick={() => setShowManualSearch(true)}
+                  disabled={isLoading}
+                  className="w-full text-left p-4 rounded-xl border transition-all border-slate-200 bg-white text-slate-700 hover:border-slate-300 flex items-center gap-2"
+                >
+                  <Search className="w-5 h-5 text-slate-500" />
+                  <span className="font-semibold">Select manually</span>
+                </button>
+              </div>
+            )}
             {errorMsg && <p className="text-red-500 text-xs font-semibold mt-1">{errorMsg}</p>}
           </div>
 

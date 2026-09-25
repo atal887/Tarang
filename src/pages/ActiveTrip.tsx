@@ -13,7 +13,7 @@ export function ActiveTrip() {
   const route = mapCfg.route;
 
   const [gpsPos, setGpsPos] = useState<[number, number] | null>(
-    profile.locationMode === "gps" && profile.coordinates
+    profile.coordinates
       ? [profile.coordinates.latitude, profile.coordinates.longitude]
       : null
   );
@@ -30,8 +30,8 @@ export function ActiveTrip() {
   }, [profile.locationMode]);
 
   // Static starting position or live GPS position
-  const currentPos = profile.locationMode === "gps" && gpsPos ? gpsPos : route[0];
-  const mapCenter = profile.locationMode === "gps" && gpsPos ? gpsPos : mapCfg.centre;
+  const currentPos = gpsPos ? gpsPos : route[0];
+  const mapCenter = gpsPos ? gpsPos : mapCfg.centre;
   const distanceRemaining = "18.4";
   const timeStr = "1h 12m";
 

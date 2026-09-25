@@ -4,7 +4,7 @@ import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
 import type { Language } from "../store/profile";
 import { SUPPORTED_LANGUAGES } from "../data/languages";
-import { MapPin } from "lucide-react";
+import { MapPin, Search, Loader2 } from "lucide-react";
 
 export function Onboarding() {
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ export function Onboarding() {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [location, setLocation] = useState("");
-  const [customLocation, setCustomLocation] = useState("");
   const [language, setLanguage] = useState<Language | "">("");
   const [boatType, setBoatType] = useState("");
   const [isGuestFlow, setIsGuestFlow] = useState(false);
@@ -27,14 +26,63 @@ export function Onboarding() {
   const [resendCountdown, setResendCountdown] = useState(0);
   const otpInputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
-  const locations = [
-    "Kochi, Kerala",
-    "Mangalore, Karnataka",
-    "Veraval, Gujarat",
-    "Chennai, Tamil Nadu",
-    "Visakhapatnam, Andhra Pradesh",
-    "Digha, West Bengal",
-  ];
+  // Search state
+  const [showManualSearch, setShowManualSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState("");
+
+  useEffect(() => {
+    if (!showManualSearch || searchQuery.length < 3) {
+      setSearchResults([]);
+      setSearchError("");
+      return;
+    }
+    
+    const timer = setTimeout(async () => {
+      setIsSearching(true);
+      setSearchError("");
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&addressdetails=1&limit=5&countrycodes=in`, {
+          headers: {
+            "Accept-Language": "en-US,en;q=0.9",
+          }
+        });
+        if (!res.ok) throw new Error("Network error");
+        const data = await res.json();
+        setSearchResults(data);
+        if (data.length === 0) {
+          setSearchError("No locations found. Try a different search.");
+        }
+      } catch (err) {
+        console.error(err);
+        setSearchError("Location search is temporarily unavailable. Please try again or use your current location.");
+      } finally {
+        setIsSearching(false);
+      }
+    }, 450);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, showManualSearch]);
+
+  const handleManualLocationSelect = (result: any) => {
+    const lat = parseFloat(result.lat);
+    const lon = parseFloat(result.lon);
+    
+    // Construct a sensible display name
+    let placeName = result.display_name;
+    const parts = result.display_name.split(",").map((p: string) => p.trim());
+    if (parts.length > 3) {
+      placeName = `${parts[0]}, ${parts[1]}, ${parts[parts.length - 1]}`;
+    }
+    
+    setLocation(placeName);
+    setGpsCoords({ latitude: lat, longitude: lon, accuracy: 100 });
+    setShowManualSearch(false);
+  };
+
+
   const boats = [
     "Motorized Boat",
     "Traditional / Non-Motorized Boat",
@@ -192,7 +240,6 @@ export function Onboarding() {
       // Success
       const { latitude, longitude, accuracy } = position.coords;
       setLocation("Current location");
-      setCustomLocation("");
       setGpsCoords({ latitude, longitude, accuracy });
       setStep(4);
 
@@ -220,15 +267,12 @@ export function Onboarding() {
 
   const handleBoatSubmit = () => {
     // Derive the city name (first part before comma) for the profile
-    const cityName =
-      location === "Other"
-        ? customLocation
-        : location.split(",")[0].trim();
+    const cityName = location.split(",")[0].trim();
 
     setProfile({
       phone: isGuestFlow ? "" : `+91 ${phone}`,
-      location: gpsCoords ? "Current location" : cityName,
-      locationMode: gpsCoords ? "gps" : "manual",
+      location: location === "Current location" ? "Current location" : cityName,
+      locationMode: location === "Current location" ? "gps" : "manual",
       coordinates: gpsCoords || undefined,
       vesselType: boatType,
       language: language as Language,
@@ -338,42 +382,96 @@ export function Onboarding() {
               <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Where do you usually fish?</h1>
               <p className="text-slate-500">Select your coastal location so TARANG can provide relevant sea and fishing information.</p>
             </div>
-            <div className="space-y-3">
-              <button
-                onClick={handleGpsLocation}
-                disabled={isLoading}
-                className="w-full text-left p-4 rounded-xl border transition-all border-slate-200 bg-white text-slate-700 hover:border-slate-300 flex items-center gap-2"
-              >
-                <MapPin className="w-5 h-5 text-ocean-600" />
-                <span className="font-semibold">{isLoading ? "Detecting location..." : "Use my current location"}</span>
-              </button>
-              {locations.map(loc => (
+            
+            {showManualSearch ? (
+              <div className="space-y-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Search for a city, village, or harbour"
+                    className="w-full h-14 bg-white border border-slate-200 rounded-xl pl-10 pr-4 text-base focus:ring-2 focus:ring-ocean-500/20 outline-none shadow-sm transition-all"
+                    autoFocus
+                  />
+                  {isSearching && (
+                    <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ocean-600 animate-spin" />
+                  )}
+                </div>
+                
+                {searchError && (
+                  <p className="text-red-500 text-sm font-semibold">{searchError}</p>
+                )}
+
+                {searchResults.length > 0 && (
+                  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    {searchResults.map((res, i) => (
+                      <button
+                        key={res.place_id || i}
+                        onClick={() => handleManualLocationSelect(res)}
+                        className="w-full text-left p-4 hover:bg-slate-50 border-b border-slate-100 last:border-0 transition-colors"
+                      >
+                        <div className="font-semibold text-slate-900">{res.display_name.split(",")[0]}</div>
+                        <div className="text-xs text-slate-500 mt-1 line-clamp-1">{res.display_name}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                
                 <button
-                  key={loc}
-                  onClick={() => { setLocation(loc); setCustomLocation(""); }}
-                  className={`w-full text-left p-4 rounded-xl border transition-all ${location === loc ? 'border-ocean-500 bg-ocean-50 text-ocean-700 font-bold shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'}`}
+                  onClick={() => setShowManualSearch(false)}
+                  className="w-full py-3 text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors"
                 >
-                  {loc}
+                  Cancel search
                 </button>
-              ))}
-              <button
-                onClick={() => setLocation("Other")}
-                className={`w-full text-left p-4 rounded-xl border transition-all ${location === "Other" ? 'border-ocean-500 bg-ocean-50 text-ocean-700 font-bold shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'}`}
-              >
-                Other location
-              </button>
-              {location === "Other" && (
-                <input
-                  type="text"
-                  value={customLocation}
-                  onChange={e => setCustomLocation(e.target.value)}
-                  className="w-full h-14 bg-white border border-ocean-500 rounded-xl px-4 text-base focus:ring-2 focus:ring-ocean-500/20 outline-none shadow-sm transition-all mt-2"
-                  placeholder="Enter your location"
-                />
-              )}
-            </div>
+              </div>
+            ) : location && location !== "Current location" && gpsCoords ? (
+              <div className="space-y-4">
+                <div className="p-4 bg-ocean-50 border border-ocean-200 rounded-xl">
+                  <div className="text-xs font-semibold text-ocean-600 uppercase tracking-wider mb-1">Selected Location</div>
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-5 h-5 text-ocean-600 shrink-0 mt-0.5" />
+                    <div className="font-semibold text-slate-900">{location}</div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setLocation("");
+                    setGpsCoords(null);
+                    setShowManualSearch(true);
+                  }}
+                  className="w-full py-3 text-sm font-semibold text-ocean-600 hover:text-ocean-700 transition-colors bg-white border border-ocean-100 rounded-xl shadow-sm"
+                >
+                  Change location
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <button
+                  onClick={handleGpsLocation}
+                  disabled={isLoading}
+                  className="w-full text-left p-4 rounded-xl border transition-all border-slate-200 bg-white text-slate-700 hover:border-slate-300 flex items-center gap-2"
+                >
+                  <MapPin className="w-5 h-5 text-ocean-600" />
+                  <span className="font-semibold">{isLoading ? "Detecting location..." : "Use my current location"}</span>
+                </button>
+                <button
+                  onClick={() => setShowManualSearch(true)}
+                  disabled={isLoading}
+                  className="w-full text-left p-4 rounded-xl border transition-all border-slate-200 bg-white text-slate-700 hover:border-slate-300 flex items-center gap-2"
+                >
+                  <Search className="w-5 h-5 text-slate-500" />
+                  <span className="font-semibold">Select manually</span>
+                </button>
+              </div>
+            )}
+            
             {errorMsg && <p className="text-red-500 text-sm font-semibold text-center">{errorMsg}</p>}
-            <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleLocationSubmit} disabled={!location || (location === "Other" && !customLocation)}>Continue</Button>
+            
+            {!showManualSearch && (
+              <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleLocationSubmit} disabled={!location}>Continue</Button>
+            )}
           </div>
         )}
 
