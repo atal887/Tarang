@@ -107,9 +107,9 @@ for i, r in enumerate(records):
         'region': region,
         'latitude': r['lat'],
         'longitude': r['lon'],
-        'coordinateSource': 'GeoNames (Supplementary Gazetteer)',
+        'coordinateSource': 'GeoNames (PPL/PPLA/etc) - Official Census reconciliation pending',
         'classificationSource': 'Natural Earth 1:10m Coastline',
-        'classificationMethod': 'Haversine distance <= 30km'
+        'classificationMethod': 'Haversine distance to nearest coastline vertex <= 30km'
     })
 
 with open('src/data/indiaFishingLocations.json', 'w') as f:
