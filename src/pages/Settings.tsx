@@ -14,13 +14,15 @@ export function Settings() {
   const [boatType, setBoatType] = useState(profile.vesselType);
   const [language, setLanguage] = useState<Language>(profile.language);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const boats = ["Motorized Boat", "Traditional / Non-Motorized Boat", "Small Fishing Vessel", "Other"];
 
   const handleLocationChange = (val: string) => {
+    setErrorMsg("");
     if (val === "Current location") {
       if (!("geolocation" in navigator)) {
-        alert("GPS is not supported.");
+        setErrorMsg("GPS is not supported.");
         return;
       }
       
@@ -34,42 +36,63 @@ export function Settings() {
         if (watchdogTimer) clearTimeout(watchdogTimer);
       };
 
+      const finalize = () => {
+        setIsLoading(false);
+      };
+
       watchdogTimer = setTimeout(() => {
         if (isFinished) return;
         isFinished = true;
-        if (import.meta.env.DEV) console.log("[GPS] Watchdog fired");
-        setIsLoading(false);
-        alert("We couldn't detect your current location. Please try again or select your location manually.");
-        setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-        setLocationMode("manual");
+        try {
+          if (import.meta.env.DEV) console.log("[GPS] Watchdog fired");
+          setErrorMsg("We couldn't detect your current location. Please try again or select your location manually.");
+          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
+          setLocationMode("manual");
+        } finally {
+          finalize();
+        }
       }, 35000);
 
       const handleSuccess = (pos: GeolocationPosition) => {
         if (isFinished) return;
         isFinished = true;
         clearWatchdog();
-        if (import.meta.env.DEV) console.log(`[GPS] Success: ${pos.coords.latitude}, ${pos.coords.longitude} (Accuracy: ${pos.coords.accuracy}m)`);
-        setLocation("Current location");
-        setLocationMode("gps");
-        setGpsCoords({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy });
-        setIsLoading(false);
+        try {
+          if (import.meta.env.DEV) console.log(`[GPS] Success: ${pos.coords.latitude}, ${pos.coords.longitude} (Accuracy: ${pos.coords.accuracy}m)`);
+          setLocation("Current location");
+          setLocationMode("gps");
+          setGpsCoords({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy });
+          setErrorMsg("");
+        } catch (err) {
+          if (import.meta.env.DEV) console.log("[GPS] Success callback error:", err);
+          setErrorMsg("An unexpected error occurred while saving your location.");
+          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
+          setLocationMode("manual");
+        } finally {
+          finalize();
+        }
       };
 
-      const handleFinalError = (err: GeolocationPositionError, attempt: string) => {
+      const handleFinalError = (err: GeolocationPositionError | any, attempt: string) => {
         if (isFinished) return;
         isFinished = true;
         clearWatchdog();
-        if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err.code, err.message);
-        let errName = "UNKNOWN_ERROR";
-        switch (err.code) {
-          case 1: errName = "PERMISSION_DENIED"; break;
-          case 2: errName = "POSITION_UNAVAILABLE"; break;
-          case 3: errName = "TIMEOUT"; break;
+        try {
+          if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err?.code, err?.message);
+          let errName = "UNKNOWN_ERROR";
+          if (err?.code) {
+            switch (err.code) {
+              case 1: errName = "PERMISSION_DENIED"; break;
+              case 2: errName = "POSITION_UNAVAILABLE"; break;
+              case 3: errName = "TIMEOUT"; break;
+            }
+          }
+          setErrorMsg(`Location Error [${err?.code || 'X'}: ${errName}]: ${err?.message || 'Unknown'}. Falling back to manual location.`);
+          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
+          setLocationMode("manual");
+        } finally {
+          finalize();
         }
-        alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nFalling back to manual location.`);
-        setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-        setLocationMode("manual");
-        setIsLoading(false);
       };
 
       try {
@@ -80,43 +103,43 @@ export function Settings() {
             handleSuccess(pos);
           },
           (err) => {
-            if (import.meta.env.DEV) console.log("[GPS] Primary error callback received", err.code, err.message);
-            if (err.code === 2 || err.code === 3) {
+            if (import.meta.env.DEV) console.log("[GPS] Primary error callback received", err?.code, err?.message);
+            if (err?.code === 2 || err?.code === 3) {
               if (isFinished) return;
               if (import.meta.env.DEV) console.log("[GPS] Fallback getCurrentPosition called");
-              try {
-                navigator.geolocation.getCurrentPosition(
-                  (fallbackPos) => {
-                    if (import.meta.env.DEV) console.log("[GPS] Fallback success callback received");
-                    handleSuccess(fallbackPos);
-                  },
-                  (fallbackErr) => {
-                    if (import.meta.env.DEV) console.log("[GPS] Fallback error callback received");
-                    handleFinalError(fallbackErr, "Fallback");
-                  },
-                  { enableHighAccuracy: false, timeout: 30000, maximumAge: 120000 }
-                );
-              } catch (e) {
-                if (import.meta.env.DEV) console.log("[GPS] Fallback throw", e);
-                handleFinalError(err, "High Accuracy (Fallback throw)");
-              }
-            } else {
-              handleFinalError(err, "High Accuracy");
+            try {
+              navigator.geolocation.getCurrentPosition(
+                (fallbackPos) => {
+                  if (import.meta.env.DEV) console.log("[GPS] Fallback success callback received");
+                  handleSuccess(fallbackPos);
+                },
+                (fallbackErr) => {
+                  if (import.meta.env.DEV) console.log("[GPS] Fallback error callback received");
+                  handleFinalError(fallbackErr, "Fallback");
+                },
+                { enableHighAccuracy: false, timeout: 30000, maximumAge: 120000 }
+              );
+            } catch (e) {
+              if (import.meta.env.DEV) console.log("[GPS] Fallback throw", e);
+              handleFinalError(e, "High Accuracy (Fallback throw)");
             }
-          },
-          { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 }
-        );
-      } catch (e) {
-        if (import.meta.env.DEV) console.log("[GPS] Primary throw", e);
-        if (!isFinished) {
-          isFinished = true;
-          clearWatchdog();
-          setIsLoading(false);
-          alert(`Location Error [Exception]: ${e}\n\nFalling back to manual location.`);
-          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-          setLocationMode("manual");
-        }
+          } else {
+            handleFinalError(err, "High Accuracy");
+          }
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 }
+      );
+    } catch (e) {
+      if (import.meta.env.DEV) console.log("[GPS] Primary throw", e);
+      if (!isFinished) {
+        isFinished = true;
+        clearWatchdog();
+        setErrorMsg(`Location Error [Exception]: ${e}`);
+        setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
+        setLocationMode("manual");
+        finalize();
       }
+    }
     } else {
       setLocation(val);
       setLocationMode("manual");
@@ -170,6 +193,7 @@ export function Settings() {
                 <option key={loc} value={loc}>{loc}</option>
               ))}
             </select>
+            {errorMsg && <p className="text-red-500 text-xs font-semibold mt-1">{errorMsg}</p>}
           </div>
 
           <div>

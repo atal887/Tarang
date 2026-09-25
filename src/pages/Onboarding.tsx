@@ -175,40 +175,59 @@ export function Onboarding() {
       if (watchdogTimer) clearTimeout(watchdogTimer);
     };
 
+    const finalize = () => {
+      setIsLoading(false);
+    };
+
     watchdogTimer = setTimeout(() => {
       if (isFinished) return;
       isFinished = true;
-      if (import.meta.env.DEV) console.log("[GPS] Watchdog fired");
-      setIsLoading(false);
-      alert("We couldn't detect your current location. Please try again or select your location manually.");
+      try {
+        if (import.meta.env.DEV) console.log("[GPS] Watchdog fired");
+        setErrorMsg("We couldn't detect your current location. Please try again or select your location manually.");
+      } finally {
+        finalize();
+      }
     }, 35000);
 
     const handleSuccess = (pos: GeolocationPosition) => {
       if (isFinished) return;
       isFinished = true;
       clearWatchdog();
-      const { latitude, longitude, accuracy } = pos.coords;
-      if (import.meta.env.DEV) console.log(`[GPS] Success: ${latitude}, ${longitude} (Accuracy: ${accuracy}m)`);
-      setLocation("Current location");
-      setCustomLocation("");
-      setGpsCoords({ latitude, longitude, accuracy });
-      setIsLoading(false);
-      setStep(4);
+      try {
+        const { latitude, longitude, accuracy } = pos.coords;
+        if (import.meta.env.DEV) console.log(`[GPS] Success: ${latitude}, ${longitude} (Accuracy: ${accuracy}m)`);
+        setLocation("Current location");
+        setCustomLocation("");
+        setGpsCoords({ latitude, longitude, accuracy });
+        setErrorMsg("");
+        setStep(4);
+      } catch (err) {
+        if (import.meta.env.DEV) console.log("[GPS] Success callback error:", err);
+        setErrorMsg("An unexpected error occurred while saving your location.");
+      } finally {
+        finalize();
+      }
     };
 
-    const handleFinalError = (err: GeolocationPositionError, attempt: string) => {
+    const handleFinalError = (err: GeolocationPositionError | any, attempt: string) => {
       if (isFinished) return;
       isFinished = true;
       clearWatchdog();
-      if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err.code, err.message);
-      setIsLoading(false);
-      let errName = "UNKNOWN_ERROR";
-      switch (err.code) {
-        case 1: errName = "PERMISSION_DENIED"; break;
-        case 2: errName = "POSITION_UNAVAILABLE"; break;
-        case 3: errName = "TIMEOUT"; break;
+      try {
+        if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err?.code, err?.message);
+        let errName = "UNKNOWN_ERROR";
+        if (err?.code) {
+          switch (err.code) {
+            case 1: errName = "PERMISSION_DENIED"; break;
+            case 2: errName = "POSITION_UNAVAILABLE"; break;
+            case 3: errName = "TIMEOUT"; break;
+          }
+        }
+        setErrorMsg(`Location Error [${err?.code || 'X'}: ${errName}]: ${err?.message || 'Unknown'}. Please select location manually.`);
+      } finally {
+        finalize();
       }
-      alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nYou can select your fishing location manually.`);
     };
 
     try {
@@ -219,8 +238,8 @@ export function Onboarding() {
           handleSuccess(pos);
         },
         (err) => {
-          if (import.meta.env.DEV) console.log("[GPS] Primary error callback received", err.code, err.message);
-          if (err.code === 2 || err.code === 3) {
+          if (import.meta.env.DEV) console.log("[GPS] Primary error callback received", err?.code, err?.message);
+          if (err?.code === 2 || err?.code === 3) {
             if (isFinished) return;
             if (import.meta.env.DEV) console.log("[GPS] Fallback getCurrentPosition called");
             try {
@@ -237,7 +256,7 @@ export function Onboarding() {
               );
             } catch (e) {
               if (import.meta.env.DEV) console.log("[GPS] Fallback throw", e);
-              handleFinalError(err, "High Accuracy (Fallback throw)");
+              handleFinalError(e, "High Accuracy (Fallback throw)");
             }
           } else {
             handleFinalError(err, "High Accuracy");
@@ -250,8 +269,8 @@ export function Onboarding() {
       if (!isFinished) {
         isFinished = true;
         clearWatchdog();
-        setIsLoading(false);
-        alert(`Location Error [Exception]: ${e}\n\nYou can select your fishing location manually.`);
+        setErrorMsg(`Location Error [Exception]: ${e}`);
+        finalize();
       }
     }
   };
@@ -414,6 +433,7 @@ export function Onboarding() {
                 />
               )}
             </div>
+            {errorMsg && <p className="text-red-500 text-sm font-semibold text-center">{errorMsg}</p>}
             <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleLocationSubmit} disabled={!location || (location === "Other" && !customLocation)}>Continue</Button>
           </div>
         )}
