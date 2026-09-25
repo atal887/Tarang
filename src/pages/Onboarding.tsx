@@ -174,7 +174,13 @@ export function Onboarding() {
         (err) => {
           console.warn("Location error:", err);
           setIsLoading(false);
-          alert("Location access was denied or unavailable. You can select your fishing location manually.");
+          let errName = "UNKNOWN_ERROR";
+          switch (err.code) {
+            case 1: errName = "PERMISSION_DENIED"; break;
+            case 2: errName = "POSITION_UNAVAILABLE"; break;
+            case 3: errName = "TIMEOUT"; break;
+          }
+          alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nYou can select your fishing location manually.`);
         },
         { timeout: 10000 }
       );

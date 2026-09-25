@@ -27,7 +27,13 @@ export function Settings() {
           },
           (err) => {
             console.warn("Location error:", err);
-            alert("Location access was denied or unavailable.");
+            let errName = "UNKNOWN_ERROR";
+            switch (err.code) {
+              case 1: errName = "PERMISSION_DENIED"; break;
+              case 2: errName = "POSITION_UNAVAILABLE"; break;
+              case 3: errName = "TIMEOUT"; break;
+            }
+            alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nFalling back to manual location.`);
             setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
             setLocationMode("manual");
           },
