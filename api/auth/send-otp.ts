@@ -40,7 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     // Check for trial account restrictions or other specific errors
     if (error.code === 21608) {
-      return res.status(400).json({ error: 'This phone number is unverified. Trial accounts cannot send messages to unverified numbers.' });
+      return res.status(400).json({ error: 'Phone verification is currently available only for registered test numbers during our current trial setup. Please continue as Guest to explore TARANG.' });
     }
     
     return res.status(500).json({ error: 'We couldn\'t send the verification code right now. Please try again.' });

@@ -17,6 +17,7 @@ export function Onboarding() {
   const [language, setLanguage] = useState<Language | "">("");
   const [boatType, setBoatType] = useState("");
   const [isGuestFlow, setIsGuestFlow] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(false);
   
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -53,10 +54,25 @@ export function Onboarding() {
     return `+${digits}`;
   };
 
+  const DEMO_TEST_PHONE = "7982559126";
+  const DEMO_TEST_OTP = "123456";
+
   const sendOtpRequest = async () => {
     setIsLoading(true);
     setErrorMsg("");
     try {
+      if (phone === DEMO_TEST_PHONE) {
+        setIsDemoMode(true);
+        setStep(2);
+        setResendCountdown(25);
+        setTimeout(() => {
+          if (otpInputsRef.current[0]) otpInputsRef.current[0].focus();
+        }, 100);
+        setIsLoading(false);
+        return;
+      }
+
+      setIsDemoMode(false);
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,6 +106,16 @@ export function Onboarding() {
     setIsLoading(true);
     setErrorMsg("");
     try {
+      if (isDemoMode) {
+        if (code === DEMO_TEST_OTP) {
+          setStep(3);
+        } else {
+          throw new Error("The code you entered is incorrect. Please try again.");
+        }
+        setIsLoading(false);
+        return;
+      }
+
       const res = await fetch("/api/auth/verify-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -192,7 +218,7 @@ export function Onboarding() {
         {step === 2 && (
           <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
             <div>
-              <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Verify your number</h1>
+              <h1 className="text-2xl font-extrabold text-slate-900 mb-2">{isDemoMode ? "Demo verification" : "Verify your number"}</h1>
               <p className="text-slate-500">We've sent a 6-digit verification code to +91 {phone}.</p>
             </div>
             <div className="flex justify-between gap-2">
