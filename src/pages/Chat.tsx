@@ -95,6 +95,8 @@ export function Chat() {
         language: lang,
         location: resolvedLocation,
         boatType: profile.vesselType,
+        currentLatitude: profile.coordinates?.latitude,
+        currentLongitude: profile.coordinates?.longitude,
         intent
       };
       

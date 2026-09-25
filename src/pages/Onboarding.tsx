@@ -4,6 +4,7 @@ import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
 import type { Language } from "../store/profile";
 import { SUPPORTED_LANGUAGES } from "../data/languages";
+import { MapPin } from "lucide-react";
 
 export function Onboarding() {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export function Onboarding() {
   const [isGuestFlow, setIsGuestFlow] = useState(false);
   const [isDemoMode, setIsDemoMode] = useState(false);
   
+  const [gpsCoords, setGpsCoords] = useState<{latitude: number, longitude: number, accuracy: number} | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [resendCountdown, setResendCountdown] = useState(0);
@@ -156,6 +159,30 @@ export function Onboarding() {
     setStep(4);
   };
 
+  const handleGpsLocation = () => {
+    if ("geolocation" in navigator) {
+      setIsLoading(true);
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude, accuracy } = pos.coords;
+          setLocation("Current location");
+          setCustomLocation("");
+          setGpsCoords({ latitude, longitude, accuracy });
+          setIsLoading(false);
+          setStep(4);
+        },
+        (err) => {
+          console.warn("Location error:", err);
+          setIsLoading(false);
+          alert("Location access was denied or unavailable. You can select your fishing location manually.");
+        },
+        { timeout: 10000 }
+      );
+    } else {
+      alert("GPS is not supported by your browser.");
+    }
+  };
+
   const handleLanguageSubmit = () => {
     setStep(5);
   };
@@ -169,7 +196,9 @@ export function Onboarding() {
 
     setProfile({
       phone: isGuestFlow ? "" : `+91 ${phone}`,
-      location: cityName,
+      location: gpsCoords ? "Current location" : cityName,
+      locationMode: gpsCoords ? "gps" : "manual",
+      coordinates: gpsCoords || undefined,
       vesselType: boatType,
       language: language as Language,
       phoneVerified: !isGuestFlow,
@@ -279,6 +308,14 @@ export function Onboarding() {
               <p className="text-slate-500">Select your coastal location so TARANG can provide relevant sea and fishing information.</p>
             </div>
             <div className="space-y-3">
+              <button
+                onClick={handleGpsLocation}
+                disabled={isLoading}
+                className="w-full text-left p-4 rounded-xl border transition-all border-slate-200 bg-white text-slate-700 hover:border-slate-300 flex items-center gap-2"
+              >
+                <MapPin className="w-5 h-5 text-ocean-600" />
+                <span className="font-semibold">{isLoading ? "Detecting location..." : "Use my current location"}</span>
+              </button>
               {locations.map(loc => (
                 <button
                   key={loc}

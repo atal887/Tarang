@@ -6,6 +6,12 @@ export type Language = 'en' | 'hi' | 'ml' | 'kn' | 'gu' | 'ta' | 'te' | 'bn';
 export interface Profile {
   phone: string;
   location: string; // e.g., 'Kochi'
+  locationMode?: "manual" | "gps";
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+  };
   vesselType: string;
   language: Language;
   phoneVerified: boolean;

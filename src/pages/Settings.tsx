@@ -9,15 +9,45 @@ export function Settings() {
   const { profile, setProfile } = useProfile();
 
   const [location, setLocation] = useState(profile.location);
+  const [locationMode, setLocationMode] = useState<"manual"|"gps">(profile.locationMode || "manual");
+  const [gpsCoords, setGpsCoords] = useState<{latitude: number, longitude: number, accuracy: number} | null>(profile.coordinates || null);
   const [boatType, setBoatType] = useState(profile.vesselType);
   const [language, setLanguage] = useState<Language>(profile.language);
 
   const boats = ["Motorized Boat", "Traditional / Non-Motorized Boat", "Small Fishing Vessel", "Other"];
 
+  const handleLocationChange = (val: string) => {
+    if (val === "Current location") {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            setLocation("Current location");
+            setLocationMode("gps");
+            setGpsCoords({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy });
+          },
+          (err) => {
+            console.warn("Location error:", err);
+            alert("Location access was denied or unavailable.");
+            setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
+            setLocationMode("manual");
+          },
+          { timeout: 10000 }
+        );
+      } else {
+        alert("GPS is not supported.");
+      }
+    } else {
+      setLocation(val);
+      setLocationMode("manual");
+    }
+  };
+
   const handleSave = () => {
     setProfile({
       ...profile,
       location,
+      locationMode,
+      coordinates: locationMode === "gps" && gpsCoords ? gpsCoords : undefined,
       vesselType: boatType,
       language,
     });
@@ -48,9 +78,10 @@ export function Settings() {
             <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Location</label>
             <select
               value={location}
-              onChange={e => setLocation(e.target.value)}
+              onChange={e => handleLocationChange(e.target.value)}
               className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-ocean-500 outline-none"
             >
+              <option value="Current location">Use my current location</option>
               {demoData.availableLocations.map(loc => (
                 <option key={loc} value={loc}>{loc}</option>
               ))}

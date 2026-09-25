@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { MapComponent } from "../components/map/MapComponent";
 import { demoData, getLocationMapConfig } from "../data/demoData";
 import { Button } from "../components/ui/Button";
@@ -13,6 +14,23 @@ export function Map() {
 
   // ── Derive all map data from the user's selected location ──────────────────
   const mapCfg = getLocationMapConfig(profile.location);
+
+  const [gpsPos, setGpsPos] = useState<[number, number] | null>(
+    profile.locationMode === "gps" && profile.coordinates
+      ? [profile.coordinates.latitude, profile.coordinates.longitude]
+      : null
+  );
+
+  useEffect(() => {
+    if (profile.locationMode === "gps") {
+      const watchId = navigator.geolocation.watchPosition(
+        (pos) => setGpsPos([pos.coords.latitude, pos.coords.longitude]),
+        (err) => console.warn("GPS watch error:", err),
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+      );
+      return () => navigator.geolocation.clearWatch(watchId);
+    }
+  }, [profile.locationMode]);
 
   const renderPanel = () => {
     switch(mode) {
@@ -140,7 +158,10 @@ export function Map() {
 
   // ── Build markers / zones / routes from location-specific data ─────────────
   const getMapData = () => {
-    const harbourMarker = { id: "1", position: mapCfg.harbour, label: `${profile.location} Harbour`, type: "start" as const };
+    let harbourMarker = { id: "1", position: mapCfg.harbour, label: `${profile.location} Harbour`, type: "start" as const };
+    if (profile.locationMode === "gps" && gpsPos) {
+      harbourMarker = { id: "gps", position: gpsPos, label: "Your current location", type: "start" as const };
+    }
     const zoneMarker    = { id: "2", position: mapCfg.zone,    label: mapCfg.zoneLabel,              type: "destination" as const };
 
     switch(mode) {
@@ -177,13 +198,14 @@ export function Map() {
   };
 
   const mapData = getMapData();
+  const mapCenter = profile.locationMode === "gps" && gpsPos ? gpsPos : mapCfg.centre;
 
   return (
     <div className="flex flex-col h-full bg-slate-50 relative">
       {renderPanel()}
       <div className="flex-1 w-full h-full relative z-0">
         <MapComponent
-          center={mapCfg.centre}
+          center={mapCenter}
           zoom={mapCfg.zoom}
           mode={mode as any}
           markers={mapData.markers}

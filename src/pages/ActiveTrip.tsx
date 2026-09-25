@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { MapComponent } from "../components/map/MapComponent";
 import { getLocationMapConfig } from "../data/demoData";
 import { useProfile } from "../store/profile";
@@ -11,8 +12,26 @@ export function ActiveTrip() {
   const mapCfg = getLocationMapConfig(profile.location);
   const route = mapCfg.route;
 
-  // Static starting position
-  const currentPos = route[0];
+  const [gpsPos, setGpsPos] = useState<[number, number] | null>(
+    profile.locationMode === "gps" && profile.coordinates
+      ? [profile.coordinates.latitude, profile.coordinates.longitude]
+      : null
+  );
+
+  useEffect(() => {
+    if (profile.locationMode === "gps") {
+      const watchId = navigator.geolocation.watchPosition(
+        (pos) => setGpsPos([pos.coords.latitude, pos.coords.longitude]),
+        (err) => console.warn("GPS watch error:", err),
+        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+      );
+      return () => navigator.geolocation.clearWatch(watchId);
+    }
+  }, [profile.locationMode]);
+
+  // Static starting position or live GPS position
+  const currentPos = profile.locationMode === "gps" && gpsPos ? gpsPos : route[0];
+  const mapCenter = profile.locationMode === "gps" && gpsPos ? gpsPos : mapCfg.centre;
   const distanceRemaining = "18.4";
   const timeStr = "1h 12m";
 
@@ -42,7 +61,7 @@ export function ActiveTrip() {
       {/* Map View */}
       <div className="flex-1 w-full h-full relative z-0 pt-[72px] md:pt-[84px]">
         <MapComponent
-          center={mapCfg.centre}
+          center={mapCenter}
           zoom={11}
           mode="route"
           markers={[
