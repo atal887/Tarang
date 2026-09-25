@@ -160,33 +160,52 @@ export function Onboarding() {
   };
 
   const handleGpsLocation = () => {
-    if ("geolocation" in navigator) {
-      setIsLoading(true);
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const { latitude, longitude, accuracy } = pos.coords;
-          setLocation("Current location");
-          setCustomLocation("");
-          setGpsCoords({ latitude, longitude, accuracy });
-          setIsLoading(false);
-          setStep(4);
-        },
-        (err) => {
-          console.warn("Location error:", err);
-          setIsLoading(false);
-          let errName = "UNKNOWN_ERROR";
-          switch (err.code) {
-            case 1: errName = "PERMISSION_DENIED"; break;
-            case 2: errName = "POSITION_UNAVAILABLE"; break;
-            case 3: errName = "TIMEOUT"; break;
-          }
-          alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nYou can select your fishing location manually.`);
-        },
-        { timeout: 10000 }
-      );
-    } else {
+    if (!("geolocation" in navigator)) {
       alert("GPS is not supported by your browser.");
+      return;
     }
+    
+    setIsLoading(true);
+    if (import.meta.env.DEV) console.log("[GPS] Request started (High Accuracy)");
+
+    const handleSuccess = (pos: GeolocationPosition) => {
+      const { latitude, longitude, accuracy } = pos.coords;
+      if (import.meta.env.DEV) console.log(`[GPS] Success: ${latitude}, ${longitude} (Accuracy: ${accuracy}m)`);
+      setLocation("Current location");
+      setCustomLocation("");
+      setGpsCoords({ latitude, longitude, accuracy });
+      setIsLoading(false);
+      setStep(4);
+    };
+
+    const handleFinalError = (err: GeolocationPositionError, attempt: string) => {
+      if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err.code, err.message);
+      setIsLoading(false);
+      let errName = "UNKNOWN_ERROR";
+      switch (err.code) {
+        case 1: errName = "PERMISSION_DENIED"; break;
+        case 2: errName = "POSITION_UNAVAILABLE"; break;
+        case 3: errName = "TIMEOUT"; break;
+      }
+      alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nYou can select your fishing location manually.`);
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      handleSuccess,
+      (err) => {
+        if (err.code === 2 || err.code === 3) {
+          if (import.meta.env.DEV) console.log(`[GPS] High accuracy failed (${err.code}), starting fallback (Low Accuracy)`);
+          navigator.geolocation.getCurrentPosition(
+            handleSuccess,
+            (fallbackErr) => handleFinalError(fallbackErr, "Fallback"),
+            { enableHighAccuracy: false, timeout: 30000, maximumAge: 120000 }
+          );
+        } else {
+          handleFinalError(err, "High Accuracy");
+        }
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 }
+    );
   };
 
   const handleLanguageSubmit = () => {

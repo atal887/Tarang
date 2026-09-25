@@ -13,35 +13,58 @@ export function Settings() {
   const [gpsCoords, setGpsCoords] = useState<{latitude: number, longitude: number, accuracy: number} | null>(profile.coordinates || null);
   const [boatType, setBoatType] = useState(profile.vesselType);
   const [language, setLanguage] = useState<Language>(profile.language);
+  const [isLoading, setIsLoading] = useState(false);
 
   const boats = ["Motorized Boat", "Traditional / Non-Motorized Boat", "Small Fishing Vessel", "Other"];
 
   const handleLocationChange = (val: string) => {
     if (val === "Current location") {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            setLocation("Current location");
-            setLocationMode("gps");
-            setGpsCoords({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy });
-          },
-          (err) => {
-            console.warn("Location error:", err);
-            let errName = "UNKNOWN_ERROR";
-            switch (err.code) {
-              case 1: errName = "PERMISSION_DENIED"; break;
-              case 2: errName = "POSITION_UNAVAILABLE"; break;
-              case 3: errName = "TIMEOUT"; break;
-            }
-            alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nFalling back to manual location.`);
-            setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-            setLocationMode("manual");
-          },
-          { timeout: 10000 }
-        );
-      } else {
+      if (!("geolocation" in navigator)) {
         alert("GPS is not supported.");
+        return;
       }
+      
+      setIsLoading(true);
+      if (import.meta.env.DEV) console.log("[GPS] Settings Request started (High Accuracy)");
+
+      const handleSuccess = (pos: GeolocationPosition) => {
+        if (import.meta.env.DEV) console.log(`[GPS] Success: ${pos.coords.latitude}, ${pos.coords.longitude} (Accuracy: ${pos.coords.accuracy}m)`);
+        setLocation("Current location");
+        setLocationMode("gps");
+        setGpsCoords({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy });
+        setIsLoading(false);
+      };
+
+      const handleFinalError = (err: GeolocationPositionError, attempt: string) => {
+        if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err.code, err.message);
+        let errName = "UNKNOWN_ERROR";
+        switch (err.code) {
+          case 1: errName = "PERMISSION_DENIED"; break;
+          case 2: errName = "POSITION_UNAVAILABLE"; break;
+          case 3: errName = "TIMEOUT"; break;
+        }
+        alert(`Location Error [${err.code}: ${errName}]: ${err.message}\n\nFalling back to manual location.`);
+        setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
+        setLocationMode("manual");
+        setIsLoading(false);
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        handleSuccess,
+        (err) => {
+          if (err.code === 2 || err.code === 3) {
+            if (import.meta.env.DEV) console.log(`[GPS] High accuracy failed (${err.code}), starting fallback (Low Accuracy)`);
+            navigator.geolocation.getCurrentPosition(
+              handleSuccess,
+              (fallbackErr) => handleFinalError(fallbackErr, "Fallback"),
+              { enableHighAccuracy: false, timeout: 30000, maximumAge: 120000 }
+            );
+          } else {
+            handleFinalError(err, "High Accuracy");
+          }
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 }
+      );
     } else {
       setLocation(val);
       setLocationMode("manual");
@@ -81,9 +104,12 @@ export function Settings() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Location</label>
+            <label className="block text-xs font-bold text-slate-500 uppercase mb-1">
+              Location {isLoading && <span className="text-ocean-600 font-medium ml-2 animate-pulse">(Detecting...)</span>}
+            </label>
             <select
               value={location}
+              disabled={isLoading}
               onChange={e => handleLocationChange(e.target.value)}
               className="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-ocean-500 outline-none"
             >
@@ -123,7 +149,7 @@ export function Settings() {
           </div>
         </section>
 
-        <Button className="w-full h-12" onClick={handleSave}>Save Changes</Button>
+        <Button className="w-full h-12" onClick={handleSave} disabled={isLoading}>Save Changes</Button>
       </div>
     </div>
   );
