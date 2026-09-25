@@ -44,12 +44,14 @@ for infra_id in demo_infra_ids:
             "visibilityKm": None,
             "rainfallCategory": None,
             "seaCondition": None,
-            "dataType": "seasonal_demo_baseline",
+            "dataType": "historical_reanalysis_monthly_baseline",
             "source": {
-                "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
-                "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
-                "url": "https://incois.gov.in/site/index.jsp",
-                "sourcePeriod": "2010-2023 Climatological Mean",
+                "organization": "ECMWF / Copernicus Marine Service",
+                "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
+                "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
+                "url": "https://open-meteo.com/en/docs",
+                "sourcePeriod": "2023-10-01 to 2023-11-30",
+                "aggregation": "monthly mean of hourly data",
                 "method": "Environmental source identified but data ingestion pending."
             }
         })

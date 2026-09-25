@@ -3,8 +3,10 @@ import baselineData from '../data/environmentalBaseline.json';
 export interface EnvironmentalSource {
   organization: string;
   dataset: string;
+  accessMethod: string;
   url: string;
   sourcePeriod: string;
+  aggregation: string;
   method: string;
 }
 
@@ -19,7 +21,7 @@ export interface EnvironmentalProfile {
   visibilityKm: number | null;
   rainfallCategory: string | null;
   seaCondition: string | null;
-  dataType: "seasonal_demo_baseline";
+  dataType: "historical_reanalysis_monthly_baseline" | "seasonal_demo_baseline";
   source: EnvironmentalSource;
 }
 
