@@ -1,0 +1,639 @@
+[
+  {
+    "name": "Development of Kothapatnam Fishing Harbour",
+    "lat": 15.4392,
+    "lon": 80.1806,
+    "district": "Ongole",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Modernization and up-gradation of Vishakapatnam Fishing Harbour",
+    "lat": 17.6939,
+    "lon": 83.3025,
+    "district": "Vishakapatnam Port",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Development of Budugatlapalem Fishing Harbour",
+    "lat": 18.1492,
+    "lon": 83.7919,
+    "district": "Srikakulam",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Juvvaladinne Fishing Harbour",
+    "lat": 14.8081,
+    "lon": 80.0842,
+    "district": "SPSR Nellore",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Construction of Fishing Harbour",
+    "lat": 17.1941,
+    "lon": 82.61,
+    "district": "Uppada",
+    "state": "East Godavari"
+  },
+  {
+    "name": "Construction of Fishing Harbour",
+    "lat": 15.7108,
+    "lon": 80.3569,
+    "district": "Vodarevu",
+    "state": "Prakasham"
+  },
+  {
+    "name": "Construction of Fishing Harbour",
+    "lat": 16.2475,
+    "lon": 81.3184,
+    "district": "Machilipattinam",
+    "state": "Krishna"
+  },
+  {
+    "name": "Construction of Fishing Harbour",
+    "lat": 16.4944,
+    "lon": 81.0927,
+    "district": "Nizampattinam",
+    "state": "Guntur"
+  },
+  {
+    "name": "Development of Smart and Integrated Fishing Harbour at Jakhau",
+    "lat": 23.2394,
+    "lon": 68.6,
+    "district": "Kutch",
+    "state": "Gujarat"
+  },
+  {
+    "name": "3rd Stage of Mangarol Fishing Harbour",
+    "lat": 21.1047,
+    "lon": 70.1046,
+    "district": "Junagadh",
+    "state": "Gujarat"
+  },
+  {
+    "name": "Development of Fishery Harbour at Navabandar",
+    "lat": 20.7426,
+    "lon": 71.0805,
+    "district": "Junagadh",
+    "state": "Gujarat"
+  },
+  {
+    "name": "Development of Fishery harbour at Madhwad",
+    "lat": 20.6987,
+    "lon": 70.8335,
+    "district": "Junagadh",
+    "state": "Gujarat"
+  },
+  {
+    "name": "Development of Fishery Harbour at Veraval \u2013 Phase 2",
+    "lat": 20.8998,
+    "lon": 70.3667,
+    "district": "Gir Somnath",
+    "state": "Gujarat"
+  },
+  {
+    "name": "Development of Fishery Harbour Porbandar \u2013 Phase 2",
+    "lat": 21.6365,
+    "lon": 69.5833,
+    "district": "Porbandar",
+    "state": "Gujarat"
+  },
+  {
+    "name": "Development of Fishery Harbour at Sutrapada",
+    "lat": 20.8354,
+    "lon": 70.4861,
+    "district": "Gir Somnath",
+    "state": "Gujarat"
+  },
+  {
+    "name": "Modernisation and Upgradation of Mangalore Fishing Harbour",
+    "lat": 12.8564,
+    "lon": 74.8308,
+    "district": "Dakshina Kannada",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Modernisation of Malpe Fishing Harbour",
+    "lat": 13.3478,
+    "lon": 74.7006,
+    "district": "Udupi",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Modernisation of Gangoli Fishing Harbour",
+    "lat": 13.6497,
+    "lon": 74.6744,
+    "district": "Udupi",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Maintenance Dredging at Amadalli Fishing Harbour",
+    "lat": 14.7464,
+    "lon": 74.2278,
+    "district": "Uttar Kannada",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Dredging work at Tadari Fishing Harbour",
+    "lat": 14.5257,
+    "lon": 74.3549,
+    "district": "Uttar Kannada",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Kulai Fishing Harbour",
+    "lat": 12.9661,
+    "lon": 74.765,
+    "district": "Mangalore",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Hejmadi Kodi Fishing Harbour",
+    "lat": 13.0864,
+    "lon": 74.772,
+    "district": "Udupi",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Modernization and up-gradation of Cochin Fishing Harbour at Thoppumpady",
+    "lat": 9.9389,
+    "lon": 76.2622,
+    "district": "Cochin",
+    "state": "Ernakulam"
+  },
+  {
+    "name": "Expansion of Muthalapozhy Fishing Harbour",
+    "lat": 8.63328,
+    "lon": 76.78875,
+    "district": "Thiruvanathapuram",
+    "state": "Kerala"
+  },
+  {
+    "name": "Expansion of Kasaragod Fishing Harbour",
+    "lat": 12.4758,
+    "lon": 74.9934,
+    "district": "Kasaragod",
+    "state": "Kerala"
+  },
+  {
+    "name": "Upgradation and modernization of Harbour in Ponnani",
+    "lat": 10.7833,
+    "lon": 75.9167,
+    "district": "Malappuram",
+    "state": "Kerala"
+  },
+  {
+    "name": "Upgradation and modernization of Harbour in Puthiyappa",
+    "lat": 11.3202,
+    "lon": 75.7467,
+    "district": "Kozhikode",
+    "state": "Kerala"
+  },
+  {
+    "name": "Upgradation and modernization of Harbour in Koyilandy",
+    "lat": 11.434271,
+    "lon": 75.691214,
+    "district": "Kozhikode",
+    "state": "Kerala"
+  },
+  {
+    "name": "Maintenance dredging of existing harbor in Kayamkulam",
+    "lat": 9.1167,
+    "lon": 76.4667,
+    "district": "Kollam",
+    "state": "Kerala"
+  },
+  {
+    "name": "Maintenance dredging of existing harbor in Chettuva",
+    "lat": 10.515595,
+    "lon": 76.041327,
+    "district": "Trissur",
+    "state": "Kerala"
+  },
+  {
+    "name": "Maintenance dredging of existing harbor in Ponnani",
+    "lat": 10.7839,
+    "lon": 75.9167,
+    "district": "Malappuram",
+    "state": "Kerala"
+  },
+  {
+    "name": "Maintenance dredging of existing harbor in Beypore",
+    "lat": 11.1752,
+    "lon": 75.8139,
+    "district": "Kozhikode",
+    "state": "Kerala"
+  },
+  {
+    "name": "Maintenance dredging of existing harbor in Puthiyappa",
+    "lat": 11.3202,
+    "lon": 75.7467,
+    "district": "Kozhikode",
+    "state": "Kerala"
+  },
+  {
+    "name": "Development of Arthungal Fishing Harbor (Balance work)",
+    "lat": 9.6714,
+    "lon": 76.2917,
+    "district": "Alappuzha",
+    "state": "Kerala"
+  },
+  {
+    "name": "Development of Mallet Bunder Fishing Harbour",
+    "lat": 18.9532,
+    "lon": 72.8508,
+    "district": "Ratnagiri-Sindhudurg",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Modernisation of Sassoon Dock Fishing Harbour",
+    "lat": 18.91,
+    "lon": 72.82,
+    "district": "Mumbai",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Karanja Fishing Harbour (Revised)",
+    "lat": 18.8369,
+    "lon": 72.925,
+    "district": "Raigad",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Anandwadi (Fishing Harbour)",
+    "lat": 16.3786,
+    "lon": 73.3749,
+    "district": "Sindhudurg",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Construction of Fisheries Fishing Harbour at Jeevana",
+    "lat": 18.0511,
+    "lon": 72.9992,
+    "district": "Taluka Shrivardhan",
+    "state": "District Raigad"
+  },
+  {
+    "name": "Construction of Fisheries Fishing Harbour at Bharadkhol",
+    "lat": 18.1394,
+    "lon": 72.9822,
+    "district": "Near Shrivardhan",
+    "state": "District Raigad"
+  },
+  {
+    "name": "Construction of Fisheries Fishing Harbour at Harnai",
+    "lat": 17.8092,
+    "lon": 73.0894,
+    "district": "Taluka Dapoli",
+    "state": "District Ratnagiri"
+  },
+  {
+    "name": "Construction of Fisheries Fishing Harbour at Sakhari Nate",
+    "lat": 16.6476,
+    "lon": 73.3645,
+    "district": "Taluka Rajapur",
+    "state": "District Ratnagiri"
+  },
+  {
+    "name": "Development of Fishing Harbour at Satpati",
+    "lat": 19.7281,
+    "lon": 72.6953,
+    "district": "Near Palghar",
+    "state": "Palghar District"
+  },
+  {
+    "name": "Development of Smart and Integrated Fishing Harbour at Karaikal",
+    "lat": 10.9181,
+    "lon": 79.8469,
+    "district": "Karaikal",
+    "state": "Puducherry"
+  },
+  {
+    "name": "Development of Smart and Integrated Fishing Harbour at Vanakbara",
+    "lat": 20.721058,
+    "lon": 70.876962,
+    "district": "Vanakbara",
+    "state": "Diu"
+  },
+  {
+    "name": "Modernisation of Paradip Fishing Harbour",
+    "lat": 20.288211,
+    "lon": 86.704052,
+    "district": "Jagatsinghpur",
+    "state": "Odisha"
+  },
+  {
+    "name": "Development of Stage-II Fishing Harbour at Nuagarh (Astranga)",
+    "lat": 19.3077,
+    "lon": 84.9657,
+    "district": "Puri",
+    "state": "Odisha"
+  },
+  {
+    "name": "Construction of Fishing Harbour at Thengaithittu (Arikamedu section)",
+    "lat": 13.0253,
+    "lon": 79.8658,
+    "district": "Arian",
+    "state": "Puducherry"
+  },
+  {
+    "name": "Upgradation of Puducherry Fishing Harbour",
+    "lat": 11.912,
+    "lon": 79.8231,
+    "district": "Thengaithittu District",
+    "state": "Puducherry"
+  },
+  {
+    "name": "Chandipur Fishing Harbour",
+    "lat": 21.4723,
+    "lon": 87.6271,
+    "district": "Balasore",
+    "state": "Odisha"
+  },
+  {
+    "name": "Up-gradation of Pazhayar Fishing Harbour",
+    "lat": 11.3589,
+    "lon": 79.8236,
+    "district": "Mayiladuthurai",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Modernization and up-gradation of Chennai Fishing Harbour",
+    "lat": 13.2108,
+    "lon": 80.4957,
+    "district": "Chennai",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Maintenance Dredging of Colachel Fishing Harbour",
+    "lat": 8.1735,
+    "lon": 77.2503,
+    "district": "Kanniyakumari",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Extension of T-Jetty at Tharuvaikulam",
+    "lat": 8.8878,
+    "lon": 78.1747,
+    "district": "Thoothukudi",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Modernisation and upgradation of existing fishing harbour at Petuaghat",
+    "lat": 21.795,
+    "lon": 87.881,
+    "district": "Medinipur",
+    "state": "West Bengal"
+  },
+  {
+    "name": "Modernisation and upgradation of existing fishing harbour at Shankarpur",
+    "lat": 22.2839,
+    "lon": 88.3367,
+    "district": "Purba Medinipur",
+    "state": "West Bengal"
+  },
+  {
+    "name": "Modernisation and upgradation of existing fishing harbour at Frasergunj",
+    "lat": 21.9808,
+    "lon": 88.4319,
+    "district": "South 24 Parganas",
+    "state": "West Bengal"
+  },
+  {
+    "name": "Modernisation and upgradation of existing fishing harbour at Kakdwip",
+    "lat": 21.7794,
+    "lon": 88.2845,
+    "district": "South 24 Parganas",
+    "state": "West Bengal"
+  },
+  {
+    "name": "Rajayyapeta fish landing centre",
+    "lat": 17.3514,
+    "lon": 82.7211,
+    "district": "Visakhapatnam",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Chintapalli Fish Landing Centre in Vizianagram District",
+    "lat": 18.1175,
+    "lon": 84.0861,
+    "district": "Vizianagram",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Rayadaruvu Fish Landing Centre",
+    "lat": 14.4064,
+    "lon": 80.3611,
+    "district": "Tirupati",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Dhondavaka Fish Landing Centre",
+    "lat": 17.3714,
+    "lon": 82.7519,
+    "district": "Anakapalli",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Uppalanka Fish Landing Centre",
+    "lat": 17.1689,
+    "lon": 82.3858,
+    "district": "Kakinada",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Biyyaputhippa Fish Landing Centre",
+    "lat": 16.5581,
+    "lon": 82.1936,
+    "district": "West Godavari",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Juvvaladinne",
+    "lat": 14.8081,
+    "lon": 80.0841,
+    "district": "SPSR Nellore",
+    "state": "Andhra Pradesh"
+  },
+  {
+    "name": "Chunari Village Fish Landing Centre",
+    "lat": 26.11,
+    "lon": 90.33,
+    "district": "Goalpara",
+    "state": "Assam"
+  },
+  {
+    "name": "Maintenance Dredging at Harwada & Belekeri Fish Landing Centres",
+    "lat": 14.7114,
+    "lon": 74.2642,
+    "district": "Uttar Kannada",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Training walls at Alvekodi and Tenginagundi FLCs",
+    "lat": 14.0292,
+    "lon": 74.5036,
+    "district": "Uttar Kannada District",
+    "state": "Karnataka"
+  },
+  {
+    "name": "Shiroda fish landing centre in Vengurla taluk",
+    "lat": 15.7575,
+    "lon": 73.6692,
+    "district": "Ratnagiri-Sindhudurg",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Dandi-Machkhar fish landing centre in Malvan taluk",
+    "lat": 16.0513,
+    "lon": 73.4686,
+    "district": "Ratnagiri-Sindhudurg",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Taramumbri fish landing centre in Devgad taluk",
+    "lat": 16.3713,
+    "lon": 73.4688,
+    "district": "Ratnagiri-Sindhudurg",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Dabhol fish landing centre in Dapoli taluk",
+    "lat": 17.5143,
+    "lon": 73.1772,
+    "district": "Raigad",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Korlai fish landing centre in Murud taluk",
+    "lat": 18.5333,
+    "lon": 72.9103,
+    "district": "Raigad",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Palshet fish landing centre in Guhagar taluk",
+    "lat": 17.4396,
+    "lon": 73.1988,
+    "district": "Ratnagiri",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Revdanda fish landing centre in Alibag taluk",
+    "lat": 18.0681,
+    "lon": 72.974,
+    "district": "Raigad",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Asgoli fish landing centre in Guhagar taluk",
+    "lat": 17.4644,
+    "lon": 73.1931,
+    "district": "Ratnagiri",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Budhal fish landing centre in Guhagar taluk",
+    "lat": 17.4067,
+    "lon": 73.1749,
+    "district": "Ratnagiri",
+    "state": "Maharashtra"
+  },
+  {
+    "name": "Construction of Fish Landing Centre at Periakalapet",
+    "lat": 12.0253,
+    "lon": 79.8658,
+    "district": "Periakalapet",
+    "state": "Puducherry"
+  },
+  {
+    "name": "Construction of Fish Landing Centre at Nallavadu",
+    "lat": 11.8586,
+    "lon": 79.8014,
+    "district": "Nallavadu",
+    "state": "Puducherry"
+  },
+  {
+    "name": "Establishment of Fish Landing Centre at Sorana",
+    "lat": 19.8493,
+    "lon": 85.4077,
+    "district": "Khorda",
+    "state": "Odisha"
+  },
+  {
+    "name": "Establishment of Fish Landing Centre at Kalupahaghat",
+    "lat": 19.873,
+    "lon": 85.4077,
+    "district": "Khorda",
+    "state": "Odisha"
+  },
+  {
+    "name": "Establishment of Fish Landing Centre at Kasia",
+    "lat": 21.0786,
+    "lon": 86.8383,
+    "district": "Badruk",
+    "state": "Odisha"
+  },
+  {
+    "name": "Nettukuppam Fish Landing Centre",
+    "lat": 13.2307,
+    "lon": 80.3271,
+    "district": "Chennai",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Thazankuppam Fish Landing Centre",
+    "lat": 13.2261,
+    "lon": 80.3219,
+    "district": "Chennai",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Arangankuppam Fish Landing Centre",
+    "lat": 13.5455,
+    "lon": 80.0835,
+    "district": "Thiruvallur",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Goonankuppam Fish Landing Centre",
+    "lat": 13.4249,
+    "lon": 80.3245,
+    "district": "Thiruvallur",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Mookaiyur Fishing Harbour",
+    "lat": 9.1274,
+    "lon": 78.4818,
+    "district": "Ramanathapuram",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Kunthukal Fish Landing Centre",
+    "lat": 9.259655,
+    "lon": 79.224781,
+    "district": "Ramanathapuram",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Construction of Fish Landing Centre at Mandapam (North)",
+    "lat": 9.276912,
+    "lon": 79.151291,
+    "district": "Ramanathapuram",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Construction of Fish Landing Centre at Mandapam (South)",
+    "lat": 9.277692,
+    "lon": 79.155847,
+    "district": "Ramanathapuram",
+    "state": "Tamil Nadu"
+  },
+  {
+    "name": "Construction of FLC at Sunnambukulam",
+    "lat": 13.4908,
+    "lon": 80.1547,
+    "district": "Thiruvallur",
+    "state": "Tamil Nadu"
+  }
+]

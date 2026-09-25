@@ -1,6 +1,186 @@
 [
   {
-    "id": "infra_0",
+    "id": "infra_pmmsy_0",
+    "name": "Development of Kothapatnam Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Andhra Pradesh",
+    "district": "Ongole",
+    "latitude": 15.4392,
+    "longitude": 80.1806,
+    "associatedLocationId": "loc_252",
+    "distanceFromAssociatedLocationKm": 16.24,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_1",
+    "name": "Modernization and up-gradation of Vishakapatnam Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Andhra Pradesh",
+    "district": "Vishakapatnam Port",
+    "latitude": 17.6939,
+    "longitude": 83.3025,
+    "associatedLocationId": "loc_7326",
+    "distanceFromAssociatedLocationKm": 3.11,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_2",
+    "name": "Development of Budugatlapalem Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Andhra Pradesh",
+    "district": "Srikakulam",
+    "latitude": 18.1492,
+    "longitude": 83.7919,
+    "associatedLocationId": "loc_391",
+    "distanceFromAssociatedLocationKm": 20.04,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_3",
+    "name": "Juvvaladinne Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Andhra Pradesh",
+    "district": "SPSR Nellore",
+    "latitude": 14.8081,
+    "longitude": 80.0842,
+    "associatedLocationId": "loc_7146",
+    "distanceFromAssociatedLocationKm": 1.48,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_4",
+    "name": "Construction of Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "East Godavari",
+    "district": "Uppada",
+    "latitude": 17.1941,
+    "longitude": 82.61,
+    "associatedLocationId": "loc_1054",
+    "distanceFromAssociatedLocationKm": 19.56,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_5",
+    "name": "Construction of Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Prakasham",
+    "district": "Vodarevu",
+    "latitude": 15.7108,
+    "longitude": 80.3569,
+    "associatedLocationId": "loc_1501",
+    "distanceFromAssociatedLocationKm": 9.85,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_6",
+    "name": "Construction of Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Krishna",
+    "district": "Machilipattinam",
+    "latitude": 16.2475,
+    "longitude": 81.3184,
+    "associatedLocationId": "loc_1307",
+    "distanceFromAssociatedLocationKm": 8.03,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_7",
+    "name": "Construction of Fishing Harbour",
+    "type": "fishing_harbour",
+    "state": "Guntur",
+    "district": "Nizampattinam",
+    "latitude": 16.4944,
+    "longitude": 81.0927,
+    "associatedLocationId": "loc_454",
+    "distanceFromAssociatedLocationKm": 12.26,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_8",
+    "name": "Development of Smart and Integrated Fishing Harbour at Jakhau",
+    "type": "fishing_harbour",
+    "state": "Gujarat",
+    "district": "Kutch",
+    "latitude": 23.2394,
+    "longitude": 68.6,
+    "associatedLocationId": "loc_7871",
+    "distanceFromAssociatedLocationKm": 21.17,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_9",
     "name": "3rd Stage of Mangarol Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Gujarat",
@@ -11,36 +191,136 @@
     "distanceFromAssociatedLocationKm": 2.26,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_1",
+    "id": "infra_pmmsy_10",
+    "name": "Development of Fishery Harbour at Navabandar",
+    "type": "fishing_harbour",
+    "state": "Gujarat",
+    "district": "Junagadh",
+    "latitude": 20.7426,
+    "longitude": 71.0805,
+    "associatedLocationId": "loc_934",
+    "distanceFromAssociatedLocationKm": 9.99,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_11",
+    "name": "Development of Fishery harbour at Madhwad",
+    "type": "fishing_harbour",
+    "state": "Gujarat",
+    "district": "Junagadh",
+    "latitude": 20.6987,
+    "longitude": 70.8335,
+    "associatedLocationId": "loc_934",
+    "distanceFromAssociatedLocationKm": 25.37,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_12",
+    "name": "Development of Fishery Harbour at Veraval \u2013 Phase 2",
+    "type": "fishing_harbour",
+    "state": "Gujarat",
+    "district": "Gir Somnath",
+    "latitude": 20.8998,
+    "longitude": 70.3667,
+    "associatedLocationId": "loc_308",
+    "distanceFromAssociatedLocationKm": 0.89,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_13",
+    "name": "Development of Fishery Harbour Porbandar \u2013 Phase 2",
+    "type": "fishing_harbour",
+    "state": "Gujarat",
+    "district": "Porbandar",
+    "latitude": 21.6365,
+    "longitude": 69.5833,
+    "associatedLocationId": "loc_354",
+    "distanceFromAssociatedLocationKm": 2.76,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_14",
+    "name": "Development of Fishery Harbour at Sutrapada",
+    "type": "fishing_harbour",
+    "state": "Gujarat",
+    "district": "Gir Somnath",
+    "latitude": 20.8354,
+    "longitude": 70.4861,
+    "associatedLocationId": "loc_2298",
+    "distanceFromAssociatedLocationKm": 0.95,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_15",
     "name": "Modernisation and Upgradation of Mangalore Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
     "district": "Dakshina Kannada",
     "latitude": 12.8564,
     "longitude": 74.8308,
-    "associatedLocationId": "loc_925",
-    "distanceFromAssociatedLocationKm": 6.5,
+    "associatedLocationId": "loc_109",
+    "distanceFromAssociatedLocationKm": 7.3,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_2",
+    "id": "infra_pmmsy_16",
     "name": "Modernisation of Malpe Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
@@ -51,16 +331,16 @@
     "distanceFromAssociatedLocationKm": 0.41,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_3",
+    "id": "infra_pmmsy_17",
     "name": "Modernisation of Gangoli Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
@@ -71,16 +351,16 @@
     "distanceFromAssociatedLocationKm": 0.4,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_4",
+    "id": "infra_pmmsy_18",
     "name": "Maintenance Dredging at Amadalli Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
@@ -91,16 +371,16 @@
     "distanceFromAssociatedLocationKm": 7.9,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_5",
+    "id": "infra_pmmsy_19",
     "name": "Dredging work at Tadari Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
@@ -111,77 +391,77 @@
     "distanceFromAssociatedLocationKm": 4.92,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_6",
+    "id": "infra_pmmsy_20",
     "name": "Kulai Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
     "district": "Mangalore",
     "latitude": 12.9661,
     "longitude": 74.765,
-    "associatedLocationId": "loc_5718",
-    "distanceFromAssociatedLocationKm": 7.92,
+    "associatedLocationId": "loc_109",
+    "distanceFromAssociatedLocationKm": 11.26,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_7",
+    "id": "infra_pmmsy_21",
     "name": "Hejmadi Kodi Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Karnataka",
     "district": "Udupi",
     "latitude": 13.0864,
     "longitude": 74.772,
-    "associatedLocationId": "loc_3393",
-    "distanceFromAssociatedLocationKm": 2.39,
+    "associatedLocationId": "loc_323",
+    "distanceFromAssociatedLocationKm": 27.75,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_8",
-    "name": "Cochin Fishing Harbour at Thoppumpady",
+    "id": "infra_pmmsy_22",
+    "name": "Modernization and up-gradation of Cochin Fishing Harbour at Thoppumpady",
     "type": "fishing_harbour",
-    "state": "Kerala",
-    "district": "Ernakulam",
+    "state": "Ernakulam",
+    "district": "Cochin",
     "latitude": 9.9389,
     "longitude": 76.2622,
     "associatedLocationId": "loc_84",
     "distanceFromAssociatedLocationKm": 0.24,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_9",
-    "name": "Muthalapozhy Fishing Harbour",
+    "id": "infra_pmmsy_23",
+    "name": "Expansion of Muthalapozhy Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Kerala",
     "district": "Thiruvanathapuram",
@@ -191,17 +471,17 @@
     "distanceFromAssociatedLocationKm": 1.65,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_10",
-    "name": "Kasaragod Fishing Harbour",
+    "id": "infra_pmmsy_24",
+    "name": "Expansion of Kasaragod Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Kerala",
     "district": "Kasaragod",
@@ -211,57 +491,237 @@
     "distanceFromAssociatedLocationKm": 1.58,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_11",
-    "name": "Mallet Bunder Fishing Harbour",
+    "id": "infra_pmmsy_25",
+    "name": "Upgradation and modernization of Harbour in Ponnani",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Malappuram",
+    "latitude": 10.7833,
+    "longitude": 75.9167,
+    "associatedLocationId": "loc_502",
+    "distanceFromAssociatedLocationKm": 2.04,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_26",
+    "name": "Upgradation and modernization of Harbour in Puthiyappa",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Kozhikode",
+    "latitude": 11.3202,
+    "longitude": 75.7467,
+    "associatedLocationId": "loc_94",
+    "distanceFromAssociatedLocationKm": 8.83,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_27",
+    "name": "Upgradation and modernization of Harbour in Koyilandy",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Kozhikode",
+    "latitude": 11.434271,
+    "longitude": 75.691214,
+    "associatedLocationId": "loc_749",
+    "distanceFromAssociatedLocationKm": 0.47,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_28",
+    "name": "Maintenance dredging of existing harbor in Kayamkulam",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Kollam",
+    "latitude": 9.1167,
+    "longitude": 76.4667,
+    "associatedLocationId": "loc_789",
+    "distanceFromAssociatedLocationKm": 8.15,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_29",
+    "name": "Maintenance dredging of existing harbor in Chettuva",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Trissur",
+    "latitude": 10.515595,
+    "longitude": 76.041327,
+    "associatedLocationId": "loc_1525",
+    "distanceFromAssociatedLocationKm": 1.64,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_30",
+    "name": "Maintenance dredging of existing harbor in Ponnani",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Malappuram",
+    "latitude": 10.7839,
+    "longitude": 75.9167,
+    "associatedLocationId": "loc_502",
+    "distanceFromAssociatedLocationKm": 2.1,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_31",
+    "name": "Maintenance dredging of existing harbor in Beypore",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Kozhikode",
+    "latitude": 11.1752,
+    "longitude": 75.8139,
+    "associatedLocationId": "loc_765",
+    "distanceFromAssociatedLocationKm": 0.94,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_32",
+    "name": "Maintenance dredging of existing harbor in Puthiyappa",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Kozhikode",
+    "latitude": 11.3202,
+    "longitude": 75.7467,
+    "associatedLocationId": "loc_94",
+    "distanceFromAssociatedLocationKm": 8.83,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_33",
+    "name": "Development of Arthungal Fishing Harbor (Balance work)",
+    "type": "fishing_harbour",
+    "state": "Kerala",
+    "district": "Alappuzha",
+    "latitude": 9.6714,
+    "longitude": 76.2917,
+    "associatedLocationId": "loc_217",
+    "distanceFromAssociatedLocationKm": 20.52,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_34",
+    "name": "Development of Mallet Bunder Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Maharashtra",
-    "district": "Mumbai",
+    "district": "Ratnagiri-Sindhudurg",
     "latitude": 18.9532,
     "longitude": 72.8508,
     "associatedLocationId": "loc_7381",
     "distanceFromAssociatedLocationKm": 7.06,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_12",
-    "name": "Sassoon Dock Fishing Harbour",
+    "id": "infra_pmmsy_35",
+    "name": "Modernisation of Sassoon Dock Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Maharashtra",
     "district": "Mumbai",
     "latitude": 18.91,
     "longitude": 72.82,
-    "associatedLocationId": "loc_5698",
-    "distanceFromAssociatedLocationKm": 9.93,
+    "associatedLocationId": "loc_0",
+    "distanceFromAssociatedLocationKm": 19.27,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_13",
-    "name": "Karanja Fishing Harbour",
+    "id": "infra_pmmsy_36",
+    "name": "Karanja Fishing Harbour (Revised)",
     "type": "fishing_harbour",
     "state": "Maharashtra",
     "district": "Raigad",
@@ -271,17 +731,17 @@
     "distanceFromAssociatedLocationKm": 3.97,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_14",
-    "name": "Anandwadi Fishing Harbour",
+    "id": "infra_pmmsy_37",
+    "name": "Anandwadi (Fishing Harbour)",
     "type": "fishing_harbour",
     "state": "Maharashtra",
     "district": "Sindhudurg",
@@ -291,117 +751,117 @@
     "distanceFromAssociatedLocationKm": 20.01,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_15",
-    "name": "Jeevana Fishing Harbour",
+    "id": "infra_pmmsy_38",
+    "name": "Construction of Fisheries Fishing Harbour at Jeevana",
     "type": "fishing_harbour",
-    "state": "Maharashtra",
-    "district": "Raigad",
+    "state": "District Raigad",
+    "district": "Taluka Shrivardhan",
     "latitude": 18.0511,
     "longitude": 72.9992,
     "associatedLocationId": "loc_3758",
     "distanceFromAssociatedLocationKm": 0.31,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_16",
-    "name": "Bharadkhol Fishing Harbour",
+    "id": "infra_pmmsy_39",
+    "name": "Construction of Fisheries Fishing Harbour at Bharadkhol",
     "type": "fishing_harbour",
-    "state": "Maharashtra",
-    "district": "Raigad",
+    "state": "District Raigad",
+    "district": "Near Shrivardhan",
     "latitude": 18.1394,
     "longitude": 72.9822,
-    "associatedLocationId": "loc_5879",
-    "distanceFromAssociatedLocationKm": 4.14,
+    "associatedLocationId": "loc_3758",
+    "distanceFromAssociatedLocationKm": 9.79,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_17",
-    "name": "Harnai Fishing Harbour",
+    "id": "infra_pmmsy_40",
+    "name": "Construction of Fisheries Fishing Harbour at Harnai",
     "type": "fishing_harbour",
-    "state": "Maharashtra",
-    "district": "Ratnagiri",
+    "state": "District Ratnagiri",
+    "district": "Taluka Dapoli",
     "latitude": 17.8092,
     "longitude": 73.0894,
     "associatedLocationId": "loc_5820",
     "distanceFromAssociatedLocationKm": 0.9,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_18",
-    "name": "Sakhari Nate Fishing Harbour",
+    "id": "infra_pmmsy_41",
+    "name": "Construction of Fisheries Fishing Harbour at Sakhari Nate",
     "type": "fishing_harbour",
-    "state": "Maharashtra",
-    "district": "Ratnagiri",
+    "state": "District Ratnagiri",
+    "district": "Taluka Rajapur",
     "latitude": 16.6476,
     "longitude": 73.3645,
     "associatedLocationId": "loc_7450",
     "distanceFromAssociatedLocationKm": 10.81,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_19",
-    "name": "Satpati Fishing Harbour",
+    "id": "infra_pmmsy_42",
+    "name": "Development of Fishing Harbour at Satpati",
     "type": "fishing_harbour",
-    "state": "Maharashtra",
-    "district": "Palghar",
+    "state": "Palghar District",
+    "district": "Near Palghar",
     "latitude": 19.7281,
     "longitude": 72.6953,
     "associatedLocationId": "loc_6203",
     "distanceFromAssociatedLocationKm": 4.15,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_20",
-    "name": "Karaikal Fishing Harbour",
+    "id": "infra_pmmsy_43",
+    "name": "Development of Smart and Integrated Fishing Harbour at Karaikal",
     "type": "fishing_harbour",
     "state": "Puducherry",
     "district": "Karaikal",
@@ -411,17 +871,17 @@
     "distanceFromAssociatedLocationKm": 1.49,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_21",
-    "name": "Vanakbara Fishing Harbour",
+    "id": "infra_pmmsy_44",
+    "name": "Development of Smart and Integrated Fishing Harbour at Vanakbara",
     "type": "fishing_harbour",
     "state": "Diu",
     "district": "Vanakbara",
@@ -431,17 +891,17 @@
     "distanceFromAssociatedLocationKm": 5.36,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_22",
-    "name": "Paradip Fishing Harbour",
+    "id": "infra_pmmsy_45",
+    "name": "Modernisation of Paradip Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Odisha",
     "district": "Jagatsinghpur",
@@ -451,17 +911,17 @@
     "distanceFromAssociatedLocationKm": 10.45,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_23",
-    "name": "Stage-II Fishing Harbour at Nuagarh (Astranga)",
+    "id": "infra_pmmsy_46",
+    "name": "Development of Stage-II Fishing Harbour at Nuagarh (Astranga)",
     "type": "fishing_harbour",
     "state": "Odisha",
     "district": "Puri",
@@ -471,17 +931,17 @@
     "distanceFromAssociatedLocationKm": 1.31,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_24",
-    "name": "Thengaithittu Fishing Harbour (Arikamedu section)",
+    "id": "infra_pmmsy_47",
+    "name": "Construction of Fishing Harbour at Thengaithittu (Arikamedu section)",
     "type": "fishing_harbour",
     "state": "Puducherry",
     "district": "Arian",
@@ -491,36 +951,36 @@
     "distanceFromAssociatedLocationKm": 20.09,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_25",
-    "name": "Puducherry Fishing Harbour",
+    "id": "infra_pmmsy_48",
+    "name": "Upgradation of Puducherry Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Puducherry",
     "district": "Thengaithittu District",
     "latitude": 11.912,
     "longitude": 79.8231,
-    "associatedLocationId": "loc_7424",
-    "distanceFromAssociatedLocationKm": 2.1,
+    "associatedLocationId": "loc_80",
+    "distanceFromAssociatedLocationKm": 2.53,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_26",
+    "id": "infra_pmmsy_49",
     "name": "Chandipur Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Odisha",
@@ -531,17 +991,17 @@
     "distanceFromAssociatedLocationKm": 20.55,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_27",
-    "name": "Pazhayar Fishing Harbour",
+    "id": "infra_pmmsy_50",
+    "name": "Up-gradation of Pazhayar Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Tamil Nadu",
     "district": "Mayiladuthurai",
@@ -551,37 +1011,37 @@
     "distanceFromAssociatedLocationKm": 10.85,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_28",
-    "name": "Chennai Fishing Harbour",
+    "id": "infra_pmmsy_51",
+    "name": "Modernization and up-gradation of Chennai Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Tamil Nadu",
     "district": "Chennai",
     "latitude": 13.2108,
     "longitude": 80.4957,
-    "associatedLocationId": "loc_1600",
-    "distanceFromAssociatedLocationKm": 19.39,
+    "associatedLocationId": "loc_5",
+    "distanceFromAssociatedLocationKm": 27.21,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_29",
-    "name": "Colachel Fishing Harbour",
+    "id": "infra_pmmsy_52",
+    "name": "Maintenance Dredging of Colachel Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Tamil Nadu",
     "district": "Kanniyakumari",
@@ -591,117 +1051,37 @@
     "distanceFromAssociatedLocationKm": 1.09,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_30",
-    "name": "Tharangampadi Fishing harbour",
+    "id": "infra_pmmsy_53",
+    "name": "Extension of T-Jetty at Tharuvaikulam",
     "type": "fishing_harbour",
     "state": "Tamil Nadu",
-    "district": "Nagapattinam",
-    "latitude": 11.0319,
-    "longitude": 79.8542,
-    "associatedLocationId": "loc_2620",
-    "distanceFromAssociatedLocationKm": 0.47,
+    "district": "Thoothukudi",
+    "latitude": 8.8878,
+    "longitude": 78.1747,
+    "associatedLocationId": "loc_130",
+    "distanceFromAssociatedLocationKm": 14.11,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_31",
-    "name": "ThiruvottriyurKuppam Fishing harbour",
-    "type": "fishing_harbour",
-    "state": "Tamil Nadu",
-    "district": "Tiruvallur",
-    "latitude": 13.1631,
-    "longitude": 80.3053,
-    "associatedLocationId": "loc_210",
-    "distanceFromAssociatedLocationKm": 0.66,
-    "source": {
-      "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
-      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
-      "accessedAt": "2026-09-25"
-    },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
-    "notes": ""
-  },
-  {
-    "id": "infra_32",
-    "name": "Mudhunagar Fishing Harbour",
-    "type": "fishing_harbour",
-    "state": "Tamil Nadu",
-    "district": "Cuddalore",
-    "latitude": 11.7144,
-    "longitude": 79.7753,
-    "associatedLocationId": "loc_304",
-    "distanceFromAssociatedLocationKm": 4.73,
-    "source": {
-      "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
-      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
-      "accessedAt": "2026-09-25"
-    },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
-    "notes": ""
-  },
-  {
-    "id": "infra_33",
-    "name": "Arcottuthurai Fishing Harbour",
-    "type": "fishing_harbour",
-    "state": "Tamil Nadu",
-    "district": "Nagapattinam",
-    "latitude": 10.7608,
-    "longitude": 79.8497,
-    "associatedLocationId": "loc_520",
-    "distanceFromAssociatedLocationKm": 0.79,
-    "source": {
-      "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
-      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
-      "accessedAt": "2026-09-25"
-    },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
-    "notes": ""
-  },
-  {
-    "id": "infra_34",
-    "name": "Vellapallam Fishing Harbour",
-    "type": "fishing_harbour",
-    "state": "Tamil Nadu",
-    "district": "Nagapattinam",
-    "latitude": 10.5111,
-    "longitude": 79.8311,
-    "associatedLocationId": "loc_4229",
-    "distanceFromAssociatedLocationKm": 8.52,
-    "source": {
-      "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
-      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
-      "accessedAt": "2026-09-25"
-    },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
-    "notes": ""
-  },
-  {
-    "id": "infra_35",
-    "name": "Petuaghat fishing harbour",
+    "id": "infra_pmmsy_54",
+    "name": "Modernisation and upgradation of existing fishing harbour at Petuaghat",
     "type": "fishing_harbour",
     "state": "West Bengal",
     "district": "Medinipur",
@@ -711,17 +1091,17 @@
     "distanceFromAssociatedLocationKm": 13.74,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_36",
-    "name": "Shankarpur fishing harbour",
+    "id": "infra_pmmsy_55",
+    "name": "Modernisation and upgradation of existing fishing harbour at Shankarpur",
     "type": "fishing_harbour",
     "state": "West Bengal",
     "district": "Purba Medinipur",
@@ -731,17 +1111,17 @@
     "distanceFromAssociatedLocationKm": 13.39,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_37",
-    "name": "Frasergunj fishing harbour",
+    "id": "infra_pmmsy_56",
+    "name": "Modernisation and upgradation of existing fishing harbour at Frasergunj",
     "type": "fishing_harbour",
     "state": "West Bengal",
     "district": "South 24 Parganas",
@@ -751,17 +1131,17 @@
     "distanceFromAssociatedLocationKm": 21.65,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_38",
-    "name": "Kakdwip fishing harbour",
+    "id": "infra_pmmsy_57",
+    "name": "Modernisation and upgradation of existing fishing harbour at Kakdwip",
     "type": "fishing_harbour",
     "state": "West Bengal",
     "district": "South 24 Parganas",
@@ -771,16 +1151,576 @@
     "distanceFromAssociatedLocationKm": 14.68,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_39",
+    "id": "infra_pmmsy_58",
+    "name": "Rajayyapeta fish landing centre",
+    "type": "fish_landing_centre",
+    "state": "Andhra Pradesh",
+    "district": "Visakhapatnam",
+    "latitude": 17.3514,
+    "longitude": 82.7211,
+    "associatedLocationId": "loc_5660",
+    "distanceFromAssociatedLocationKm": 6.3,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_59",
+    "name": "Chintapalli Fish Landing Centre in Vizianagram District",
+    "type": "fish_landing_centre",
+    "state": "Andhra Pradesh",
+    "district": "Vizianagram",
+    "latitude": 18.1175,
+    "longitude": 84.0861,
+    "associatedLocationId": "loc_391",
+    "distanceFromAssociatedLocationKm": 28.35,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_60",
+    "name": "Rayadaruvu Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Andhra Pradesh",
+    "district": "Tirupati",
+    "latitude": 14.4064,
+    "longitude": 80.3611,
+    "associatedLocationId": "loc_7710",
+    "distanceFromAssociatedLocationKm": 28.88,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_61",
+    "name": "Dhondavaka Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Andhra Pradesh",
+    "district": "Anakapalli",
+    "latitude": 17.3714,
+    "longitude": 82.7519,
+    "associatedLocationId": "loc_5660",
+    "distanceFromAssociatedLocationKm": 5.52,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_62",
+    "name": "Uppalanka Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Andhra Pradesh",
+    "district": "Kakinada",
+    "latitude": 17.1689,
+    "longitude": 82.3858,
+    "associatedLocationId": "loc_7766",
+    "distanceFromAssociatedLocationKm": 11.03,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_63",
+    "name": "Biyyaputhippa Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Andhra Pradesh",
+    "district": "West Godavari",
+    "latitude": 16.5581,
+    "longitude": 82.1936,
+    "associatedLocationId": "loc_7762",
+    "distanceFromAssociatedLocationKm": 10.26,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_64",
+    "name": "Juvvaladinne",
+    "type": "fishing_harbour",
+    "state": "Andhra Pradesh",
+    "district": "SPSR Nellore",
+    "latitude": 14.8081,
+    "longitude": 80.0841,
+    "associatedLocationId": "loc_7146",
+    "distanceFromAssociatedLocationKm": 1.47,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_65",
+    "name": "Chunari Village Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Assam",
+    "district": "Goalpara",
+    "latitude": 26.11,
+    "longitude": 90.33,
+    "associatedLocationId": null,
+    "distanceFromAssociatedLocationKm": null,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_66",
+    "name": "Maintenance Dredging at Harwada & Belekeri Fish Landing Centres",
+    "type": "fish_landing_centre",
+    "state": "Karnataka",
+    "district": "Uttar Kannada",
+    "latitude": 14.7114,
+    "longitude": 74.2642,
+    "associatedLocationId": "loc_6732",
+    "distanceFromAssociatedLocationKm": 4.56,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_67",
+    "name": "Training walls at Alvekodi and Tenginagundi FLCs",
+    "type": "fish_landing_centre",
+    "state": "Karnataka",
+    "district": "Uttar Kannada District",
+    "latitude": 14.0292,
+    "longitude": 74.5036,
+    "associatedLocationId": "loc_5888",
+    "distanceFromAssociatedLocationKm": 3.22,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_68",
+    "name": "Shiroda fish landing centre in Vengurla taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Ratnagiri-Sindhudurg",
+    "latitude": 15.7575,
+    "longitude": 73.6692,
+    "associatedLocationId": "loc_4301",
+    "distanceFromAssociatedLocationKm": 12.21,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_69",
+    "name": "Dandi-Machkhar fish landing centre in Malvan taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Ratnagiri-Sindhudurg",
+    "latitude": 16.0513,
+    "longitude": 73.4686,
+    "associatedLocationId": "loc_3143",
+    "distanceFromAssociatedLocationKm": 1.13,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_70",
+    "name": "Taramumbri fish landing centre in Devgad taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Ratnagiri-Sindhudurg",
+    "latitude": 16.3713,
+    "longitude": 73.4688,
+    "associatedLocationId": "loc_7450",
+    "distanceFromAssociatedLocationKm": 24.86,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_71",
+    "name": "Dabhol fish landing centre in Dapoli taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Raigad",
+    "latitude": 17.5143,
+    "longitude": 73.1772,
+    "associatedLocationId": "loc_6830",
+    "distanceFromAssociatedLocationKm": 3.74,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_72",
+    "name": "Korlai fish landing centre in Murud taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Raigad",
+    "latitude": 18.5333,
+    "longitude": 72.9103,
+    "associatedLocationId": "loc_4260",
+    "distanceFromAssociatedLocationKm": 23.45,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_73",
+    "name": "Palshet fish landing centre in Guhagar taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Ratnagiri",
+    "latitude": 17.4396,
+    "longitude": 73.1988,
+    "associatedLocationId": "loc_6830",
+    "distanceFromAssociatedLocationKm": 4.99,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_74",
+    "name": "Revdanda fish landing centre in Alibag taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Raigad",
+    "latitude": 18.0681,
+    "longitude": 72.974,
+    "associatedLocationId": "loc_3758",
+    "distanceFromAssociatedLocationKm": 3.31,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_75",
+    "name": "Asgoli fish landing centre in Guhagar taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Ratnagiri",
+    "latitude": 17.4644,
+    "longitude": 73.1931,
+    "associatedLocationId": "loc_6830",
+    "distanceFromAssociatedLocationKm": 2.2,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_76",
+    "name": "Budhal fish landing centre in Guhagar taluk",
+    "type": "fish_landing_centre",
+    "state": "Maharashtra",
+    "district": "Ratnagiri",
+    "latitude": 17.4067,
+    "longitude": 73.1749,
+    "associatedLocationId": "loc_7505",
+    "distanceFromAssociatedLocationKm": 5.26,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_77",
+    "name": "Construction of Fish Landing Centre at Periakalapet",
+    "type": "fish_landing_centre",
+    "state": "Puducherry",
+    "district": "Periakalapet",
+    "latitude": 12.0253,
+    "longitude": 79.8658,
+    "associatedLocationId": "loc_6946",
+    "distanceFromAssociatedLocationKm": 6.57,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_78",
+    "name": "Construction of Fish Landing Centre at Nallavadu",
+    "type": "fish_landing_centre",
+    "state": "Puducherry",
+    "district": "Nallavadu",
+    "latitude": 11.8586,
+    "longitude": 79.8014,
+    "associatedLocationId": "loc_3658",
+    "distanceFromAssociatedLocationKm": 3.72,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_79",
+    "name": "Establishment of Fish Landing Centre at Sorana",
+    "type": "fish_landing_centre",
+    "state": "Odisha",
+    "district": "Khorda",
+    "latitude": 19.8493,
+    "longitude": 85.4077,
+    "associatedLocationId": "loc_6680",
+    "distanceFromAssociatedLocationKm": 9.38,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_80",
+    "name": "Establishment of Fish Landing Centre at Kalupahaghat",
+    "type": "fish_landing_centre",
+    "state": "Odisha",
+    "district": "Khorda",
+    "latitude": 19.873,
+    "longitude": 85.4077,
+    "associatedLocationId": "loc_6680",
+    "distanceFromAssociatedLocationKm": 6.76,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_81",
+    "name": "Establishment of Fish Landing Centre at Kasia",
+    "type": "fish_landing_centre",
+    "state": "Odisha",
+    "district": "Badruk",
+    "latitude": 21.0786,
+    "longitude": 86.8383,
+    "associatedLocationId": "loc_1755",
+    "distanceFromAssociatedLocationKm": 12.23,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_82",
+    "name": "Nettukuppam Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Chennai",
+    "latitude": 13.2307,
+    "longitude": 80.3271,
+    "associatedLocationId": "loc_5",
+    "distanceFromAssociatedLocationKm": 16.74,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_83",
+    "name": "Thazankuppam Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Chennai",
+    "latitude": 13.2261,
+    "longitude": 80.3219,
+    "associatedLocationId": "loc_5",
+    "distanceFromAssociatedLocationKm": 16.08,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_84",
+    "name": "Arangankuppam Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Thiruvallur",
+    "latitude": 13.5455,
+    "longitude": 80.0835,
+    "associatedLocationId": "loc_6160",
+    "distanceFromAssociatedLocationKm": 7.21,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_85",
+    "name": "Goonankuppam Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Thiruvallur",
+    "latitude": 13.4249,
+    "longitude": 80.3245,
+    "associatedLocationId": "loc_1906",
+    "distanceFromAssociatedLocationKm": 16.99,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_86",
     "name": "Mookaiyur Fishing Harbour",
     "type": "fishing_harbour",
     "state": "Tamil Nadu",
@@ -791,36 +1731,116 @@
     "distanceFromAssociatedLocationKm": 6.02,
     "source": {
       "organization": "Department of Fisheries",
-      "dataset": "Official Map/Statistics",
+      "dataset": "PMMSY Official Web Map",
       "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
-    "coordinateConfidence": "high",
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
     "notes": ""
   },
   {
-    "id": "infra_40",
+    "id": "infra_pmmsy_87",
+    "name": "Kunthukal Fish Landing Centre",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Ramanathapuram",
+    "latitude": 9.259655,
+    "longitude": 79.224781,
+    "associatedLocationId": "loc_1915",
+    "distanceFromAssociatedLocationKm": 2.64,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_88",
+    "name": "Construction of Fish Landing Centre at Mandapam (North)",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Ramanathapuram",
+    "latitude": 9.276912,
+    "longitude": 79.151291,
+    "associatedLocationId": "loc_3218",
+    "distanceFromAssociatedLocationKm": 3.04,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_89",
+    "name": "Construction of Fish Landing Centre at Mandapam (South)",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Ramanathapuram",
+    "latitude": 9.277692,
+    "longitude": 79.155847,
+    "associatedLocationId": "loc_3218",
+    "distanceFromAssociatedLocationKm": 3.54,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_pmmsy_90",
+    "name": "Construction of FLC at Sunnambukulam",
+    "type": "fish_landing_centre",
+    "state": "Tamil Nadu",
+    "district": "Thiruvallur",
+    "latitude": 13.4908,
+    "longitude": 80.1547,
+    "associatedLocationId": "loc_5512",
+    "distanceFromAssociatedLocationKm": 6.58,
+    "source": {
+      "organization": "Department of Fisheries",
+      "dataset": "PMMSY Official Web Map",
+      "url": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+      "accessedAt": "2026-09-25"
+    },
+    "coordinateSource": "Extracted from PMMSY Web Map visualization arrays",
+    "coordinateConfidence": "medium",
+    "notes": ""
+  },
+  {
+    "id": "infra_port_0",
     "name": "Mumbai Port",
     "type": "port",
     "state": "Maharashtra",
     "district": "Mumbai",
     "latitude": 18.9322,
     "longitude": 72.8466,
-    "associatedLocationId": "loc_5698",
-    "distanceFromAssociatedLocationKm": 8.09,
+    "associatedLocationId": "loc_0",
+    "distanceFromAssociatedLocationKm": 16.09,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_41",
+    "id": "infra_port_1",
     "name": "Jawaharlal Nehru Port Trust (JNPT)",
     "type": "port",
     "state": "Maharashtra",
@@ -831,76 +1851,76 @@
     "distanceFromAssociatedLocationKm": 7.18,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_42",
+    "id": "infra_port_2",
     "name": "Cochin Port",
     "type": "port",
     "state": "Kerala",
     "district": "Ernakulam",
     "latitude": 9.9631,
     "longitude": 76.2625,
-    "associatedLocationId": "loc_69",
-    "distanceFromAssociatedLocationKm": 0.61,
+    "associatedLocationId": "loc_84",
+    "distanceFromAssociatedLocationKm": 2.59,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_43",
+    "id": "infra_port_3",
     "name": "New Mangalore Port",
     "type": "port",
     "state": "Karnataka",
     "district": "Dakshina Kannada",
     "latitude": 12.9288,
     "longitude": 74.8142,
-    "associatedLocationId": "loc_5718",
-    "distanceFromAssociatedLocationKm": 4.67,
+    "associatedLocationId": "loc_109",
+    "distanceFromAssociatedLocationKm": 4.71,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_44",
+    "id": "infra_port_4",
     "name": "Mormugao Port",
     "type": "port",
     "state": "Goa",
     "district": "South Goa",
     "latitude": 15.4093,
     "longitude": 73.8043,
-    "associatedLocationId": "loc_532",
-    "distanceFromAssociatedLocationKm": 1.93,
+    "associatedLocationId": "loc_522",
+    "distanceFromAssociatedLocationKm": 2.51,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_45",
+    "id": "infra_port_5",
     "name": "Chennai Port",
     "type": "port",
     "state": "Tamil Nadu",
@@ -911,36 +1931,36 @@
     "distanceFromAssociatedLocationKm": 1.66,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_46",
+    "id": "infra_port_6",
     "name": "Visakhapatnam Port",
     "type": "port",
     "state": "Andhra Pradesh",
     "district": "Visakhapatnam",
     "latitude": 17.697,
     "longitude": 83.2848,
-    "associatedLocationId": "loc_7326",
-    "distanceFromAssociatedLocationKm": 4.26,
+    "associatedLocationId": "loc_48",
+    "distanceFromAssociatedLocationKm": 9.01,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_47",
+    "id": "infra_port_7",
     "name": "Paradip Port",
     "type": "port",
     "state": "Odisha",
@@ -951,16 +1971,16 @@
     "distanceFromAssociatedLocationKm": 8.71,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_48",
+    "id": "infra_port_8",
     "name": "Syama Prasad Mookerjee Port (Kolkata Port)",
     "type": "port",
     "state": "West Bengal",
@@ -971,16 +1991,16 @@
     "distanceFromAssociatedLocationKm": 12.7,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_49",
+    "id": "infra_port_9",
     "name": "Haldia Port",
     "type": "port",
     "state": "West Bengal",
@@ -991,16 +2011,16 @@
     "distanceFromAssociatedLocationKm": 3.89,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_50",
+    "id": "infra_port_10",
     "name": "Deendayal Port (Kandla)",
     "type": "port",
     "state": "Gujarat",
@@ -1011,16 +2031,16 @@
     "distanceFromAssociatedLocationKm": 2.23,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_51",
+    "id": "infra_port_11",
     "name": "V. O. Chidambaranar Port (Tuticorin)",
     "type": "port",
     "state": "Tamil Nadu",
@@ -1031,36 +2051,36 @@
     "distanceFromAssociatedLocationKm": 5.96,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_52",
+    "id": "infra_port_12",
     "name": "Kamarajar Port (Ennore)",
     "type": "port",
     "state": "Tamil Nadu",
     "district": "Chennai",
     "latitude": 13.2562,
     "longitude": 80.334,
-    "associatedLocationId": "loc_4668",
-    "distanceFromAssociatedLocationKm": 4.71,
+    "associatedLocationId": "loc_5",
+    "distanceFromAssociatedLocationKm": 19.66,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_53",
+    "id": "infra_port_13",
     "name": "Porbandar Port",
     "type": "port",
     "state": "Gujarat",
@@ -1071,16 +2091,16 @@
     "distanceFromAssociatedLocationKm": 1.02,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
-    "id": "infra_54",
+    "id": "infra_port_14",
     "name": "Port Blair Port",
     "type": "port",
     "state": "Andaman & Nicobar Islands",
@@ -1091,13 +2111,13 @@
     "distanceFromAssociatedLocationKm": 1.42,
     "source": {
       "organization": "Ministry of Ports, Shipping and Waterways",
-      "dataset": "Official Map/Statistics",
+      "dataset": "Basic Port Statistics of India 2024-25 (Demo-relevant port subset)",
       "url": "https://shipmin.gov.in/en/publication/trw-publication",
       "accessedAt": "2026-09-25"
     },
-    "coordinateSource": "Supplementary Geospatial Extraction from Official Web Map",
+    "coordinateSource": "Supplementary Geospatial Extraction (GeoNames/OpenStreetMap)",
     "coordinateConfidence": "high",
-    "notes": ""
+    "notes": "Representing a demo-relevant subset of major and key non-major ports. India has over 200 non-major ports."
   },
   {
     "id": "flc_aggregate_india",
@@ -1112,6 +2132,6 @@
       "url": "https://www.dof.gov.in/static/uploads/2026/01/93b14ece1aa0a35cb768e40d38e5b73b.pdf",
       "accessedAt": "2026-09-25"
     },
-    "notes": "Name-level coordinate data remains pending. Total notified centres across India is 1547."
+    "notes": "Name-level coordinate data remains pending for the majority of the 1547 centres. Only the 31 FLCs from the PMMSY map are listed individually."
   }
 ]
