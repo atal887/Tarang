@@ -15,10 +15,14 @@ export interface ChatContext {
   location: string;
   boatType: string;
   intent: IntentCategory;
+  currentLatitude?: number;
+  currentLongitude?: number;
 }
 
+import { getEnvironmentalConditions } from "../data/environmentResolver";
+
 export function generateResponse(ctx: ChatContext): ChatResponse {
-  const { language, location, boatType, intent } = ctx;
+  const { language, location, boatType, intent, currentLatitude, currentLongitude } = ctx;
 
   if (intent === "UNKNOWN") {
     // English fallback
@@ -57,9 +61,26 @@ export function generateResponse(ctx: ChatContext): ChatResponse {
     };
   }
 
-  // Inject dynamic location data
   const dynamicSuffix = getDynamicContextSuffix(location, boatType, language, intent);
-  const finalAnswer = baseAnswer + dynamicSuffix;
+  let finalAnswer = baseAnswer + dynamicSuffix;
+
+  // Intercept wave/ocean questions for inland locations
+  if (currentLatitude !== undefined && currentLongitude !== undefined) {
+    const env = getEnvironmentalConditions(location, currentLatitude, currentLongitude);
+    
+    if (!env.isMarine) {
+      const isOceanQuestion = intent === "WAVE_HEIGHT" || ctx.query.toLowerCase().includes("wave");
+      if (isOceanQuestion) {
+        finalAnswer = `${location} is an inland fishing location, so sea-wave conditions do not apply here. I can provide the relevant inland fishing and weather conditions. Currently, wind speed is ${env.wind} (${env.windDesc}), and visibility is ${env.visibility}.`;
+      } else if (intent === "CURRENT_COASTAL_CONDITIONS" || intent === "SAFETY_TOMORROW" || intent === "WIND_FORECAST") {
+        finalAnswer = `Current conditions at ${location} (Inland): Weather is ${env.weatherDesc} at ${env.temperature}. Wind is ${env.wind}. ${env.safetyExplanation}`;
+      }
+    } else {
+      if (intent === "CURRENT_COASTAL_CONDITIONS" || intent === "SAFETY_TOMORROW" || intent === "WIND_FORECAST") {
+        finalAnswer = `Current marine conditions at ${location}: Wind is ${env.wind} (${env.windDesc}). Waves are at ${env.waves} (${env.wavesDesc}). ${env.safetyExplanation}`;
+      }
+    }
+  }
 
   let action: ChatResponse["action"] = "NONE";
   if (intent === "NEAREST_PFZ" || intent === "BEST_FISHING_ZONE" || intent === "CHLOROPHYLL_ZONE") action = "VIEW_MAP_FISHING";
