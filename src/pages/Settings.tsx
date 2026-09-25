@@ -18,7 +18,7 @@ export function Settings() {
 
   const boats = ["Motorized Boat", "Traditional / Non-Motorized Boat", "Small Fishing Vessel", "Other"];
 
-  const handleLocationChange = (val: string) => {
+  const handleLocationChange = async (val: string) => {
     setErrorMsg("");
     if (val === "Current location") {
       if (!("geolocation" in navigator)) {
@@ -27,119 +27,53 @@ export function Settings() {
       }
       
       setIsLoading(true);
-      if (import.meta.env.DEV) console.log("[GPS] Settings Request started (High Accuracy)");
-
-      let isFinished = false;
-      let watchdogTimer: any = null;
-
-      const clearWatchdog = () => {
-        if (watchdogTimer) clearTimeout(watchdogTimer);
-      };
-
-      const finalize = () => {
-        setIsLoading(false);
-      };
-
-      watchdogTimer = setTimeout(() => {
-        if (isFinished) return;
-        isFinished = true;
-        try {
-          if (import.meta.env.DEV) console.log("[GPS] Watchdog fired");
-          setErrorMsg("We couldn't detect your current location. Please try again or select your location manually.");
-          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-          setLocationMode("manual");
-        } finally {
-          finalize();
-        }
-      }, 35000);
-
-      const handleSuccess = (pos: GeolocationPosition) => {
-        if (isFinished) return;
-        isFinished = true;
-        clearWatchdog();
-        try {
-          if (import.meta.env.DEV) console.log(`[GPS] Success: ${pos.coords.latitude}, ${pos.coords.longitude} (Accuracy: ${pos.coords.accuracy}m)`);
-          setLocation("Current location");
-          setLocationMode("gps");
-          setGpsCoords({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy });
-          setErrorMsg("");
-        } catch (err) {
-          if (import.meta.env.DEV) console.log("[GPS] Success callback error:", err);
-          setErrorMsg("An unexpected error occurred while saving your location.");
-          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-          setLocationMode("manual");
-        } finally {
-          finalize();
-        }
-      };
-
-      const handleFinalError = (err: GeolocationPositionError | any, attempt: string) => {
-        if (isFinished) return;
-        isFinished = true;
-        clearWatchdog();
-        try {
-          if (import.meta.env.DEV) console.log(`[GPS] Final Error (${attempt})`, err?.code, err?.message);
-          let errName = "UNKNOWN_ERROR";
-          if (err?.code) {
-            switch (err.code) {
-              case 1: errName = "PERMISSION_DENIED"; break;
-              case 2: errName = "POSITION_UNAVAILABLE"; break;
-              case 3: errName = "TIMEOUT"; break;
-            }
-          }
-          setErrorMsg(`Location Error [${err?.code || 'X'}: ${errName}]: ${err?.message || 'Unknown'}. Falling back to manual location.`);
-          setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
-          setLocationMode("manual");
-        } finally {
-          finalize();
-        }
-      };
+      setErrorMsg("");
 
       try {
-        if (import.meta.env.DEV) console.log("[GPS] Primary getCurrentPosition called");
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            if (import.meta.env.DEV) console.log("[GPS] Primary success callback received");
-            handleSuccess(pos);
-          },
-          (err) => {
-            if (import.meta.env.DEV) console.log("[GPS] Primary error callback received", err?.code, err?.message);
-            if (err?.code === 2 || err?.code === 3) {
-              if (isFinished) return;
-              if (import.meta.env.DEV) console.log("[GPS] Fallback getCurrentPosition called");
-            try {
-              navigator.geolocation.getCurrentPosition(
-                (fallbackPos) => {
-                  if (import.meta.env.DEV) console.log("[GPS] Fallback success callback received");
-                  handleSuccess(fallbackPos);
-                },
-                (fallbackErr) => {
-                  if (import.meta.env.DEV) console.log("[GPS] Fallback error callback received");
-                  handleFinalError(fallbackErr, "Fallback");
-                },
-                { enableHighAccuracy: false, timeout: 30000, maximumAge: 120000 }
-              );
-            } catch (e) {
-              if (import.meta.env.DEV) console.log("[GPS] Fallback throw", e);
-              handleFinalError(e, "High Accuracy (Fallback throw)");
-            }
-          } else {
-            handleFinalError(err, "High Accuracy");
-          }
-        },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 }
-      );
-    } catch (e) {
-      if (import.meta.env.DEV) console.log("[GPS] Primary throw", e);
-      if (!isFinished) {
-        isFinished = true;
-        clearWatchdog();
-        setErrorMsg(`Location Error [Exception]: ${e}`);
+        const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+          // Watchdog timer (15 seconds max)
+          const watchdog = setTimeout(() => {
+            reject(new Error("WATCHDOG_TIMEOUT"));
+          }, 15000);
+
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              clearTimeout(watchdog);
+              resolve(pos);
+            },
+            (err) => {
+              clearTimeout(watchdog);
+              reject(err);
+            },
+            // Just use basic options to maximize compatibility on Android
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+          );
+        });
+
+        // Success
+        const { latitude, longitude, accuracy } = position.coords;
+        setLocation("Current location");
+        setLocationMode("gps");
+        setGpsCoords({ latitude, longitude, accuracy });
+
+      } catch (error: any) {
+        console.warn("GPS Error:", error);
+        let errMsg = "We couldn't detect your current location. Please select it manually.";
+        
+        if (error && typeof error.code === 'number') {
+          if (error.code === 1) errMsg = "Location permission was denied.";
+          if (error.code === 2) errMsg = "Location information is unavailable on this device.";
+          if (error.code === 3) errMsg = "The location request timed out.";
+        } else if (error && error.message === "WATCHDOG_TIMEOUT") {
+          errMsg = "Location request timed out. Please try again or select manually.";
+        }
+        
+        setErrorMsg(errMsg);
         setLocation(profile.location !== "Current location" ? profile.location : demoData.availableLocations[0]);
         setLocationMode("manual");
-        finalize();
+      } finally {
+        setIsLoading(false);
       }
-    }
     } else {
       setLocation(val);
       setLocationMode("manual");
