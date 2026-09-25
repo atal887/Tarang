@@ -22,7 +22,11 @@ export interface EnvironmentalProfile {
   rainfallCategory: string | null;
   seaCondition: string | null;
   dataType: "historical_reanalysis_monthly_baseline" | "seasonal_demo_baseline";
-  source: EnvironmentalSource;
+  sources: {
+    atmospheric: EnvironmentalSource;
+    marine: EnvironmentalSource;
+    derived?: EnvironmentalSource;
+  };
 }
 
 export function getEnvironmentalProfile(infrastructureId: string, month: number): EnvironmentalProfile | null {

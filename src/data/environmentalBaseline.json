@@ -2,133 +2,253 @@
   {
     "infrastructureId": "infra_pmmsy_13",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 11.9,
+    "windDirectionDeg": 240,
+    "significantWaveHeightM": 0.6,
+    "wavePeriodSec": 9.0,
+    "swellHeightM": 0.43,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_13",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 12.7,
+    "windDirectionDeg": 135,
+    "significantWaveHeightM": 0.44,
+    "wavePeriodSec": 8.9,
+    "swellHeightM": 0.34,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "smooth",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_15",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 6.6,
+    "windDirectionDeg": 170,
+    "significantWaveHeightM": 0.68,
+    "wavePeriodSec": 9.2,
+    "swellHeightM": 0.5,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_15",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 7.2,
+    "windDirectionDeg": 148,
+    "significantWaveHeightM": 0.53,
+    "wavePeriodSec": 8.9,
+    "swellHeightM": 0.4,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_20",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 6.6,
+    "windDirectionDeg": 180,
+    "significantWaveHeightM": 0.67,
+    "wavePeriodSec": 9.3,
+    "swellHeightM": 0.5,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_20",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 6.7,
+    "windDirectionDeg": 166,
+    "significantWaveHeightM": 0.52,
+    "wavePeriodSec": 9.0,
+    "swellHeightM": 0.39,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -143,14 +263,34 @@
     "rainfallCategory": null,
     "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -165,14 +305,34 @@
     "rainfallCategory": null,
     "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -187,14 +347,34 @@
     "rainfallCategory": null,
     "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -209,102 +389,202 @@
     "rainfallCategory": null,
     "seaCondition": "smooth",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_51",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 17.6,
+    "windDirectionDeg": 134,
+    "significantWaveHeightM": 0.9,
+    "wavePeriodSec": 8.3,
+    "swellHeightM": 0.73,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_51",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 20.7,
+    "windDirectionDeg": 69,
+    "significantWaveHeightM": 1.1,
+    "wavePeriodSec": 7.0,
+    "swellHeightM": 0.85,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_82",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 10.9,
+    "windDirectionDeg": 144,
+    "significantWaveHeightM": 0.63,
+    "wavePeriodSec": 8.0,
+    "swellHeightM": 0.51,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_82",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 12.4,
+    "windDirectionDeg": 84,
+    "significantWaveHeightM": 0.81,
+    "wavePeriodSec": 6.6,
+    "swellHeightM": 0.65,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -319,36 +599,67 @@
     "rainfallCategory": null,
     "seaCondition": null,
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "Extraction pending/failed"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "Extraction pending/failed"
+      }
     }
   },
   {
     "infrastructureId": "infra_pmmsy_83",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 12.4,
+    "windDirectionDeg": 84,
+    "significantWaveHeightM": 0.81,
+    "wavePeriodSec": 6.6,
+    "swellHeightM": 0.65,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -363,14 +674,34 @@
     "rainfallCategory": null,
     "seaCondition": "smooth",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -385,14 +716,34 @@
     "rainfallCategory": null,
     "seaCondition": "smooth",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -407,14 +758,34 @@
     "rainfallCategory": null,
     "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -429,278 +800,538 @@
     "rainfallCategory": null,
     "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "nearest grid point"
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_3",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 6.7,
+    "windDirectionDeg": 177,
+    "significantWaveHeightM": 0.67,
+    "wavePeriodSec": 9.3,
+    "swellHeightM": 0.5,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_3",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 7.0,
+    "windDirectionDeg": 155,
+    "significantWaveHeightM": 0.52,
+    "wavePeriodSec": 9.0,
+    "swellHeightM": 0.39,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_4",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 7.6,
+    "windDirectionDeg": 172,
+    "significantWaveHeightM": 0.67,
+    "wavePeriodSec": 9.3,
+    "swellHeightM": 0.51,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_4",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 8.3,
+    "windDirectionDeg": 157,
+    "significantWaveHeightM": 0.53,
+    "wavePeriodSec": 8.8,
+    "swellHeightM": 0.4,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_5",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 9.6,
+    "windDirectionDeg": 154,
+    "significantWaveHeightM": 0.67,
+    "wavePeriodSec": 8.0,
+    "swellHeightM": 0.54,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_5",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 11.5,
+    "windDirectionDeg": 91,
+    "significantWaveHeightM": 0.84,
+    "wavePeriodSec": 6.7,
+    "swellHeightM": 0.67,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_6",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 9.3,
+    "windDirectionDeg": 182,
+    "significantWaveHeightM": 0.89,
+    "wavePeriodSec": 9.2,
+    "swellHeightM": 0.76,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_6",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 11.5,
+    "windDirectionDeg": 83,
+    "significantWaveHeightM": 0.88,
+    "wavePeriodSec": 7.5,
+    "swellHeightM": 0.67,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_12",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 10.9,
+    "windDirectionDeg": 144,
+    "significantWaveHeightM": 0.64,
+    "wavePeriodSec": 7.8,
+    "swellHeightM": 0.52,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_12",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 12.4,
+    "windDirectionDeg": 84,
+    "significantWaveHeightM": 0.84,
+    "wavePeriodSec": 6.5,
+    "swellHeightM": 0.69,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_13",
     "month": 10,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 11.9,
+    "windDirectionDeg": 240,
+    "significantWaveHeightM": 0.53,
+    "wavePeriodSec": 9.0,
+    "swellHeightM": 0.39,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "slight",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_13",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 12.7,
+    "windDirectionDeg": 135,
+    "significantWaveHeightM": 0.39,
+    "wavePeriodSec": 9.0,
+    "swellHeightM": 0.3,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "smooth",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   },
   {
@@ -715,36 +1346,67 @@
     "rainfallCategory": null,
     "seaCondition": null,
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "Extraction pending/failed"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "Extraction pending/failed"
+      }
     }
   },
   {
     "infrastructureId": "infra_port_14",
     "month": 11,
-    "windSpeedKmph": null,
-    "windDirectionDeg": null,
-    "significantWaveHeightM": null,
-    "wavePeriodSec": null,
-    "swellHeightM": null,
+    "windSpeedKmph": 11.9,
+    "windDirectionDeg": 95,
+    "significantWaveHeightM": 0.39,
+    "wavePeriodSec": 5.9,
+    "swellHeightM": 0.32,
     "visibilityKm": null,
     "rainfallCategory": null,
-    "seaCondition": null,
+    "seaCondition": "smooth",
     "dataType": "historical_reanalysis_monthly_baseline",
-    "source": {
-      "organization": "ECMWF / Copernicus Marine Service",
-      "dataset": "ERA5 historical reanalysis / Global Ocean Waves Reanalysis",
-      "accessMethod": "Open-Meteo Historical Weather & Marine APIs",
-      "url": "https://open-meteo.com/en/docs",
-      "sourcePeriod": "2023-10-01 to 2023-11-30",
-      "aggregation": "monthly mean of hourly data",
-      "method": "Environmental source identified but data ingestion pending."
+    "sources": {
+      "atmospheric": {
+        "organization": "ECMWF",
+        "dataset": "ERA5 Historical Reanalysis",
+        "accessMethod": "Open-Meteo Historical Weather API",
+        "url": "https://archive-api.open-meteo.com/v1/archive",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "marine": {
+        "organization": "Copernicus Marine Environment Monitoring Service (CMEMS)",
+        "dataset": "Global Ocean Waves Reanalysis",
+        "accessMethod": "Open-Meteo Marine API",
+        "url": "https://marine-api.open-meteo.com/v1/marine",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "monthly mean of hourly data",
+        "method": "nearest grid point"
+      },
+      "derived": {
+        "organization": "TARANG",
+        "dataset": "Internal Logic",
+        "accessMethod": "Python Script",
+        "url": "local",
+        "sourcePeriod": "2023-10-01 to 2023-11-30",
+        "aggregation": "N/A",
+        "method": "Derived from significantWaveHeightM"
+      }
     }
   }
 ]
