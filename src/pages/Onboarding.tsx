@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
@@ -16,6 +16,11 @@ export function Onboarding() {
   const [customLocation, setCustomLocation] = useState("");
   const [language, setLanguage] = useState<Language | "">("");
   const [boatType, setBoatType] = useState("");
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [resendCountdown, setResendCountdown] = useState(0);
+  const otpInputsRef = useRef<(HTMLInputElement | null)[]>([]);
 
   const locations = [
     "Kochi, Kerala",
@@ -32,8 +37,94 @@ export function Onboarding() {
     "Other",
   ];
 
-  const handlePhoneSubmit = () => setStep(2);
-  const handleOtpSubmit = () => setStep(3);
+  useEffect(() => {
+    let timer: any;
+    if (resendCountdown > 0) {
+      timer = setTimeout(() => setResendCountdown(resendCountdown - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [resendCountdown]);
+
+  const formatPhoneE164 = (p: string) => {
+    const digits = p.replace(/\D/g, "");
+    if (digits.length === 10) return `+91${digits}`;
+    if (digits.length > 10 && digits.startsWith("91")) return `+${digits}`;
+    return `+${digits}`;
+  };
+
+  const sendOtpRequest = async () => {
+    setIsLoading(true);
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: formatPhoneE164(phone) }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send code");
+      }
+      setStep(2);
+      setResendCountdown(25);
+      // Focus first OTP field shortly after transitioning
+      setTimeout(() => {
+        if (otpInputsRef.current[0]) otpInputsRef.current[0].focus();
+      }, 100);
+    } catch (err: any) {
+      setErrorMsg(err.message || "An error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePhoneSubmit = () => {
+    sendOtpRequest();
+  };
+
+  const handleOtpSubmit = async () => {
+    const code = otp.join("");
+    if (code.length < 6) return;
+    
+    setIsLoading(true);
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: formatPhoneE164(phone), code }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to verify code");
+      }
+      if (data.success && data.status === "approved") {
+        setStep(3);
+      } else {
+        throw new Error("Invalid verification status");
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || "An error occurred");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData.getData("text/plain").replace(/\D/g, "").slice(0, 6);
+    if (pasteData.length > 0) {
+      const newOtp = [...otp];
+      for (let i = 0; i < pasteData.length; i++) {
+        newOtp[i] = pasteData[i];
+      }
+      setOtp(newOtp);
+      const nextFocus = Math.min(pasteData.length, 5);
+      if (otpInputsRef.current[nextFocus]) {
+        otpInputsRef.current[nextFocus]?.focus();
+      }
+    }
+  };
 
   const handleLocationSubmit = () => {
     setStep(4);
@@ -82,7 +173,8 @@ export function Onboarding() {
                 placeholder="Enter mobile number"
               />
             </div>
-            <Button size="lg" className="w-full h-14 text-base" onClick={handlePhoneSubmit} disabled={phone.length < 10}>Send OTP</Button>
+            {errorMsg && <p className="text-red-500 text-sm font-semibold text-center">{errorMsg}</p>}
+            <Button size="lg" className="w-full h-14 text-base" onClick={handlePhoneSubmit} disabled={phone.length < 10 || isLoading}>{isLoading ? "Sending..." : "Send OTP"}</Button>
           </div>
         )}
 
@@ -96,22 +188,51 @@ export function Onboarding() {
               {otp.map((digit, idx) => (
                 <input
                   key={idx}
-                  id={`otp-${idx}`}
+                  ref={(el) => { otpInputsRef.current[idx] = el; }}
                   type="text"
                   maxLength={1}
                   value={digit}
+                  onPaste={handleOtpPaste}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Backspace' && !digit && idx > 0) {
+                      otpInputsRef.current[idx - 1]?.focus();
+                    } else if (e.key === 'Enter') {
+                      handleOtpSubmit();
+                    }
+                  }}
                   onChange={e => {
                     const newOtp = [...otp];
-                    newOtp[idx] = e.target.value.replace(/\D/g, '');
+                    const val = e.target.value.replace(/\D/g, '');
+                    newOtp[idx] = val;
                     setOtp(newOtp);
-                    if (e.target.value && idx < 5) document.getElementById(`otp-${idx+1}`)?.focus();
+                    if (val && idx < 5) {
+                      otpInputsRef.current[idx + 1]?.focus();
+                    }
                   }}
                   className="w-full h-14 bg-white border border-slate-200 rounded-xl text-center text-xl font-bold focus:border-ocean-500 focus:ring-2 focus:ring-ocean-500/20 outline-none shadow-sm transition-all"
                 />
               ))}
             </div>
-            <Button size="lg" className="w-full h-14 text-base" onClick={handleOtpSubmit} disabled={otp.join('').length < 6}>Verify &amp; Continue</Button>
-            <button className="w-full text-sm font-bold text-ocean-600 py-2">Resend OTP</button>
+            {errorMsg && <p className="text-red-500 text-sm font-semibold text-center">{errorMsg}</p>}
+            <Button size="lg" className="w-full h-14 text-base" onClick={handleOtpSubmit} disabled={otp.join('').length < 6 || isLoading}>
+              {isLoading ? "Verifying..." : "Verify & Continue"}
+            </Button>
+            <div className="flex flex-col items-center gap-2 pt-2">
+              <button 
+                className="text-sm font-bold text-ocean-600 disabled:text-slate-400 transition-colors" 
+                onClick={sendOtpRequest} 
+                disabled={resendCountdown > 0 || isLoading}
+              >
+                {resendCountdown > 0 ? `Resend in ${resendCountdown}s` : "Resend OTP"}
+              </button>
+              <button 
+                className="text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors" 
+                onClick={() => { setStep(1); setOtp(["", "", "", "", "", ""]); setErrorMsg(""); }}
+                disabled={isLoading}
+              >
+                Change phone number
+              </button>
+            </div>
           </div>
         )}
 
