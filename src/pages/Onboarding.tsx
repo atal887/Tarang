@@ -55,7 +55,6 @@ export function Onboarding() {
   };
 
   const DEMO_TEST_PHONE = "7982559126";
-  const DEMO_TEST_OTP = "123456";
 
   const sendOtpRequest = async () => {
     setIsLoading(true);
@@ -107,7 +106,7 @@ export function Onboarding() {
     setErrorMsg("");
     try {
       if (isDemoMode) {
-        if (code === DEMO_TEST_OTP) {
+        if (/^\d{6}$/.test(code)) {
           setStep(3);
         } else {
           throw new Error("The code you entered is incorrect. Please try again.");
