@@ -16,6 +16,7 @@ export function Onboarding() {
   const [customLocation, setCustomLocation] = useState("");
   const [language, setLanguage] = useState<Language | "">("");
   const [boatType, setBoatType] = useState("");
+  const [isGuestFlow, setIsGuestFlow] = useState(false);
   
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -142,11 +143,12 @@ export function Onboarding() {
         : location.split(",")[0].trim();
 
     setProfile({
-      phone: `+91 ${phone}`,
+      phone: isGuestFlow ? "" : `+91 ${phone}`,
       location: cityName,
       vesselType: boatType,
       language: language as Language,
-      phoneVerified: true,
+      phoneVerified: !isGuestFlow,
+      isGuest: isGuestFlow,
     });
 
     navigate("/home");
@@ -175,6 +177,15 @@ export function Onboarding() {
             </div>
             {errorMsg && <p className="text-red-500 text-sm font-semibold text-center">{errorMsg}</p>}
             <Button size="lg" className="w-full h-14 text-base" onClick={handlePhoneSubmit} disabled={phone.length < 10 || isLoading}>{isLoading ? "Sending..." : "Send OTP"}</Button>
+            <div className="pt-2 text-center">
+              <button 
+                className="text-sm font-semibold text-slate-500 hover:text-slate-700 transition-colors"
+                onClick={() => { setIsGuestFlow(true); setStep(3); }}
+                disabled={isLoading}
+              >
+                Continue as Guest
+              </button>
+            </div>
           </div>
         )}
 

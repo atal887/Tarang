@@ -9,6 +9,7 @@ export interface Profile {
   vesselType: string;
   language: Language;
   phoneVerified: boolean;
+  isGuest?: boolean;
 }
 
 interface ProfileContextValue {
@@ -29,8 +30,11 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   const [profile, setProfileState] = useState<Profile>(() => {
     try {
-      const stored = localStorage.getItem('tarangProfile');
-      return stored ? JSON.parse(stored) : defaultProfile;
+      const storedLocal = localStorage.getItem('tarangProfile');
+      const storedSession = sessionStorage.getItem('tarangProfile');
+      if (storedLocal) return JSON.parse(storedLocal);
+      if (storedSession) return JSON.parse(storedSession);
+      return defaultProfile;
     } catch {
       return defaultProfile;
     }
@@ -38,12 +42,22 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
 
   const setProfile = (newProfile: Profile) => {
     setProfileState(newProfile);
-    localStorage.setItem('tarangProfile', JSON.stringify(newProfile));
+    if (newProfile.isGuest) {
+      sessionStorage.setItem('tarangProfile', JSON.stringify(newProfile));
+      localStorage.removeItem('tarangProfile');
+    } else {
+      localStorage.setItem('tarangProfile', JSON.stringify(newProfile));
+      sessionStorage.removeItem('tarangProfile');
+    }
   };
 
-  // Keep localStorage in sync if profile changes elsewhere
+  // Keep storage in sync if profile changes elsewhere
   useEffect(() => {
-    localStorage.setItem('tarangProfile', JSON.stringify(profile));
+    if (profile.isGuest) {
+      sessionStorage.setItem('tarangProfile', JSON.stringify(profile));
+    } else {
+      localStorage.setItem('tarangProfile', JSON.stringify(profile));
+    }
   }, [profile]);
 
   return React.createElement(ProfileContext.Provider, { value: { profile, setProfile } }, children);
