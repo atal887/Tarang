@@ -1,0 +1,682 @@
+[
+  {
+    "infrastructureId": "infra_pmmsy_13",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_13",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_15",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_15",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_20",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_20",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_22",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_22",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_35",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_35",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_51",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_51",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_82",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_82",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_83",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_pmmsy_83",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_0",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_0",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_2",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_2",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_3",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_3",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_4",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_4",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_5",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_5",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_6",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_6",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_12",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_12",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_13",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_13",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_14",
+    "month": 10,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  },
+  {
+    "infrastructureId": "infra_port_14",
+    "month": 11,
+    "windSpeedKmph": null,
+    "windDirectionDeg": null,
+    "significantWaveHeightM": null,
+    "wavePeriodSec": null,
+    "swellHeightM": null,
+    "visibilityKm": null,
+    "rainfallCategory": null,
+    "seaCondition": null,
+    "dataType": "seasonal_demo_baseline",
+    "source": {
+      "organization": "INCOIS (Indian National Centre for Ocean Information Services) / IMD",
+      "dataset": "Live Access Server (LAS) / ERDDAP Historical Ocean State Climatology",
+      "url": "https://incois.gov.in/site/index.jsp",
+      "sourcePeriod": "2010-2023 Climatological Mean",
+      "method": "Environmental source identified but data ingestion pending."
+    }
+  }
+]
