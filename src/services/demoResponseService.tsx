@@ -68,16 +68,18 @@ export function generateResponse(ctx: ChatContext): ChatResponse {
   if (currentLatitude !== undefined && currentLongitude !== undefined) {
     const env = getEnvironmentalConditions(location, currentLatitude, currentLongitude);
     
-    if (!env.isMarine) {
-      const isOceanQuestion = intent === "WAVE_HEIGHT" || ctx.query.toLowerCase().includes("wave");
-      if (isOceanQuestion) {
-        finalAnswer = `${location} is an inland fishing location, so sea-wave conditions do not apply here. I can provide the relevant inland fishing and weather conditions. Currently, wind speed is ${env.wind} (${env.windDesc}), and visibility is ${env.visibility}.`;
-      } else if (intent === "CURRENT_COASTAL_CONDITIONS" || intent === "SAFETY_TOMORROW" || intent === "WIND_FORECAST") {
-        finalAnswer = `Current conditions at ${location} (Inland): Weather is ${env.weatherDesc} at ${env.temperature}. Wind is ${env.wind}. ${env.safetyExplanation}`;
-      }
-    } else {
-      if (intent === "CURRENT_COASTAL_CONDITIONS" || intent === "SAFETY_TOMORROW" || intent === "WIND_FORECAST") {
-        finalAnswer = `Current marine conditions at ${location}: Wind is ${env.wind} (${env.windDesc}). Waves are at ${env.waves} (${env.wavesDesc}). ${env.safetyExplanation}`;
+    if (env) {
+      if (!env.isMarine) {
+        const isOceanQuestion = intent === "WAVE_HEIGHT" || ctx.query.toLowerCase().includes("wave");
+        if (isOceanQuestion) {
+          finalAnswer = `${location} is an inland fishing location, so sea-wave conditions do not apply here. I can provide the relevant inland fishing and weather conditions. Currently, wind speed is ${env.wind} (${env.windDesc}), and visibility is ${env.visibility}.`;
+        } else if (intent === "CURRENT_COASTAL_CONDITIONS" || intent === "SAFETY_TOMORROW" || intent === "WIND_FORECAST") {
+          finalAnswer = `Current conditions at ${location} (Inland): Weather is ${env.weatherDesc} at ${env.temperature}. Wind is ${env.wind}. ${env.safetyExplanation}`;
+        }
+      } else {
+        if (intent === "CURRENT_COASTAL_CONDITIONS" || intent === "SAFETY_TOMORROW" || intent === "WIND_FORECAST") {
+          finalAnswer = `Current marine conditions at ${location}: Wind is ${env.wind} (${env.windDesc}). Waves are at ${env.waves} (${env.wavesDesc}). ${env.safetyExplanation}`;
+        }
       }
     }
   }

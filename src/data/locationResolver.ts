@@ -31,7 +31,7 @@ function deg2rad(deg: number) {
   return deg * (Math.PI / 180);
 }
 
-export function resolveFishingLocation(latitude: number, longitude: number): Omit<LocationData, "id" | "latitude" | "longitude"> & { locationName: string } {
+export function resolveFishingLocation(latitude: number, longitude: number): LocationData & { locationName: string } {
   let nearestLoc = locations[0] as unknown as LocationData;
   let minDistance = Infinity;
 
@@ -47,13 +47,7 @@ export function resolveFishingLocation(latitude: number, longitude: number): Omi
   }
 
   return {
+    ...nearestLoc,
     locationName: nearestLoc.name,
-    name: nearestLoc.name,
-    state: nearestLoc.state,
-    district: nearestLoc.district,
-    subDistrict: nearestLoc.subDistrict,
-    fisheriesType: nearestLoc.fisheriesType,
-    waterContext: nearestLoc.waterContext,
-    region: nearestLoc.region
   };
 }

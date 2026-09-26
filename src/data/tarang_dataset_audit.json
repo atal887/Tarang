@@ -1,0 +1,25 @@
+{
+  "masterLocations": 7935,
+  "marineLocations": 1593,
+  "inlandLocations": 6342,
+  "months": [
+    10,
+    11
+  ],
+  "locationEnvironmentalRecords": 15870,
+  "facilityRecords": 81,
+  "facilityEnvironmentalRecords": 162,
+  "candidateAssociations": 6435,
+  "officialPMMSYFishingHarboursListed": 66,
+  "researchedPortSubset": 15,
+  "environmentalProvenance": "synthetic_demo_baseline",
+  "warning": "Values are deterministic synthetic prototype values constrained by researched INCOIS/IMD variable definitions and regional patterns; they are NOT live observations.",
+  "officialSources": {
+    "INCOIS_OSF": "https://www.incois.gov.in/oceanservices/osfforecast.jsp",
+    "INCOIS_GeneralCirculation": "https://incois.gov.in/oceanservices/osf_gc_rsmc.jsp",
+    "IMD_MarineForecast": "https://mausam.imd.gov.in/responsive/marine_forecast.php",
+    "PMMSY_HarbourMap": "https://pmmsy.dof.gov.in/static/harbour/harbours.html",
+    "PMMSY_FLC_SOP": "https://pmmsy.dof.gov.in/assets/documents/SOP_FLC_NoV.pdf"
+  },
+  "officialPMMSYFishingHarboursMapped": 66
+}

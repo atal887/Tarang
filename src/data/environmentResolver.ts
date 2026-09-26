@@ -1,17 +1,47 @@
 import { resolveFishingLocation } from './locationResolver';
+import locationEnvData from './tarang_location_environment_7935x2.json';
 
-// A simple deterministic hash function
-function hashString(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return Math.abs(hash);
+export interface LocationEnvRecord {
+  locationId: string;
+  name: string;
+  stateCode: string;
+  districtCode: string;
+  fisheriesType: string;
+  latitude: number;
+  longitude: number;
+  month: number;
+  airTemperatureC: number | null;
+  weatherCondition: string | null;
+  windSpeedKmph: number | null;
+  windDirectionDeg: number | null;
+  rainfallMm: number | null;
+  visibilityKm: number | null;
+  significantWaveHeightM: number | null;
+  wavePeriodSec: number | null;
+  waveDirectionDeg: number | null;
+  swellHeightM: number | null;
+  swellPeriodSec: number | null;
+  seaCondition: string | null;
+  seaSurfaceTemperatureC: number | null;
+  surfaceCurrentSpeedMs: number | null;
+  surfaceCurrentDirectionDeg: number | null;
+  mixedLayerDepthM: number | null;
+  d20DepthM: number | null;
+  chlorophyllMgM3: number | null;
+  pfzPotentialScore: number | null;
+  fishingPotential: string | null;
+  cycloneStatus: string | null;
+  cycloneRiskScore: number | null;
+  cycloneDistanceKm: number | null;
+  cycloneWindKmph: number | null;
+  marineWarning: string | null;
+  highWaveAlert: boolean;
+  dataType: string;
+  modelBasis: string;
+  waveApplicability: string;
 }
 
-export interface EnvironmentalConditions {
+export interface EnvironmentalConditions extends Partial<LocationEnvRecord> {
   isMarine: boolean;
   wind: string;
   windDesc: string;
@@ -31,58 +61,77 @@ export interface EnvironmentalConditions {
   rainfall?: string;
 }
 
-export function getEnvironmentalConditions(_locationName: string, lat: number, lon: number): EnvironmentalConditions {
+export function getLocationEnvironment(locationId: string, month: number): LocationEnvRecord | null {
+  const records = locationEnvData as unknown as LocationEnvRecord[];
+  const match = records.find(r => r.locationId === locationId && r.month === month);
+  return match || null;
+}
+
+export function getEnvironmentalConditions(_locationName: string, lat: number, lon: number): EnvironmentalConditions | null {
   const locContext = resolveFishingLocation(lat, lon);
-  const isMarine = locContext.fisheriesType === "marine";
   const date = new Date();
-  const month = date.getMonth(); // 0-11
+  const currentMonth = date.getMonth(); // 0-11
   
-  // Use October (9) or November (10) as default if outside evaluator period
-  const evalMonth = (month === 9 || month === 10) ? month : 9;
+  // JSON uses 10 (Oct) and 11 (Nov)
+  const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
   
-  // Deterministic seed based on location name and month
-  const seed = hashString(locContext.locationName + evalMonth.toString());
+  const envData = getLocationEnvironment(locContext.id, evalMonth);
+
+  if (!envData) {
+    return null;
+  }
+
+  const isMarine = envData.waveApplicability !== "not_applicable_inland";
   
-  // Deterministic random between 0 and 1
-  const pseudoRandom = (seed % 100) / 100;
+  const windSpeed = envData.windSpeedKmph ?? 0;
+  const windDesc = windSpeed > 20 ? "Strong Breeze" : windSpeed > 10 ? "Moderate" : "Light";
+  
+  let safetyStatus = "Favourable for fishing";
+  let safetyExplanation = "Current conditions are suitable.";
   
   if (isMarine) {
-    // Marine data generation
-    const waveHeight = 0.5 + (pseudoRandom * 1.5); // 0.5m to 2.0m
-    const windSpeed = 5 + (pseudoRandom * 20); // 5 to 25 km/h
-    
-    return {
-      isMarine: true,
-      wind: `${windSpeed.toFixed(1)} km/h`,
-      windDesc: windSpeed > 20 ? "Strong Breeze" : windSpeed > 10 ? "Moderate" : "Light",
-      weather: evalMonth === 9 ? "29°C" : "27°C",
-      weatherDesc: pseudoRandom > 0.7 ? "Partly cloudy" : "Sunny",
-      temperature: evalMonth === 9 ? "29°C" : "27°C",
-      visibility: pseudoRandom > 0.8 ? "8 km" : "15 km",
-      waves: `${waveHeight.toFixed(1)} m`,
-      wavesDesc: waveHeight > 1.5 ? "Rough" : waveHeight > 0.8 ? "Moderate" : "Calm",
-      current: `${(0.1 + pseudoRandom * 0.4).toFixed(1)} m/s`,
-      sst: evalMonth === 9 ? "28.5°C" : "27.5°C",
-      safetyStatus: waveHeight > 1.5 || windSpeed > 20 ? "Exercise Caution" : "Favourable for fishing",
-      safetyExplanation: waveHeight > 1.5 ? "Waves are relatively high today." : "Current conditions are suitable for marine operations.",
-    };
+    const waveHeight = envData.significantWaveHeightM ?? 0;
+    if (envData.highWaveAlert || envData.cycloneStatus === "elevated" || waveHeight > 1.5 || windSpeed > 20) {
+      safetyStatus = "Exercise Caution";
+      safetyExplanation = envData.highWaveAlert ? "High wave alert is active." : 
+        envData.cycloneStatus === "elevated" ? "Elevated cyclone risk." : 
+        waveHeight > 1.5 ? "Waves are relatively high today." : 
+        "Strong winds present.";
+    } else {
+      safetyExplanation = "Current conditions are suitable for marine operations.";
+    }
   } else {
-    // Inland data generation
-    const windSpeed = 2 + (pseudoRandom * 12); // 2 to 14 km/h
-    const rainChance = pseudoRandom;
-    
-    return {
-      isMarine: false,
-      wind: `${windSpeed.toFixed(1)} km/h`,
-      windDesc: windSpeed > 10 ? "Moderate" : "Light",
-      weather: evalMonth === 9 ? "31°C" : "28°C",
-      weatherDesc: rainChance > 0.8 ? "Light Rain" : rainChance > 0.5 ? "Cloudy" : "Clear",
-      temperature: evalMonth === 9 ? "31°C" : "28°C",
-      visibility: rainChance > 0.8 ? "5 km" : "12 km",
-      waterLevel: pseudoRandom > 0.5 ? "Normal" : "Slightly low",
-      rainfall: rainChance > 0.8 ? "5 mm" : "0 mm",
-      safetyStatus: rainChance > 0.8 ? "Exercise Caution" : "Favourable for fishing",
-      safetyExplanation: rainChance > 0.8 ? "Rain may affect visibility and water conditions." : "Current conditions are suitable for inland fishing.",
-    };
+    const rain = envData.rainfallMm ?? 0;
+    if (rain > 10) {
+      safetyStatus = "Exercise Caution";
+      safetyExplanation = "Heavy rain may affect visibility and water conditions.";
+    } else {
+      safetyExplanation = "Current conditions are suitable for inland fishing.";
+    }
   }
+
+  const baseConditions: EnvironmentalConditions = {
+    isMarine,
+    wind: `${windSpeed.toFixed(1)} km/h`,
+    windDesc,
+    weather: `${envData.airTemperatureC ?? 0}°C`,
+    weatherDesc: (envData.weatherCondition || "Clear").replace(/_/g, " "),
+    temperature: `${envData.airTemperatureC ?? 0}°C`,
+    visibility: `${envData.visibilityKm ?? 0} km`,
+    safetyStatus,
+    safetyExplanation,
+    ...envData
+  };
+
+  if (isMarine) {
+    baseConditions.waves = envData.significantWaveHeightM != null ? `${envData.significantWaveHeightM} m` : undefined;
+    baseConditions.wavesDesc = envData.seaCondition ? envData.seaCondition.replace(/_/g, " ") : undefined;
+    baseConditions.current = envData.surfaceCurrentSpeedMs != null ? `${envData.surfaceCurrentSpeedMs} m/s` : undefined;
+    baseConditions.sst = envData.seaSurfaceTemperatureC != null ? `${envData.seaSurfaceTemperatureC}°C` : undefined;
+  } else {
+    baseConditions.waterLevel = "Normal";
+    baseConditions.rainfall = envData.rainfallMm != null ? `${envData.rainfallMm} mm` : "0 mm";
+  }
+
+  return baseConditions;
 }
