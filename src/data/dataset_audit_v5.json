@@ -1,0 +1,51 @@
+{
+  "totalRecords": 65,
+  "uniqueSpotIds": 65,
+  "duplicateSpotIds": [],
+  "coordinateConfidence": {
+    "high": 40,
+    "medium": 19,
+    "low": 6
+  },
+  "evidenceClass": {
+    "documented_fisheries_resource": 27,
+    "documented_fishing_or_access_evidence": 30,
+    "aquaculture_or_stocking_evidence": 5,
+    "needs_source_review": 3
+  },
+  "operationalDiscoveryEligibleCount": 20,
+  "operationalDiscoveryEligibleByState": {
+    "Andhra Pradesh": 1,
+    "Jharkhand": 1,
+    "Kerala": 1,
+    "Maharashtra": 7,
+    "Odisha": 1,
+    "Rajasthan": 6,
+    "Uttarakhand": 1,
+    "West Bengal": 2
+  },
+  "stateCounts": {
+    "Andhra Pradesh": 4,
+    "Assam": 2,
+    "Bihar": 5,
+    "Delhi": 2,
+    "Goa": 2,
+    "Gujarat": 2,
+    "Himachal Pradesh": 3,
+    "Jharkhand": 1,
+    "Kerala": 6,
+    "Madhya Pradesh": 2,
+    "Maharashtra": 7,
+    "Meghalaya": 1,
+    "Nagaland": 1,
+    "Odisha": 2,
+    "Punjab": 4,
+    "Rajasthan": 15,
+    "Tamil Nadu": 1,
+    "Telangana": 1,
+    "Uttarakhand": 1,
+    "West Bengal": 3
+  },
+  "fishingPotentialNonNullCount": 1,
+  "principle": "The master file preserves evidence-backed records; only high-coordinate-confidence records with direct fishing/landing/licensing/rights evidence are eligible for precise nearby-destination discovery. Legal permission is never inferred."
+}

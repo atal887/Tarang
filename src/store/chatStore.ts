@@ -6,6 +6,7 @@ export type Message = {
   isBot: boolean;
   action: string | null;
   intent: string | null;
+  payload?: any;
 };
 
 const INITIAL_MSG: Message = {

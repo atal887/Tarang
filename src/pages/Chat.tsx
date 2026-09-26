@@ -1,15 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw } from "lucide-react";
+import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { ChatBubble } from "../components/ui/ChatBubble";
 import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoader";
-import { detectIntent } from "../services/intentService";
-import { generateResponse } from "../services/demoResponseService";
-import { detectLanguage } from "../services/languageService";
-import { detectLocationInQuery } from "../services/multilingualHelper";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useProfile } from "../store/profile";
 import { useChatStore, type Message } from "../store/chatStore";
+import { resolveFishermanContext, type ResolvedContext } from "../services/contextResolver";
+import { evaluateFishermanContext, type DecisionResult } from "../services/decisionEngine";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -21,6 +19,7 @@ export function Chat() {
 
   const [input, setInput] = useState("");
   const [analysis, setAnalysis] = useState<{ active: boolean; type: AnalysisType | null; duration: number }>({ active: false, type: null, duration: 0 });
+  const [editContext, setEditContext] = useState<{ active: boolean; context: ResolvedContext | null }>({ active: false, context: null });
   
   // Use a ref to track if we are currently processing a flow/query to prevent strict mode double firing
   const isProcessingUrlParams = useRef(false);
@@ -86,37 +85,39 @@ export function Chat() {
     setAnalysis({ active: true, type, duration });
 
     setTimeout(() => {
-      const lang = detectLanguage(text);
-      const intent = detectIntent(text, lang);
-      const resolvedLocation = detectLocationInQuery(text, profile.location);
-      
-      const context = {
+      const resolvedContext = resolveFishermanContext({
         query: text,
-        language: lang,
-        location: resolvedLocation,
-        boatType: profile.vesselType,
-        currentLatitude: profile.coordinates?.latitude,
-        currentLongitude: profile.coordinates?.longitude,
-        intent
-      };
-      
-      const response = generateResponse(context);
-      
-      if (response.action === "DEMO_CONFIRM") {
-        setAnalysis({ active: false, type: null, duration: 0 });
-        triggerDemoConfirmation();
-        return;
-      }
+        defaultLocationName: profile.location,
+        defaultBoatType: profile.vesselType
+      });
 
-      // Add text-only bot message
       addMessage({ 
-        text: response.text,
+        text: "Sure! Let's confirm your details for this trip:",
         isBot: true,
-        action: response.action || null,
-        intent: response.intent || null
+        action: "context_confirm",
+        intent: null,
+        payload: resolvedContext
       });
       setAnalysis({ active: false, type: null, duration: 0 });
     }, duration);
+  };
+
+  const handleConfirmContext = (_ctx: ResolvedContext) => {
+    updateLastMessageAction("context_confirm_done");
+    
+    // Evaluate risk using the new decision engine
+    const decision = evaluateFishermanContext(_ctx.locationId, _ctx.dateTime, _ctx.boatType, _ctx.originalQuery);
+    
+    const filteredReasons = decision.reasons.filter(r => !r.startsWith('- **') && !r.startsWith('Top '));
+    const responseText = `Risk Assessment: ${decision.riskBand}\n\n${filteredReasons.map(r => `• ${r}`).join('\n')}`;
+
+    addMessage({ 
+      text: responseText, 
+      isBot: true, 
+      action: "DECISION_RESULT", 
+      intent: null,
+      payload: decision
+    });
   };
 
   const triggerDemoConfirmation = () => {
@@ -247,6 +248,77 @@ export function Chat() {
             <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Confirmed {profile.location}, 3 days</div>
            </div>
         );
+      } else if (msg.action === "context_confirm") {
+        const ctx: ResolvedContext = msg.payload;
+        elements.push(
+          <div key="context-confirm" className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-4 text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
+              <div><span className="text-slate-400 block text-xs uppercase mb-1">Location</span><span className="font-semibold text-slate-900">{ctx.locationName}</span></div>
+              <div><span className="text-slate-400 block text-xs uppercase mb-1">Boat Type</span><span className="font-semibold text-slate-900 capitalize">{ctx.boatType.replace('_', ' ')}</span></div>
+              <div><span className="text-slate-400 block text-xs uppercase mb-1">Time</span><span className="font-semibold text-slate-900 capitalize">{ctx.timeDescription}</span></div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-slate-100">
+              <Button className="flex-1" onClick={() => handleConfirmContext(ctx)}>
+                Apply & Proceed
+              </Button>
+              <Button variant="outline" className="flex-1" onClick={() => setEditContext({ active: true, context: ctx })}>
+                <Edit2 className="w-3 h-3 mr-2" /> Edit Details
+              </Button>
+            </div>
+          </div>
+        );
+      } else if (msg.action === "context_confirm_done") {
+        elements.push(
+           <div key="context-done" className="bg-slate-50 rounded-xl border border-slate-200 p-4 mt-3 space-y-2 text-sm text-slate-500 text-left">
+            <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Context Confirmed</div>
+           </div>
+        );
+      } else if (msg.action === "DECISION_RESULT" && msg.payload) {
+        const decision = msg.payload as DecisionResult;
+        const isMarine = !!decision.marineRecommendations;
+        const recs = isMarine ? decision.marineRecommendations : decision.inlandRecommendations;
+        
+        if (recs && recs.length > 0) {
+          elements.push(
+            <div key="decision-recommendations" className="space-y-3 mt-4">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-slate-200 pb-2">
+                {isMarine ? "Marine Destinations" : "Inland Destinations"}
+              </h4>
+              <div className="flex flex-col gap-3">
+                {recs.map((rec: any, idx: number) => {
+                  const name = isMarine ? rec.facilityName : rec.spotName;
+                  const dist = rec.distanceKm.toFixed(1);
+                  const isFallback = !isMarine && rec.isFallback;
+                  const isSafe = rec.riskBand === 'SAFE';
+                  const isCaution = rec.riskBand === 'CAUTION';
+                  
+                  return (
+                    <div key={idx} className="bg-white border border-slate-200 p-3 rounded-lg shadow-sm">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="flex items-start gap-2">
+                          <MapPin className="w-4 h-4 text-ocean-600 mt-0.5 shrink-0" />
+                          <div>
+                            <div className="font-semibold text-slate-800 text-sm leading-tight mb-0.5">{name}</div>
+                            <div className="text-xs text-slate-500">{dist} km {isFallback && "(Fallback Option)"}</div>
+                          </div>
+                        </div>
+                        <div className={`text-[10px] font-bold uppercase px-2 py-1 rounded shrink-0 ml-2 ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
+                          {rec.riskBand}
+                        </div>
+                      </div>
+                      <div className="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                        {rec.suitability}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="text-[11px] text-slate-400 italic pt-1">
+                Recommendations are selected using safety, fishing suitability, and distance.
+              </div>
+            </div>
+          );
+        }
       }
     }
     
@@ -302,6 +374,67 @@ export function Chat() {
           </div>
         </div>
       </div>
+
+      {editContext.active && editContext.context && (
+        <div className="absolute inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl w-full max-w-sm p-6 shadow-xl animate-in fade-in zoom-in-95">
+            <h2 className="text-xl font-bold mb-4">Edit Context</h2>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Location</label>
+                <input 
+                  type="text" 
+                  value={editContext.context.locationName}
+                  onChange={e => setEditContext(prev => ({ ...prev, context: { ...prev.context!, locationName: e.target.value } }))}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Time Description</label>
+                <input 
+                  type="text" 
+                  value={editContext.context.timeDescription}
+                  onChange={e => setEditContext(prev => ({ ...prev, context: { ...prev.context!, timeDescription: e.target.value } }))}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Boat Type</label>
+                <select 
+                  value={editContext.context.boatType}
+                  onChange={e => setEditContext(prev => ({ ...prev, context: { ...prev.context!, boatType: e.target.value } }))}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm"
+                >
+                  <option value="non_motorized">Non Motorized</option>
+                  <option value="motorized">Motorized</option>
+                  <option value="mechanized">Mechanized</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex gap-2 mt-6">
+              <Button variant="outline" className="flex-1" onClick={() => setEditContext({ active: false, context: null })}>Cancel</Button>
+              <Button className="flex-1" onClick={() => {
+                const ctx = editContext.context!;
+                setEditContext({ active: false, context: null });
+                updateLastMessageAction("context_confirm_done");
+                
+                // Rerun with the edited context
+                setTimeout(() => {
+                  addMessage({ 
+                    text: "Sure! Let's confirm your updated details:",
+                    isBot: true,
+                    action: "context_confirm",
+                    intent: null,
+                    payload: ctx
+                  });
+                }, 400);
+              }}>Apply</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
