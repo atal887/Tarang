@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin } from "lucide-react";
+import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin, Plus, Microscope, Cpu, AlertTriangle } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { ChatBubble } from "../components/ui/ChatBubble";
 import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoader";
@@ -15,7 +15,10 @@ import { formatComparisonResponse } from "../services/comparisonFormatter";
 import { useAppStore } from "../store/appStore";
 import { ModeToggle } from "../components/ui/ModeToggle";
 import { ResearchCard } from "../components/ui/ResearchCard";
+import { DigitalTwinUI } from "../components/ui/DigitalTwinUI";
 import { getConversationContext, commitConversationContext, resetConversationContext } from "../store/conversationContext";
+import { useTwinStore } from "../store/scenarioStore";
+import { getLocationEnvironment } from "../data/environmentResolver";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -25,10 +28,12 @@ export function Chat() {
   
   const { messages, addMessage, updateLastMessageAction, clearChat } = useChatStore();
   const { activeMode } = useAppStore();
+  const { twinState, setTwinState } = useTwinStore();
 
   const [input, setInput] = useState("");
   const [analysis, setAnalysis] = useState<{ active: boolean; type: AnalysisType | null; duration: number }>({ active: false, type: null, duration: 0 });
   const [editContext, setEditContext] = useState<{ active: boolean; context: ResolvedContext | null }>({ active: false, context: null });
+  const [showModeMenu, setShowModeMenu] = useState(false);
   
   // Use a ref to track if we are currently processing a flow/query to prevent strict mode double firing
   const isProcessingUrlParams = useRef(false);
@@ -188,7 +193,29 @@ export function Chat() {
     // Evaluate risk using the new decision engine
     try {
       console.log("[CHAT] evaluating context");
-      const decision = evaluateFishermanContext(_ctx.locationId, _ctx.dateTime, _ctx.boatType, _ctx.originalQuery, fallbackConsent);
+      const decision = evaluateFishermanContext(
+        _ctx.locationId, 
+        _ctx.dateTime, 
+        _ctx.boatType, 
+        _ctx.originalQuery, 
+        fallbackConsent,
+        activeMode === "Digital_Twin" ? (twinState.modified || undefined) : undefined
+      );
+      
+      // Update Digital Twin baseline if not in active simulation
+      if (activeMode !== "Digital_Twin" || !twinState.baseline) {
+        const currentMonth = _ctx.dateTime.getMonth();
+        const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
+        const baseline = getLocationEnvironment(_ctx.locationId, evalMonth);
+        if (baseline) {
+          setTwinState({ 
+            baseline, 
+            context: _ctx,
+            active: activeMode === "Digital_Twin"
+          });
+        }
+      }
+      
       console.log("[CHAT] decision", decision);
       
       const intents = detectIntent(_ctx.originalQuery, "English");
@@ -491,6 +518,7 @@ export function Chat() {
       </div>
       
       <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 pb-24 pt-14">
+        {activeMode === "Digital_Twin" && <DigitalTwinUI />}
         {messages.map((msg) => (
           <div key={msg.id} className="w-full max-w-3xl mx-auto flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300">
             <ChatBubble 
@@ -512,7 +540,39 @@ export function Chat() {
 
       <div className="p-4 bg-white border-t border-slate-200 shrink-0 shadow-[0_-4px_10px_-4px_rgba(0,0,0,0.02)] z-20">
         <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 relative">
+            <div className="relative">
+              <button 
+                onClick={() => setShowModeMenu(!showModeMenu)}
+                aria-label="Select mode" 
+                disabled={analysis.active} 
+                className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 border border-slate-200 bg-slate-50 text-slate-500 hover:text-ocean-600 hover:bg-ocean-50 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
+              {showModeMenu && (
+                <div className="absolute bottom-full mb-3 left-0 w-48 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden py-2 z-50">
+                  <button 
+                    onClick={() => { useAppStore().setActiveMode("Research"); setShowModeMenu(false); }}
+                    className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Research' ? 'bg-ocean-50 text-ocean-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    <Microscope className="w-4 h-4" /> Researcher
+                  </button>
+                  <button 
+                    onClick={() => { useAppStore().setActiveMode("Digital_Twin"); setShowModeMenu(false); }}
+                    className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Digital_Twin' ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    <Cpu className="w-4 h-4" /> Digital Twin
+                  </button>
+                  <button 
+                    onClick={() => { useAppStore().setActiveMode("Alert"); setShowModeMenu(false); }}
+                    className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Alert' ? 'bg-rose-50 text-rose-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    <AlertTriangle className="w-4 h-4" /> Alert
+                  </button>
+                </div>
+              )}
+            </div>
             <button aria-label="Voice input" disabled={analysis.active} className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 border border-slate-200 bg-slate-50 text-slate-500 hover:text-ocean-600 hover:bg-ocean-50 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 disabled:opacity-50 disabled:cursor-not-allowed">
               <Mic className="w-5 h-5" />
             </button>

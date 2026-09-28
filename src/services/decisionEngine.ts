@@ -16,7 +16,7 @@ export interface DecisionResult {
   requiresFallbackConsent?: boolean;
 }
 
-export function evaluateFishermanContext(locationId: string, dateTime: Date, vesselType: string, query: string = "", fallbackConsent: boolean = false): DecisionResult {
+export function evaluateFishermanContext(locationId: string, dateTime: Date, vesselType: string, query: string = "", fallbackConsent: boolean = false, simulatedEnv?: any): DecisionResult {
   const currentMonth = dateTime.getMonth(); // 0-11
   const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
   
@@ -66,7 +66,7 @@ export function evaluateFishermanContext(locationId: string, dateTime: Date, ves
 
   // If marine, run the marine fishing pipeline
   // evaluateMarineCandidates already handles the "explicitly named facility" logic
-  const evaluated = evaluateMarineCandidates(query, locationId, dateTime, vesselType);
+  const evaluated = evaluateMarineCandidates(query, locationId, dateTime, vesselType, simulatedEnv);
   
   if (evaluated.length === 0) {
     return {

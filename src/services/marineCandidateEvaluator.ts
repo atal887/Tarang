@@ -23,7 +23,8 @@ export function evaluateMarineCandidates(
   query: string, 
   locationId: string, 
   dateTime: Date, 
-  vesselType: string
+  vesselType: string,
+  simulatedEnv?: Partial<MarineProductivityProfile & { windSpeedKmph: number, significantWaveHeightM: number }>
 ): MarineCandidateResult[] {
   const currentMonth = dateTime.getMonth(); // 0-11
   const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
@@ -60,13 +61,29 @@ export function evaluateMarineCandidates(
     }
   }
 
-  // If a specific facility is mentioned, only evaluate that one
   const candidatesToEvaluate = explicitFacility ? [explicitFacility] : facilities;
-
+  
   // 3. Evaluate each candidate using the existing risk resolver
   const results: MarineCandidateResult[] = candidatesToEvaluate.map(fac => {
-    const evaluated = evaluateMarineFacilityRisk(fac, vesselType);
-    const env = fac.environment;
+    let env = fac.environment ? { ...fac.environment } : undefined;
+    
+    // Merge simulated values if they exist
+    if (env && simulatedEnv) {
+      if (simulatedEnv.windSpeedKmph !== undefined) env.windSpeedKmph = simulatedEnv.windSpeedKmph;
+      if (simulatedEnv.significantWaveHeightM !== undefined) env.significantWaveHeightM = simulatedEnv.significantWaveHeightM;
+      if (simulatedEnv.seaSurfaceTemperatureC !== undefined) env.seaSurfaceTemperatureC = simulatedEnv.seaSurfaceTemperatureC;
+      if (simulatedEnv.surfaceCurrentSpeedMs !== undefined) env.surfaceCurrentSpeedMs = simulatedEnv.surfaceCurrentSpeedMs;
+      if (simulatedEnv.mixedLayerDepthM !== undefined) env.mixedLayerDepthM = simulatedEnv.mixedLayerDepthM;
+      if (simulatedEnv.d20DepthM !== undefined) env.d20DepthM = simulatedEnv.d20DepthM;
+      if (simulatedEnv.chlorophyllMgM3 !== undefined) env.chlorophyllMgM3 = simulatedEnv.chlorophyllMgM3;
+      if (simulatedEnv.pfzPotentialScore !== undefined) env.pfzPotentialScore = simulatedEnv.pfzPotentialScore;
+    }
+    
+    // We need to pass the cloned/modified env to evaluateMarineFacilityRisk as well, but evaluateMarineFacilityRisk takes fac.
+    // So we need to create a shallow copy of fac as well!
+    const modifiedFac = { ...fac, environment: env };
+    
+    const evaluated = evaluateMarineFacilityRisk(modifiedFac, vesselType);
     
     const profile = env ? {
       seaSurfaceTemperatureC: env.seaSurfaceTemperatureC,

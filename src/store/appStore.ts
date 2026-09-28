@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type ChatMode = "Normal" | "Research";
+export type ChatMode = "Normal" | "Research" | "Digital_Twin" | "Alert";
 
 // Simple global state manager using a singleton pattern since we don't have Zustand
 // and want to avoid modifying App.tsx to add a Provider.
