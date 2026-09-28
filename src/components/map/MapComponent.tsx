@@ -44,7 +44,7 @@ export interface MapZone {
   id: string;
   center: [number, number];
   radius: number; // meters
-  type: "safe" | "caution" | "danger" | "restricted";
+  type: "safe" | "caution" | "danger" | "restricted" | "inland" | "fishing";
   label: string;
 }
 
@@ -75,10 +75,12 @@ export function MapComponent({
   
   const getZoneStyle = (type: string) => {
     switch (type) {
+      case "inland": return { color: "#eab308", fillOpacity: 0.15, weight: 1, dashArray: "4" }; // yellow-500
+      case "restricted": return { color: "#dc2626", fillOpacity: 0.2, weight: 2, dashArray: "5, 10" }; // red-600
+      case "fishing": return { color: "#ec4899", fillOpacity: 0.2, weight: 2 }; // pink-500
       case "safe": return { color: "#14b8a6", fillOpacity: 0.1, weight: 1, dashArray: "4" }; // teal-500
       case "caution": return { color: "#d97706", fillOpacity: 0.15, weight: 1 }; // amber-600
       case "danger": return { color: "#dc2626", fillOpacity: 0.15, weight: 1 }; // red-600
-      case "restricted": return { color: "#475569", fillOpacity: 0.1, weight: 2, dashArray: "5, 10" }; // slate-600
       default: return { color: "#0ea5e9", fillOpacity: 0.1, weight: 1 }; // sky-500
     }
   };

@@ -21,6 +21,8 @@ import { getConversationContext, commitConversationContext, resetConversationCon
 import { useTwinStore } from "../store/scenarioStore";
 import { getLocationEnvironment } from "../data/environmentResolver";
 import { locationData as oldLocationData } from "../data/demoData";
+import { MapComponent } from "../components/map/MapComponent";
+import { getLocationCoordinates } from "../services/contextResolver";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -248,7 +250,7 @@ export function Chat() {
           isBot: true,
           action: "DECISION_RESULT",
           intent: intents[0],
-          payload: decision
+          payload: { decision, context: _ctx }
         });
       } else {
         if (isCompoundOrdinal) {
@@ -477,8 +479,36 @@ export function Chat() {
             <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Searching nearby locations...</div>
            </div>
         );
-      } else if (msg.action === "DECISION_RESULT" && msg.payload) {
-        const decision = msg.payload as DecisionResult;
+      }
+      
+      let ctx: ResolvedContext | undefined;
+      if (msg.payload && (msg.payload as any).context) {
+        ctx = (msg.payload as any).context;
+      }
+      
+      if (msg.intent === "TRIP_PLANNING" && ctx) {
+        const coords = getLocationCoordinates(ctx.locationId);
+        if (coords) {
+          const zones: any[] = [
+            { id: "inland-1", center: [coords[0] + 0.05, coords[1] - 0.05], radius: 3000, type: "inland", label: "Inland Area" },
+            { id: "restricted-1", center: [coords[0] - 0.02, coords[1] - 0.02], radius: 1500, type: "restricted", label: "Restricted Area" },
+            { id: "pfz-1", center: [coords[0] - 0.06, coords[1] + 0.06], radius: 4000, type: "fishing", label: "Recommended PFZ" },
+          ];
+          elements.push(
+            <div key="trip-map" className="mt-4 border border-slate-200 rounded-xl overflow-hidden shadow-sm h-64 bg-white relative">
+              <MapComponent center={coords} zoom={11} zones={zones} />
+              <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1.5 rounded-lg border border-slate-200 shadow-sm text-[10px] font-bold flex flex-col gap-1 z-10">
+                <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-yellow-500"></span> Inland</div>
+                <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-red-600"></span> Restricted</div>
+                <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-pink-500"></span> Fishing Zone</div>
+              </div>
+            </div>
+          );
+        }
+      }
+      
+      if (msg.action === "DECISION_RESULT" && msg.payload) {
+        const decision = (msg.payload as any).decision || msg.payload as DecisionResult;
         const isMarine = !!decision.marineRecommendations;
         const recs = isMarine ? decision.marineRecommendations : decision.inlandRecommendations;
         

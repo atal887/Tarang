@@ -412,3 +412,9 @@ function buildMergedContext(
     inheritedFrom: inherited,
   };
 }
+
+export function getLocationCoordinates(id: string): [number, number] | null {
+  const loc = locations.find((l: any) => l.place_id === id);
+  if (loc && loc.latitude && loc.longitude) return [loc.latitude, loc.longitude];
+  return null;
+}
