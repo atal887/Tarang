@@ -67,7 +67,7 @@ export function getLocationEnvironment(locationId: string, month: number): Locat
   return match || null;
 }
 
-export function getEnvironmentalConditions(_locationName: string, lat: number, lon: number): EnvironmentalConditions | null {
+export function getEnvironmentalConditions(_locationName: string, lat: number, lon: number, vesselType?: string): EnvironmentalConditions | null {
   const locContext = resolveFishingLocation(lat, lon);
   const date = new Date();
   const currentMonth = date.getMonth(); // 0-11
@@ -91,12 +91,17 @@ export function getEnvironmentalConditions(_locationName: string, lat: number, l
   
   if (isMarine) {
     const waveHeight = envData.significantWaveHeightM ?? 0;
-    if (envData.highWaveAlert || envData.cycloneStatus === "elevated" || waveHeight > 1.5 || windSpeed > 20) {
+    
+    // Vessel limits
+    const waveLimit = vesselType === 'non_motorized' ? 0.5 : vesselType === 'motorized' ? 1.4 : 2.0;
+    const windLimit = vesselType === 'non_motorized' ? 25 : vesselType === 'motorized' ? 40 : 50;
+
+    if (envData.highWaveAlert || envData.cycloneStatus === "elevated" || waveHeight > waveLimit || windSpeed > windLimit) {
       safetyStatus = "Exercise Caution";
       safetyExplanation = envData.highWaveAlert ? "High wave alert is active." : 
         envData.cycloneStatus === "elevated" ? "Elevated cyclone risk." : 
-        waveHeight > 1.5 ? "Waves are relatively high today." : 
-        "Strong winds present.";
+        waveHeight > waveLimit ? "Waves are relatively high today for your boat type." : 
+        "Strong winds present for your boat type.";
     } else {
       safetyExplanation = "Current conditions are suitable for marine operations.";
     }

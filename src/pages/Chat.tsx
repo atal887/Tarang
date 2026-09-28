@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin, Plus, Microscope, Cpu, AlertTriangle } from "lucide-react";
+import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin, Plus, Microscope, Cpu, AlertTriangle, ArrowRight } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { ChatBubble } from "../components/ui/ChatBubble";
 import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoader";
@@ -20,6 +20,7 @@ import { AlertUI } from "../components/ui/AlertUI";
 import { getConversationContext, commitConversationContext, resetConversationContext } from "../store/conversationContext";
 import { useTwinStore } from "../store/scenarioStore";
 import { getLocationEnvironment } from "../data/environmentResolver";
+import { locationData as oldLocationData } from "../data/demoData";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -582,6 +583,20 @@ export function Chat() {
         ))}
         {analysis.active && analysis.type && (
            <AnalysisLoader type={analysis.type} duration={analysis.duration} />
+        )}
+        {messages.length === 1 && messages[0].id === 'init-1' && (
+          <div className="w-full max-w-3xl mx-auto flex flex-col gap-2 pt-4 px-2 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150 fill-mode-both">
+            {(oldLocationData[profile.location.split(',')[0].trim().toLowerCase()] || oldLocationData.other).suggestedQuestions.map((q, idx) => (
+              <button 
+                key={idx}
+                onClick={() => handleUserMessage(q)}
+                className="bg-white border border-slate-200 p-4 rounded-xl text-left text-[15px] font-medium text-slate-700 hover:bg-ocean-50 hover:border-ocean-200 hover:text-ocean-800 transition-all shadow-sm flex items-center justify-between group"
+              >
+                {q}
+                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-ocean-500 transition-colors" />
+              </button>
+            ))}
+          </div>
         )}
         <div ref={messagesEndRef} />
       </div>

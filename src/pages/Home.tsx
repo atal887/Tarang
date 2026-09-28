@@ -28,20 +28,21 @@ export function Home() {
 
   const { profile } = useProfile();
   const userLocation = profile.location;
-  const locKey = userLocation.toLowerCase();
+  
+  let locName = userLocation.split(',')[0].trim();
+  const locKey = locName.toLowerCase();
   
   // Fallback for image and suggested questions
   const fallbackLocData = oldLocationData[locKey] || {
     ...oldLocationData.other,
-    name: userLocation,
-    state: "Region"
+    name: locName,
+    state: userLocation.split(',')[1]?.trim() || "Region"
   };
 
   // 1. Resolve lat/lon
   let lat = profile.coordinates?.latitude;
   let lon = profile.coordinates?.longitude;
   let stateName = fallbackLocData.state;
-  let locName = userLocation.split(',')[0].trim();
   
   if (!lat || !lon) {
     const matchedLoc = indiaFishingLocations.find(l => 
@@ -56,7 +57,7 @@ export function Home() {
   }
 
   // 2. Fetch dynamic environmental conditions
-  const env = (lat && lon) ? getEnvironmentalConditions(locName, lat, lon) : null;
+  const env = (lat && lon) ? getEnvironmentalConditions(locName, lat, lon, profile.vesselType) : null;
 
   if (env && env.name) {
     if (locName === "Current location" || locName === "Live Location") {
