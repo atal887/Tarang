@@ -11,7 +11,7 @@ interface AlertUIProps {
 export function AlertUI({ decision, context, isSimulated }: AlertUIProps) {
   if (!decision || !context) {
     return (
-      <div className="p-4 m-4 bg-slate-50 border border-slate-200 rounded-xl shadow-sm text-sm text-slate-600 text-center flex flex-col items-center">
+      <div className="p-4 m-4 bg-slate-50 border border-slate-200 rounded-xl shadow-sm text-sm text-slate-600 text-center flex flex-col items-center animate-in fade-in zoom-in-95 duration-300">
         <AlertTriangle className="w-8 h-8 text-slate-300 mb-2" />
         <p>Ask a question about a location to view its marine safety alerts.</p>
       </div>
@@ -36,7 +36,7 @@ export function AlertUI({ decision, context, isSimulated }: AlertUIProps) {
   const windLimit = context.boatType === 'non_motorized' ? 25 : context.boatType === 'motorized' ? 40 : 50;
 
   return (
-    <div className={`m-4 border rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row ${bgColor} ${borderColor}`}>
+    <div className={`m-4 border rounded-xl shadow-sm overflow-hidden flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-300 hover:shadow-md transition-shadow ${bgColor} ${borderColor}`}>
       {/* Status Panel */}
       <div className={`p-6 flex flex-col items-center justify-center border-r md:w-64 shrink-0 ${borderColor}`}>
         <Icon className={`w-12 h-12 mb-3 ${textColor}`} />

@@ -110,7 +110,7 @@ export function Home() {
       <div className="p-4 md:p-6 space-y-6 max-w-3xl mx-auto w-full -mt-2">
         
         {/* Current Conditions Grid */}
-        <section>
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both">
           <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Current Conditions</h2>
           <div className="grid grid-cols-3 gap-3">
             <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
@@ -146,9 +146,9 @@ export function Home() {
         </section>
 
         {/* Sea Condition Summary */}
-        <section>
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-75 fill-mode-both">
           <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">{isMarine ? "Today's Sea Conditions" : "Today's Inland Conditions"}</h2>
-          <div className={`p-4 rounded-2xl border flex items-start gap-3 shadow-sm ${
+          <div className={`p-4 rounded-2xl border flex items-start gap-3 shadow-sm transition-transform hover:scale-[1.01] ${
             safetyStatus.toLowerCase().includes('favourable') ? 'bg-status-safeBg border-status-safe/20' : 
             safetyStatus.toLowerCase().includes('not') ? 'bg-status-dangerBg border-status-danger/20' : 
             'bg-status-cautionBg border-status-caution/20'
@@ -170,28 +170,28 @@ export function Home() {
         </section>
 
         {/* Most Asked Questions */}
-        <section>
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150 fill-mode-both">
           <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Most Asked Questions</h2>
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
             {fallbackLocData.suggestedQuestions.map((q, idx) => (
               <button 
                 key={idx}
                 onClick={() => handleQuestionClick(q)}
-                className={`w-full text-left p-4 flex items-center justify-between hover:bg-slate-50 transition-colors ${idx !== fallbackLocData.suggestedQuestions.length - 1 ? 'border-b border-slate-50' : ''}`}
+                className={`w-full text-left p-4 flex items-center justify-between hover:bg-ocean-50 transition-colors group ${idx !== fallbackLocData.suggestedQuestions.length - 1 ? 'border-b border-slate-50' : ''}`}
               >
-                <span className="text-sm font-medium text-slate-700">{q}</span>
-                <ArrowRight className="w-4 h-4 text-slate-300" />
+                <span className="text-sm font-medium text-slate-700 group-hover:text-ocean-800 transition-colors">{q}</span>
+                <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-ocean-500 transition-colors" />
               </button>
             ))}
           </div>
         </section>
 
         {/* Learn with TARANG */}
-        <section>
+        <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200 fill-mode-both">
           <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3 px-1">Learn with TARANG</h2>
           <div 
             onClick={() => navigate('/training')}
-            className="bg-ocean-600 rounded-2xl p-5 text-white flex items-center justify-between cursor-pointer hover:bg-ocean-700 transition-colors shadow-sm"
+            className="group bg-ocean-600 rounded-2xl p-5 text-white flex items-center justify-between cursor-pointer hover:bg-ocean-700 transition-all hover:scale-[1.02] hover:shadow-md active:scale-95"
           >
             <div>
               <div className="flex items-center gap-2 mb-2">
