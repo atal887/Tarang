@@ -271,10 +271,21 @@ export function Chat() {
         } else {
           console.log("[CHAT] formatting normal response");
           const responseText = formatNormalResponse(intents, _ctx, decision);
+          
+          let actionToSet = decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT";
+          if (!decision.requiresFallbackConsent) {
+            const isRec = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
+            const isWeatherWithRecs = (decision.marineRecommendations && decision.marineRecommendations.length > 0 && intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i)));
+            
+            if (isRec || isWeatherWithRecs) {
+              actionToSet = "VIEW_MAP_FISHING";
+            }
+          }
+
           addMessage({ 
             text: responseText, 
             isBot: true, 
-            action: decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT", 
+            action: actionToSet, 
             intent: null,
             payload: decision.requiresFallbackConsent ? _ctx : decision
           });
