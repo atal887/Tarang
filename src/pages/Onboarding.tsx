@@ -259,12 +259,10 @@ export function Onboarding() {
   };
 
   const handleBoatSubmit = () => {
-    // Derive the city name (first part before comma) for the profile
-    const cityName = location.split(",")[0].trim();
 
     setProfile({
       phone: isGuestFlow ? "" : `+91 ${phone}`,
-      location: location === "Current location" ? "Current location" : cityName,
+      location: location,
       locationMode: location === "Current location" ? "gps" : "manual",
       coordinates: gpsCoords || undefined,
       vesselType: boatType,

@@ -93,8 +93,9 @@ export function getEnvironmentalConditions(_locationName: string, lat: number, l
     const waveHeight = envData.significantWaveHeightM ?? 0;
     
     // Vessel limits
-    const waveLimit = vesselType === 'non_motorized' ? 0.5 : vesselType === 'motorized' ? 1.4 : 2.0;
-    const windLimit = vesselType === 'non_motorized' ? 25 : vesselType === 'motorized' ? 40 : 50;
+    const normalizedVessel = vesselType?.toLowerCase() || '';
+    const waveLimit = (normalizedVessel.includes('non-motorized') || normalizedVessel.includes('traditional')) ? 0.5 : normalizedVessel.includes('motorized') ? 1.4 : 2.0;
+    const windLimit = (normalizedVessel.includes('non-motorized') || normalizedVessel.includes('traditional')) ? 25 : normalizedVessel.includes('motorized') ? 40 : 50;
 
     if (envData.highWaveAlert || envData.cycloneStatus === "elevated" || waveHeight > waveLimit || windSpeed > windLimit) {
       safetyStatus = "Exercise Caution";

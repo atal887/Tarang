@@ -42,7 +42,6 @@ export function Home() {
   // 1. Resolve lat/lon
   let lat = profile.coordinates?.latitude;
   let lon = profile.coordinates?.longitude;
-  let stateName = fallbackLocData.state;
   
   if (!lat || !lon) {
     const matchedLoc = indiaFishingLocations.find(l => 
@@ -51,7 +50,6 @@ export function Home() {
     if (matchedLoc) {
       lat = matchedLoc.latitude;
       lon = matchedLoc.longitude;
-      stateName = matchedLoc.stateCode;
       locName = matchedLoc.canonicalDisplayName;
     }
   }
@@ -99,10 +97,13 @@ export function Home() {
         
         <div className="absolute bottom-0 left-0 p-6 w-full text-white">
           <p className="text-sm font-medium text-white/80 mb-1">{greeting}</p>
-          <div className="flex items-center gap-1.5 mb-2">
+          <div className="flex items-center gap-1.5 mb-1">
             <MapPin className="w-5 h-5 text-ocean-300" />
-            <h1 className="text-2xl font-bold">{locName}, {stateName}</h1>
+            <h1 className="text-2xl font-bold">{userLocation}</h1>
           </div>
+          <p className="text-sm text-ocean-100 font-medium mb-1">
+            Vessel: {profile.vesselType}
+          </p>
           <p className="text-sm text-white/90 font-medium">{getSubtitle()}</p>
         </div>
       </div>
