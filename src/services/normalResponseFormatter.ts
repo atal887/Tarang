@@ -8,10 +8,7 @@ export function formatNormalResponse(
   context: ResolvedContext,
   decision: DecisionResult
 ): string {
-  // If the decision engine explicitly triggered a fallback consent prompt, return the reason immediately.
-  if (decision.requiresFallbackConsent && decision.reasons.length > 0) {
-    return decision.reasons[0];
-  }
+
 
   if (intents.includes('UNKNOWN')) {
     return "Could you please elaborate your question a little more? TARANG is designed to help with marine conditions, fishing zones, and safety. What would you like to know about your fishing trip?";

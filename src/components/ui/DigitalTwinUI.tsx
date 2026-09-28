@@ -25,7 +25,6 @@ export function DigitalTwinUI() {
       twinState.context.dateTime, 
       twinState.context.boatType, 
       "", 
-      false, 
       localMods
     );
     
@@ -41,8 +40,7 @@ export function DigitalTwinUI() {
         twinState.context.locationId, 
         twinState.context.dateTime, 
         twinState.context.boatType, 
-        "", 
-        false
+        ""
       );
       setTwinState({ predictions: decision });
     }

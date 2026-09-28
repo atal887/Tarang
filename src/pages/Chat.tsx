@@ -206,7 +206,6 @@ export function Chat() {
         _ctx.dateTime, 
         _ctx.boatType, 
         _ctx.originalQuery, 
-        fallbackConsent,
         activeMode === "Digital_Twin" ? (twinState.modified || undefined) : undefined
       );
       
@@ -272,8 +271,14 @@ export function Chat() {
           console.log("[CHAT] formatting normal response");
           const responseText = formatNormalResponse(intents, _ctx, decision);
           
-          let actionToSet = decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT";
-          if (!decision.requiresFallbackConsent) {
+          let actionToSet = "DECISION_RESULT";
+          const ctxState = getConversationContext();
+          const lastContext = ctxState.lastResolvedContext;
+          const shouldConfirm = _ctx.inferred.location && (!lastContext || lastContext.locationName !== _ctx.locationName);
+          
+          if (shouldConfirm) {
+            actionToSet = "context_confirm";
+          } else {
             const isRec = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
             const isWeatherWithRecs = (decision.marineRecommendations && decision.marineRecommendations.length > 0 && intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i)));
             
@@ -287,7 +292,7 @@ export function Chat() {
             isBot: true, 
             action: actionToSet, 
             intent: null,
-            payload: decision.requiresFallbackConsent ? _ctx : decision
+            payload: shouldConfirm ? _ctx : decision
           });
         }
       }
