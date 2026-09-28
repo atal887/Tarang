@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Mic, Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin, Plus, Microscope, Cpu, AlertTriangle, ArrowRight } from "lucide-react";
+import { Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin, Plus, Microscope, Cpu, AlertTriangle, ArrowRight } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { ChatBubble } from "../components/ui/ChatBubble";
 import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoader";
@@ -545,11 +545,7 @@ export function Chat() {
   const renderModeIndicator = () => {
     switch(activeMode) {
       case "Normal":
-        return (
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm font-bold border border-slate-200">
-            <span className="text-lg leading-none">⚓</span> Normal
-          </div>
-        );
+        return null;
       case "Research":
         return (
           <div className="flex items-center gap-2 px-3 py-1.5 bg-ocean-50 text-ocean-700 rounded-lg text-sm font-bold border border-ocean-200">
@@ -652,9 +648,7 @@ export function Chat() {
                 </div>
               )}
             </div>
-            <button aria-label="Voice input" disabled={analysis.active} className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 border border-slate-200 bg-slate-50 text-slate-500 hover:text-ocean-600 hover:bg-ocean-50 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 disabled:opacity-50 disabled:cursor-not-allowed">
-              <Mic className="w-5 h-5" />
-            </button>
+
             <input
               type="text"
               value={input}
