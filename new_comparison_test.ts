@@ -52,7 +52,7 @@ ok(res2.includes('Safety Analysis:') && res2.includes('Productivity Analysis:'),
 
 const res3 = formatComparisonResponse(mockCandidates, 'Normal');
 ok(res3.includes('Quick comparison'), 'Should use 3-way format');
-ok(res3.includes('Zone C') && res3.includes('lowest risk'), 'Should identify Zone C as safest');
+ok(res3.includes('Zone C') && res3.includes('safest operating conditions'), 'Should identify Zone C as safest');
 
 // 2. Intent Taxonomy Tests
 ok(detectIntent('Compare the first and second zones', 'English').includes('COMPARE_ZONES'), 'Should detect COMPARE_ZONES');

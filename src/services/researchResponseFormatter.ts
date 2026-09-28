@@ -227,91 +227,103 @@ export function formatResearchResponse(
   };
 
   // 6. Summary generation based on intent
-  const summaries: string[] = [];
-  if (!intents || intents.length === 0) intents = ['BOAT_SAFETY'];
-
-  if (intents.some(i => ['NEAREST_PFZ', 'BEST_FISHING_ZONE', 'CHLOROPHYLL_ZONE'].includes(i))) {
-    if (!isMarine) {
-      summaries.push(`For ${context.locationName}, marine productivity metrics like PFZ and Chlorophyll are inapplicable since it's an inland location. However, I can still help you evaluate general weather safety.`);
-    } else if (response.productivityAnalysis) {
-      summaries.push(`Based on the latest conditions, **${topMarine?.facilityName}** shows the strongest fishing potential for your trip.\n\nIts productivity score is highly favorable at **${response.productivityAnalysis.productivityScore}/100**. ${response.productivityAnalysis.insights}`);
-    } else {
-      summaries.push(`I cannot determine the fishing potential for this location because productivity data is currently unavailable in the baseline dataset.`);
-    }
+  if (intents.includes('UNKNOWN')) {
+    response.summary = "Could you please elaborate your question a little more? TARANG is designed to help with marine conditions, fishing zones, and safety. What would you like to know about your fishing trip?";
+    return response;
   }
 
-  if (intents.some(i => ['SAFETY_TOMORROW', 'BOAT_SAFETY', 'WHY_NOT_RECOMMENDED', 'SAFETY_ANALYSIS'].includes(i))) {
-    const isSafe = decision.riskBand === 'SAFE';
-    const timeContext = intents.includes('SAFETY_TOMORROW') ? ' forecasted for tomorrow' : ' current';
-    const intro = isSafe 
-      ? `Yes, based on the${timeContext} conditions, this zone is suitable for your ${context.boatType}.` 
-      : `I would advise caution for your ${context.boatType} in this zone based on the${timeContext} conditions.`;
-    const windWave = env?.windSpeedKmph && env?.significantWaveHeightM 
-      ? ` Predicted wind speeds are ${env.windSpeedKmph} km/h and waves are ${env.significantWaveHeightM} m.` : '';
-    summaries.push(`${intro}\n\nThe overall environmental risk is classified as **${decision.riskBand}**. ${decision.reasons.join('. ')}${windWave}`);
+  const isSafe = decision.riskBand === 'SAFE';
+  const vesselType = context.boatType.replace('_', ' ');
+  const timeContext = intents.includes('SAFETY_TOMORROW') ? "tomorrow" : "under current conditions";
+  
+  let directAnswer = "";
+  
+  // Direct Answer & Prioritization
+  if (!isSafe && intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i))) {
+    directAnswer = `**The fishing potential here is favorable, but I would advise against going ${timeContext}.** The environmental risk exceeds the safe operating limits for your ${vesselType}.`;
+  } else if (intents.some(i => ['SAFETY_TOMORROW', 'BOAT_SAFETY', 'AVOID_ZONE', 'SAFETY_ANALYSIS'].includes(i))) {
+    directAnswer = isSafe 
+      ? `**Yes, based on the forecast, this zone is safe for your ${vesselType} ${timeContext}.**` 
+      : `**I would advise caution for your ${vesselType} in this zone ${timeContext}.**`;
+  } else if (intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i))) {
+    if (isMarine && topMarine) directAnswer = `**Based on the latest conditions, ${topMarine.facilityName} shows the strongest fishing potential for your trip.**`;
+    else if (!isMarine) directAnswer = `**Marine productivity metrics are inapplicable since ${context.locationName} is an inland location.**`;
+    else directAnswer = `**I cannot determine the fishing potential because productivity data is currently unavailable in the baseline dataset.**`;
+  } else if (intents.includes('COMPARE_ZONES') && decision.marineRecommendations && decision.marineRecommendations.length > 1) {
+    const top = decision.marineRecommendations[0];
+    const second = decision.marineRecommendations[1];
+    directAnswer = `**Comparing the primary zone (${top.facilityName}) with the alternative (${second.facilityName}):** ${top.facilityName} offers stronger fishing potential.`;
+  } else {
+    directAnswer = `**Overall Environmental Risk: ${decision.riskBand}.**`;
   }
 
-  if (intents.includes('WIND_FORECAST')) {
-    summaries.push(env?.windSpeedKmph !== null 
-      ? `The forecasted wind speed is **${env?.windSpeedKmph} km/h**.\n\nThis is evaluated against your vessel's upper limit of ${windLimit} km/h, resulting in a safety band of **${decision.riskBand}**.`
-      : `Wind forecast data is not available in the baseline dataset.`);
-  }
+  // Integrated Analysis
+  const metrics: string[] = [];
+  const hasWind = env && env.windSpeedKmph !== null;
+  const hasWave = env && env.significantWaveHeightM !== null;
 
-  if (intents.includes('WAVE_HEIGHT')) {
-    if (!isMarine) {
-      summaries.push(`Marine metrics like wave height are inapplicable to ${context.locationName} because it's inland.\n\nHowever, the overall weather risk is currently classified as **${decision.riskBand}**.`);
-    } else {
-      summaries.push(env?.significantWaveHeightM !== null 
-        ? `The significant wave height is forecasted at **${env?.significantWaveHeightM} meters**.\n\nThis is evaluated against your vessel's upper limit of ${waveLimit} meters, resulting in a safety band of **${decision.riskBand}**.`
-        : `Wave height data is not available in the baseline dataset.`);
+  if (intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'COMPARE_ZONES'].includes(i))) {
+    if (hasWind && hasWave) {
+      metrics.push(`The significant wave height (${env.significantWaveHeightM}m) and wind speeds (${env.windSpeedKmph} km/h) remain ${isSafe ? 'comfortably below' : 'concerningly close to or above'} the ${waveLimit}m and ${windLimit} km/h thresholds for ${vesselType} boats.`);
+    } else if (hasWind) {
+      metrics.push(`The wind speed is ${env.windSpeedKmph} km/h (Limit: ${windLimit} km/h).`);
+    } else if (hasWave) {
+      metrics.push(`The wave height is ${env.significantWaveHeightM} m (Limit: ${waveLimit} m).`);
     }
   }
 
   if (intents.includes('CURRENT_COASTAL_CONDITIONS')) {
-    if (!isMarine) summaries.push(`Marine metrics like ocean currents are inapplicable to ${context.locationName} because it's inland.`);
-    else summaries.push(env?.surfaceCurrentSpeedMs !== null ? `The ocean surface current is moving at **${env?.surfaceCurrentSpeedMs} m/s** toward **${env?.surfaceCurrentDirectionDeg}°**.\n\nCurrents play a key role in nutrient transport and are scored as part of the overall productivity model.` : `Current data is not available for this location.`);
+    if (!isMarine) metrics.push(`Marine metrics like ocean currents are inapplicable to ${context.locationName} because it's inland.`);
+    else metrics.push(env?.surfaceCurrentSpeedMs !== null ? `Ocean surface currents are moving at ${env.surfaceCurrentSpeedMs} m/s toward ${env.surfaceCurrentDirectionDeg}°, which plays a key role in nutrient transport.` : `Current data is not available for this location.`);
   }
 
   if (intents.includes('SST_CONDITIONS')) {
-    if (!isMarine) summaries.push(`Marine metrics like sea surface temperature (SST) are inapplicable to ${context.locationName} because it's inland.`);
-    else summaries.push(env?.seaSurfaceTemperatureC !== null ? `The sea surface temperature (SST) here is **${env?.seaSurfaceTemperatureC} °C**.\n\nOptimal SST (typically 27-31°C) is crucial for the aggregation of commercially important pelagic species.` : `SST data is not available for this location.`);
+    if (!isMarine) metrics.push(`Marine metrics like sea surface temperature (SST) are inapplicable to ${context.locationName} because it's inland.`);
+    else metrics.push(env?.seaSurfaceTemperatureC !== null ? `The sea surface temperature (SST) here is ${env.seaSurfaceTemperatureC} °C.` : `SST data is not available for this location.`);
   }
 
   if (intents.includes('MLD_CONDITIONS')) {
-    if (!isMarine) summaries.push(`Marine metrics like mixed layer depth are inapplicable to ${context.locationName} because it's inland.`);
-    else summaries.push(env?.mixedLayerDepthM !== null ? `The mixed layer depth (MLD) here is **${env?.mixedLayerDepthM} meters**.\n\nA shallower MLD tends to concentrate nutrients and fish in the upper water column, making them more accessible.` : `MLD data is not available for this location.`);
+    if (!isMarine) metrics.push(`Marine metrics like mixed layer depth are inapplicable to ${context.locationName} because it's inland.`);
+    else metrics.push(env?.mixedLayerDepthM !== null ? `The mixed layer depth (MLD) is ${env.mixedLayerDepthM} meters.` : `MLD data is not available for this location.`);
   }
 
   if (intents.includes('D20_CONDITIONS')) {
-    if (!isMarine) summaries.push(`Marine metrics like D20 depth are inapplicable to ${context.locationName} because it's inland.`);
-    else summaries.push(env?.d20DepthM !== null ? `The D20 isotherm (20°C boundary) depth here is **${env?.d20DepthM} meters**.\n\nThis thermocline depth influences the vertical distribution of both prey and predatory fish species.` : `D20 depth data is not available for this location.`);
+    if (!isMarine) metrics.push(`Marine metrics like D20 depth are inapplicable to ${context.locationName} because it's inland.`);
+    else metrics.push(env?.d20DepthM !== null ? `The D20 isotherm depth is ${env.d20DepthM} meters.` : `D20 depth data is not available for this location.`);
   }
 
-  if (intents.includes('COMPARE_ZONES')) {
-    if (decision.marineRecommendations && decision.marineRecommendations.length > 1) {
-      const top = decision.marineRecommendations[0];
-      const second = decision.marineRecommendations[1];
-      summaries.push(`**${top.facilityName}** has stronger fishing potential (Score: ${top.productivityEvaluation?.productivityScore}/100) compared to **${second.facilityName}**.\n\nBoth locations have been evaluated for your ${context.boatType}'s safety limits.`);
-    } else {
-      summaries.push(`I only have sufficient data to analyze one primary zone for this request.`);
+  if (intents.includes('DISTANCE_ANALYSIS') && topMarine) {
+    metrics.push(`This location is approximately ${topMarine.distanceKm.toFixed(1)} km away.`);
+  }
+
+  // Methodology and Context
+  const contextLines: string[] = [];
+  if (intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE', 'PRODUCTIVITY_ANALYSIS', 'COMPARE_ZONES'].includes(i))) {
+    if (isMarine && topMarine && topMarine.productivityEvaluation) {
+      const prod = topMarine.productivityEvaluation;
+      const factors = [];
+      if (prod.factors.pfz?.score > 50) factors.push("strong historical PFZ");
+      if (prod.factors.chlorophyll?.score > 50) factors.push("favorable chlorophyll");
+      if (prod.factors.sst?.score > 50) factors.push("optimal SST");
+      
+      const reasons = factors.length > 0 ? ` This score is heavily weighted by its ${factors.join(" and ")}, which historically indicate strong pelagic aggregation.` : "";
+      contextLines.push(`From a productivity standpoint, this zone scores ${prod.productivityScore}/100.${reasons}`);
     }
   }
-
-  if (summaries.length === 0) {
-    if (intents.includes('FACTOR_EXPLANATION')) summaries.push(`This factor is a key environmental indicator used by TARANG to estimate fishing productivity. \n\nIt is normalized against historical ranges and weighted alongside other factors like SST and Chlorophyll. Please note, this shows how the factor is used mathematically in the scoring model, rather than claiming a direct biological guarantee.`);
-    else if (intents.some(i => ['SCORE_BREAKDOWN', 'PRODUCTIVITY_METHODOLOGY'].includes(i))) summaries.push(`The total productivity score for this zone is **${response.productivityAnalysis?.productivityScore ?? 0}/100**.\n\nThis is a composite score calculated deterministically from six static environmental factors: PFZ potential (40%), Chlorophyll (30%), SST (10%), Surface current (10%), Mixed Layer Depth (5%), and D20 depth (5%).`);
-    else if (intents.includes('SAFETY_METHODOLOGY')) summaries.push(`Safety is evaluated by comparing the historical wind and wave conditions against the specific operating limits of your vessel (${context.boatType}).\n\n${response.methodology?.safety?.join(' ') ?? ''}`);
-    else if (intents.some(i => ['DATA_SOURCE', 'DATA_AVAILABILITY'].includes(i))) summaries.push(`The analysis you are seeing is powered by the TARANG historical seasonal dataset. \n\nIt provides reliable baseline climatology and modeled environmental conditions, though it does not use live satellite imagery or real-time buoy feeds.`);
-    else if (intents.includes('PRODUCTIVITY_ANALYSIS')) summaries.push(response.productivityAnalysis?.insights ? `This zone is highly productive primarily due to its strong underlying environmental factors. \n\n${response.productivityAnalysis.insights}` : 'Detailed productivity insights are not available in the baseline dataset for this specific location.');
-    else if (intents.includes('WHY_RECOMMENDED')) summaries.push(`I recommended this location because it offers the best available trade-off for you right now.\n\nIt has a strong fishing productivity potential (${response.productivityAnalysis?.productivityScore ?? 'N/A'}/100) while keeping wind and wave conditions safely within the operating limits of your ${context.boatType}.`);
-    else if (intents.includes('DISTANCE_ANALYSIS')) summaries.push(`The primary recommended location, ${topMarine?.facilityName}, is approximately ${topMarine?.distanceKm ?? 'N/A'} km away.\n\nThis distance is calculated using the static registry coordinates for the facility.`);
-    else {
-      if (!isMarine) summaries.push(`This inland location has a general weather risk band of **${decision.riskBand}**. Marine metrics are inapplicable here.`);
-      else summaries.push(`Based on the latest analysis, the overall risk for this location is **${decision.riskBand}**.`);
-    }
+  
+  if (intents.includes('FACTOR_EXPLANATION')) {
+    contextLines.push(`This factor is normalized against historical ranges and weighted alongside other metrics in the scoring model.`);
+  }
+  
+  if (intents.includes('DATA_SOURCE')) {
+    contextLines.push(`This analysis relies on the TARANG historical seasonal dataset, rather than live satellite feeds.`);
   }
 
-  response.summary = summaries.join('\n\n---\n\n');
+  let finalSummary = directAnswer;
+  if (metrics.length > 0) finalSummary += " " + metrics.join(" ");
+  if (contextLines.length > 0) finalSummary += "\n\n" + contextLines.join(" ");
+
+  response.summary = finalSummary.trim();
 
   return response;
 }

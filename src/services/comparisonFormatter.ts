@@ -37,19 +37,28 @@ export function formatComparisonResponse(candidates: MarineCandidateResult[], ac
   }
 
   // 3-way or more
-  let text = "**Quick comparison**\n\n";
+  let text = "**Quick comparison:**\n\n";
   let minRisk = 100; let maxProd = 0;
   let safest = ""; let mostProd = "";
   
-  candidates.forEach((c, idx) => {
+  candidates.forEach((c) => {
     const r = c.riskScore ?? 0;
     const p = c.productivityEvaluation?.productivityScore ?? 0;
-    text += `* **Zone ${idx + 1} (${c.facilityName}):** Productivity ${p} | Risk ${r} (${c.riskBand})\n`;
+    
+    let line = `* **${c.facilityName}:** `;
+    if (r <= 40) line += `Safe operating conditions`;
+    else if (r <= 70) line += `Caution advised`;
+    else line += `Dangerous conditions`;
+    
+    line += ` with a fishing potential of ${p}/100.\n`;
+    text += line;
+
     if (r < minRisk) { minRisk = r; safest = c.facilityName; }
     if (p > maxProd) { maxProd = p; mostProd = c.facilityName; }
   });
 
-  text += `\n**What this means:** **${mostProd}** has the strongest fishing potential, while **${safest}** has the lowest risk.`;
+  text += `\n**Conclusion:** **${mostProd}** offers the strongest fishing potential, while **${safest}** provides the safest operating conditions.`;
+  
   if (activeMode === 'Research') {
     text += `\n\n*Note: This analysis is based on the currently available TARANG dataset.*`;
   }
