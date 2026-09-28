@@ -13,7 +13,6 @@ import { formatNormalResponse } from "../services/normalResponseFormatter";
 import { formatResearchResponse } from "../services/researchResponseFormatter";
 import { formatComparisonResponse } from "../services/comparisonFormatter";
 import { useAppStore } from "../store/appStore";
-import { ModeToggle } from "../components/ui/ModeToggle";
 import { ResearchCard } from "../components/ui/ResearchCard";
 import { DigitalTwinUI } from "../components/ui/DigitalTwinUI";
 import { getConversationContext, commitConversationContext, resetConversationContext } from "../store/conversationContext";
@@ -37,6 +36,7 @@ export function Chat() {
   
   // Use a ref to track if we are currently processing a flow/query to prevent strict mode double firing
   const isProcessingUrlParams = useRef(false);
+  const isProcessingMessageRef = useRef(false);
 
   useEffect(() => {
     const flow = searchParams.get("flow");
@@ -68,6 +68,9 @@ export function Chat() {
 
   const handleUserMessage = (text: string) => {
     if (!text.trim()) return;
+    if (analysis.active || isProcessingMessageRef.current) return; // Prevent duplicate submissions
+    
+    isProcessingMessageRef.current = true;
     
     // Add user message
     addMessage({ text, isBot: false, action: null, intent: null });
@@ -75,10 +78,9 @@ export function Chat() {
     
     if (text === "I want to plan a 3-day fishing trip starting tomorrow.") {
       triggerDemoConfirmation();
+      isProcessingMessageRef.current = false;
       return;
     }
-
-    if (analysis.active) return; // Prevent duplicate submissions
 
     const qLower = text.toLowerCase();
     let type: AnalysisType = "general";
@@ -171,6 +173,7 @@ export function Chat() {
         console.error("[CHAT] Context resolving error", error);
       } finally {
         setAnalysis({ active: false, type: null, duration: 0 });
+        isProcessingMessageRef.current = false;
       }
     }, duration);
   };
@@ -507,11 +510,40 @@ export function Chat() {
     return elements.length > 0 ? <>{elements}</> : null;
   };
 
+  const renderModeIndicator = () => {
+    switch(activeMode) {
+      case "Normal":
+        return (
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 text-slate-700 rounded-lg text-sm font-bold border border-slate-200">
+            <span className="text-lg leading-none">⚓</span> Normal
+          </div>
+        );
+      case "Research":
+        return (
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-ocean-50 text-ocean-700 rounded-lg text-sm font-bold border border-ocean-200">
+            <Microscope className="w-4 h-4" /> Researcher
+          </div>
+        );
+      case "Digital_Twin":
+        return (
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-bold border border-indigo-200">
+            <Cpu className="w-4 h-4" /> Digital Twin
+          </div>
+        );
+      case "Alert":
+        return (
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-rose-50 text-rose-700 rounded-lg text-sm font-bold border border-rose-200">
+            <AlertTriangle className="w-4 h-4" /> Alert
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] bg-slate-50 relative">
-      {/* Header for Fresh Chat and Mode Toggle */}
+      {/* Header for Fresh Chat and Mode Indicator */}
       <div className="absolute top-0 left-0 right-0 z-10 bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2 flex items-center justify-between">
-        <ModeToggle />
+        {renderModeIndicator()}
         <Button variant="outline" size="sm" onClick={handleFreshChat} className="bg-white text-xs font-semibold shadow-sm">
           <RefreshCw className="w-3.5 h-3.5 mr-1.5" /> Fresh Chat
         </Button>
