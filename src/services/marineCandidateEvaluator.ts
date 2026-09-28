@@ -19,6 +19,34 @@ export interface MarineCandidateResult extends EvaluatedMarineFacility {
   productivityEvaluation: MarineProductivityEvaluation | null;
 }
 
+export function getProperPortName(rawName: string): string {
+  const mapping: Record<string, string> = {
+    "Modernisation of Sassoon Dock Fishing Harbour": "Sassoon Dock",
+    "Karanja Fishing Harbour (Revised)": "Karanja Fishing Harbour",
+    "Construction of Fisheries Fishing Harbour at Jeevana": "Jeevana Fishing Harbour",
+    "Development of Fishing Harbour at Satpati": "Satpati Fishing Harbour",
+    "Mumbai Port": "Mumbai Port",
+    "Jawaharlal Nehru Port (JNPT)": "JNPT Port",
+    "Modernization and up-gradation of Chennai Fishing Harbour": "Chennai Fishing Harbour",
+    "Construction of Fishing harbour at ThiruvottriyurKuppam": "Thiruvottriyur Kuppam",
+    "Chennai Port": "Chennai Port",
+    "Kamarajar Port": "Kamarajar Port"
+  };
+  
+  if (mapping[rawName]) return mapping[rawName];
+  
+  let cleanName = rawName
+    .replace(/^Modernisation of /i, '')
+    .replace(/^Modernization and up-gradation of /i, '')
+    .replace(/^Development of /i, '')
+    .replace(/^Construction of Fisheries /i, '')
+    .replace(/^Construction of /i, '')
+    .replace(/ \(Revised\)$/i, '')
+    .replace(/at /i, '');
+    
+  return cleanName.trim();
+}
+
 export function evaluateMarineCandidates(
   query: string, 
   locationId: string, 
@@ -98,6 +126,7 @@ export function evaluateMarineCandidates(
     
     return {
       ...evaluated,
+      facilityName: getProperPortName(evaluated.facilityName),
       fishingPotential: env?.fishingPotential || null,
       productivityProfile: profile,
       productivityEvaluation: evaluateMarineProductivity(profile)
