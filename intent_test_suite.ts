@@ -96,7 +96,7 @@ test("E06", "Why is this zone dangerous?", "SAFETY_ANALYSIS");
 test("E07", "Why is this zone productive?", "PRODUCTIVITY_ANALYSIS");
 
 // 6. False-positive / Ambiguous / Similar-looking
-test("A01", "Is there a cyclone?", "CYCLONE_ALERT");
+test("A01", "Is there a cyclone?", "MARINE_ALERT");
 test("A02", "What is the current situation?", "BOAT_SAFETY");
 test("A03", "How far is it?", "DISTANCE_ANALYSIS");
 test("A04", "Why?", "UNKNOWN");

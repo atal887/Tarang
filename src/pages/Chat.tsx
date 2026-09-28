@@ -11,6 +11,7 @@ import { evaluateFishermanContext, type DecisionResult } from "../services/decis
 import { detectIntent } from "../services/intentService";
 import { formatNormalResponse } from "../services/normalResponseFormatter";
 import { formatResearchResponse } from "../services/researchResponseFormatter";
+import { formatAlertResponse } from "../services/alertResponseFormatter";
 import { formatComparisonResponse } from "../services/comparisonFormatter";
 import { useAppStore } from "../store/appStore";
 import { ResearchCard } from "../components/ui/ResearchCard";
@@ -238,6 +239,16 @@ export function Chat() {
           action: "RESEARCH_RESULT",
           intent: null,
           payload: researchResponse
+        });
+      } else if (activeMode === "Alert") {
+        console.log("[CHAT] formatting alert response");
+        const alertResponse = formatAlertResponse(intents, _ctx, decision, twinState.active && !!twinState.modified);
+        addMessage({
+          text: alertResponse,
+          isBot: true,
+          action: "DECISION_RESULT",
+          intent: intents[0],
+          payload: decision
         });
       } else {
         if (isCompoundOrdinal) {

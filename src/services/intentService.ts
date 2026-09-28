@@ -41,6 +41,10 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
       // Safety & Planning (General - Temporal gets priority over specific conditions)
       { regex: /(?=.*\btomorrow\b)(?=.*\b(safe|okay|go|go\s+out|rough|fish|fishing)\b)/i, intent: "SAFETY_TOMORROW" },
 
+      // Alerts & Warnings
+      { regex: /\b(alert|alerts|warning|warnings|hazard|hazards)\b/i, intent: "MARINE_ALERT" },
+      { regex: /\b(cyclone|storm)\b/i, intent: "MARINE_ALERT" },
+
       // Weather / Conditions Parameters (Specific)
       { regex: /\b(sst|sea\s+surface\s+temperature|water\s+temperature|temperature)\b/i, intent: "SST_CONDITIONS" },
       { regex: /(?=.*\b(deep|depth)\b)(?=.*\b(warm\s+water)\b)/i, intent: "MLD_CONDITIONS" },
@@ -50,7 +54,6 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
       { regex: /\b(wave|waves)\b/i, intent: "WAVE_HEIGHT" },
       { regex: /(?=.*\b(rough|calm)\b)(?=.*\b(sea|water)\b)/i, intent: "WAVE_HEIGHT" },
       { regex: /\b(wind|windy|winds)\b/i, intent: "WIND_FORECAST" },
-      { regex: /\bcyclone\b/i, intent: "CYCLONE_ALERT" },
       
       // Disambiguate 'current'
       { regex: /\b(current\s+conditions|current\s+situation|current\s+weather)\b/i, intent: "BOAT_SAFETY" },
