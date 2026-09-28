@@ -18,6 +18,8 @@ export interface ConversationContext {
   /** The last detected intent category. */
   lastIntent: string | null;
 
+  pendingLocationCheck?: boolean;
+
   /** Location from the last confirmed + evaluated turn. */
   lastLocationId: string | null;
   lastLocationName: string | null;
@@ -48,6 +50,7 @@ export interface ConversationContext {
 const EMPTY_CONTEXT: ConversationContext = {
   lastQuery: null,
   lastIntent: null,
+  pendingLocationCheck: false,
   lastLocationId: null,
   lastLocationName: null,
   lastDateTime: null,
@@ -100,6 +103,15 @@ export function commitConversationContext(update: {
     lastTopCandidate: preserveCandidateList ? globalConversationContext.lastTopCandidate : topCandidate,
     lastCandidateList: preserveCandidateList ? globalConversationContext.lastCandidateList : marineRecs,
     lastUpdatedAt: Date.now(),
+  };
+}
+
+export function setPendingLocationCheck(value: boolean, query?: string, intent?: string) {
+  globalConversationContext = {
+    ...globalConversationContext,
+    pendingLocationCheck: value,
+    ...(query ? { lastQuery: query } : {}),
+    ...(intent ? { lastIntent: intent } : {})
   };
 }
 

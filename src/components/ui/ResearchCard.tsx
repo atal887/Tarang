@@ -100,14 +100,14 @@ export function ResearchCard({ payload }: Props) {
               <h5 className="font-bold text-slate-800 uppercase tracking-wide text-xs">Environmental Profile</h5>
             </div>
                 <EnvironmentalProfile data={{
-                  pfz: 85, // Illustrative
-                  chlorophyll: 1.2,
-                  sst: 28.5,
-                  wind: payload.safetyAnalysis?.windSpeedKmph ?? 20,
-                  waves: payload.safetyAnalysis?.significantWaveHeightM ?? 1.2,
-                  current: 0.5,
-                  mld: 45,
-                  d20: 80
+                  pfz: payload.candidateComparison[0].environmentalProfile?.pfzPotentialScore ?? 0,
+                  chlorophyll: payload.candidateComparison[0].environmentalProfile?.chlorophyllMgM3 ?? 0,
+                  sst: payload.candidateComparison[0].environmentalProfile?.seaSurfaceTemperatureC ?? 0,
+                  wind: payload.safetyAnalysis?.windSpeedKmph ?? 0,
+                  waves: payload.safetyAnalysis?.significantWaveHeightM ?? 0,
+                  current: payload.candidateComparison[0].environmentalProfile?.surfaceCurrentSpeedMs ?? 0,
+                  mld: payload.candidateComparison[0].environmentalProfile?.mixedLayerDepthM ?? 0,
+                  d20: payload.candidateComparison[0].environmentalProfile?.d20DepthM ?? 0
                 }} />
                 {renderExpandButton('env')}
             </section>
@@ -150,19 +150,16 @@ export function ResearchCard({ payload }: Props) {
           </section>
           ) : null;
 
-          const CompareSection = (payload.candidateComparison && payload.candidateComparison.length > 0) ? (
+          const CompareSection = (payload.charts?.find(c => c.type === 'CANDIDATE_COMPARISON')) ? (
             <section key="compare" className="space-y-3 mb-6">
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
               <div className="flex items-center gap-2">
                 <Map className="w-4 h-4 text-indigo-600" />
                 <h5 className="font-bold text-slate-800 uppercase tracking-wide text-xs">Zone comparison trade-off</h5>
               </div>
-              <div className="text-[9px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded border border-amber-200">
-                DEMO DATASET
-              </div>
             </div>
             <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
-              <TradeOffScatter data={demoVisualizationDataset.tradeOffData} />
+              <TradeOffScatter data={payload.charts.find(c => c.type === 'CANDIDATE_COMPARISON')?.data as any} />
               {renderExpandButton('tradeoff')}
             </div>
           </section>

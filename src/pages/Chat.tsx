@@ -17,7 +17,7 @@ import { useAppStore } from "../store/appStore";
 import { ResearchCard } from "../components/ui/ResearchCard";
 import { DigitalTwinUI } from "../components/ui/DigitalTwinUI";
 import { AlertUI } from "../components/ui/AlertUI";
-import { getConversationContext, commitConversationContext, resetConversationContext } from "../store/conversationContext";
+import { getConversationContext, commitConversationContext, resetConversationContext, setPendingLocationCheck } from "../store/conversationContext";
 import { useTwinStore } from "../store/scenarioStore";
 import { getLocationEnvironment } from "../data/environmentResolver";
 import { locationData as oldLocationData } from "../data/demoData";
@@ -111,8 +111,15 @@ export function Chat() {
     setTimeout(() => {
       try {
         // 1. Check for follow-up context before standard resolution
+        let currentText = text;
         const convCtx = getConversationContext();
-        const followUp = resolveFollowUpContext(text, convCtx, profile.vesselType);
+        
+        if (convCtx.pendingLocationCheck && convCtx.lastQuery) {
+          currentText = `${convCtx.lastQuery} at ${text}`;
+          setPendingLocationCheck(false);
+        }
+        
+        const followUp = resolveFollowUpContext(currentText, convCtx, profile.vesselType);
 
         if (followUp.type === 'CLARIFICATION') {
           addMessage({ text: followUp.clarificationMessage, isBot: true, action: null, intent: null });
@@ -156,26 +163,38 @@ export function Chat() {
           ordinalTargetName = followUp.candidate.facilityName;
         } else {
           // NOT_FOLLOW_UP: standard fresh resolution
-          const intents = detectIntent(text, "English");
-          if (intents.includes('UNKNOWN') && intents.length === 1 && !hasExplicitLocationInQuery(text) && !isVesselOnlyChange(text)) {
+          const intents = detectIntent(currentText, "English");
+          if (intents.includes('UNKNOWN') && intents.length === 1 && !hasExplicitLocationInQuery(currentText) && !isVesselOnlyChange(currentText)) {
             addMessage({ text: "Could you please elaborate on your question a little more so I can help you accurately?", isBot: true, action: null, intent: null });
             return;
           }
 
+          if (intents.includes('LOCATION_CHECK') && !hasExplicitLocationInQuery(currentText)) {
+            setPendingLocationCheck(true, currentText, "LOCATION_CHECK");
+            addMessage({ text: "Which location or port are you referring to?", isBot: true, action: null, intent: null });
+            return;
+          }
+
           resolvedContext = resolveFishermanContext({
-            query: text,
+            query: currentText,
             defaultLocationName: profile.location,
             defaultBoatType: profile.vesselType
           });
         }
 
-        addMessage({
-          text: "Sure! Let's confirm your details for this trip:",
-          isBot: true,
-          action: "context_confirm",
-          intent: null,
-          payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }
-        });
+        const intents = detectIntent(currentText, "English");
+        if (intents.includes("LOCATION_CHECK")) {
+          // Bypass confirmation completely for LOCATION_CHECK
+          handleConfirmContext({ ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }, false, true);
+        } else {
+          addMessage({
+            text: "Sure! Let's confirm your details for this trip:",
+            isBot: true,
+            action: "context_confirm",
+            intent: null,
+            payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }
+          });
+        }
       } catch (error) {
         console.error("[CHAT] Context resolving error", error);
       } finally {
@@ -185,19 +204,21 @@ export function Chat() {
     }, duration);
   };
 
-  const handleConfirmContext = (rawCtx: ResolvedContext & { __isCompoundOrdinal?: boolean; __ordinalTargetName?: string }, fallbackConsent = false) => {
+  const handleConfirmContext = (rawCtx: ResolvedContext & { __isCompoundOrdinal?: boolean; __ordinalTargetName?: string }, fallbackConsent = false, silent = false) => {
     const isCompoundOrdinal = rawCtx.__isCompoundOrdinal;
     const ordinalTargetName = rawCtx.__ordinalTargetName;
     const _ctx = { ...rawCtx };
     delete (_ctx as any).__isCompoundOrdinal;
     delete (_ctx as any).__ordinalTargetName;
 
-    console.log("[CHAT] handleConfirmContext called", _ctx, fallbackConsent);
-    if (!fallbackConsent) {
-      updateLastMessageAction("context_confirm_done");
-    } else {
-      updateLastMessageAction("fallback_consent_done");
-      addMessage({ text: "Yes, show me the options.", isBot: false, action: null, intent: null });
+    console.log("[CHAT] handleConfirmContext called", _ctx, fallbackConsent, silent);
+    if (!silent) {
+      if (!fallbackConsent) {
+        updateLastMessageAction("context_confirm_done");
+      } else {
+        updateLastMessageAction("fallback_consent_done");
+        addMessage({ text: "Yes, show me the options.", isBot: false, action: null, intent: null });
+      }
     }
     
     // Evaluate risk using the new decision engine
@@ -239,7 +260,7 @@ export function Chat() {
           text: researchResponse.summary,
           isBot: true,
           action: "RESEARCH_RESULT",
-          intent: null,
+          intent: intents[0],
           payload: researchResponse
         });
       } else if (activeMode === "Alert") {
@@ -486,7 +507,7 @@ export function Chat() {
         ctx = (msg.payload as any).context;
       }
       
-      if (msg.intent === "TRIP_PLANNING" && ctx) {
+      if ((msg.intent === "TRIP_PLANNING" || msg.intent === "LOCATION_CHECK") && ctx) {
         const coords = getLocationCoordinates(ctx.locationId);
         if (coords) {
           const zones: any[] = [
