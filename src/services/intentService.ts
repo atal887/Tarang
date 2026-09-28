@@ -33,7 +33,10 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
       { regex: /\b(how|why)\s+does\s+.*affect\b/i, intent: "FACTOR_EXPLANATION" },
 
       // Temporal Planning (Specific)
-      { regex: /\b(3|three)[\s-]*day\b/i, intent: "MULTI_DAY_TRIP" },
+      { regex: /\bplan(ning)?\b.*\btrip\b/i, intent: "TRIP_PLANNING" },
+      { regex: /\b(1|2|3|4|5|6|7|one|two|three|four|five|six|seven)[\s-]*day[\s-]*trip\b/i, intent: "TRIP_PLANNING" },
+      { regex: /\b(3|three)[\s-]*day\b/i, intent: "TRIP_PLANNING" },
+      { regex: /\btrip\b/i, intent: "TRIP_PLANNING" },
       { regex: /\bweekend\b/i, intent: "WEEKEND_FISHING" },
       { regex: /\bnight(time)?\b/i, intent: "NIGHT_VISIBILITY" },
       { regex: /\b(safest|best)\s+time\b/i, intent: "SAFEST_TIME" },

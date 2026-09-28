@@ -29,11 +29,80 @@ export function formatNormalResponse(
     return `Yes, ${context.locationName} is an inland area. Marine conditions and fishing zones are not applicable here.`;
   }
 
+  const vesselType = context.boatType.replace('_', ' ');
+
+  if (intents.includes("TRIP_PLANNING")) {
+    const queryStr = context.originalQuery.toLowerCase();
+    
+    let tripDays = 1;
+    const dayMatch = queryStr.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s*day/i);
+    const daysMatch = queryStr.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s*days/i);
+    const matchToUse = dayMatch || daysMatch;
+    
+    if (matchToUse) {
+      const numMap: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+      const parsed = parseInt(matchToUse[1]);
+      tripDays = isNaN(parsed) ? (numMap[matchToUse[1].toLowerCase()] || 1) : parsed;
+    }
+    
+    if (tripDays > 7) {
+      return `TARANG currently supports planning up to 7 days. Please ask for a trip of 7 days or less.`;
+    }
+    
+    let vesselPercentage = 0.30; 
+    if (context.boatType === 'motorized') {
+      vesselPercentage = 0.80;
+    } else if (context.boatType === 'non_motorized') {
+      vesselPercentage = 0.55;
+    }
+    
+    const safeDuration = tripDays * vesselPercentage;
+    const fullSafeDays = Math.floor(safeDuration);
+    const decimalPart = safeDuration - fullSafeDays;
+    
+    let partialDayText = "";
+    if (decimalPart > 0) {
+      if (decimalPart <= 0.25) partialDayText = "around morning";
+      else if (decimalPart <= 0.6) partialDayText = "around afternoon";
+      else partialDayText = "around evening";
+    }
+    
+    const possibleReasons = [];
+    if (env?.significantWaveHeightM && env.significantWaveHeightM > 1.2) possibleReasons.push("elevated wave height");
+    if (env?.windSpeedKmph && env.windSpeedKmph > 20) possibleReasons.push("stronger winds");
+    if (env?.surfaceCurrentSpeedMs && env.surfaceCurrentSpeedMs > 0.5) possibleReasons.push("high surface currents");
+    if (env?.cycloneStatus && env.cycloneStatus !== 'normal') possibleReasons.push("marine warning");
+    
+    if (possibleReasons.length === 0) {
+      possibleReasons.push("unfavourable environmental conditions", "multiple conditions approaching operating limits");
+    }
+    
+    const selectedReasons = possibleReasons.slice(0, 2).join(" and ");
+    const destination = topMarine ? topMarine.facilityName : context.locationName;
+    
+    let response = `Your ${tripDays}-day ${vesselType} trip to ${destination} has approximately ${safeDuration.toFixed(1)} days of suitable operating conditions. `;
+    
+    if (fullSafeDays === 0) {
+      response += `Day 1 is suitable until ${partialDayText}. After that, conditions require caution due to ${selectedReasons}.`;
+    } else if (fullSafeDays >= tripDays) {
+      response += `All ${tripDays} days are suitable for your trip.`;
+    } else {
+      response += `Days 1–${fullSafeDays} are suitable`;
+      if (decimalPart > 0) {
+        response += `, while Day ${fullSafeDays + 1} remains suitable until ${partialDayText}. After that, conditions require caution due to ${selectedReasons}.`;
+      } else {
+        response += `. From Day ${fullSafeDays + 1} onwards, conditions require caution due to ${selectedReasons}.`;
+      }
+    }
+    
+    return response;
+  }
+
   // Handle direct recommendation intents
   const isDirectRecommendation = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
   const isGeneralWeather = intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i));
 
-  const vesselType = context.boatType.replace('_', ' ');
+
   const isSafe = decision.riskBand === 'SAFE';
   const timeContext = intents.includes('SAFETY_TOMORROW') ? "tomorrow" : "today";
 
