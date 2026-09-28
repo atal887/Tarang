@@ -1,8 +1,22 @@
 import { getNearbyMarineFacilities, type ResolvedMarineFacility } from '../data/marineInfrastructureResolver';
 import { evaluateMarineFacilityRisk, type EvaluatedMarineFacility } from '../data/marineRiskResolver';
+import { evaluateMarineProductivity, type MarineProductivityEvaluation } from '../data/marineProductivityResolver';
+
+export interface MarineProductivityProfile {
+  seaSurfaceTemperatureC: number | null;
+  surfaceCurrentSpeedMs: number | null;
+  surfaceCurrentDirectionDeg: number | null;
+  mixedLayerDepthM: number | null;
+  d20DepthM: number | null;
+  chlorophyllMgM3: number | null;
+  pfzPotentialScore: number | null;
+  fishingPotential: string | null;
+}
 
 export interface MarineCandidateResult extends EvaluatedMarineFacility {
   fishingPotential: string | null;
+  productivityProfile: MarineProductivityProfile | null;
+  productivityEvaluation: MarineProductivityEvaluation | null;
 }
 
 export function evaluateMarineCandidates(
@@ -52,10 +66,24 @@ export function evaluateMarineCandidates(
   // 3. Evaluate each candidate using the existing risk resolver
   const results: MarineCandidateResult[] = candidatesToEvaluate.map(fac => {
     const evaluated = evaluateMarineFacilityRisk(fac, vesselType);
+    const env = fac.environment;
+    
+    const profile = env ? {
+      seaSurfaceTemperatureC: env.seaSurfaceTemperatureC,
+      surfaceCurrentSpeedMs: env.surfaceCurrentSpeedMs,
+      surfaceCurrentDirectionDeg: env.surfaceCurrentDirectionDeg,
+      mixedLayerDepthM: env.mixedLayerDepthM,
+      d20DepthM: env.d20DepthM,
+      chlorophyllMgM3: env.chlorophyllMgM3,
+      pfzPotentialScore: env.pfzPotentialScore,
+      fishingPotential: env.fishingPotential
+    } : null;
     
     return {
       ...evaluated,
-      fishingPotential: fac.environment?.fishingPotential || null
+      fishingPotential: env?.fishingPotential || null,
+      productivityProfile: profile,
+      productivityEvaluation: evaluateMarineProductivity(profile)
     };
   });
 
@@ -67,12 +95,6 @@ export function selectTopMarineCandidates(candidates: MarineCandidateResult[]): 
   const suitable = candidates.filter(c => c.riskBand === 'SAFE' || c.riskBand === 'CAUTION');
 
   // Helper for fishing potential rank
-  const getPfzRank = (pfz: string | null) => {
-    if (pfz === 'high') return 3;
-    if (pfz === 'moderate') return 2;
-    if (pfz === 'low') return 1;
-    return 0;
-  };
 
   // Helper for risk band rank
   const getBandRank = (band: string) => {
@@ -93,14 +115,10 @@ export function selectTopMarineCandidates(candidates: MarineCandidateResult[]): 
     const scoreDiff = scoreA - scoreB;
     if (Math.abs(scoreDiff) > 0.01) return scoreDiff; // avoid floating point equality issues
 
-    // 3rd: Higher fishing potential is better
-    const pfzDiff = getPfzRank(b.fishingPotential) - getPfzRank(a.fishingPotential);
-    if (pfzDiff !== 0) return pfzDiff;
-
-    // 4th: Shorter distance is better
+    // 3rd: Shorter distance is better
     return a.distanceKm - b.distanceKm;
   });
 
-  // 3. Return top 3 (or fewer if not enough suitable)
-  return suitable.slice(0, 3);
+  // 3. Return all suitable candidates for the recommendation engine to rank
+  return suitable;
 }

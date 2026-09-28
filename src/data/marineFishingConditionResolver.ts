@@ -1,5 +1,5 @@
 import { type ResolvedMarineFacility, type FacilityEnvironment } from './marineInfrastructureResolver';
-import infrastructureEnvData from './tarang_marine_infrastructure_environment_81x2.json';
+import infrastructureEnvData from './tarang_marine_infrastructure_environment_clean_v1.json';
 
 export interface ConditionedMarineFacility extends ResolvedMarineFacility {}
 

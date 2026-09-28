@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "generated": "2026-09-27",
+  "status": "cleaned_demo_data_package",
+  "source_notes": [
+    "Official PMMSY fishing harbour list used for state assignment and harbour count.",
+    "Environmental values remain deterministic synthetic demo baselines; they are not live observations.",
+    "Canonical display names normalize common place-name variants while sourceName preserves source wording.",
+    "No candidate location records were invented; 27 malformed control-character IDs were repaired by removing the form-feed character and matched to existing location IDs."
+  ],
+  "counts": {
+    "locations": 7935,
+    "locationEnvironmentalRecords": 15870,
+    "marineLocations": 1593,
+    "inlandLocations": 6342,
+    "marineInfrastructure": 81,
+    "fishingHarbours": 66,
+    "ports": 15,
+    "facilityEnvironmentalRecords": 162,
+    "candidateAssociations": 6435
+  },
+  "checks": {
+    "locationIdMonthUnique": true,
+    "locationCoordsValid": true,
+    "infraCoordsValid": true,
+    "infraIdsUnique": true,
+    "facilityMonthUnique": true,
+    "candidatePairsUnique": true,
+    "candidateDistancesValid": true,
+    "candidateLocationIdsResolve": true,
+    "candidateFacilityIdsResolve": true,
+    "marineOceanFieldsComplete": true,
+    "inlandOceanFieldsNull": true
+  },
+  "issues": [
+    {
+      "severity": "FIXED",
+      "issue": "27 candidate location IDs contained a leading form-feed control character",
+      "action": "stripped control character and revalidated against 7,935 location IDs"
+    },
+    {
+      "severity": "FIXED",
+      "issue": "66 PMMSY fishing-harbour records had missing state metadata",
+      "action": "assigned state using official PMMSY harbour list ordering/state grouping; source district/name retained"
+    },
+    {
+      "severity": "FIXED",
+      "issue": "facility environment state values were JSON NaN/missing",
+      "action": "replaced with valid state strings"
+    },
+    {
+      "severity": "DESIGN",
+      "issue": "pfzPotentialScore and fishingPotential are derived/synthetic prototype indicators and may be correlated",
+      "action": "do not double-count them as independent evidence; define productivity engine explicitly"
+    },
+    {
+      "severity": "DESIGN",
+      "issue": "environmental values are synthetic demo baselines",
+      "action": "never label them as live observations or current INCOIS/IMD measurements"
+    },
+    {
+      "severity": "DESIGN",
+      "issue": "ports are a researched subset, not a complete national port inventory",
+      "action": "keep port subset scope explicit"
+    }
+  ]
+}

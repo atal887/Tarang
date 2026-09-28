@@ -1,7 +1,7 @@
-import infrastructureData from './tarang_marine_infrastructure_81.json';
-import infrastructureEnvData from './tarang_marine_infrastructure_environment_81x2.json';
-import nearbyCandidatesData from './tarang_marine_nearby_candidates.json';
-import locationsData from './indiaFishingLocations.json';
+import infrastructureData from './tarang_marine_infrastructure_clean_v1.json';
+import infrastructureEnvData from './tarang_marine_infrastructure_environment_clean_v1.json';
+import nearbyCandidatesData from './tarang_marine_nearby_candidates_clean_v1.json';
+import locationsData from './tarang_place_registry_7935_v1.json';
 
 export interface MarineFacility {
   facilityId: string;

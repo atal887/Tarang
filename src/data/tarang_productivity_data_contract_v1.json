@@ -1,0 +1,30 @@
+{
+  "status": "pre-engineering_data_contract",
+  "core_rule": "Never treat synthetic prototype environmental values as live observations.",
+  "productivity_definition": "Environmental favorability for fish aggregation and fishing activity based on available indicators; not a catch guarantee.",
+  "primary_indicators": [
+    "chlorophyllMgM3",
+    "seaSurfaceTemperatureC",
+    "surfaceCurrentSpeedMs",
+    "surfaceCurrentDirectionDeg",
+    "pfzPotentialScore",
+    "seaCondition",
+    "significantWaveHeightM",
+    "swellHeightM",
+    "windSpeedKmph"
+  ],
+  "derived_output": "fishingPotential",
+  "important_rule": "Do not double-count pfzPotentialScore and fishingPotential as independent evidence until the derivation is formally specified.",
+  "unsupported_without_new_data": [
+    "exact fish abundance",
+    "guaranteed catch",
+    "species-specific catch prediction",
+    "official live PFZ advisory",
+    "long-term productivity trend beyond the available October-November prototype snapshot"
+  ],
+  "data_status": {
+    "location_environment": "deterministic synthetic demo baseline",
+    "facility_environment": "deterministic synthetic demo baseline",
+    "place_registry": "canonical registry derived from the supplied TARANG master"
+  }
+}

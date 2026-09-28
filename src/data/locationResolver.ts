@@ -1,4 +1,4 @@
-import locations from './indiaFishingLocations.json';
+import locations from './tarang_place_registry_7935_v1.json';
 
 export interface LocationData {
   id: string;
@@ -48,6 +48,6 @@ export function resolveFishingLocation(latitude: number, longitude: number): Loc
 
   return {
     ...nearestLoc,
-    locationName: nearestLoc.name,
+    locationName: (nearestLoc as any).canonicalDisplayName || (nearestLoc as any).sourceName || nearestLoc.name,
   };
 }

@@ -28,15 +28,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest Potential Fishing Zone is shown on the map for Kochi; use the highlighted zone and check its current risk before departure."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Kochi के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "ഇന്ന് ഏറ്റവും അടുത്തുള്ള സാധ്യതയുള്ള മത്സ്യബന്ധന മേഖല (PFZ) എവിടെയാണ്?",
-      "a": "Kochi-ന് സമീപമുള്ള ശുപാർശ ചെയ്ത PFZ മാപ്പിൽ കാണിച്ചിരിക്കുന്നു. പുറപ്പെടുന്നതിന് മുമ്പ് അടയാളപ്പെടുത്തിയ മേഖലയിലെ നിലവിലെ അപകടസാധ്യത പരിശോധിക്കുക."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -123,15 +123,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "സമീപത്ത് ഏത് പ്രദേശങ്ങളിലാണ് ക്ലോറോഫിൽ അളവ് കൂടുതൽ?",
-      "a": "മാപ്പിൽ കൂടുതൽ ക്ലോറോഫിൽ ഉള്ള സമീപ പ്രദേശങ്ങൾ അടയാളപ്പെടുത്തിയിട്ടുണ്ട്. ഇവ സാധ്യതയുള്ള ഉൽപാദന മേഖലകളാണ്; ഉറപ്പായ മീൻപിടിത്തമല്ല."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -313,15 +313,15 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "എന്റെ ബോട്ട് തരത്തിന് ഏറ്റവും അനുയോജ്യമായ മത്സ്യബന്ധന മേഖല ഏതാണ്?",
-      "a": "സുരക്ഷയും ഉൽപാദനക്ഷമതയും കൂട്ടിച്ചേർത്ത് തിരഞ്ഞെടുത്ത ബോട്ട് തരത്തിന്യിൽ അടയാളപ്പെടുത്തിയ PFZ മികച്ച സാധ്യതയായി റാങ്ക് ചെയ്തിട്ടുണ്ട്. ഉറപ്പായ മീൻപിടിത്തമല്ല."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -351,15 +351,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest Potential Fishing Zone is shown on the map for Mangalore; use the highlighted zone and check its current risk before departure."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Mangalore के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "ಇಂದು ಹತ್ತಿರದ ಸಂಭಾವ್ಯ ಮೀನುಗಾರಿಕಾ ವಲಯ (PFZ) ಎಲ್ಲಿದೆ?",
-      "a": "Mangalore ಸಮೀಪದ ಶಿಫಾರಸು ಮಾಡಲಾದ PFZ ಅನ್ನು ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಲಾಗಿದೆ. ಹೊರಡುವ ಮೊದಲು ಗುರುತಿಸಲಾದ ಪ್ರದೇಶದ ಪ್ರಸ್ತುತ ಅಪಾಯವನ್ನು ಪರಿಶೀಲಿಸಿ."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -446,15 +446,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "ಹತ್ತಿರದಲ್ಲಿ ಯಾವ ಪ್ರದೇಶಗಳಲ್ಲಿ ಕ್ಲೋರೊಫಿಲ್ ಪ್ರಮಾಣ ಹೆಚ್ಚಿದೆ?",
-      "a": "ನಕ್ಷೆಯಲ್ಲಿ ಹೆಚ್ಚಿನ ಕ್ಲೋರೊಫಿಲ್ ಇರುವ ಸಮೀಪದ ಪ್ರದೇಶಗಳನ್ನು ಗುರುತಿಸಲಾಗಿದೆ. ಇವು ಸಾಧ್ಯತೆಯಿರುವ ಉತ್ಪಾದಕ ಪ್ರದೇಶಗಳು; ಖಚಿತ ಮೀನುಗಾರಿಕೆಯ ಭರವಸೆ ಅಲ್ಲ."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -636,15 +636,15 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "ನನ್ನ ದೋಣಿ ಪ್ರಕಾರಕ್ಕೆ ಉತ್ತಮ ಮೀನುಗಾರಿಕಾ ವಲಯ ಯಾವುದು?",
-      "a": "ಸುರಕ್ಷತೆ ಮತ್ತು ಉತ್ಪಾದಕತೆಯನ್ನು ಸೇರಿಸಿ ಆಯ್ಕೆ ಮಾಡಿದ ದೋಣಿ ಪ್ರಕಾರಕ್ಕೆ ಗುರುತಿಸಲಾದ PFZ ಅನ್ನು ಈ ವಿಶ್ಲೇಷಣೆಯಲ್ಲಿ ಉತ್ತಮ ಅಭ್ಯರ್ಥಿಯಾಗಿ ರ್ಯಾಂಕ್ ಮಾಡಲಾಗಿದೆ. ಖಚಿತ ಹಿಡಿತದ ಭರವಸೆ ಅಲ್ಲ."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -674,15 +674,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest Potential Fishing Zone is shown on the map for Veraval; use the highlighted zone and check its current risk before departure."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Veraval के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "આજે સૌથી નજીકનો સંભવિત મત્સ્યક્ષેત્ર (PFZ) ક્યાં છે?",
-      "a": "Veraval નજીકનો ડેમો PFZ નકશા પર બતાવવામાં આવ્યો છે. નીકળતા પહેલાં દર્શાવેલા વિસ્તારનું વર્તમાન જોખમ તપાસો."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -769,15 +769,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "નજીકમાં કયા વિસ્તારોમાં ક્લોરોફિલનું પ્રમાણ વધુ છે?",
-      "a": "ડેમો નકશામાં વધુ ક્લોરોફિલ ધરાવતા નજીકના વિસ્તારો દર્શાવ્યા છે. આ સંભવિત ઉત્પાદક વિસ્તારો છે, પકડની ગેરંટી નથી."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -959,15 +959,15 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "મારી હોડીના પ્રકાર માટે શ્રેષ્ઠ મત્સ્યક્ષેત્ર કયો છે?",
-      "a": "સલામતી અને ઉત્પાદકતા જોડીને પસંદ કરેલા બોટ પ્રકાર માટે દર્શાવેલ PFZને ડેમોમાં શ્રેષ્ઠ ઉમેદવાર તરીકે રેન્ક કરવામાં આવ્યો છે. પકડની ગેરંટી નથી."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -997,15 +997,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest Potential Fishing Zone is shown on the map for Chennai; use the highlighted zone and check its current risk before departure."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Chennai के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "இன்று அருகிலுள்ள சாத்தியமான மீன்பிடி மண்டலம் (PFZ) எங்கே உள்ளது?",
-      "a": "Chennai அருகிலுள்ள டெமோ PFZ வரைபடத்தில் காட்டப்பட்டுள்ளது. புறப்படுவதற்கு முன் குறிக்கப்பட்ட பகுதியின் தற்போதைய அபாயத்தைச் சரிபார்க்கவும்."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -1092,15 +1092,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "அருகில் எந்த பகுதிகளில் குளோரோபில் அளவு அதிகமாக உள்ளது?",
-      "a": "டெமோ வரைபடத்தில் அதிக குளோரோஃபில் உள்ள அருகிலுள்ள பகுதிகள் குறிக்கப்பட்டுள்ளன. இவை சாத்தியமான உற்பத்திப் பகுதிகள்; பிடிப்பு உறுதி அல்ல."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -1282,15 +1282,15 @@ export const questionBank = [
     "intent": "BEST_FISHING_ZONE",
     "english": {
       "q": "What is the best fishing zone for my boat type?",
-      "a": "TARANG ranks the highlighted PFZ as the best candidate for the selected boat type after combining productivity and safety. It is a recommendation, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "मेरी नाव के प्रकार के लिए सबसे अच्छा मछली पकड़ने का क्षेत्र कौन सा है?",
-      "a": "इस विश्लेषण में चुनी गई नाव के प्रकार के लिए उत्पादकता और सुरक्षा को मिलाकर चिन्हित PFZ को सबसे अच्छा विकल्प माना गया है। यह सिफारिश है, पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "எனது படகு வகைக்கு சிறந்த மீன்பிடி மண்டலம் எது?",
-      "a": "பாதுகாப்பு மற்றும் உற்பத்தித்திறனை இணைத்து, தேர்ந்தெடுக்கப்பட்ட படகு வகைக்கு குறிக்கப்பட்ட PFZ டெமோவில் சிறந்த வாய்ப்பாக தரவரிசைப்படுத்தப்பட்டுள்ளது. பிடிப்பு உறுதி அல்ல."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -1320,15 +1320,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest Potential Fishing Zone is shown on the map for Visakhapatnam; use the highlighted zone and check its current risk before departure."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Visakhapatnam के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "ఈరోజు సమీపంలో ఉన్న సంభావ్య మత్స్య మండలం (PFZ) ఎక్కడ ఉంది?",
-      "a": "Visakhapatnam సమీపంలోని డెమో PFZ మ్యాప్‌లో చూపబడింది. బయలుదేరే ముందు గుర్తించిన ప్రాంతం యొక్క ప్రస్తుత ప్రమాదాన్ని తనిఖీ చేయండి."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -1415,15 +1415,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "సమీపంలో ఏ ప్రాంతాల్లో క్లోరోఫిల్ స్థాయి ఎక్కువగా ఉంది?",
-      "a": "డెమో మ్యాప్‌లో ఎక్కువ క్లోరోఫిల్ ఉన్న సమీప ప్రాంతాలు గుర్తించబడ్డాయి. ఇవి సంభావ్య ఉత్పాదక ప్రాంతాలు; చేపల వేట హామీ కాదు."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -1624,15 +1624,15 @@ export const questionBank = [
     "intent": "NEAREST_PFZ",
     "english": {
       "q": "Where is the nearest Potential Fishing Zone today?",
-      "a": "The nearest Potential Fishing Zone is shown on the map for Digha; use the highlighted zone and check its current risk before departure."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आज सबसे नज़दीकी संभावित मछली पकड़ने का क्षेत्र (PFZ) कहाँ है?",
-      "a": "Digha के लिए निकटतम संभावित मछली पकड़ने का क्षेत्र मानचित्र पर दिखाया गया है; रवाना होने से पहले चिन्हित क्षेत्र का वर्तमान जोखिम जाँचें।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "আজ সবচেয়ে কাছের সম্ভাব্য মৎস্য অঞ্চল (PFZ) কোথায়?",
-      "a": "Digha-এর কাছের ডেমো PFZ মানচিত্রে দেখানো হয়েছে। রওনা হওয়ার আগে চিহ্নিত এলাকার বর্তমান ঝুঁকি পরীক্ষা করুন।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {
@@ -1719,15 +1719,15 @@ export const questionBank = [
     "intent": "CHLOROPHYLL_ZONE",
     "english": {
       "q": "Which regions show high chlorophyll concentration nearby?",
-      "a": "The map highlights the nearby areas with higher chlorophyll concentration; these are candidate productivity zones, not a guaranteed catch."
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "hindi": {
       "q": "आस-पास किन क्षेत्रों में क्लोरोफिल का स्तर अधिक है?",
-      "a": "मानचित्र में अधिक क्लोरोफिल वाले आसपास के क्षेत्र चिन्हित हैं; ये संभावित उत्पादक क्षेत्र हैं, निश्चित पकड़ की गारंटी नहीं।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     },
     "regional": {
       "q": "কাছাকাছি কোন অঞ্চলে ক্লোরোফিলের পরিমাণ বেশি?",
-      "a": "ডেমো মানচিত্রে বেশি ক্লোরোফিলযুক্ত কাছের এলাকাগুলি চিহ্নিত করা হয়েছে। এগুলি সম্ভাব্য উৎপাদনশীল এলাকা; মাছ ধরার নিশ্চয়তা নয়।"
+      "a": "[DYNAMIC_PRODUCTIVITY_ENGINE_HANDLED]"
     }
   },
   {

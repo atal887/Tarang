@@ -4,7 +4,7 @@ import { locationData as oldLocationData } from "../data/demoData";
 import { useProfile } from "../store/profile";
 import { useState, useEffect } from "react";
 import { getEnvironmentalConditions } from "../data/environmentResolver";
-import indiaFishingLocations from "../data/indiaFishingLocations.json";
+import indiaFishingLocations from "../data/tarang_place_registry_7935_v1.json";
 
 export function Home() {
   const navigate = useNavigate();
@@ -45,13 +45,13 @@ export function Home() {
   
   if (!lat || !lon) {
     const matchedLoc = indiaFishingLocations.find(l => 
-      locKey.includes(l.name.toLowerCase()) || l.name.toLowerCase() === locKey.split(',')[0].trim()
+      locKey.includes(l.canonicalDisplayName.toLowerCase()) || l.canonicalDisplayName.toLowerCase() === locKey.split(',')[0].trim()
     );
     if (matchedLoc) {
       lat = matchedLoc.latitude;
       lon = matchedLoc.longitude;
-      stateName = matchedLoc.state;
-      locName = matchedLoc.name;
+      stateName = matchedLoc.stateCode;
+      locName = matchedLoc.canonicalDisplayName;
     }
   }
 

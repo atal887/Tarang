@@ -8,6 +8,12 @@ import { useProfile } from "../store/profile";
 import { useChatStore, type Message } from "../store/chatStore";
 import { resolveFishermanContext, type ResolvedContext } from "../services/contextResolver";
 import { evaluateFishermanContext, type DecisionResult } from "../services/decisionEngine";
+import { detectIntent } from "../services/intentService";
+import { formatNormalResponse } from "../services/normalResponseFormatter";
+import { formatResearchResponse } from "../services/researchResponseFormatter";
+import { useAppStore } from "../store/appStore";
+import { ModeToggle } from "../components/ui/ModeToggle";
+import { ResearchCard } from "../components/ui/ResearchCard";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -16,6 +22,7 @@ export function Chat() {
   const { profile } = useProfile();
   
   const { messages, addMessage, updateLastMessageAction, clearChat } = useChatStore();
+  const { activeMode } = useAppStore();
 
   const [input, setInput] = useState("");
   const [analysis, setAnalysis] = useState<{ active: boolean; type: AnalysisType | null; duration: number }>({ active: false, type: null, duration: 0 });
@@ -85,39 +92,76 @@ export function Chat() {
     setAnalysis({ active: true, type, duration });
 
     setTimeout(() => {
-      const resolvedContext = resolveFishermanContext({
-        query: text,
-        defaultLocationName: profile.location,
-        defaultBoatType: profile.vesselType
-      });
+      try {
+        const resolvedContext = resolveFishermanContext({
+          query: text,
+          defaultLocationName: profile.location,
+          defaultBoatType: profile.vesselType
+        });
 
-      addMessage({ 
-        text: "Sure! Let's confirm your details for this trip:",
-        isBot: true,
-        action: "context_confirm",
-        intent: null,
-        payload: resolvedContext
-      });
-      setAnalysis({ active: false, type: null, duration: 0 });
+        addMessage({ 
+          text: "Sure! Let's confirm your details for this trip:",
+          isBot: true,
+          action: "context_confirm",
+          intent: null,
+          payload: resolvedContext
+        });
+      } catch (error) {
+        console.error("[CHAT] Context resolving error", error);
+      } finally {
+        setAnalysis({ active: false, type: null, duration: 0 });
+      }
     }, duration);
   };
 
-  const handleConfirmContext = (_ctx: ResolvedContext) => {
-    updateLastMessageAction("context_confirm_done");
+  const handleConfirmContext = (_ctx: ResolvedContext, fallbackConsent = false) => {
+    console.log("[CHAT] handleConfirmContext called", _ctx, fallbackConsent);
+    if (!fallbackConsent) {
+      updateLastMessageAction("context_confirm_done");
+    } else {
+      updateLastMessageAction("fallback_consent_done");
+      addMessage({ text: "Yes, show me the options.", isBot: false, action: null, intent: null });
+    }
     
     // Evaluate risk using the new decision engine
-    const decision = evaluateFishermanContext(_ctx.locationId, _ctx.dateTime, _ctx.boatType, _ctx.originalQuery);
-    
-    const filteredReasons = decision.reasons.filter(r => !r.startsWith('- **') && !r.startsWith('Top '));
-    const responseText = `Risk Assessment: ${decision.riskBand}\n\n${filteredReasons.map(r => `• ${r}`).join('\n')}`;
+    try {
+      console.log("[CHAT] evaluating context");
+      const decision = evaluateFishermanContext(_ctx.locationId, _ctx.dateTime, _ctx.boatType, _ctx.originalQuery, fallbackConsent);
+      console.log("[CHAT] decision", decision);
+      
+      const intent = detectIntent(_ctx.originalQuery, "English");
+      console.log("[CHAT] intent", intent);
+      console.log("[CHAT] activeMode", activeMode);
 
-    addMessage({ 
-      text: responseText, 
-      isBot: true, 
-      action: "DECISION_RESULT", 
-      intent: null,
-      payload: decision
-    });
+      if (activeMode === "Research") {
+        console.log("[CHAT] formatting research response");
+        const researchResponse = formatResearchResponse(intent, _ctx, decision);
+        console.log("[CHAT] research response", researchResponse);
+        console.log("[CHAT] adding research message");
+        addMessage({
+          text: researchResponse.summary,
+          isBot: true,
+          action: "RESEARCH_RESULT",
+          intent: null,
+          payload: researchResponse
+        });
+      } else {
+        console.log("[CHAT] formatting normal response");
+        const responseText = formatNormalResponse(intent, _ctx, decision);
+        addMessage({ 
+          text: responseText, 
+          isBot: true, 
+          action: decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT", 
+          intent: null,
+          payload: decision.requiresFallbackConsent ? _ctx : decision
+        });
+      }
+    } catch (error) {
+      console.error("[CHAT] RESPONSE PIPELINE ERROR", error);
+    } finally {
+      console.log("[CHAT] loading false");
+      setAnalysis({ active: false, type: null, duration: 0 });
+    }
   };
 
   const triggerDemoConfirmation = () => {
@@ -273,6 +317,21 @@ export function Chat() {
             <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Context Confirmed</div>
            </div>
         );
+      } else if (msg.action === "FALLBACK_CONSENT") {
+        const ctx: ResolvedContext = msg.payload;
+        elements.push(
+          <div key="fallback-consent" className="mt-3 flex gap-2">
+            <Button className="flex-1 shadow-sm" onClick={() => handleConfirmContext(ctx, true)}>
+              Yes, show me the options
+            </Button>
+          </div>
+        );
+      } else if (msg.action === "fallback_consent_done") {
+        elements.push(
+           <div key="fallback-done" className="bg-slate-50 rounded-xl border border-slate-200 p-4 mt-3 space-y-2 text-sm text-slate-500 text-left">
+            <div className="flex items-center gap-2"><Info className="w-4 h-4 text-slate-400"/> Searching nearby locations...</div>
+           </div>
+        );
       } else if (msg.action === "DECISION_RESULT" && msg.payload) {
         const decision = msg.payload as DecisionResult;
         const isMarine = !!decision.marineRecommendations;
@@ -293,13 +352,24 @@ export function Chat() {
                   const isCaution = rec.riskBand === 'CAUTION';
                   
                   return (
-                    <div key={idx} className="bg-white border border-slate-200 p-3 rounded-lg shadow-sm">
+                    <div 
+                      key={idx} 
+                      className="bg-white border border-slate-200 p-3 rounded-lg shadow-sm"
+                      data-productivity-score={isMarine ? rec.productivityEvaluation?.productivityScore : undefined}
+                      data-productivity-band={isMarine ? rec.productivityEvaluation?.productivityBand : undefined}
+                      data-productivity-factors={isMarine ? JSON.stringify(rec.productivityEvaluation?.factors) : undefined}
+                    >
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex items-start gap-2">
                           <MapPin className="w-4 h-4 text-ocean-600 mt-0.5 shrink-0" />
                           <div>
                             <div className="font-semibold text-slate-800 text-sm leading-tight mb-0.5">{name}</div>
                             <div className="text-xs text-slate-500">{dist} km {isFallback && "(Fallback Option)"}</div>
+                            {isMarine && rec.productivityEvaluation && (
+                              <div className="text-xs text-slate-600 mt-0.5">
+                                <span className="font-medium">Fishing Potential:</span> {rec.productivityEvaluation.productivityScore}/100 &bull; {rec.productivityEvaluation.productivityBand}
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className={`text-[10px] font-bold uppercase px-2 py-1 rounded shrink-0 ml-2 ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
@@ -319,6 +389,8 @@ export function Chat() {
             </div>
           );
         }
+      } else if (msg.action === "RESEARCH_RESULT" && msg.payload) {
+        elements.push(<ResearchCard key="research-result" payload={msg.payload} />);
       }
     }
     
@@ -327,8 +399,9 @@ export function Chat() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] bg-slate-50 relative">
-      {/* Header for Fresh Chat */}
-      <div className="absolute top-0 left-0 right-0 z-10 bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2 flex justify-end">
+      {/* Header for Fresh Chat and Mode Toggle */}
+      <div className="absolute top-0 left-0 right-0 z-10 bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 py-2 flex items-center justify-between">
+        <ModeToggle />
         <Button variant="outline" size="sm" onClick={handleFreshChat} className="bg-white text-xs font-semibold shadow-sm">
           <RefreshCw className="w-3.5 h-3.5 mr-1.5" /> Fresh Chat
         </Button>

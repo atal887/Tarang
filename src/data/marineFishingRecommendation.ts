@@ -8,14 +8,6 @@ export function getMarineRecommendations(
     c.riskBand !== 'AVOID' && c.riskBand !== 'INSUFFICIENT_DATA'
   );
 
-  // Helper for fishing potential rank (Higher is better)
-  const getPfzRank = (pfz: string | null) => {
-    if (pfz === 'high') return 3;
-    if (pfz === 'moderate') return 2;
-    if (pfz === 'low') return 1;
-    return 0;
-  };
-
   // Helper for risk band rank (Higher is better)
   const getBandRank = (band: string) => {
     if (band === 'SAFE') return 2;
@@ -35,9 +27,11 @@ export function getMarineRecommendations(
     const scoreDiff = scoreA - scoreB;
     if (Math.abs(scoreDiff) > 0.01) return scoreDiff;
 
-    // 3rd: Higher fishing potential is better
-    const pfzDiff = getPfzRank(b.fishingPotential) - getPfzRank(a.fishingPotential);
-    if (pfzDiff !== 0) return pfzDiff;
+    // 3rd: Higher productivity score is better
+    const prodA = a.productivityEvaluation?.productivityScore ?? 0;
+    const prodB = b.productivityEvaluation?.productivityScore ?? 0;
+    const prodDiff = prodB - prodA;
+    if (prodDiff !== 0) return prodDiff;
 
     // 4th: Shorter distance is better
     return (a.distanceKm || 0) - (b.distanceKm || 0);

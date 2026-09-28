@@ -13,9 +13,10 @@ export interface DecisionResult {
   reasons: string[];
   inlandRecommendations?: EvaluatedInlandCandidate[];
   marineRecommendations?: MarineCandidateResult[];
+  requiresFallbackConsent?: boolean;
 }
 
-export function evaluateFishermanContext(locationId: string, dateTime: Date, vesselType: string, query: string = ""): DecisionResult {
+export function evaluateFishermanContext(locationId: string, dateTime: Date, vesselType: string, query: string = "", fallbackConsent: boolean = false): DecisionResult {
   const currentMonth = dateTime.getMonth(); // 0-11
   const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
   
@@ -39,6 +40,14 @@ export function evaluateFishermanContext(locationId: string, dateTime: Date, ves
     const reasons = ['Inland location detected. Environmental analysis applied.'];
     
     if (recommendations.length > 0) {
+      if (recommendations.every(r => r.isFallback) && !fallbackConsent) {
+        return {
+          riskBand: 'INSUFFICIENT_DATA',
+          reasons: [`${env.name} is an inland location, and TARANG currently doesn’t have a verified fishing area in ${env.name}. I can help you find the nearest documented fishing areas around ${env.name}. Would you like me to show you the options?`],
+          requiresFallbackConsent: true
+        };
+      }
+      
       reasons.push(`Top ${recommendations.length} Recommended Destinations:`);
       recommendations.forEach(r => {
         const distInfo = r.isFallback ? `Fallback: ${r.distanceKm.toFixed(1)} km` : `${r.distanceKm.toFixed(1)} km`;

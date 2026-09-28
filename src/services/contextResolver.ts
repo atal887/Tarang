@@ -1,4 +1,4 @@
-import locationsData from '../data/indiaFishingLocations.json';
+import locationsData from '../data/tarang_place_registry_7935_v1.json';
 import type { LocationData } from '../data/locationResolver';
 
 const locations = locationsData as unknown as LocationData[];
@@ -31,15 +31,20 @@ export function resolveFishermanContext(input: ResolverInput): ResolvedContext {
   let locationInferred = true;
 
   // Sort locations by name length descending to match more specific names first
-  const sortedLocations = [...locations].sort((a, b) => b.name.length - a.name.length);
+  const sortedLocations = [...locations].sort((a: any, b: any) => {
+    const aName = a.canonicalDisplayName || a.sourceName || "";
+    const bName = b.canonicalDisplayName || b.sourceName || "";
+    return bName.length - aName.length;
+  });
 
   // Helper to remove diacritics
-  const normalize = (str: string) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const normalize = (str: string) => (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
   const queryNormalized = normalize(input.query);
   
   for (const loc of sortedLocations) {
-    const locNormalized = normalize(loc.name);
+    const locName = (loc as any).canonicalDisplayName || (loc as any).sourceName || "";
+    const locNormalized = normalize(locName);
     if (locNormalized.length > 2) { // avoid matching 2-letter stop words
       // Use regex for word boundary to avoid partial matches
       const regex = new RegExp(`\\b${locNormalized}\\b`);
@@ -54,7 +59,7 @@ export function resolveFishermanContext(input: ResolverInput): ResolvedContext {
   // Fallback to default location
   if (!resolvedLocation) {
     const defaultNormalized = normalize(input.defaultLocationName.split(',')[0].trim());
-    resolvedLocation = locations.find(l => normalize(l.name) === defaultNormalized) || locations[0];
+    resolvedLocation = locations.find((l: any) => normalize(l.canonicalDisplayName || l.sourceName) === defaultNormalized) || locations[0];
   }
 
   // 2. Resolve Boat Type
@@ -104,8 +109,8 @@ export function resolveFishermanContext(input: ResolverInput): ResolvedContext {
   }
 
   return {
-    locationId: resolvedLocation.id,
-    locationName: resolvedLocation.name,
+    locationId: (resolvedLocation as any).locationId || resolvedLocation.id,
+    locationName: (resolvedLocation as any).canonicalDisplayName || (resolvedLocation as any).sourceName || resolvedLocation.name,
     dateTime: resolvedDate,
     timeDescription: timeDescription,
     boatType: resolvedBoatType,

@@ -1,5 +1,5 @@
 import inlandSpots from './tarang_inland_fishing_spots_operational_candidates_v5.json';
-import locationsData from './indiaFishingLocations.json';
+import locationsData from './tarang_place_registry_7935_v1.json';
 
 export interface InlandFishingSpot {
   spotId: string;
