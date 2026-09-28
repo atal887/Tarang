@@ -33,20 +33,21 @@ export function formatNormalResponse(
   const isDirectRecommendation = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
   const isGeneralWeather = intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i));
 
+  const vesselType = context.boatType.replace('_', ' ');
   const isSafe = decision.riskBand === 'SAFE';
   const timeContext = intents.includes('SAFETY_TOMORROW') ? "tomorrow" : "today";
 
   if (isDirectRecommendation) {
     if (isSafe && topMarine) {
-      let recText = `The best nearby marine option is ${topMarine.facilityName}, located ${topMarine.distanceKm.toFixed(1)} km away.`;
+      let recText = `The best nearby marine option for your ${vesselType} is ${topMarine.facilityName}, located ${topMarine.distanceKm.toFixed(1)} km away.`;
       if (topMarine.productivityEvaluation) {
         recText += ` It has a Fishing Potential of ${topMarine.productivityEvaluation.productivityScore}/100.`;
       }
       return recText;
     } else if (!isSafe) {
-      return `The fishing potential may be good, but I would not recommend going ${timeContext}. The current safety conditions exceed your vessel's operating limits.`;
+      return `The fishing potential may be good, but I would not recommend going ${timeContext}. The current conditions exceed your ${vesselType}'s operating limits.`;
     } else {
-      return `I couldn't find any suitable fishing zones nearby based on your safety conditions.`;
+      return `I couldn't find any suitable fishing zones nearby based on your ${vesselType}'s safety constraints.`;
     }
   }
 
@@ -54,7 +55,7 @@ export function formatNormalResponse(
     const hasWind = env && env.windSpeedKmph !== null;
     const hasWave = env && env.significantWaveHeightM !== null;
     
-    let weatherSummary = `Overall conditions ${timeContext} at ${context.locationName} are ${isSafe ? 'favourable' : 'not recommended'}.`;
+    let weatherSummary = `Overall conditions ${timeContext} at ${context.locationName} are ${isSafe ? 'favourable' : 'not recommended'} for your ${vesselType}.`;
     if (hasWind && hasWave) {
       weatherSummary += ` Wind is ${env.windSpeedKmph} km/h and waves are ${env.significantWaveHeightM} m.`;
     }
