@@ -113,8 +113,8 @@ export function resolveFishermanContext(input: ResolverInput): ResolvedContext {
   }
 
   return {
-    locationId: (resolvedLocation as any).locationId || resolvedLocation.id,
-    locationName: (resolvedLocation as any).canonicalDisplayName || (resolvedLocation as any).sourceName || resolvedLocation.name,
+    locationId: (resolvedLocation as any).locationId,
+    locationName: (resolvedLocation as any).canonicalDisplayName || (resolvedLocation as any).sourceName,
     dateTime: resolvedDate,
     timeDescription: timeDescription,
     boatType: resolvedBoatType,

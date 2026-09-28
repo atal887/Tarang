@@ -75,7 +75,9 @@ export function getEnvironmentalConditions(_locationName: string, lat: number, l
   // JSON uses 10 (Oct) and 11 (Nov)
   const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
   
-  const envData = getLocationEnvironment(locContext.id, evalMonth);
+  const envData = getLocationEnvironment(locContext.locationId, evalMonth);
+  
+  console.log("environmentResolver getEnvironmentalConditions:", JSON.stringify({ _locationName, lat, lon, vesselType, locContextId: locContext.locationId, evalMonth, foundData: !!envData }));
 
   if (!envData) {
     return null;

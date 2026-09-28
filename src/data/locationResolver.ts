@@ -1,8 +1,8 @@
 import locations from './tarang_place_registry_7935_v1.json';
 
 export interface LocationData {
-  id: string;
-  name: string;
+  locationId: string;
+  canonicalDisplayName: string;
   state: string;
   district: string;
   subDistrict: string;
@@ -48,6 +48,6 @@ export function resolveFishingLocation(latitude: number, longitude: number): Loc
 
   return {
     ...nearestLoc,
-    locationName: (nearestLoc as any).canonicalDisplayName || (nearestLoc as any).sourceName || nearestLoc.name,
+    locationName: (nearestLoc as any).canonicalDisplayName || (nearestLoc as any).sourceName,
   };
 }

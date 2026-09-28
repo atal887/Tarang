@@ -259,7 +259,7 @@ export function Onboarding() {
   };
 
   const handleBoatSubmit = () => {
-
+    console.log("Onboarding saving profile:", JSON.stringify({ location, boatType, gpsCoords }));
     setProfile({
       phone: isGuestFlow ? "" : `+91 ${phone}`,
       location: location,

@@ -20,7 +20,7 @@ export function resolveInlandFishingConditions(
     const nearestLoc = resolveFishingLocation(candidate.latitude, candidate.longitude);
     
     // Get deterministic environmental data
-    const env = getLocationEnvironment(nearestLoc.id, evalMonth);
+    const env = getLocationEnvironment(nearestLoc.locationId, evalMonth);
     
     // Calculate geographic distance between spot and the matched environmental node
     let envDist: number | null = null;

@@ -28,6 +28,7 @@ export function Home() {
 
   const { profile } = useProfile();
   const userLocation = profile.location;
+  console.log("Home reading profile:", JSON.stringify({ userLocation, vesselType: profile.vesselType, coords: profile.coordinates }));
   
   let locName = userLocation.split(',')[0].trim();
   const locKey = locName.toLowerCase();
