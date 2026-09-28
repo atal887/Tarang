@@ -31,7 +31,19 @@ export interface SafetyStressChart {
   }[];
 }
 
-export type ResearchChartPayload = ProductivityRadarChart | CandidateComparisonChart | SafetyStressChart;
+export interface TripTimelineChart {
+  type: 'TRIP_TIMELINE';
+  data: {
+    day: number;
+    label: string;
+    productivity: number;
+    risk: number;
+    wind: number;
+    wave: number;
+  }[];
+}
+
+export type ResearchChartPayload = ProductivityRadarChart | CandidateComparisonChart | SafetyStressChart | TripTimelineChart;
 
 // Structured Research Response
 export interface ResearchResponse {
@@ -237,6 +249,103 @@ export function formatResearchResponse(
   const timeContext = intents.includes('SAFETY_TOMORROW') ? "tomorrow" : "under current conditions";
   
   let directAnswer = "";
+
+  if (intents.includes("TRIP_PLANNING")) {
+    const queryStr = context.originalQuery.toLowerCase();
+    
+    let tripDays = 1;
+    const dayMatch = queryStr.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s*day/i);
+    const daysMatch = queryStr.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s*days/i);
+    const matchToUse = dayMatch || daysMatch;
+    
+    if (matchToUse) {
+      const numMap: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+      const parsed = parseInt(matchToUse[1]);
+      tripDays = isNaN(parsed) ? (numMap[matchToUse[1].toLowerCase()] || 1) : parsed;
+    }
+    
+    if (tripDays > 7) {
+      response.summary = `TARANG currently supports planning up to 7 days. Please ask for a trip of 7 days or less.`;
+      return response;
+    }
+    
+    let vesselPercentage = 0.30; 
+    if (context.boatType === 'motorized') {
+      vesselPercentage = 0.80;
+    } else if (context.boatType === 'non_motorized') {
+      vesselPercentage = 0.55;
+    }
+    
+    const safeDuration = tripDays * vesselPercentage;
+    const fullSafeDays = Math.floor(safeDuration);
+    const decimalPart = safeDuration - fullSafeDays;
+    
+    let partialDayText = "";
+    if (decimalPart > 0) {
+      if (decimalPart <= 0.25) partialDayText = "around morning";
+      else if (decimalPart <= 0.6) partialDayText = "around afternoon";
+      else partialDayText = "around evening";
+    }
+    
+    const possibleReasons = [];
+    if (env?.significantWaveHeightM && env.significantWaveHeightM > 1.2) possibleReasons.push("elevated wave height");
+    if (env?.windSpeedKmph && env.windSpeedKmph > 20) possibleReasons.push("stronger winds");
+    if (env?.surfaceCurrentSpeedMs && env.surfaceCurrentSpeedMs > 0.5) possibleReasons.push("high surface currents");
+    if (env?.cycloneStatus && env.cycloneStatus !== 'normal') possibleReasons.push("marine warning");
+    
+    if (possibleReasons.length === 0) {
+      possibleReasons.push("unfavourable environmental conditions", "multiple conditions approaching operating limits");
+    }
+    
+    const selectedReasons = possibleReasons.slice(0, 2).join(" and ");
+    const destination = topMarine ? topMarine.facilityName : context.locationName;
+    
+    let tripSummary = `**Trip Analysis (${tripDays} days for ${vesselType} to ${destination})**\n\n`;
+    tripSummary += `Approximately ${safeDuration.toFixed(1)} days of suitable operating conditions.\n`;
+    
+    if (fullSafeDays === 0) {
+      tripSummary += `Day 1 is suitable until ${partialDayText}. After that, conditions require caution due to ${selectedReasons}.`;
+    } else if (fullSafeDays >= tripDays) {
+      tripSummary += `All ${tripDays} days are suitable for your trip.`;
+    } else {
+      tripSummary += `Days 1–${fullSafeDays} are suitable`;
+      if (decimalPart > 0) {
+        tripSummary += `, while Day ${fullSafeDays + 1} remains suitable until ${partialDayText}. After that, conditions require caution due to ${selectedReasons}.`;
+      } else {
+        tripSummary += `. From Day ${fullSafeDays + 1} onwards, conditions require caution due to ${selectedReasons}.`;
+      }
+    }
+    response.summary = tripSummary;
+
+    // Generate Chart Data
+    const timelineData: TripTimelineChart['data'] = [];
+    const baseProd = topMarine?.productivityEvaluation?.productivityScore || 50;
+    const baseWind = env?.windSpeedKmph || 15;
+    const baseWave = env?.significantWaveHeightM || 0.8;
+    
+    for (let i = 1; i <= tripDays; i++) {
+      let dayRisk = 20; // Safe
+      if (i > fullSafeDays + 1) dayRisk = 80; // Unsafe
+      else if (i === fullSafeDays + 1) dayRisk = 55; // Caution
+      
+      // Add some simulated progression to the numbers
+      const riskMod = dayRisk + (i * 2);
+      const windMod = baseWind * (1 + (i > fullSafeDays ? 0.5 : 0));
+      const waveMod = baseWave * (1 + (i > fullSafeDays ? 0.3 : 0));
+      
+      timelineData.push({
+        day: i,
+        label: `Day ${i}`,
+        productivity: Math.min(100, Math.max(0, baseProd + (Math.sin(i) * 10))),
+        risk: Math.min(100, riskMod),
+        wind: Math.round(windMod * 10) / 10,
+        wave: Math.round(waveMod * 10) / 10,
+      });
+    }
+    
+    response.charts = [{ type: 'TRIP_TIMELINE', data: timelineData }];
+    return response;
+  }
   
   // Direct Answer & Prioritization
   if (!isSafe && intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i))) {

@@ -168,10 +168,11 @@ export function ResearchCard({ payload }: Props) {
           </section>
           ) : null;
 
-          const TripSection = payload.safetyAnalysis ? (
+          const tripChart = payload.charts?.find(c => c.type === 'TRIP_TIMELINE');
+          const TripSection = tripChart ? (
             <section key="trip" className="space-y-3 mb-6">
             <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
-              <TripVisualization data={demoVisualizationDataset.tripData} />
+              <TripVisualization data={tripChart.data as any} />
               {renderExpandButton('trip')}
             </div>
           </section>

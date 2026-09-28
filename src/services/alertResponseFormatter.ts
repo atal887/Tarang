@@ -1,5 +1,6 @@
 import type { ResolvedContext } from "./contextResolver";
 import type { DecisionResult } from "./decisionEngine";
+import { getLocationEnvironment } from '../data/environmentResolver';
 
 export function formatAlertResponse(
   intents: string[],
@@ -23,6 +24,69 @@ export function formatAlertResponse(
 
   // Determine alert status
   const hasAlert = riskBand === 'AVOID' || riskBand === 'CAUTION';
+  
+  if (intents.includes("TRIP_PLANNING")) {
+    const currentMonth = context.dateTime.getMonth();
+    const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
+    const env = getLocationEnvironment(context.locationId, evalMonth);
+
+    const queryStr = context.originalQuery.toLowerCase();
+    let tripDays = 1;
+    const matchToUse = queryStr.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s*day/i) || queryStr.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s*days/i);
+    
+    if (matchToUse) {
+      const numMap: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10 };
+      const parsed = parseInt(matchToUse[1]);
+      tripDays = isNaN(parsed) ? (numMap[matchToUse[1].toLowerCase()] || 1) : parsed;
+    }
+    
+    if (tripDays > 7) {
+      return `TARANG currently supports planning up to 7 days. Please ask for a trip of 7 days or less.`;
+    }
+    
+    let vesselPercentage = 0.30; 
+    if (context.boatType === 'motorized') vesselPercentage = 0.80;
+    else if (context.boatType === 'non_motorized') vesselPercentage = 0.55;
+    
+    const safeDuration = tripDays * vesselPercentage;
+    const fullSafeDays = Math.floor(safeDuration);
+    const decimalPart = safeDuration - fullSafeDays;
+    
+    if (fullSafeDays >= tripDays) {
+      return `🟢 **No Trip Alerts**\n\nYour ${tripDays}-day trip remains within safe operating limits for your ${context.boatType.replace('_', ' ')}.`;
+    }
+    
+    let partialDayText = "";
+    if (decimalPart > 0) {
+      if (decimalPart <= 0.25) partialDayText = "around morning";
+      else if (decimalPart <= 0.6) partialDayText = "around afternoon";
+      else partialDayText = "around evening";
+    }
+
+    const possibleReasons = [];
+    if (env?.significantWaveHeightM && env.significantWaveHeightM > 1.2) possibleReasons.push(`Waves reaching ${env.significantWaveHeightM}m`);
+    if (env?.windSpeedKmph && env.windSpeedKmph > 20) possibleReasons.push(`Winds up to ${env.windSpeedKmph} km/h`);
+    if (env?.surfaceCurrentSpeedMs && env.surfaceCurrentSpeedMs > 0.5) possibleReasons.push("High surface currents");
+    if (env?.cycloneStatus && env.cycloneStatus !== 'normal') possibleReasons.push("Marine warning active");
+    
+    if (possibleReasons.length === 0) {
+      possibleReasons.push("Deteriorating conditions exceeding operating limits");
+    }
+    
+    const selectedReasons = possibleReasons.slice(0, 2).join(" & ");
+
+    const warningDay = fullSafeDays + 1;
+    const warningTime = decimalPart > 0 ? `After ${partialDayText} on Day ${warningDay}` : `Starting Day ${warningDay}`;
+
+    let response = `🚨 **TRIP WARNING**\n\n`;
+    response += `**Affected Time:** ${warningTime}\n`;
+    response += `**Severity:** HIGH RISK\n`;
+    response += `**Main Warning:** ${selectedReasons}\n\n`;
+    response += `**Vessel Impact:** The conditions will severely exceed the operational limits of your ${context.boatType.replace('_', ' ')}.\n`;
+    response += `**Recommended Action:** Conclude your trip before ${warningTime} or seek shelter immediately.`;
+
+    return response;
+  }
   const severity = riskBand === 'AVOID' ? 'SEVERE' : 'WARNING';
   
   const locationName = context.locationName || "this location";
