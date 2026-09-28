@@ -274,22 +274,22 @@ export function formatResearchResponse(
 
   if (intents.includes('CURRENT_COASTAL_CONDITIONS')) {
     if (!isMarine) metrics.push(`Marine metrics like ocean currents are inapplicable to ${context.locationName} because it's inland.`);
-    else metrics.push(env?.surfaceCurrentSpeedMs !== null ? `Ocean surface currents are moving at ${env.surfaceCurrentSpeedMs} m/s toward ${env.surfaceCurrentDirectionDeg}°, which plays a key role in nutrient transport.` : `Current data is not available for this location.`);
+    else metrics.push(env?.surfaceCurrentSpeedMs != null ? `Ocean surface currents are moving at ${env.surfaceCurrentSpeedMs} m/s toward ${env.surfaceCurrentDirectionDeg}°, which plays a key role in nutrient transport.` : `Current data is not available for this location.`);
   }
 
   if (intents.includes('SST_CONDITIONS')) {
     if (!isMarine) metrics.push(`Marine metrics like sea surface temperature (SST) are inapplicable to ${context.locationName} because it's inland.`);
-    else metrics.push(env?.seaSurfaceTemperatureC !== null ? `The sea surface temperature (SST) here is ${env.seaSurfaceTemperatureC} °C.` : `SST data is not available for this location.`);
+    else metrics.push(env?.seaSurfaceTemperatureC != null ? `The sea surface temperature (SST) here is ${env.seaSurfaceTemperatureC} °C.` : `SST data is not available for this location.`);
   }
 
   if (intents.includes('MLD_CONDITIONS')) {
     if (!isMarine) metrics.push(`Marine metrics like mixed layer depth are inapplicable to ${context.locationName} because it's inland.`);
-    else metrics.push(env?.mixedLayerDepthM !== null ? `The mixed layer depth (MLD) is ${env.mixedLayerDepthM} meters.` : `MLD data is not available for this location.`);
+    else metrics.push(env?.mixedLayerDepthM != null ? `The mixed layer depth (MLD) is ${env.mixedLayerDepthM} meters.` : `MLD data is not available for this location.`);
   }
 
   if (intents.includes('D20_CONDITIONS')) {
     if (!isMarine) metrics.push(`Marine metrics like D20 depth are inapplicable to ${context.locationName} because it's inland.`);
-    else metrics.push(env?.d20DepthM !== null ? `The D20 isotherm depth is ${env.d20DepthM} meters.` : `D20 depth data is not available for this location.`);
+    else metrics.push(env?.d20DepthM != null ? `The D20 isotherm depth is ${env.d20DepthM} meters.` : `D20 depth data is not available for this location.`);
   }
 
   if (intents.includes('DISTANCE_ANALYSIS') && topMarine) {

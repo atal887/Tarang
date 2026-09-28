@@ -15,6 +15,7 @@ import { formatComparisonResponse } from "../services/comparisonFormatter";
 import { useAppStore } from "../store/appStore";
 import { ResearchCard } from "../components/ui/ResearchCard";
 import { DigitalTwinUI } from "../components/ui/DigitalTwinUI";
+import { AlertUI } from "../components/ui/AlertUI";
 import { getConversationContext, commitConversationContext, resetConversationContext } from "../store/conversationContext";
 import { useTwinStore } from "../store/scenarioStore";
 import { getLocationEnvironment } from "../data/environmentResolver";
@@ -28,6 +29,8 @@ export function Chat() {
   const { messages, addMessage, updateLastMessageAction, clearChat } = useChatStore();
   const { activeMode } = useAppStore();
   const { twinState, setTwinState } = useTwinStore();
+  
+  const [latestDecision, setLatestDecision] = useState<{decision: DecisionResult | null, context: ResolvedContext | null}>({ decision: null, context: null });
 
   const [input, setInput] = useState("");
   const [analysis, setAnalysis] = useState<{ active: boolean; type: AnalysisType | null; duration: number }>({ active: false, type: null, duration: 0 });
@@ -212,7 +215,7 @@ export function Chat() {
         const baseline = getLocationEnvironment(_ctx.locationId, evalMonth);
         if (baseline) {
           setTwinState({ 
-            baseline, 
+            baseline: baseline as any, 
             context: _ctx,
             active: activeMode === "Digital_Twin"
           });
@@ -220,6 +223,7 @@ export function Chat() {
       }
       
       console.log("[CHAT] decision", decision);
+      setLatestDecision({ decision, context: _ctx });
       
       const intents = detectIntent(_ctx.originalQuery, "English");
       console.log("[CHAT] intents", intents);
@@ -551,6 +555,7 @@ export function Chat() {
       
       <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 pb-24 pt-14">
         {activeMode === "Digital_Twin" && <DigitalTwinUI />}
+        {activeMode === "Alert" && <AlertUI decision={latestDecision.decision} context={latestDecision.context} isSimulated={twinState.active && !!twinState.modified} />}
         {messages.map((msg) => (
           <div key={msg.id} className="w-full max-w-3xl mx-auto flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-300">
             <ChatBubble 

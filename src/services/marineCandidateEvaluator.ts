@@ -65,7 +65,7 @@ export function evaluateMarineCandidates(
   
   // 3. Evaluate each candidate using the existing risk resolver
   const results: MarineCandidateResult[] = candidatesToEvaluate.map(fac => {
-    let env = fac.environment ? { ...fac.environment } : undefined;
+    let env = fac.environment ? { ...fac.environment } : null;
     
     // Merge simulated values if they exist
     if (env && simulatedEnv) {
