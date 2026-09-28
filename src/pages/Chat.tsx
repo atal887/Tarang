@@ -71,23 +71,24 @@ export function Chat() {
       return;
     }
 
+    if (analysis.active) return; // Prevent duplicate submissions
+
     const qLower = text.toLowerCase();
     let type: AnalysisType = "general";
-    let duration = 4500;
-
+    
     if (qLower.includes("3-day") || qLower.includes("trip")) {
-       type = "trip"; duration = 7000;
+       type = "trip";
     } else if (qLower.includes("route")) {
-       type = "route"; duration = 9000;
+       type = "route";
     } else if (qLower.includes("safe")) {
-       type = "safety"; duration = 5000;
+       type = "safety";
     } else if (qLower.includes("pfz") || qLower.includes("zone")) {
-       type = "pfz"; duration = 6000;
+       type = "pfz";
     } else if (qLower.includes("weather") || qLower.includes("wind") || qLower.includes("wave") || qLower.includes("cyclone")) {
-       type = "weather"; duration = 5000;
-    } else {
-       duration = 4000 + Math.random() * 1000;
+       type = "weather";
     }
+
+    const duration = 400; // Fast UI response time
 
     setAnalysis({ active: true, type, duration });
 
@@ -430,18 +431,19 @@ export function Chat() {
       <div className="p-4 bg-white border-t border-slate-200 shrink-0 shadow-[0_-4px_10px_-4px_rgba(0,0,0,0.02)] z-20">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center gap-2">
-            <button aria-label="Voice input" className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 border border-slate-200 bg-slate-50 text-slate-500 hover:text-ocean-600 hover:bg-ocean-50 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500">
+            <button aria-label="Voice input" disabled={analysis.active} className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 border border-slate-200 bg-slate-50 text-slate-500 hover:text-ocean-600 hover:bg-ocean-50 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 disabled:opacity-50 disabled:cursor-not-allowed">
               <Mic className="w-5 h-5" />
             </button>
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleUserMessage(input)}
-              placeholder="Ask TARANG about your trip..."
-              className="flex-1 min-w-0 rounded-full border border-slate-200 bg-slate-50 px-5 py-3 text-sm focus:border-ocean-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-ocean-500/20 transition-all"
+              onKeyPress={(e) => e.key === "Enter" && !analysis.active && handleUserMessage(input)}
+              placeholder={analysis.active ? "Please wait..." : "Ask TARANG about your trip..."}
+              disabled={analysis.active}
+              className="flex-1 min-w-0 rounded-full border border-slate-200 bg-slate-50 px-5 py-3 text-sm focus:border-ocean-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-ocean-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             />
-            <button aria-label="Send message" onClick={() => handleUserMessage(input)} className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 bg-ocean-600 text-white hover:bg-ocean-700 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:ring-offset-2">
+            <button aria-label="Send message" disabled={analysis.active} onClick={() => handleUserMessage(input)} className="shrink-0 flex items-center justify-center rounded-full h-12 w-12 bg-ocean-600 text-white hover:bg-ocean-700 transition-colors focus:outline-none focus:ring-2 focus:ring-ocean-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
               <Send className="w-4 h-4 ml-0.5" />
             </button>
           </div>

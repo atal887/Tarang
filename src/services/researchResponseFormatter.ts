@@ -234,10 +234,18 @@ export function formatResearchResponse(
       response.summary = `Productivity data is currently unavailable in the baseline dataset for this location.`;
     }
   } else if (intent === 'SAFETY_TOMORROW' || intent === 'WAVE_HEIGHT' || intent === 'BOAT_SAFETY' || intent === 'WHY_NOT_RECOMMENDED') {
-    response.summary = `Based on the TARANG historical dataset for the requested profile, the environmental risk is classified as **${decision.riskBand}**.`;
+    if (!isMarine && intent === 'WAVE_HEIGHT') {
+      response.summary = `Analysis for ${context.locationName}: Marine metrics such as wave height are inapplicable for inland locations. The overall environmental risk is classified as **${decision.riskBand}** based on inland weather conditions.`;
+    } else {
+      response.summary = `Based on the TARANG historical dataset for the requested profile, the environmental risk is classified as **${decision.riskBand}**.`;
+    }
   } else {
     // COMPARE_ZONES, FACTOR_EXPLANATION, SCORE_BREAKDOWN, SAFETY_METHODOLOGY can be fully handled here later.
-    response.summary = `Research query mapped to general risk/productivity analysis. The location risk is ${decision.riskBand}.`;
+    if (!isMarine) {
+      response.summary = `Research query mapped to general risk analysis. Marine metrics are inapplicable for inland locations. The location risk is ${decision.riskBand}.`;
+    } else {
+      response.summary = `Research query mapped to general risk/productivity analysis. The location risk is ${decision.riskBand}.`;
+    }
   }
 
   return response;

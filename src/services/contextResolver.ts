@@ -72,7 +72,8 @@ export function resolveFishermanContext(input: ResolverInput): ResolvedContext {
   } else if (queryLower.includes('non-motorized') || queryLower.includes('non motorized') || queryLower.includes('canoe')) {
     resolvedBoatType = 'non_motorized';
     boatTypeInferred = false;
-  } else if (queryLower.includes('motorized') || queryLower.includes('boat')) {
+  } else if (queryLower.includes('motorized') && !queryLower.includes('non')) {
+    // Only override if explicitly saying "motorized" — generic "boat" should not override the user's profile vessel type
     resolvedBoatType = 'motorized';
     boatTypeInferred = false;
   }
