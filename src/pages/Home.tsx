@@ -59,7 +59,7 @@ export function Home() {
   const env = (lat && lon) ? getEnvironmentalConditions(locName, lat, lon, profile.vesselType) : null;
 
   if (env && env.name) {
-    if (locName === "Current location" || locName === "Live Location") {
+    if (locName === "Current location" || locName === "Live Location" || userLocation === "Current location" || userLocation === "Live Location") {
       locName = env.name;
     }
   }
@@ -100,7 +100,7 @@ export function Home() {
           <p className="text-sm font-medium text-white/80 mb-1">{greeting}</p>
           <div className="flex items-center gap-1.5 mb-1">
             <MapPin className="w-5 h-5 text-ocean-300" />
-            <h1 className="text-2xl font-bold">{userLocation}</h1>
+            <h1 className="text-2xl font-bold">{userLocation === "Current location" || userLocation === "Live Location" ? locName : userLocation}</h1>
           </div>
           <p className="text-sm text-ocean-100 font-medium mb-1">
             Vessel: {profile.vesselType}
