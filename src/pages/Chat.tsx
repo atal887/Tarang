@@ -6,14 +6,16 @@ import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoad
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useProfile } from "../store/profile";
 import { useChatStore, type Message } from "../store/chatStore";
-import { resolveFishermanContext, type ResolvedContext } from "../services/contextResolver";
+import { resolveFishermanContext, resolveFollowUpContext, hasExplicitLocationInQuery, isVesselOnlyChange, type ResolvedContext } from "../services/contextResolver";
 import { evaluateFishermanContext, type DecisionResult } from "../services/decisionEngine";
 import { detectIntent } from "../services/intentService";
 import { formatNormalResponse } from "../services/normalResponseFormatter";
 import { formatResearchResponse } from "../services/researchResponseFormatter";
+import { formatComparisonResponse } from "../services/comparisonFormatter";
 import { useAppStore } from "../store/appStore";
 import { ModeToggle } from "../components/ui/ModeToggle";
 import { ResearchCard } from "../components/ui/ResearchCard";
+import { getConversationContext, commitConversationContext, resetConversationContext } from "../store/conversationContext";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -94,18 +96,71 @@ export function Chat() {
 
     setTimeout(() => {
       try {
-        const resolvedContext = resolveFishermanContext({
-          query: text,
-          defaultLocationName: profile.location,
-          defaultBoatType: profile.vesselType
-        });
+        // 1. Check for follow-up context before standard resolution
+        const convCtx = getConversationContext();
+        const followUp = resolveFollowUpContext(text, convCtx, profile.vesselType);
 
-        addMessage({ 
+        if (followUp.type === 'CLARIFICATION') {
+          addMessage({ text: followUp.clarificationMessage, isBot: true, action: null, intent: null });
+          return;
+        }
+
+        if (followUp.type === 'DISTANCE') {
+          addMessage({
+            text: `**${followUp.candidateName}** is approximately **${followUp.distanceKm.toFixed(1)} km** from your location.`,
+            isBot: true, action: null, intent: null
+          });
+          return;
+        }
+
+        // 2. Standard resolution (fresh query or merged follow-up)
+        let resolvedContext: ResolvedContext;
+        let isCompoundOrdinal = false;
+        let ordinalTargetName = "";
+
+        if (followUp.type === 'RESOLVED') {
+          resolvedContext = followUp.context;
+        } else if (followUp.type === 'COMPARE_CANDIDATES') {
+          const responseText = formatComparisonResponse(followUp.candidates, activeMode);
+          addMessage({ text: responseText, isBot: true, action: null, intent: null });
+          return;
+        } else if (followUp.type === 'ORDINAL_CANDIDATE') {
+          if (!followUp.isCompound) {
+            // For ordinal references without context change: show the candidate details directly
+            const c = followUp.candidate;
+            const score = c.productivityEvaluation?.productivityScore;
+            const band = c.productivityEvaluation?.productivityBand;
+            addMessage({
+              text: `**Option ${followUp.candidateIndex + 1}: ${c.facilityName}** — ${c.distanceKm.toFixed(1)} km away. Risk: **${c.riskBand}**${score != null ? `. Productivity: **${score}/100** (${band})` : ''}. ${c.suitability ?? ''}`,
+              isBot: true, action: null, intent: null
+            });
+            // Skip commit because we did not evaluate
+            return;
+          }
+          resolvedContext = followUp.context;
+          isCompoundOrdinal = true;
+          ordinalTargetName = followUp.candidate.facilityName;
+        } else {
+          // NOT_FOLLOW_UP: standard fresh resolution
+          const intents = detectIntent(text, "English");
+          if (intents.includes('UNKNOWN') && intents.length === 1 && !hasExplicitLocationInQuery(text) && !isVesselOnlyChange(text)) {
+            addMessage({ text: "Could you please elaborate on your question a little more so I can help you accurately?", isBot: true, action: null, intent: null });
+            return;
+          }
+
+          resolvedContext = resolveFishermanContext({
+            query: text,
+            defaultLocationName: profile.location,
+            defaultBoatType: profile.vesselType
+          });
+        }
+
+        addMessage({
           text: "Sure! Let's confirm your details for this trip:",
           isBot: true,
           action: "context_confirm",
           intent: null,
-          payload: resolvedContext
+          payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }
         });
       } catch (error) {
         console.error("[CHAT] Context resolving error", error);
@@ -115,7 +170,13 @@ export function Chat() {
     }, duration);
   };
 
-  const handleConfirmContext = (_ctx: ResolvedContext, fallbackConsent = false) => {
+  const handleConfirmContext = (rawCtx: ResolvedContext & { __isCompoundOrdinal?: boolean; __ordinalTargetName?: string }, fallbackConsent = false) => {
+    const isCompoundOrdinal = rawCtx.__isCompoundOrdinal;
+    const ordinalTargetName = rawCtx.__ordinalTargetName;
+    const _ctx = { ...rawCtx };
+    delete (_ctx as any).__isCompoundOrdinal;
+    delete (_ctx as any).__ordinalTargetName;
+
     console.log("[CHAT] handleConfirmContext called", _ctx, fallbackConsent);
     if (!fallbackConsent) {
       updateLastMessageAction("context_confirm_done");
@@ -130,15 +191,13 @@ export function Chat() {
       const decision = evaluateFishermanContext(_ctx.locationId, _ctx.dateTime, _ctx.boatType, _ctx.originalQuery, fallbackConsent);
       console.log("[CHAT] decision", decision);
       
-      const intent = detectIntent(_ctx.originalQuery, "English");
-      console.log("[CHAT] intent", intent);
+      const intents = detectIntent(_ctx.originalQuery, "English");
+      console.log("[CHAT] intents", intents);
       console.log("[CHAT] activeMode", activeMode);
 
       if (activeMode === "Research") {
         console.log("[CHAT] formatting research response");
-        const researchResponse = formatResearchResponse(intent, _ctx, decision);
-        console.log("[CHAT] research response", researchResponse);
-        console.log("[CHAT] adding research message");
+        const researchResponse = formatResearchResponse(intents, _ctx, decision);
         addMessage({
           text: researchResponse.summary,
           isBot: true,
@@ -147,16 +206,38 @@ export function Chat() {
           payload: researchResponse
         });
       } else {
-        console.log("[CHAT] formatting normal response");
-        const responseText = formatNormalResponse(intent, _ctx, decision);
-        addMessage({ 
-          text: responseText, 
-          isBot: true, 
-          action: decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT", 
-          intent: null,
-          payload: decision.requiresFallbackConsent ? _ctx : decision
-        });
+        if (isCompoundOrdinal) {
+          const target = decision.marineRecommendations?.find(c => c.facilityName === ordinalTargetName);
+          if (target) {
+            const score = target.productivityEvaluation?.productivityScore;
+            const band = target.productivityEvaluation?.productivityBand;
+            addMessage({
+              text: `For **${target.facilityName}** on ${resolvedContextToDateString(_ctx.dateTime)}, the risk is **${target.riskBand}**${score != null ? `. Productivity is **${score}/100** (${band})` : ''}.`,
+              isBot: true, action: decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT", intent: null,
+              payload: decision.requiresFallbackConsent ? _ctx : decision
+            });
+          } else {
+            addMessage({
+              text: `I couldn't find updated information for **${ordinalTargetName}** under these new conditions. It might be outside safe operating limits or unavailable.`,
+              isBot: true, action: "DECISION_RESULT", intent: null, payload: decision
+            });
+          }
+        } else {
+          console.log("[CHAT] formatting normal response");
+          const responseText = formatNormalResponse(intents, _ctx, decision);
+          addMessage({ 
+            text: responseText, 
+            isBot: true, 
+            action: decision.requiresFallbackConsent ? "FALLBACK_CONSENT" : "DECISION_RESULT", 
+            intent: null,
+            payload: decision.requiresFallbackConsent ? _ctx : decision
+          });
+        }
       }
+
+      // Commit successful context for conversation continuity
+      commitConversationContext({ query: _ctx.originalQuery, intent: intents[0] || 'UNKNOWN', resolvedContext: _ctx, decision, preserveCandidateList: isCompoundOrdinal });
+
     } catch (error) {
       console.error("[CHAT] RESPONSE PIPELINE ERROR", error);
     } finally {
@@ -194,6 +275,7 @@ export function Chat() {
   const handleFreshChat = () => {
     if (window.confirm("Start a new chat? This will clear the current conversation.")) {
       clearChat();
+      resetConversationContext(); // also clear conversation memory
       setAnalysis({ active: false, type: null, duration: 0 });
     }
   };
@@ -512,4 +594,14 @@ export function Chat() {
       )}
     </div>
   );
+}
+
+export default Chat;
+
+// Helper to format date in Chat.tsx directly (since normal formatter isn't called for compound ordinals)
+function resolvedContextToDateString(d: Date): string {
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  if (d.getDate() === tomorrow.getDate()) return "tomorrow";
+  if (d.getDate() === new Date().getDate()) return "today";
+  return d.toLocaleDateString('en-IN', { weekday: 'long' });
 }
