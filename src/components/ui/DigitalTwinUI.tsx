@@ -147,42 +147,6 @@ export function DigitalTwinUI() {
     }));
   };
 
-  // Quick Preset Scenario Handlers
-  const applyPresetScenario = (scenarioType: 'wave' | 'wind' | 'sst' | 'chlorophyll' | 'current' | 'compound') => {
-    const base = activeBaseline;
-    let newMods: Partial<EnvironmentalConditions> = { ...base };
-
-    switch (scenarioType) {
-      case 'wave':
-        newMods.significantWaveHeightM = Number((base.significantWaveHeightM + 0.8).toFixed(1));
-        break;
-      case 'wind':
-        newMods.windSpeedKmph = Math.round(base.windSpeedKmph + 14);
-        break;
-      case 'sst':
-        newMods.seaSurfaceTemperatureC = Number((base.seaSurfaceTemperatureC - 2.1).toFixed(1));
-        break;
-      case 'chlorophyll':
-        newMods.chlorophyllMgM3 = Number((base.chlorophyllMgM3 + 0.42).toFixed(2));
-        break;
-      case 'current':
-        newMods.surfaceCurrentSpeedMs = Number((base.surfaceCurrentSpeedMs + 0.90).toFixed(2));
-        break;
-      case 'compound':
-        newMods.significantWaveHeightM = Number((base.significantWaveHeightM + 1.0).toFixed(1));
-        newMods.windSpeedKmph = Math.round(base.windSpeedKmph + 18);
-        newMods.seaSurfaceTemperatureC = Number((base.seaSurfaceTemperatureC - 3.6).toFixed(1));
-        newMods.surfaceCurrentSpeedMs = Number((base.surfaceCurrentSpeedMs + 0.90).toFixed(2));
-        newMods.chlorophyllMgM3 = Number((base.chlorophyllMgM3 + 0.42).toFixed(2));
-        break;
-    }
-
-    setLocalMods(newMods);
-    setTwinState({
-      modified: newMods as EnvironmentalConditions
-    });
-  };
-
   const handleSimulate = () => {
     if (!twinState.context) return;
     setTwinState({ 
@@ -261,7 +225,7 @@ export function DigitalTwinUI() {
     { subject: 'Productivity', Baseline: baseProdScore, Simulated: simulatedProdScore }
   ];
 
-  // Professional Slider Control Renderer
+  // Clean Professional Slider Renderer (shows ONLY current value on the right, no arrow or diff text)
   const renderControlSlider = (
     label: string, 
     field: keyof PortBaseline, 
@@ -273,8 +237,6 @@ export function DigitalTwinUI() {
   ) => {
     const baseVal = activeBaseline[field];
     const currentVal = localMods[field] ?? baseVal;
-    const isFieldModified = Math.abs(currentVal - baseVal) > 0.001;
-    const delta = currentVal - baseVal;
 
     return (
       <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200 space-y-2 text-left" key={field}>
@@ -283,17 +245,8 @@ export function DigitalTwinUI() {
             <IconComponent className="w-3.5 h-3.5 text-slate-500 shrink-0" />
             {label}
           </span>
-          <div className="flex items-center gap-1.5 text-xs">
-            <span className="text-slate-500 font-medium">{Number(baseVal).toFixed(step < 0.1 ? 2 : 1)}{unit}</span>
-            <span className="text-slate-400">&rarr;</span>
-            <span className={`font-semibold px-1.5 py-0.5 rounded ${isFieldModified ? 'bg-slate-800 text-white' : 'text-slate-900 bg-slate-200/60'}`}>
-              {Number(currentVal).toFixed(step < 0.1 ? 2 : 1)}{unit}
-            </span>
-            {isFieldModified && (
-              <span className={`text-[11px] font-medium px-1 rounded ${delta >= 0 ? 'text-amber-700 bg-amber-50 border border-amber-200' : 'text-emerald-700 bg-emerald-50 border border-emerald-200'}`}>
-                {delta >= 0 ? `+${delta.toFixed(step < 0.1 ? 2 : 1)}` : delta.toFixed(step < 0.1 ? 2 : 1)}{unit}
-              </span>
-            )}
+          <div className="text-xs font-bold text-slate-900 bg-white px-2.5 py-0.5 rounded border border-slate-200">
+            {Number(currentVal).toFixed(step < 0.1 ? 2 : 1)} {unit}
           </div>
         </div>
 
@@ -308,9 +261,9 @@ export function DigitalTwinUI() {
         />
 
         <div className="flex justify-between text-[10px] text-slate-400 font-medium">
-          <span>{min}{unit}</span>
-          <span>Baseline: {Number(baseVal).toFixed(step < 0.1 ? 2 : 1)}{unit}</span>
-          <span>{max}{unit}</span>
+          <span>{min} {unit}</span>
+          <span>Baseline: {Number(baseVal).toFixed(step < 0.1 ? 2 : 1)} {unit}</span>
+          <span>{max} {unit}</span>
         </div>
       </div>
     );
@@ -367,7 +320,7 @@ export function DigitalTwinUI() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         
         {/* ========================================================= */}
-        {/* LEFT COLUMN: ENVIRONMENTAL CONTROLS (col-span-5) */}
+        {/* LEFT COLUMN: ENVIRONMENTAL CONTROLS (ONLY SLIDERS) (col-span-5) */}
         {/* ========================================================= */}
         <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-4">
           <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
@@ -375,7 +328,7 @@ export function DigitalTwinUI() {
               <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <Sliders className="w-4 h-4 text-slate-600" /> Environmental Inputs
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">Adjust environmental parameters to simulate scenario shifts.</p>
+              <p className="text-xs text-slate-500 mt-0.5">Move sliders to control simulation parameters.</p>
             </div>
             {isModified && (
               <span className="text-[11px] font-medium text-slate-700 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">
@@ -384,65 +337,9 @@ export function DigitalTwinUI() {
             )}
           </div>
 
-          {/* Quick Preset Scenarios */}
-          <div className="space-y-2 pt-1">
-            <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
-              <Zap className="w-3.5 h-3.5 text-slate-500" /> Standard Scenarios ({selectedPort}):
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs">
-              <button
-                onClick={() => applyPresetScenario('wave')}
-                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
-              >
-                <div className="font-semibold text-slate-800">Wave Spike</div>
-                <div className="text-[10px] text-slate-500">{activeBaseline.significantWaveHeightM}m &rarr; {(activeBaseline.significantWaveHeightM + 0.8).toFixed(1)}m</div>
-              </button>
-
-              <button
-                onClick={() => applyPresetScenario('wind')}
-                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
-              >
-                <div className="font-semibold text-slate-800">Wind Surge</div>
-                <div className="text-[10px] text-slate-500">{activeBaseline.windSpeedKmph} &rarr; {Math.round(activeBaseline.windSpeedKmph + 14)} km/h</div>
-              </button>
-
-              <button
-                onClick={() => applyPresetScenario('sst')}
-                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
-              >
-                <div className="font-semibold text-slate-800">SST Drop</div>
-                <div className="text-[10px] text-slate-500">{activeBaseline.seaSurfaceTemperatureC}°C &rarr; {(activeBaseline.seaSurfaceTemperatureC - 2.1).toFixed(1)}°C</div>
-              </button>
-
-              <button
-                onClick={() => applyPresetScenario('chlorophyll')}
-                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
-              >
-                <div className="font-semibold text-slate-800">Chlorophyll</div>
-                <div className="text-[10px] text-slate-500">{activeBaseline.chlorophyllMgM3} &rarr; {(activeBaseline.chlorophyllMgM3 + 0.42).toFixed(2)}</div>
-              </button>
-
-              <button
-                onClick={() => applyPresetScenario('current')}
-                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
-              >
-                <div className="font-semibold text-slate-800">Current Surge</div>
-                <div className="text-[10px] text-slate-500">{activeBaseline.surfaceCurrentSpeedMs} &rarr; {(activeBaseline.surfaceCurrentSpeedMs + 0.90).toFixed(2)} m/s</div>
-              </button>
-
-              <button
-                onClick={() => applyPresetScenario('compound')}
-                className="p-2 rounded border border-slate-300 bg-slate-100 hover:bg-slate-200 text-left transition-colors font-semibold text-slate-900"
-              >
-                <div className="font-bold text-slate-900">Compound Shock</div>
-                <div className="text-[10px] text-slate-600">Multi-vector storm</div>
-              </button>
-            </div>
-          </div>
-
-          {/* Environmental Controls Sliders */}
+          {/* Environmental Controls Sliders (Clean, no extra scenario blocks) */}
           {hasPorts ? (
-            <div className="space-y-3 pt-2 border-t border-slate-100">
+            <div className="space-y-3">
               {renderControlSlider('Significant Wave Height (Hs)', 'significantWaveHeightM', 0, 5, 0.1, 'm', Waves)}
               {renderControlSlider('Wind Speed (Vw)', 'windSpeedKmph', 0, 80, 1, 'km/h', Wind)}
               {renderControlSlider('Sea Surface Temp (SST)', 'seaSurfaceTemperatureC', 20, 35, 0.1, '°C', Thermometer)}
@@ -473,64 +370,64 @@ export function DigitalTwinUI() {
         </div>
 
         {/* ========================================================= */}
-        {/* RIGHT COLUMN: SIMULATION ASSESSMENT (col-span-7) */}
+        {/* RIGHT COLUMN: SIMULATION ASSESSMENT & RESULTS (col-span-7) */}
         {/* ========================================================= */}
         <div className="lg:col-span-7 space-y-5 min-w-0">
           
-          {/* FLOW STEP 1: WHAT CHANGED */}
+          {/* FLOW STEP 1: WHAT CHANGED (BASELINE -> SIMULATED -> CHANGE) */}
           <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-3">
             <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
               <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-slate-600" /> 1. Parameter Shift (Baseline &rarr; Simulated)
+                <Activity className="w-4 h-4 text-slate-600" /> Scenario Impact (Baseline &rarr; Simulated &rarr; Change)
               </h2>
               <span className="text-xs font-medium text-slate-500">{selectedPort}</span>
             </div>
 
             {isModified ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                {/* Wave Diff */}
+              <div className="space-y-2 text-xs">
+                {/* Wave Height Diff */}
                 <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
-                  <span className="font-medium text-slate-700">Wave Height:</span>
-                  <span className="font-semibold text-slate-900">
-                    {activeBaseline.significantWaveHeightM}m &rarr; {currentWave.toFixed(1)}m <span className="text-[11px] font-semibold text-amber-700">({waveDelta >= 0 ? `+${waveDelta.toFixed(1)}` : waveDelta.toFixed(1)}m)</span>
+                  <span className="font-semibold text-slate-700">Wave Height:</span>
+                  <span className="font-bold text-slate-900">
+                    {activeBaseline.significantWaveHeightM} m &rarr; {currentWave.toFixed(1)} m <span className="text-[11px] font-bold text-slate-600">({waveDelta >= 0 ? `+${waveDelta.toFixed(1)}` : waveDelta.toFixed(1)} m)</span>
                   </span>
                 </div>
 
-                {/* Wind Diff */}
+                {/* Wind Speed Diff */}
                 <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
-                  <span className="font-medium text-slate-700">Wind Speed:</span>
-                  <span className="font-semibold text-slate-900">
-                    {activeBaseline.windSpeedKmph} &rarr; {currentWind} km/h <span className="text-[11px] font-semibold text-amber-700">({windDelta >= 0 ? `+${windDelta}` : windDelta} km/h)</span>
+                  <span className="font-semibold text-slate-700">Wind Speed:</span>
+                  <span className="font-bold text-slate-900">
+                    {activeBaseline.windSpeedKmph} km/h &rarr; {currentWind} km/h <span className="text-[11px] font-bold text-slate-600">({windDelta >= 0 ? `+${windDelta}` : windDelta} km/h)</span>
                   </span>
                 </div>
 
-                {/* SST Diff */}
+                {/* Sea Surface Temp Diff */}
                 <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
-                  <span className="font-medium text-slate-700">Sea Surface Temp:</span>
-                  <span className="font-semibold text-slate-900">
-                    {activeBaseline.seaSurfaceTemperatureC}°C &rarr; {currentSST.toFixed(1)}°C <span className="text-[11px] font-semibold text-slate-600">({sstDelta >= 0 ? `+${sstDelta.toFixed(1)}` : sstDelta.toFixed(1)}°C)</span>
+                  <span className="font-semibold text-slate-700">Sea Surface Temp:</span>
+                  <span className="font-bold text-slate-900">
+                    {activeBaseline.seaSurfaceTemperatureC} °C &rarr; {currentSST.toFixed(1)} °C <span className="text-[11px] font-bold text-slate-600">({sstDelta >= 0 ? `+${sstDelta.toFixed(1)}` : sstDelta.toFixed(1)} °C)</span>
                   </span>
                 </div>
 
-                {/* Current Diff */}
+                {/* Surface Current Diff */}
                 <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
-                  <span className="font-medium text-slate-700">Surface Current:</span>
-                  <span className="font-semibold text-slate-900">
-                    {activeBaseline.surfaceCurrentSpeedMs} &rarr; {currentSpeed.toFixed(2)} m/s <span className="text-[11px] font-semibold text-slate-600">({currentDelta >= 0 ? `+${currentDelta.toFixed(2)}` : currentDelta.toFixed(2)} m/s)</span>
+                  <span className="font-semibold text-slate-700">Surface Current:</span>
+                  <span className="font-bold text-slate-900">
+                    {activeBaseline.surfaceCurrentSpeedMs} m/s &rarr; {currentSpeed.toFixed(2)} m/s <span className="text-[11px] font-bold text-slate-600">({currentDelta >= 0 ? `+${currentDelta.toFixed(2)}` : currentDelta.toFixed(2)} m/s)</span>
                   </span>
                 </div>
 
                 {/* Chlorophyll Diff */}
-                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between col-span-1 sm:col-span-2">
-                  <span className="font-medium text-slate-700">Chlorophyll Conc.:</span>
-                  <span className="font-semibold text-slate-900">
-                    {activeBaseline.chlorophyllMgM3} &rarr; {currentChlorophyll.toFixed(2)} mg/m³ <span className="text-[11px] font-semibold text-emerald-700">({chlorophyllDelta >= 0 ? `+${chlorophyllDelta.toFixed(2)}` : chlorophyllDelta.toFixed(2)} mg/m³)</span>
+                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
+                  <span className="font-semibold text-slate-700">Chlorophyll Conc.:</span>
+                  <span className="font-bold text-slate-900">
+                    {activeBaseline.chlorophyllMgM3} mg/m³ &rarr; {currentChlorophyll.toFixed(2)} mg/m³ <span className="text-[11px] font-bold text-slate-600">({chlorophyllDelta >= 0 ? `+${chlorophyllDelta.toFixed(2)}` : chlorophyllDelta.toFixed(2)} mg/m³)</span>
                   </span>
                 </div>
               </div>
             ) : (
-              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-500 text-center font-medium">
-                Baseline environmental conditions active. Adjust sliders on the left or select a standard scenario to simulate shifts.
+              <div className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 text-xs text-slate-500 text-center font-medium">
+                Baseline conditions active. Move sliders on the left to simulate environmental parameter changes.
               </div>
             )}
           </div>
@@ -608,7 +505,7 @@ export function DigitalTwinUI() {
           {/* FLOW STEP 3: WHAT IT AFFECTS (CAUSAL CHAIN & VESSEL ADVISORIES) */}
           <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-3">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-2.5">
-              <ArrowRight className="w-4 h-4 text-slate-600" /> 2. Operational Impact & Vessel Limits
+              <ArrowRight className="w-4 h-4 text-slate-600" /> Operational Impact & Vessel Limits
             </h2>
 
             <div className="space-y-2 text-xs">
@@ -684,7 +581,7 @@ export function DigitalTwinUI() {
           {/* FLOW STEP 4: VISUALIZATIONS (3 CLEAN RECHARTS) */}
           <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-5">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-2.5">
-              <BarChart2 className="w-4 h-4 text-slate-600" /> 3. Environmental & Performance Charts
+              <BarChart2 className="w-4 h-4 text-slate-600" /> Environmental & Performance Charts
             </h2>
 
             {/* CHART 1: PARAMETER SHIFT BAR CHART */}
