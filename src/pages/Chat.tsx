@@ -26,8 +26,12 @@ import { MapComponent } from "../components/map/MapComponent";
 import { getLocationCoordinates } from "../services/contextResolver";
 import { findDemoScenario, DEMO_SCENARIOS } from "../data/demoFishermanDataset";
 import { findDemoResearcherScenario } from "../data/demoResearcherDataset";
+import { findDemoAlertScenario } from "../data/demoAlertDataset";
+import { findDemoDigitalTwinScenario } from "../data/demoDigitalTwinDataset";
 import { FormattedMessage } from "../components/ui/FormattedMessage";
 import { ResearcherVisualizations } from "../components/ui/ResearcherVisualizations";
+import { AlertVisualizations } from "../components/ui/AlertVisualizations";
+import { DigitalTwinVisualizations } from "../components/ui/DigitalTwinVisualizations";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -177,6 +181,50 @@ export function Chat() {
               intent: null
             });
           }
+        }, 400);
+        return;
+      }
+    }
+
+    // Alert Mode Handling
+    const demoAlertScenario = findDemoAlertScenario(text);
+    if (activeMode === "Alert" || demoAlertScenario) {
+      if (demoAlertScenario) {
+        if (activeMode !== "Alert") setActiveMode("Alert");
+        setAnalysis({ active: true, type: "safety", duration: 400 });
+        setTimeout(() => {
+          setAnalysis({ active: false, type: null, duration: 0 });
+          isProcessingMessageRef.current = false;
+          
+          addMessage({
+            text: `${demoAlertScenario.warningHeader}\n\n**Primary Hazard:** ${demoAlertScenario.primaryHazard}`,
+            isBot: true,
+            action: "DEMO_ALERT_RESULT",
+            intent: null,
+            payload: demoAlertScenario
+          });
+        }, 400);
+        return;
+      }
+    }
+
+    // Digital Twin Mode Handling
+    const demoDigitalTwinScenario = findDemoDigitalTwinScenario(text);
+    if (activeMode === "Digital_Twin" || demoDigitalTwinScenario) {
+      if (demoDigitalTwinScenario) {
+        if (activeMode !== "Digital_Twin") setActiveMode("Digital_Twin");
+        setAnalysis({ active: true, type: "general", duration: 400 });
+        setTimeout(() => {
+          setAnalysis({ active: false, type: null, duration: 0 });
+          isProcessingMessageRef.current = false;
+          
+          addMessage({
+            text: `**Digital Twin Simulation:** ${demoDigitalTwinScenario.title}`,
+            isBot: true,
+            action: "DEMO_DIGITAL_TWIN_RESULT",
+            intent: null,
+            payload: demoDigitalTwinScenario
+          });
         }, 400);
         return;
       }
@@ -976,6 +1024,10 @@ export function Chat() {
         }
       } else if (msg.action === "DEMO_RESEARCHER_RESULT" && msg.payload) {
         elements.push(<ResearcherVisualizations key="demo-researcher-vis" scenario={msg.payload} />);
+      } else if (msg.action === "DEMO_ALERT_RESULT" && msg.payload) {
+        elements.push(<AlertVisualizations key="demo-alert-vis" scenario={msg.payload} />);
+      } else if (msg.action === "DEMO_DIGITAL_TWIN_RESULT" && msg.payload) {
+        elements.push(<DigitalTwinVisualizations key="demo-digital-twin-vis" scenario={msg.payload} />);
       }
     }
     
