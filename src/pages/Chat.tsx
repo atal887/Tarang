@@ -31,7 +31,7 @@ export function Chat() {
   const { profile } = useProfile();
   
   const { messages, addMessage, updateLastMessageAction, clearChat } = useChatStore();
-  const { activeMode } = useAppStore();
+  const { activeMode, setActiveMode } = useAppStore();
   const { twinState, setTwinState } = useTwinStore();
   
   const [latestDecision, setLatestDecision] = useState<{decision: DecisionResult | null, context: ResolvedContext | null}>({ decision: null, context: null });
@@ -714,19 +714,25 @@ export function Chat() {
               {showModeMenu && (
                 <div className="absolute bottom-full mb-3 left-0 w-48 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden py-2 z-50">
                   <button 
-                    onClick={() => { useAppStore().setActiveMode("Research"); setShowModeMenu(false); }}
+                    onClick={() => { setActiveMode("Normal"); setShowModeMenu(false); }}
+                    className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Normal' ? 'bg-slate-100 text-slate-800 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    <Info className="w-4 h-4" /> Default
+                  </button>
+                  <button 
+                    onClick={() => { setActiveMode("Research"); setShowModeMenu(false); }}
                     className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Research' ? 'bg-ocean-50 text-ocean-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
                     <Microscope className="w-4 h-4" /> Researcher
                   </button>
                   <button 
-                    onClick={() => { useAppStore().setActiveMode("Digital_Twin"); setShowModeMenu(false); }}
+                    onClick={() => { setActiveMode("Digital_Twin"); setShowModeMenu(false); }}
                     className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Digital_Twin' ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
                     <Cpu className="w-4 h-4" /> Digital Twin
                   </button>
                   <button 
-                    onClick={() => { useAppStore().setActiveMode("Alert"); setShowModeMenu(false); }}
+                    onClick={() => { setActiveMode("Alert"); setShowModeMenu(false); }}
                     className={`flex items-center gap-3 w-full px-4 py-2 text-sm text-left ${activeMode === 'Alert' ? 'bg-rose-50 text-rose-700 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
                     <AlertTriangle className="w-4 h-4" /> Alert
