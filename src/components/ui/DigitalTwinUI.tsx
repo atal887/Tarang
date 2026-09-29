@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTwinStore } from '../../store/scenarioStore';
 import { evaluateFishermanContext } from '../../services/decisionEngine';
 import { resolveFishermanContext, getLocationCoordinates } from '../../services/contextResolver';
-import { RotateCcw, Play, MapPin, Sliders, Cpu, ShieldAlert, Target, Waves, Wind, Thermometer, Activity, BarChart2, Zap, Navigation, ArrowRight, Anchor } from 'lucide-react';
+import { RotateCcw, Play, MapPin, Sliders, ShieldAlert, Target, Waves, Wind, Thermometer, Activity, BarChart2, Zap, ArrowRight, Anchor } from 'lucide-react';
 import type { EnvironmentalConditions } from '../../data/environmentResolver';
 import { DIGITAL_TWIN_LOCATIONS } from '../../data/digitalTwinLocations';
 import { MapComponent } from '../map/MapComponent';
@@ -54,19 +54,25 @@ export function getPortBaseline(portName: string): PortBaseline {
   return { significantWaveHeightM: 1.2, windSpeedKmph: 14, seaSurfaceTemperatureC: 28.5, surfaceCurrentSpeedMs: 0.35, chlorophyllMgM3: 0.50 };
 }
 
+// Clean helper to sanitize markdown text
+function cleanText(text: string): string {
+  if (!text) return '';
+  return text.replace(/\*\*/g, '').replace(/###/g, '').replace(/---/g, '').replace(/`/g, '').trim();
+}
+
 const CustomRechartsTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-slate-900/95 text-white p-3 rounded-lg shadow-xl border border-slate-700/60 text-xs backdrop-blur-md z-50">
-        <div className="font-bold text-indigo-400 mb-1 border-b border-slate-700/60 pb-1">{label || payload[0].name}</div>
-        <div className="space-y-1 mt-1">
+      <div className="bg-slate-900 text-white p-2.5 rounded-md shadow-md text-xs font-medium border border-slate-700 z-50">
+        <div className="font-semibold text-slate-300 mb-1 border-b border-slate-700 pb-1">{label || payload[0].name}</div>
+        <div className="space-y-1">
           {payload.map((item: any, idx: number) => (
             <div key={idx} className="flex items-center justify-between gap-3 text-slate-200">
-              <span className="flex items-center gap-1.5 font-medium">
+              <span className="flex items-center gap-1.5 font-normal">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color || item.fill }}></span>
                 {item.name}:
               </span>
-              <span className="font-bold text-white">{item.value}</span>
+              <span className="font-semibold text-white">{item.value}</span>
             </div>
           ))}
         </div>
@@ -141,7 +147,7 @@ export function DigitalTwinUI() {
     }));
   };
 
-  // Quick Preset Scenario Handlers (Dynamically relative to active selected port baseline)
+  // Quick Preset Scenario Handlers
   const applyPresetScenario = (scenarioType: 'wave' | 'wind' | 'sst' | 'chlorophyll' | 'current' | 'compound') => {
     const base = activeBaseline;
     let newMods: Partial<EnvironmentalConditions> = { ...base };
@@ -242,9 +248,9 @@ export function DigitalTwinUI() {
   ];
 
   const vesselLimitPayload = [
-    { vessel: 'Non-Motorized Canoe', WaveLimit: 0.5, CurrentWave: currentWave, WindLimit: 25, CurrentWind: currentWind },
-    { vessel: 'Motorized Boat (<12m)', WaveLimit: 1.4, CurrentWave: currentWave, WindLimit: 40, CurrentWind: currentWind },
-    { vessel: 'Mechanized Trawler (>12m)', WaveLimit: 2.4, CurrentWave: currentWave, WindLimit: 50, CurrentWind: currentWind }
+    { vessel: 'Canoes (Non-Motorized)', WaveLimit: 0.5, CurrentWave: currentWave, WindLimit: 25, CurrentWind: currentWind },
+    { vessel: 'Motorized (<12m)', WaveLimit: 1.4, CurrentWave: currentWave, WindLimit: 40, CurrentWind: currentWind },
+    { vessel: 'Trawlers (>12m)', WaveLimit: 2.4, CurrentWave: currentWave, WindLimit: 50, CurrentWind: currentWind }
   ];
 
   const radarPayload = [
@@ -255,8 +261,8 @@ export function DigitalTwinUI() {
     { subject: 'Productivity', Baseline: baseProdScore, Simulated: simulatedProdScore }
   ];
 
-  // Slider Renderer helper
-  const renderSlider = (
+  // Professional Slider Control Renderer
+  const renderControlSlider = (
     label: string, 
     field: keyof PortBaseline, 
     min: number, 
@@ -271,21 +277,21 @@ export function DigitalTwinUI() {
     const delta = currentVal - baseVal;
 
     return (
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2 text-left" key={field}>
-        <div className="flex items-center justify-between text-xs font-bold text-slate-800">
-          <span className="flex items-center gap-1.5 text-slate-700">
-            <IconComponent className="w-3.5 h-3.5 text-ocean-600 shrink-0" />
+      <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200 space-y-2 text-left" key={field}>
+        <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+          <span className="flex items-center gap-2 text-slate-700 font-medium">
+            <IconComponent className="w-3.5 h-3.5 text-slate-500 shrink-0" />
             {label}
           </span>
-          <div className="flex items-center gap-1.5 text-xs font-extrabold">
-            <span className="text-slate-500">{Number(baseVal).toFixed(step < 0.1 ? 2 : 1)}{unit}</span>
-            <span>&rarr;</span>
-            <span className={`px-2 py-0.5 rounded ${isFieldModified ? 'bg-indigo-100 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-800'}`}>
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="text-slate-500 font-medium">{Number(baseVal).toFixed(step < 0.1 ? 2 : 1)}{unit}</span>
+            <span className="text-slate-400">&rarr;</span>
+            <span className={`font-semibold px-1.5 py-0.5 rounded ${isFieldModified ? 'bg-slate-800 text-white' : 'text-slate-900 bg-slate-200/60'}`}>
               {Number(currentVal).toFixed(step < 0.1 ? 2 : 1)}{unit}
             </span>
             {isFieldModified && (
-              <span className={`text-[10px] px-1 py-0.5 rounded ${delta >= 0 ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}`}>
-                ({delta >= 0 ? `+${delta.toFixed(step < 0.1 ? 2 : 1)}` : delta.toFixed(step < 0.1 ? 2 : 1)}{unit})
+              <span className={`text-[11px] font-medium px-1 rounded ${delta >= 0 ? 'text-amber-700 bg-amber-50 border border-amber-200' : 'text-emerald-700 bg-emerald-50 border border-emerald-200'}`}>
+                {delta >= 0 ? `+${delta.toFixed(step < 0.1 ? 2 : 1)}` : delta.toFixed(step < 0.1 ? 2 : 1)}{unit}
               </span>
             )}
           </div>
@@ -298,10 +304,10 @@ export function DigitalTwinUI() {
           step={step} 
           value={Number(currentVal)}
           onChange={(e) => handleSliderChange(field, parseFloat(e.target.value))}
-          className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-ocean-600 hover:accent-ocean-500 transition-all"
+          className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-slate-800 transition-all"
         />
 
-        <div className="flex justify-between text-[10px] text-slate-400 font-semibold px-0.5">
+        <div className="flex justify-between text-[10px] text-slate-400 font-medium">
           <span>{min}{unit}</span>
           <span>Baseline: {Number(baseVal).toFixed(step < 0.1 ? 2 : 1)}{unit}</span>
           <span>{max}{unit}</span>
@@ -311,30 +317,33 @@ export function DigitalTwinUI() {
   };
 
   return (
-    <div className="m-3 md:m-5 bg-slate-50/50 border border-slate-200 rounded-2xl p-4 md:p-6 shadow-md text-left space-y-6">
+    <div className="min-h-screen bg-slate-50/50 p-3 sm:p-5 md:p-6 text-slate-800 font-sans text-left space-y-5">
       
-      {/* Top Banner & Mode Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+      {/* Page Header */}
+      <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-bold uppercase tracking-wider rounded-full border border-indigo-200 flex items-center gap-1.5">
-              <Cpu className="w-3.5 h-3.5 text-indigo-600" /> Digital Twin Mode
+            <span className="px-2.5 py-0.5 bg-slate-100 text-slate-700 text-xs font-semibold rounded border border-slate-200 uppercase tracking-wide">
+              Digital Twin Simulator
             </span>
-            <span className="text-xs text-slate-500 font-semibold">Interactive Marine Simulator</span>
+            <span className="text-xs text-slate-500">Marine Decision-Support System</span>
           </div>
-          <h2 className="text-lg md:text-xl font-black text-slate-900 leading-snug mt-1">
-            Simulate Marine Scenarios & Causal Impacts
-          </h2>
+          <h1 className="text-lg md:text-xl font-bold text-slate-900 mt-1">
+            Marine Environmental Vector Simulation
+          </h1>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Simulate environmental shifts and assess operational vessel risk for Indian fishing ports.
+          </p>
         </div>
 
-        {/* Location Dropdown Selector */}
-        <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-200 shadow-sm shrink-0">
-          <MapPin className="w-4 h-4 text-ocean-600 shrink-0" />
+        {/* Location Selector */}
+        <div className="flex items-center gap-2 bg-slate-50 p-2 rounded-lg border border-slate-200 shrink-0">
+          <MapPin className="w-4 h-4 text-slate-500 shrink-0" />
           <div className="flex gap-2 text-xs">
             <select 
               value={selectedState} 
               onChange={handleStateChange}
-              className="p-1.5 font-bold text-slate-800 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              className="p-1.5 font-semibold text-slate-800 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-400"
             >
               {Object.keys(DIGITAL_TWIN_LOCATIONS).map(state => (
                 <option key={state} value={state}>{state}</option>
@@ -344,7 +353,7 @@ export function DigitalTwinUI() {
             <select 
               value={selectedPort} 
               onChange={handlePortChange}
-              className="p-1.5 font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-ocean-500"
+              className="p-1.5 font-bold text-slate-900 bg-white border border-slate-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-400"
             >
               {validPorts.map(port => (
                 <option key={port} value={port}>{port}</option>
@@ -354,430 +363,386 @@ export function DigitalTwinUI() {
         </div>
       </div>
 
-      {/* QUICK PRESET DEMO SCENARIOS BAR */}
-      <div className="bg-white p-3.5 rounded-2xl border border-indigo-100 shadow-sm space-y-2">
-        <div className="text-xs font-bold text-indigo-900 uppercase tracking-wider flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-          <span className="flex items-center gap-1.5">
-            <Zap className="w-4 h-4 text-indigo-600" /> Quick Demo Scenarios ({selectedPort}):
-          </span>
-          <span className="text-[10px] text-slate-500 font-semibold">
-            Baseline: Wave {activeBaseline.significantWaveHeightM}m | Wind {activeBaseline.windSpeedKmph}km/h | SST {activeBaseline.seaSurfaceTemperatureC}°C | Current {activeBaseline.surfaceCurrentSpeedMs}m/s
-          </span>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          <button
-            onClick={() => applyPresetScenario('wave')}
-            className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-ocean-50 hover:border-ocean-300 text-left transition-all group"
-          >
-            <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🌊 Wave Spike</div>
-            <div className="text-[10px] text-slate-500">{activeBaseline.significantWaveHeightM}m &rarr; {(activeBaseline.significantWaveHeightM + 0.8).toFixed(1)}m</div>
-          </button>
-
-          <button
-            onClick={() => applyPresetScenario('wind')}
-            className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-amber-50 hover:border-amber-300 text-left transition-all group"
-          >
-            <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">💨 Wind Surge</div>
-            <div className="text-[10px] text-slate-500">{activeBaseline.windSpeedKmph} &rarr; {Math.round(activeBaseline.windSpeedKmph + 14)} km/h</div>
-          </button>
-
-          <button
-            onClick={() => applyPresetScenario('sst')}
-            className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-rose-50 hover:border-rose-300 text-left transition-all group"
-          >
-            <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🌡️ SST Drop</div>
-            <div className="text-[10px] text-slate-500">{activeBaseline.seaSurfaceTemperatureC}°C &rarr; {(activeBaseline.seaSurfaceTemperatureC - 2.1).toFixed(1)}°C</div>
-          </button>
-
-          <button
-            onClick={() => applyPresetScenario('chlorophyll')}
-            className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 text-left transition-all group"
-          >
-            <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🟢 Chlorophyll</div>
-            <div className="text-[10px] text-slate-500">{activeBaseline.chlorophyllMgM3} &rarr; {(activeBaseline.chlorophyllMgM3 + 0.42).toFixed(2)} mg/m³</div>
-          </button>
-
-          <button
-            onClick={() => applyPresetScenario('current')}
-            className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 text-left transition-all group"
-          >
-            <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🌊 Current Surge</div>
-            <div className="text-[10px] text-slate-500">{activeBaseline.surfaceCurrentSpeedMs} &rarr; {(activeBaseline.surfaceCurrentSpeedMs + 0.90).toFixed(2)} m/s</div>
-          </button>
-
-          <button
-            onClick={() => applyPresetScenario('compound')}
-            className="p-2 rounded-xl border border-indigo-300 bg-indigo-50 hover:bg-indigo-100 text-left transition-all shadow-sm ring-1 ring-indigo-200 group"
-          >
-            <div className="text-[11px] font-extrabold text-indigo-900 flex items-center gap-1">⚡ Compound Demo</div>
-            <div className="text-[10px] font-bold text-indigo-700">Multi-factor shock</div>
-          </button>
-        </div>
-      </div>
-
-      {/* Two Column Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Main Two Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         
         {/* ========================================================= */}
-        {/* LEFT COLUMN: ENVIRONMENT SIMULATOR CONTROLS (col-span-5) */}
+        {/* LEFT COLUMN: ENVIRONMENTAL CONTROLS (col-span-5) */}
         {/* ========================================================= */}
-        <div className="lg:col-span-5 space-y-4 bg-white p-4 md:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div className="lg:col-span-5 bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-4">
           <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                <Sliders className="w-4 h-4 text-ocean-600" /> Environment Simulator
-              </h3>
-              <p className="text-[11px] text-slate-500 mt-0.5">Move sliders to simulate custom environmental shifts</p>
+              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <Sliders className="w-4 h-4 text-slate-600" /> Environmental Inputs
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">Adjust environmental parameters to simulate scenario shifts.</p>
             </div>
             {isModified && (
-              <span className="text-[10px] font-extrabold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
-                Modified
+              <span className="text-[11px] font-medium text-slate-700 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded">
+                Modified State
               </span>
             )}
           </div>
 
+          {/* Quick Preset Scenarios */}
+          <div className="space-y-2 pt-1">
+            <div className="text-xs font-semibold text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
+              <Zap className="w-3.5 h-3.5 text-slate-500" /> Standard Scenarios ({selectedPort}):
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs">
+              <button
+                onClick={() => applyPresetScenario('wave')}
+                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
+              >
+                <div className="font-semibold text-slate-800">Wave Spike</div>
+                <div className="text-[10px] text-slate-500">{activeBaseline.significantWaveHeightM}m &rarr; {(activeBaseline.significantWaveHeightM + 0.8).toFixed(1)}m</div>
+              </button>
+
+              <button
+                onClick={() => applyPresetScenario('wind')}
+                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
+              >
+                <div className="font-semibold text-slate-800">Wind Surge</div>
+                <div className="text-[10px] text-slate-500">{activeBaseline.windSpeedKmph} &rarr; {Math.round(activeBaseline.windSpeedKmph + 14)} km/h</div>
+              </button>
+
+              <button
+                onClick={() => applyPresetScenario('sst')}
+                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
+              >
+                <div className="font-semibold text-slate-800">SST Drop</div>
+                <div className="text-[10px] text-slate-500">{activeBaseline.seaSurfaceTemperatureC}°C &rarr; {(activeBaseline.seaSurfaceTemperatureC - 2.1).toFixed(1)}°C</div>
+              </button>
+
+              <button
+                onClick={() => applyPresetScenario('chlorophyll')}
+                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
+              >
+                <div className="font-semibold text-slate-800">Chlorophyll</div>
+                <div className="text-[10px] text-slate-500">{activeBaseline.chlorophyllMgM3} &rarr; {(activeBaseline.chlorophyllMgM3 + 0.42).toFixed(2)}</div>
+              </button>
+
+              <button
+                onClick={() => applyPresetScenario('current')}
+                className="p-2 rounded border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors"
+              >
+                <div className="font-semibold text-slate-800">Current Surge</div>
+                <div className="text-[10px] text-slate-500">{activeBaseline.surfaceCurrentSpeedMs} &rarr; {(activeBaseline.surfaceCurrentSpeedMs + 0.90).toFixed(2)} m/s</div>
+              </button>
+
+              <button
+                onClick={() => applyPresetScenario('compound')}
+                className="p-2 rounded border border-slate-300 bg-slate-100 hover:bg-slate-200 text-left transition-colors font-semibold text-slate-900"
+              >
+                <div className="font-bold text-slate-900">Compound Shock</div>
+                <div className="text-[10px] text-slate-600">Multi-vector storm</div>
+              </button>
+            </div>
+          </div>
+
+          {/* Environmental Controls Sliders */}
           {hasPorts ? (
-            <div className="space-y-3">
-              {renderSlider('Wave Height', 'significantWaveHeightM', 0, 5, 0.1, 'm', Waves)}
-              {renderSlider('Wind Speed', 'windSpeedKmph', 0, 80, 1, 'km/h', Wind)}
-              {renderSlider('Sea Surface Temp', 'seaSurfaceTemperatureC', 20, 35, 0.1, '°C', Thermometer)}
-              {renderSlider('Surface Current', 'surfaceCurrentSpeedMs', 0, 2, 0.05, 'm/s', Activity)}
-              {renderSlider('Chlorophyll Conc.', 'chlorophyllMgM3', 0, 5, 0.1, 'mg/m³', Zap)}
+            <div className="space-y-3 pt-2 border-t border-slate-100">
+              {renderControlSlider('Significant Wave Height (Hs)', 'significantWaveHeightM', 0, 5, 0.1, 'm', Waves)}
+              {renderControlSlider('Wind Speed (Vw)', 'windSpeedKmph', 0, 80, 1, 'km/h', Wind)}
+              {renderControlSlider('Sea Surface Temp (SST)', 'seaSurfaceTemperatureC', 20, 35, 0.1, '°C', Thermometer)}
+              {renderControlSlider('Surface Current Speed (uc)', 'surfaceCurrentSpeedMs', 0, 2, 0.05, 'm/s', Activity)}
+              {renderControlSlider('Chlorophyll Concentration', 'chlorophyllMgM3', 0, 5, 0.1, 'mg/m³', Zap)}
               
-              {/* Primary & Secondary Action CTAs */}
+              {/* Action Buttons */}
               <div className="flex items-center gap-3 pt-3 border-t border-slate-100">
                 <button 
                   onClick={handleReset} 
-                  className="py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 transition-all flex items-center justify-center gap-1.5 shrink-0"
+                  className="py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg border border-slate-200 transition-colors flex items-center justify-center gap-1.5 shrink-0"
                 >
-                  <RotateCcw className="w-3.5 h-3.5" /> Reset
+                  <RotateCcw className="w-3.5 h-3.5" /> Reset Baseline
                 </button>
                 <button 
                   onClick={handleSimulate} 
-                  className="flex-1 py-3 px-4 bg-ocean-600 hover:bg-ocean-700 text-white font-extrabold text-xs rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 active:scale-[0.98]"
+                  className="flex-1 py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-lg shadow transition-colors flex items-center justify-center gap-2"
                 >
-                  <Play className="w-4 h-4 fill-white" /> Simulate Scenario
+                  <Play className="w-3.5 h-3.5 fill-white" /> Simulate Scenario
                 </button>
               </div>
             </div>
           ) : (
-            <div className="p-6 text-center text-xs text-slate-500 bg-slate-50 rounded-xl border border-dashed border-slate-200">
-              Please select a valid port from the top dropdown to activate the environment simulator.
+            <div className="p-6 text-center text-xs text-slate-500 bg-slate-50 rounded-lg border border-slate-200">
+              Please select a valid port to activate the simulator.
             </div>
           )}
         </div>
 
         {/* ========================================================= */}
-        {/* RIGHT COLUMN: SIMULATION RESULTS DASHBOARD (col-span-7) */}
+        {/* RIGHT COLUMN: SIMULATION ASSESSMENT (col-span-7) */}
         {/* ========================================================= */}
         <div className="lg:col-span-7 space-y-5 min-w-0">
           
-          {/* SECTION 1: SCENARIO IMPACT (Baseline -> Simulated -> Change Diff Bar) */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                <Activity className="w-4 h-4 text-indigo-600" /> Scenario Impact (Baseline &rarr; Simulated &rarr; Change)
-              </h3>
-              <span className="text-[10px] font-bold text-slate-400 uppercase">{selectedPort}</span>
+          {/* FLOW STEP 1: WHAT CHANGED */}
+          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-slate-600" /> 1. Parameter Shift (Baseline &rarr; Simulated)
+              </h2>
+              <span className="text-xs font-medium text-slate-500">{selectedPort}</span>
             </div>
 
             {isModified ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                 {/* Wave Diff */}
-                <div className="bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="font-bold text-slate-700">Wave Height:</span>
-                  <span className="font-extrabold text-indigo-900">
-                    {activeBaseline.significantWaveHeightM}m &rarr; {currentWave.toFixed(1)}m <span className="text-[10px] text-amber-700">({waveDelta >= 0 ? `+${waveDelta.toFixed(1)}` : waveDelta.toFixed(1)}m)</span>
+                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
+                  <span className="font-medium text-slate-700">Wave Height:</span>
+                  <span className="font-semibold text-slate-900">
+                    {activeBaseline.significantWaveHeightM}m &rarr; {currentWave.toFixed(1)}m <span className="text-[11px] font-semibold text-amber-700">({waveDelta >= 0 ? `+${waveDelta.toFixed(1)}` : waveDelta.toFixed(1)}m)</span>
                   </span>
                 </div>
 
                 {/* Wind Diff */}
-                <div className="bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="font-bold text-slate-700">Wind Speed:</span>
-                  <span className="font-extrabold text-indigo-900">
-                    {activeBaseline.windSpeedKmph} &rarr; {currentWind} km/h <span className="text-[10px] text-amber-700">({windDelta >= 0 ? `+${windDelta}` : windDelta} km/h)</span>
+                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
+                  <span className="font-medium text-slate-700">Wind Speed:</span>
+                  <span className="font-semibold text-slate-900">
+                    {activeBaseline.windSpeedKmph} &rarr; {currentWind} km/h <span className="text-[11px] font-semibold text-amber-700">({windDelta >= 0 ? `+${windDelta}` : windDelta} km/h)</span>
                   </span>
                 </div>
 
                 {/* SST Diff */}
-                <div className="bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="font-bold text-slate-700">SST Temp:</span>
-                  <span className="font-extrabold text-indigo-900">
-                    {activeBaseline.seaSurfaceTemperatureC}°C &rarr; {currentSST.toFixed(1)}°C <span className="text-[10px] text-rose-700">({sstDelta >= 0 ? `+${sstDelta.toFixed(1)}` : sstDelta.toFixed(1)}°C)</span>
+                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
+                  <span className="font-medium text-slate-700">Sea Surface Temp:</span>
+                  <span className="font-semibold text-slate-900">
+                    {activeBaseline.seaSurfaceTemperatureC}°C &rarr; {currentSST.toFixed(1)}°C <span className="text-[11px] font-semibold text-slate-600">({sstDelta >= 0 ? `+${sstDelta.toFixed(1)}` : sstDelta.toFixed(1)}°C)</span>
                   </span>
                 </div>
 
                 {/* Current Diff */}
-                <div className="bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="font-bold text-slate-700">Current Speed:</span>
-                  <span className="font-extrabold text-indigo-900">
-                    {activeBaseline.surfaceCurrentSpeedMs} &rarr; {currentSpeed.toFixed(2)} m/s <span className="text-[10px] text-sky-700">({currentDelta >= 0 ? `+${currentDelta.toFixed(2)}` : currentDelta.toFixed(2)} m/s)</span>
+                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between">
+                  <span className="font-medium text-slate-700">Surface Current:</span>
+                  <span className="font-semibold text-slate-900">
+                    {activeBaseline.surfaceCurrentSpeedMs} &rarr; {currentSpeed.toFixed(2)} m/s <span className="text-[11px] font-semibold text-slate-600">({currentDelta >= 0 ? `+${currentDelta.toFixed(2)}` : currentDelta.toFixed(2)} m/s)</span>
                   </span>
                 </div>
 
                 {/* Chlorophyll Diff */}
-                <div className="bg-indigo-50/70 border border-indigo-100 p-2.5 rounded-xl flex items-center justify-between col-span-1 sm:col-span-2">
-                  <span className="font-bold text-slate-700">Chlorophyll Conc.:</span>
-                  <span className="font-extrabold text-indigo-900">
-                    {activeBaseline.chlorophyllMgM3} &rarr; {currentChlorophyll.toFixed(2)} mg/m³ <span className="text-[10px] text-emerald-700">({chlorophyllDelta >= 0 ? `+${chlorophyllDelta.toFixed(2)}` : chlorophyllDelta.toFixed(2)} mg/m³)</span>
+                <div className="bg-slate-50 border border-slate-200 p-2.5 rounded-lg flex items-center justify-between col-span-1 sm:col-span-2">
+                  <span className="font-medium text-slate-700">Chlorophyll Conc.:</span>
+                  <span className="font-semibold text-slate-900">
+                    {activeBaseline.chlorophyllMgM3} &rarr; {currentChlorophyll.toFixed(2)} mg/m³ <span className="text-[11px] font-semibold text-emerald-700">({chlorophyllDelta >= 0 ? `+${chlorophyllDelta.toFixed(2)}` : chlorophyllDelta.toFixed(2)} mg/m³)</span>
                   </span>
                 </div>
               </div>
             ) : (
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-500 text-center font-medium">
-                Baseline parameters active. Move sliders on the left or select a <strong>Quick Demo Scenario</strong> above to simulate environmental shifts.
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-500 text-center font-medium">
+                Baseline environmental conditions active. Adjust sliders on the left or select a standard scenario to simulate shifts.
               </div>
             )}
           </div>
 
-          {/* SECTION 2: COMPOUND EFFECT DEMO HIGHLIGHT CARD */}
-          {isModified && (
-            <div className="bg-amber-50 border border-amber-300 rounded-2xl p-4 space-y-2 shadow-sm">
-              <div className="text-xs font-black text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
-                <Zap className="w-4 h-4 text-amber-600" /> Multi-Factor Compound Impact Calculation
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center my-2">
-                <div className="bg-white p-2 rounded-xl border border-amber-200">
-                  <div className="text-[9px] font-bold text-slate-400 uppercase">Wave Risk Shift</div>
-                  <div className="text-xs font-extrabold text-ocean-700">+{waveRiskShift} Pts</div>
-                </div>
-                <div className="bg-white p-2 rounded-xl border border-amber-200">
-                  <div className="text-[9px] font-bold text-slate-400 uppercase">Wind Risk Shift</div>
-                  <div className="text-xs font-extrabold text-amber-700">+{windRiskShift} Pts</div>
-                </div>
-                <div className="bg-white p-2 rounded-xl border border-amber-200">
-                  <div className="text-[9px] font-bold text-slate-400 uppercase">Current Risk Shift</div>
-                  <div className="text-xs font-extrabold text-sky-700">+{currentRiskShift} Pts</div>
-                </div>
-                <div className="bg-white p-2 rounded-xl border border-amber-200">
-                  <div className="text-[9px] font-bold text-slate-400 uppercase">Total Shift</div>
-                  <div className="text-xs font-extrabold text-rose-700">+{totalRiskShift} Pts</div>
-                </div>
-              </div>
-              <p className="text-xs text-amber-900 leading-relaxed font-medium bg-white/80 p-2.5 rounded-xl border border-amber-200">
-                Multiple environmental shifts combine proportionally: Wave delta (+{waveDelta.toFixed(1)}m), Wind delta (+{windDelta} km/h), and Current delta (+{currentDelta.toFixed(2)} m/s) elevate total risk score from <strong>{baseRiskScore}/100 ({activeBaseline.significantWaveHeightM > 1.5 ? 'CAUTION' : 'SAFE'})</strong> to <strong>{simulatedRiskScore}/100 ({simulatedRiskBand})</strong>.
-              </p>
-            </div>
-          )}
-
-          {/* SECTION 3: RISK ASSESSMENT & FISHING PRODUCTIVITY PROMINENT CARDS */}
+          {/* FLOW STEP 2: RESULT (OPERATIONAL RISK & PRODUCTIVITY) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
-            {/* CARD 1: RISK ASSESSMENT */}
-            <div className={`p-4 rounded-2xl border shadow-sm space-y-3 flex flex-col justify-between ${
-              simulatedRiskBand === 'SAFE' ? 'bg-emerald-50/70 border-emerald-200' : simulatedRiskBand === 'CAUTION' ? 'bg-amber-50/70 border-amber-200' : 'bg-rose-50/70 border-rose-200'
-            }`}>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1">
-                    <ShieldAlert className="w-3.5 h-3.5 text-slate-800" /> Risk Assessment
-                  </div>
-                  <span className={`text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full border ${
-                    simulatedRiskBand === 'SAFE' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : simulatedRiskBand === 'CAUTION' ? 'bg-amber-100 text-amber-800 border-amber-300' : 'bg-rose-100 text-rose-800 border-rose-300'
+            {/* Operational Risk Card */}
+            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm space-y-2 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <ShieldAlert className="w-3.5 h-3.5 text-slate-600" /> Operational Risk Index
+                  </span>
+                  <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${
+                    simulatedRiskBand === 'SAFE' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : simulatedRiskBand === 'CAUTION' ? 'bg-amber-50 text-amber-800 border-amber-200' : 'bg-rose-50 text-rose-800 border-rose-200'
                   }`}>
                     {simulatedRiskBand}
                   </span>
                 </div>
 
                 <div className="flex items-baseline gap-2 pt-1">
-                  <div className="text-3xl font-black text-slate-900 leading-none">
-                    {simulatedRiskScore}<span className="text-xs font-bold text-slate-500">/100</span>
-                  </div>
+                  <span className="text-3xl font-extrabold text-slate-900 leading-none">
+                    {simulatedRiskScore}<span className="text-xs font-normal text-slate-400">/100</span>
+                  </span>
                   {isModified && (
-                    <div className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                      <span className="line-through">{baseRiskScore}/100</span>
-                      <span className={simulatedRiskScore > baseRiskScore ? 'text-rose-600 font-extrabold' : 'text-emerald-600 font-extrabold'}>
-                        ({simulatedRiskScore > baseRiskScore ? `+${simulatedRiskScore - baseRiskScore}` : simulatedRiskScore - baseRiskScore} pts)
-                      </span>
-                    </div>
+                    <span className="text-xs text-slate-500 font-medium">
+                      Baseline {baseRiskScore}/100 ({simulatedRiskScore >= baseRiskScore ? `+${simulatedRiskScore - baseRiskScore}` : simulatedRiskScore - baseRiskScore} pts)
+                    </span>
                   )}
                 </div>
 
-                <p className="text-xs text-slate-700 leading-relaxed font-medium pt-1">
-                  {simulatedRiskBand === 'SAFE' 
-                    ? `Marine conditions at ${selectedPort} are safe with low wave and wind hazards.` 
-                    : simulatedRiskBand === 'CAUTION'
-                    ? `Moderate sea hazard at ${selectedPort}. Elevated waves (${currentWave.toFixed(1)}m) require caution for small craft.`
-                    : `HIGH DANGER WARNING at ${selectedPort}. Severe wave and wind stress pose significant navigation hazard.`}
+                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                  {cleanText(
+                    simulatedRiskBand === 'SAFE' 
+                      ? `Marine conditions at ${selectedPort} are safe with minimal wave and wind stress.` 
+                      : simulatedRiskBand === 'CAUTION'
+                      ? `Elevated hazard at ${selectedPort}. Wave swell (${currentWave.toFixed(1)}m) requires caution for small craft.`
+                      : `High operational hazard at ${selectedPort}. Elevated waves and wind force pose severe navigation hazard.`
+                  )}
                 </p>
               </div>
             </div>
 
-            {/* CARD 2: FISHING PRODUCTIVITY */}
-            <div className="p-4 rounded-2xl border border-ocean-200 bg-ocean-50/70 shadow-sm space-y-3 flex flex-col justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="text-[11px] font-black uppercase tracking-wider text-ocean-900 flex items-center gap-1">
-                    <Target className="w-3.5 h-3.5 text-ocean-600" /> Fishing Productivity
-                  </div>
-                  <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-ocean-100 text-ocean-800 border border-ocean-300">
-                    {simulatedProdScore > 70 ? 'High' : simulatedProdScore > 40 ? 'Moderate' : 'Low'} Yield
+            {/* Pelagic Yield Card */}
+            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm space-y-2 flex flex-col justify-between">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <Target className="w-3.5 h-3.5 text-slate-600" /> Pelagic Yield Index
+                  </span>
+                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200">
+                    {simulatedProdScore > 70 ? 'High Potential' : simulatedProdScore > 40 ? 'Moderate Potential' : 'Low Potential'}
                   </span>
                 </div>
 
                 <div className="flex items-baseline gap-2 pt-1">
-                  <div className="text-3xl font-black text-ocean-700 leading-none">
-                    {simulatedProdScore}<span className="text-xs font-bold text-slate-500">/100</span>
-                  </div>
+                  <span className="text-3xl font-extrabold text-slate-900 leading-none">
+                    {simulatedProdScore}<span className="text-xs font-normal text-slate-400">/100</span>
+                  </span>
                   {isModified && (
-                    <div className="text-xs font-bold text-slate-500 flex items-center gap-1">
-                      <span className="line-through">{baseProdScore}/100</span>
-                      <span className={simulatedProdScore < baseProdScore ? 'text-amber-700 font-extrabold' : 'text-emerald-700 font-extrabold'}>
-                        ({simulatedProdScore < baseProdScore ? `${simulatedProdScore - baseProdScore}` : `+${simulatedProdScore - baseProdScore}`} pts)
-                      </span>
-                    </div>
+                    <span className="text-xs text-slate-500 font-medium">
+                      Baseline {baseProdScore}/100 ({simulatedProdScore >= baseProdScore ? `+${simulatedProdScore - baseProdScore}` : simulatedProdScore - baseProdScore} pts)
+                    </span>
                   )}
                 </div>
 
-                <p className="text-xs text-slate-700 leading-relaxed font-medium pt-1">
-                  Chlorophyll concentration ({currentChlorophyll.toFixed(2)} mg/m³) and SST ({currentSST.toFixed(1)}°C) govern pelagic biological productivity index.
+                <p className="text-xs text-slate-600 leading-relaxed pt-1">
+                  {cleanText(`Chlorophyll (${currentChlorophyll.toFixed(2)} mg/m³) and thermal structure (${currentSST.toFixed(1)}°C) govern pelagic schooling potential.`)}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* SECTION 4: STEP-BY-STEP CAUSAL CHAIN ADVISORY */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-            <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-              <ArrowRight className="w-4 h-4 text-ocean-600" /> Simulation Causal Chain & Vessel Advisories
-            </h3>
+          {/* FLOW STEP 3: WHAT IT AFFECTS (CAUSAL CHAIN & VESSEL ADVISORIES) */}
+          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-3">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-2.5">
+              <ArrowRight className="w-4 h-4 text-slate-600" /> 2. Operational Impact & Vessel Limits
+            </h2>
 
             <div className="space-y-2 text-xs">
-              {/* Step 1: Env Change */}
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-indigo-600"></span>
-                  Step 1 — Environmental Change:
+              {/* Step 1: Environmental Vector Shift */}
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+                <div className="font-semibold text-slate-900 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-slate-700"></span>
+                  Environmental Vector Shift:
                 </div>
-                <div className="text-slate-600 pl-3.5">
-                  Wave = {currentWave.toFixed(1)}m | Wind = {currentWind} km/h | SST = {currentSST.toFixed(1)}°C | Current = {currentSpeed.toFixed(2)} m/s | Chlorophyll = {currentChlorophyll.toFixed(2)} mg/m³
-                </div>
-              </div>
-
-              {/* Step 2: Risk Shift */}
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-                  Step 2 — Risk & Productivity Shift:
-                </div>
-                <div className="text-slate-600 pl-3.5">
-                  Operational Risk: {baseRiskScore} &rarr; {simulatedRiskScore}/100 ({simulatedRiskBand}) | Productivity Score: {baseProdScore} &rarr; {simulatedProdScore}/100
+                <div className="text-slate-600 pl-4">
+                  Wave: {currentWave.toFixed(1)}m | Wind: {currentWind} km/h | SST: {currentSST.toFixed(1)}°C | Current: {currentSpeed.toFixed(2)} m/s | Chlorophyll: {currentChlorophyll.toFixed(2)} mg/m³
                 </div>
               </div>
 
-              {/* Step 3: Vessel Impact */}
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <Anchor className="w-3.5 h-3.5 text-slate-700" />
-                  Step 3 — Vessel Safety Impact:
+              {/* Step 2: Risk & Yield Shift */}
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+                <div className="font-semibold text-slate-900 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-slate-700"></span>
+                  Risk & Yield Shift:
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pl-3.5 pt-0.5">
-                  <div className="bg-white p-2 rounded-lg border border-slate-200">
-                    <span className="font-bold block text-slate-800">Non-Motorized Canoes:</span>
-                    <span className={currentWave > 0.5 ? 'text-rose-700 font-extrabold' : 'text-emerald-700 font-bold'}>
-                      {currentWave > 0.5 ? '⛔ PROHIBITED (>0.5m limit)' : '🟢 SAFE'}
+                <div className="text-slate-600 pl-4">
+                  Operational Risk Index: {baseRiskScore} &rarr; {simulatedRiskScore}/100 ({simulatedRiskBand}) | Yield Index: {baseProdScore} &rarr; {simulatedProdScore}/100
+                </div>
+              </div>
+
+              {/* Step 3: Vessel Threshold Advisories */}
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                <div className="font-semibold text-slate-900 flex items-center gap-2">
+                  <Anchor className="w-3.5 h-3.5 text-slate-600" />
+                  Vessel Threshold Advisories:
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pl-4">
+                  <div className="bg-white p-2.5 rounded border border-slate-200">
+                    <span className="font-semibold block text-slate-800">Canoes (Non-Motorized):</span>
+                    <span className={currentWave > 0.5 ? 'text-rose-700 font-bold' : 'text-emerald-700 font-semibold'}>
+                      {currentWave > 0.5 ? 'Prohibited (>0.5m limit)' : 'Safe Operations'}
                     </span>
                   </div>
-                  <div className="bg-white p-2 rounded-lg border border-slate-200">
-                    <span className="font-bold block text-slate-800">Motorized Boats (&lt;12m):</span>
-                    <span className={currentWave > 1.4 ? 'text-amber-700 font-extrabold' : 'text-emerald-700 font-bold'}>
-                      {currentWave > 1.4 ? '🟡 CAUTION (Nearshore only)' : '🟢 SAFE'}
+                  <div className="bg-white p-2.5 rounded border border-slate-200">
+                    <span className="font-semibold block text-slate-800">Motorized Boats (&lt;12m):</span>
+                    <span className={currentWave > 1.4 ? 'text-amber-700 font-bold' : 'text-emerald-700 font-semibold'}>
+                      {currentWave > 1.4 ? 'Caution (Nearshore only)' : 'Safe Operations'}
                     </span>
                   </div>
-                  <div className="bg-white p-2 rounded-lg border border-slate-200">
-                    <span className="font-bold block text-slate-800">Mechanized Trawlers:</span>
-                    <span className={currentWave > 2.4 ? 'text-rose-700 font-extrabold' : 'text-emerald-700 font-bold'}>
-                      {currentWave > 2.4 ? '🟡 EXTREME CAUTION' : '🟢 SAFE'}
+                  <div className="bg-white p-2.5 rounded border border-slate-200">
+                    <span className="font-semibold block text-slate-800">Trawlers (&gt;12m):</span>
+                    <span className={currentWave > 2.4 ? 'text-rose-700 font-bold' : 'text-emerald-700 font-semibold'}>
+                      {currentWave > 2.4 ? 'Extreme Caution Required' : 'Safe Operations'}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Step 4: Fishing Impact */}
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                  <Target className="w-3.5 h-3.5 text-emerald-600" />
-                  Step 4 — Practical Fishing Impact:
+              {/* Step 4: Practical Fishery Advisory */}
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+                <div className="font-semibold text-slate-900 flex items-center gap-2">
+                  <Target className="w-3.5 h-3.5 text-slate-600" />
+                  Practical Fishing Operational Advisory:
                 </div>
-                <div className="text-slate-600 pl-3.5">
-                  {currentWave > 1.8 
-                    ? "Rough surface swell makes purse-seine and gillnet casting hazardous. High drift forces gear off target."
-                    : currentChlorophyll > 0.7 
-                    ? "High chlorophyll concentration encourages pelagic schooling along thermal fronts."
-                    : "Normal sea state allows standard net deployment with minimal drift."}
+                <div className="text-slate-600 pl-4 leading-relaxed">
+                  {cleanText(
+                    currentWave > 1.8 
+                      ? "Rough surface swell makes purse-seine and gillnet deployment hazardous. Vessel drift requires increased engine power."
+                      : currentChlorophyll > 0.7 
+                      ? "Favorable chlorophyll concentration indicates potential pelagic fish aggregation near thermal fronts."
+                      : "Standard sea conditions allow regular fishing net deployment with predictable drift forces."
+                  )}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* SECTION 5: LIVE-UPDATING RECHARTS VISUALIZATIONS (3 Charts) */}
-          <div className="space-y-6 pt-2">
-            <div className="text-xs font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-              <BarChart2 className="w-4 h-4 text-ocean-600" /> Live Simulation Interactive Charts
-            </div>
+          {/* FLOW STEP 4: VISUALIZATIONS (3 CLEAN RECHARTS) */}
+          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-5">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-2.5">
+              <BarChart2 className="w-4 h-4 text-slate-600" /> 3. Environmental & Performance Charts
+            </h2>
 
             {/* CHART 1: PARAMETER SHIFT BAR CHART */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <BarChart2 className="w-4 h-4 text-indigo-600" /> 1. Parameter Baseline vs Simulated Shift
-                </div>
-                <span className="text-[10px] text-slate-500 font-semibold bg-slate-100 px-2 py-0.5 rounded">Bar Chart</span>
+            <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+                <span>1. Environmental Parameter Baseline vs Simulated Shift</span>
+                <span className="text-[10px] text-slate-400 font-normal">Bar Chart</span>
               </div>
-              <div className="h-60 w-full pt-2">
+              <div className="h-56 w-full pt-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={barChartPayload} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="metric" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <XAxis dataKey="metric" tick={{ fontSize: 10, fill: '#334155' }} />
                     <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
                     <Tooltip content={<CustomRechartsTooltip />} />
-                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
-                    <Bar dataKey="Baseline" fill="#10b981" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Simulated" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                    <Bar dataKey="Baseline" fill="#64748b" radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="Simulated" fill="#0284c7" radius={[3, 3, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
             {/* CHART 2: VESSEL OPERATING LIMITS CHART */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <ShieldAlert className="w-4 h-4 text-rose-600" /> 2. Vessel Wave Limit vs Simulated Wave Stress
-                </div>
-                <span className="text-[10px] text-slate-500 font-semibold bg-slate-100 px-2 py-0.5 rounded">Limit Gauge</span>
+            <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+                <span>2. Wave Height vs Safe Vessel Operating Limits</span>
+                <span className="text-[10px] text-slate-400 font-normal">Threshold Chart</span>
               </div>
-              <div className="h-60 w-full pt-2">
+              <div className="h-56 w-full pt-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={vesselLimitPayload} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="vessel" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <XAxis dataKey="vessel" tick={{ fontSize: 10, fill: '#334155' }} />
                     <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
                     <Tooltip content={<CustomRechartsTooltip />} />
-                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
-                    <Bar dataKey="WaveLimit" name="Wave Limit (m)" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="CurrentWave" name={`Simulated Wave (${currentWave.toFixed(1)}m)`} fill="#ef4444" radius={[4, 4, 0, 0]} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                    <Bar dataKey="WaveLimit" name="Safe Wave Limit (m)" fill="#cbd5e1" radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="CurrentWave" name={`Simulated Wave (${currentWave.toFixed(1)}m)`} fill="#dc2626" radius={[3, 3, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
             {/* CHART 3: RADAR PROFILE OVERLAY */}
-            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <Cpu className="w-4 h-4 text-emerald-600" /> 3. Environmental Safety & Productivity Radar Overlay
-                </div>
-                <span className="text-[10px] text-slate-500 font-semibold bg-slate-100 px-2 py-0.5 rounded">Radar Chart</span>
+            <div className="bg-slate-50/70 p-3.5 rounded-lg border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between text-xs font-semibold text-slate-800">
+                <span>3. Environmental Safety Profile Overlay</span>
+                <span className="text-[10px] text-slate-400 font-normal">Radar Chart</span>
               </div>
-              <div className="h-64 w-full">
+              <div className="h-60 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="65%" data={radarPayload}>
                     <PolarGrid stroke="#cbd5e1" />
-                    <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: '#334155' }} />
                     <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                    <Radar name="Baseline Profile" dataKey="Baseline" stroke="#10b981" fill="#10b981" fillOpacity={0.25} />
-                    <Radar name="Simulated Scenario" dataKey="Simulated" stroke="#0284c7" fill="#0284c7" fillOpacity={0.35} />
+                    <Radar name="Baseline State" dataKey="Baseline" stroke="#475569" fill="#475569" fillOpacity={0.2} />
+                    <Radar name="Simulated Scenario" dataKey="Simulated" stroke="#0284c7" fill="#0284c7" fillOpacity={0.3} />
                     <Tooltip content={<CustomRechartsTooltip />} />
                     <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
                   </RadarChart>
@@ -786,16 +751,16 @@ export function DigitalTwinUI() {
             </div>
           </div>
 
-          {/* SECTION 6: MAP INTEGRATION */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                <Navigation className="w-4 h-4 text-ocean-600" /> Interactive Simulated Location Map
-              </h3>
-              <span className="text-[10px] font-bold text-slate-500">{selectedPort}</span>
+          {/* FLOW STEP 5: SECTOR MAP */}
+          <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-slate-600" /> Interactive Simulated Sector Map
+              </h2>
+              <span className="text-xs text-slate-500 font-medium">{selectedPort}</span>
             </div>
 
-            <div className="h-56 rounded-xl overflow-hidden border border-slate-200 relative shadow-inner bg-slate-100">
+            <div className="h-56 rounded-lg overflow-hidden border border-slate-200 relative shadow-inner bg-slate-100">
               {coords ? (
                 <MapComponent 
                   center={coords}
@@ -803,16 +768,13 @@ export function DigitalTwinUI() {
                   zones={[{ id: "twin-map-loc", center: coords, radius: 3000, type: simulatedRiskBand === 'SAFE' ? "safe" : "danger", label: selectedPort }]}
                 />
               ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-ocean-950 text-white p-6 flex flex-col justify-between">
+                <div className="absolute inset-0 bg-slate-800 text-white p-5 flex flex-col justify-between">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></div>
-                      <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">{selectedPort} Marine Grid</span>
-                    </div>
+                    <span className="text-xs font-semibold text-slate-300 uppercase tracking-wide">{selectedPort} Sector Grid</span>
                   </div>
                   <div className="space-y-1 my-auto">
-                    <div className="text-lg font-black text-white">{selectedPort} Sector</div>
-                    <p className="text-xs text-slate-300">Digital twin simulation monitoring active wave, wind, and SST vectors.</p>
+                    <div className="text-base font-bold text-white">{selectedPort} Port Monitoring Sector</div>
+                    <p className="text-xs text-slate-300">Environmental vectors and operational risk simulation active.</p>
                   </div>
                 </div>
               )}
