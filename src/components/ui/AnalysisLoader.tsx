@@ -1,82 +1,125 @@
 import { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
+import { Sparkles, Compass, ShieldAlert, Cpu, BarChart3 } from "lucide-react";
 
-export type AnalysisType = "route" | "safety" | "pfz" | "weather" | "trip" | "general";
+export type AnalysisType = "route" | "safety" | "pfz" | "weather" | "trip" | "research" | "digital_twin" | "alert" | "general";
 
 interface AnalysisLoaderProps {
   type: AnalysisType;
-  duration: number;
+  duration?: number;
 }
 
-export function AnalysisLoader({ type, duration }: AnalysisLoaderProps) {
+export function AnalysisLoader({ type, duration = 2400 }: AnalysisLoaderProps) {
   const [step, setStep] = useState(0);
-  
-  const messages = {
+
+  const messages: Record<AnalysisType, string[]> = {
     safety: [
-      "Fetching sea conditions...",
-      "Checking wind and wave conditions...",
-      "Evaluating safety limits...",
-      "Calculating your risk score...",
-      "Preparing your recommendation..."
+      "Checking weather and wave conditions…",
+      "Calculating risk score…",
+      "Preparing safety assessment…"
     ],
     pfz: [
-      "Checking nearby fishing zones...",
-      "Analysing ocean conditions...",
-      "Evaluating fishing potential...",
-      "Comparing safety conditions...",
-      "Selecting the best zone..."
-    ],
-    weather: [
-      "Fetching weather conditions...",
-      "Checking wind forecast...",
-      "Checking sea state...",
-      "Evaluating fishing conditions..."
+      "Analyzing marine indicators…",
+      "Checking fishing potential…",
+      "Finding suitable zones…"
     ],
     route: [
-      "Understanding your destination...",
-      "Fetching sea and weather conditions...",
-      "Mapping nearby risk zones...",
-      "Evaluating possible routes...",
-      "Comparing route safety...",
-      "Optimising the safest path...",
-      "Checking the final route...",
-      "Preparing your route..."
+      "Analyzing route conditions…",
+      "Calculating risk along the route…",
+      "Preparing safest route…"
+    ],
+    research: [
+      "Comparing marine conditions…",
+      "Analyzing the differences…",
+      "Preparing visualization…"
+    ],
+    digital_twin: [
+      "Applying simulated changes…",
+      "Recalculating impacts…",
+      "Preparing scenario result…"
+    ],
+    alert: [
+      "Scanning for hazards…",
+      "Checking safety thresholds…",
+      "Preparing warning…"
+    ],
+    weather: [
+      "Checking weather and wave conditions…",
+      "Calculating risk score…",
+      "Preparing safety assessment…"
     ],
     trip: [
-      "Preparing your trip analysis...",
-      "Analysing Day 1 conditions...",
-      "Checking Day 2 conditions...",
-      "Checking Day 3 conditions...",
-      "Evaluating fishing potential...",
-      "Comparing daily risk...",
-      "Calculating the overall trip recommendation...",
-      "Preparing the safest plan..."
+      "Analyzing route conditions…",
+      "Calculating risk along the route…",
+      "Preparing safest route…"
     ],
     general: [
-      "Fetching the latest conditions...",
-      "Making sure you get the best answer..."
+      "Analyzing marine conditions…",
+      "Finding the most suitable option…",
+      "Preparing the best answer…"
     ]
   };
 
   const steps = messages[type] || messages.general;
-  
+
   useEffect(() => {
-    // Determine interval time to evenly distribute messages over the duration.
-    // Subtract a tiny bit so we hit the last message before the duration ends.
-    const intervalTime = (duration - 500) / steps.length;
-    
+    setStep(0);
+    const stepDuration = Math.max(600, Math.floor(duration / steps.length));
     const interval = setInterval(() => {
-      setStep(s => (s < steps.length - 1 ? s + 1 : s));
-    }, intervalTime);
-    
+      setStep((s) => (s < steps.length - 1 ? s + 1 : s));
+    }, stepDuration);
+
     return () => clearInterval(interval);
-  }, [duration, steps.length]);
+  }, [duration, steps.length, type]);
+
+  const progressPercent = Math.min(100, Math.round(((step + 1) / steps.length) * 100));
+
+  const getIcon = () => {
+    switch (type) {
+      case "research":
+        return <BarChart3 className="w-4 h-4 text-ocean-600 animate-pulse" />;
+      case "digital_twin":
+        return <Cpu className="w-4 h-4 text-indigo-600 animate-pulse" />;
+      case "alert":
+        return <ShieldAlert className="w-4 h-4 text-amber-600 animate-pulse" />;
+      case "route":
+      case "trip":
+        return <Compass className="w-4 h-4 text-ocean-600 animate-spin" style={{ animationDuration: '4s' }} />;
+      default:
+        return <Sparkles className="w-4 h-4 text-ocean-600 animate-pulse" />;
+    }
+  };
 
   return (
-    <div className="w-full max-w-3xl mx-auto flex justify-start animate-in fade-in slide-in-from-bottom-2">
-      <div className="bg-white border border-slate-200 py-3 px-4 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-3">
-        <Loader2 className="w-5 h-5 text-ocean-600 animate-spin" />
-        <span className="text-sm text-slate-700 font-medium animate-in fade-in zoom-in-95 duration-300" key={step}>{steps[step]}</span>
+    <div className="w-full max-w-3xl mx-auto flex justify-start animate-in fade-in duration-200">
+      <div className="bg-white border border-slate-200/80 rounded-2xl rounded-tl-xs px-4 py-3 shadow-sm min-w-[280px] max-w-md relative overflow-hidden">
+        <div className="flex items-center gap-3">
+          {/* Subtle animated ocean pulse dot */}
+          <div className="relative flex items-center justify-center shrink-0">
+            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-ocean-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-ocean-600"></span>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <span
+              key={step}
+              className="text-xs font-semibold text-slate-700 block truncate animate-in fade-in slide-in-from-bottom-1 duration-200"
+            >
+              {steps[step]}
+            </span>
+          </div>
+
+          <div className="shrink-0 text-slate-400">
+            {getIcon()}
+          </div>
+        </div>
+
+        {/* Subtle bottom progress bar line */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-slate-100">
+          <div
+            className="h-full bg-ocean-500 transition-all duration-500 ease-out"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
       </div>
     </div>
   );

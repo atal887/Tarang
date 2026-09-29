@@ -112,7 +112,7 @@ export function Chat() {
     if (activeMode === "Research") {
       const demoResearcherScenario = findDemoResearcherScenario(text);
       if (demoResearcherScenario) {
-        setAnalysis({ active: true, type: "general", duration: 400 });
+        setAnalysis({ active: true, type: "research", duration: 2400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
           isProcessingMessageRef.current = false;
@@ -124,7 +124,7 @@ export function Chat() {
             intent: null,
             payload: demoResearcherScenario
           });
-        }, 400);
+        }, 2400);
         return;
       }
 
@@ -132,7 +132,7 @@ export function Chat() {
       const isComparisonQuery = qLower.includes("compare") || qLower.includes(" vs ") || qLower.includes("versus") || qLower.includes("difference");
       if (isComparisonQuery) {
         const detectedLocs = extractLocationsFromQuery(text);
-        setAnalysis({ active: true, type: "general", duration: 400 });
+        setAnalysis({ active: true, type: "research", duration: 2400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
           isProcessingMessageRef.current = false;
@@ -183,13 +183,13 @@ export function Chat() {
               intent: null
             });
           }
-        }, 400);
+        }, 2400);
         return;
       }
     } else if (activeMode === "Alert") {
       const demoAlertScenario = findDemoAlertScenario(text);
       if (demoAlertScenario) {
-        setAnalysis({ active: true, type: "safety", duration: 400 });
+        setAnalysis({ active: true, type: "alert", duration: 2400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
           isProcessingMessageRef.current = false;
@@ -201,13 +201,13 @@ export function Chat() {
             intent: null,
             payload: demoAlertScenario
           });
-        }, 400);
+        }, 2400);
         return;
       }
     } else if (activeMode === "Digital_Twin") {
       const demoDigitalTwinScenario = findDemoDigitalTwinScenario(text);
       if (demoDigitalTwinScenario) {
-        setAnalysis({ active: true, type: "general", duration: 400 });
+        setAnalysis({ active: true, type: "digital_twin", duration: 2400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
           isProcessingMessageRef.current = false;
@@ -219,14 +219,18 @@ export function Chat() {
             intent: null,
             payload: demoDigitalTwinScenario
           });
-        }, 400);
+        }, 2400);
         return;
       }
     } else if (activeMode === "Normal") {
       // Fisherman / Default Mode
       const demoScenario = findDemoScenario(text);
       if (demoScenario) {
-        setAnalysis({ active: true, type: "general", duration: 400 });
+        let scType: AnalysisType = "safety";
+        if (demoScenario.id === 5 || demoScenario.id === 6 || demoScenario.id === 12) scType = "pfz";
+        else if (demoScenario.id === 9 || demoScenario.id === 10 || demoScenario.id === 13) scType = "route";
+
+        setAnalysis({ active: true, type: scType, duration: 2400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
           isProcessingMessageRef.current = false;
@@ -276,15 +280,21 @@ export function Chat() {
               decision: {} as any
             });
           }
-        }, 400);
+        }, 2400);
         return;
       }
     }
 
     let type: AnalysisType = "general";
     
-    if (qLower.includes("3-day") || qLower.includes("trip")) {
-       type = "trip";
+    if (activeMode === "Research") {
+      type = "research";
+    } else if (activeMode === "Alert") {
+      type = "alert";
+    } else if (activeMode === "Digital_Twin") {
+      type = "digital_twin";
+    } else if (qLower.includes("3-day") || qLower.includes("trip")) {
+       type = "route";
     } else if (qLower.includes("route")) {
        type = "route";
     } else if (qLower.includes("safe")) {
@@ -292,10 +302,10 @@ export function Chat() {
     } else if (qLower.includes("pfz") || qLower.includes("zone")) {
        type = "pfz";
     } else if (qLower.includes("weather") || qLower.includes("wind") || qLower.includes("wave") || qLower.includes("cyclone")) {
-       type = "weather";
+       type = "safety";
     }
 
-    const duration = 400; // Fast UI response time
+    const duration = 2400; // 2.4s rolling animation duration
 
     setAnalysis({ active: true, type, duration });
 
