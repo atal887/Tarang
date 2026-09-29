@@ -83,6 +83,13 @@ export function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, analysis.active]);
 
+  useEffect(() => {
+    // Reset transient state when mode switches so responses/states do not leak across modes
+    setAnalysis({ active: false, type: null, duration: 0 });
+    setActiveMapLocation(null);
+    isProcessingMessageRef.current = false;
+  }, [activeMode]);
+
   const handleUserMessage = (text: string) => {
     if (!text.trim()) return;
     if (analysis.active || isProcessingMessageRef.current) return; // Prevent duplicate submissions
@@ -100,15 +107,9 @@ export function Chat() {
     }
 
     const qLower = text.toLowerCase();
-    const isComparisonQuery = qLower.includes("compare") || qLower.includes(" vs ") || qLower.includes("versus") || qLower.includes("difference");
 
-    // Switch to Research Mode automatically if query is a comparison
-    if (isComparisonQuery && activeMode !== "Research") {
-      setActiveMode("Research");
-    }
-
-    // Researcher / Comparison Mode Handling
-    if (activeMode === "Research" || isComparisonQuery) {
+    // ── STRICT MODE ROUTING ─────────────────────────────────────────────
+    if (activeMode === "Research") {
       const demoResearcherScenario = findDemoResearcherScenario(text);
       if (demoResearcherScenario) {
         setAnalysis({ active: true, type: "general", duration: 400 });
@@ -127,7 +128,8 @@ export function Chat() {
         return;
       }
 
-      // Dynamic Location Extraction for Comparison Queries
+      // Dynamic Location Extraction for Comparison Queries in Research Mode
+      const isComparisonQuery = qLower.includes("compare") || qLower.includes(" vs ") || qLower.includes("versus") || qLower.includes("difference");
       if (isComparisonQuery) {
         const detectedLocs = extractLocationsFromQuery(text);
         setAnalysis({ active: true, type: "general", duration: 400 });
@@ -184,13 +186,9 @@ export function Chat() {
         }, 400);
         return;
       }
-    }
-
-    // Alert Mode Handling
-    const demoAlertScenario = findDemoAlertScenario(text);
-    if (activeMode === "Alert" || demoAlertScenario) {
+    } else if (activeMode === "Alert") {
+      const demoAlertScenario = findDemoAlertScenario(text);
       if (demoAlertScenario) {
-        if (activeMode !== "Alert") setActiveMode("Alert");
         setAnalysis({ active: true, type: "safety", duration: 400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
@@ -206,13 +204,9 @@ export function Chat() {
         }, 400);
         return;
       }
-    }
-
-    // Digital Twin Mode Handling
-    const demoDigitalTwinScenario = findDemoDigitalTwinScenario(text);
-    if (activeMode === "Digital_Twin" || demoDigitalTwinScenario) {
+    } else if (activeMode === "Digital_Twin") {
+      const demoDigitalTwinScenario = findDemoDigitalTwinScenario(text);
       if (demoDigitalTwinScenario) {
-        if (activeMode !== "Digital_Twin") setActiveMode("Digital_Twin");
         setAnalysis({ active: true, type: "general", duration: 400 });
         setTimeout(() => {
           setAnalysis({ active: false, type: null, duration: 0 });
@@ -228,63 +222,63 @@ export function Chat() {
         }, 400);
         return;
       }
-    }
+    } else if (activeMode === "Normal") {
+      // Fisherman / Default Mode
+      const demoScenario = findDemoScenario(text);
+      if (demoScenario) {
+        setAnalysis({ active: true, type: "general", duration: 400 });
+        setTimeout(() => {
+          setAnalysis({ active: false, type: null, duration: 0 });
+          isProcessingMessageRef.current = false;
 
-    // 0. Check for 10 static Fisherman Demo Scenarios in Normal mode
-    const demoScenario = activeMode === "Normal" ? findDemoScenario(text) : undefined;
-    if (demoScenario) {
-      setAnalysis({ active: true, type: "general", duration: 400 });
-      setTimeout(() => {
-        setAnalysis({ active: false, type: null, duration: 0 });
-        isProcessingMessageRef.current = false;
-
-        if (demoScenario.requiresPortSelection && demoScenario.ports) {
-          const isHindiQuery = /[\u0900-\u097F]/.test(demoScenario.title || text);
-          addMessage({
-            text: isHindiQuery
-              ? `आप किस बंदरगाह से जाना चाहते हैं? कृपया नीचे दिए गए बंदरगाहों में से चुनें:`
-              : `Please select the port or harbour you are departing from:`,
-            isBot: true,
-            action: "DEMO_PORT_SELECT",
-            intent: null,
-            payload: { scenarioId: demoScenario.id, ports: demoScenario.ports }
-          });
-        } else if (demoScenario.requiresConfirmation) {
-          const isHindiQuery = /[\u0900-\u097F]/.test(demoScenario.title || text);
-          addMessage({
-            text: demoScenario.confirmPrompt || (isHindiQuery ? "कृपया विवरण की पुष्टि करें:" : "Please confirm details:"),
-            isBot: true,
-            action: demoScenario.id === 12 ? "DEMO_CONFIRM_LOCATION_HI" : "DEMO_CONFIRM_TRIP_HI",
-            intent: null,
-            payload: { scenarioId: demoScenario.id }
-          });
-        } else {
-          const resp = demoScenario.getResponse();
-          addMessage({
-            text: resp.summary,
-            isBot: true,
-            action: "DEMO_RESULT",
-            intent: null,
-            payload: resp
-          });
-          const dummyCtx: ResolvedContext = {
-            locationId: "demo-loc",
-            locationName: resp.mapName || "Selected Harbour",
-            dateTime: new Date(),
-            timeDescription: "tomorrow evening",
-            boatType: profile.vesselType || "motorized",
-            inferred: { location: false, dateTime: true, boatType: true },
-            originalQuery: text
-          };
-          commitConversationContext({
-            query: text,
-            intent: demoScenario.id === 3 ? "WAVE_HEIGHT" : demoScenario.id === 4 ? "WIND_FORECAST" : demoScenario.id === 5 || demoScenario.id === 6 || demoScenario.id === 12 ? "NEAREST_PFZ" : demoScenario.id === 7 ? "SST_CONDITIONS" : demoScenario.id === 9 ? "SAFE_ROUTE" : demoScenario.id === 10 || demoScenario.id === 13 ? "TRIP_PLANNING" : "SAFETY_TOMORROW",
-            resolvedContext: dummyCtx,
-            decision: {} as any
-          });
-        }
-      }, 400);
-      return;
+          if (demoScenario.requiresPortSelection && demoScenario.ports) {
+            const isHindiQuery = /[\u0900-\u097F]/.test(demoScenario.title || text);
+            addMessage({
+              text: isHindiQuery
+                ? `आप किस बंदरगाह से जाना चाहते हैं? कृपया नीचे दिए गए बंदरगाहों में से चुनें:`
+                : `Please select the port or harbour you are departing from:`,
+              isBot: true,
+              action: "DEMO_PORT_SELECT",
+              intent: null,
+              payload: { scenarioId: demoScenario.id, ports: demoScenario.ports }
+            });
+          } else if (demoScenario.requiresConfirmation) {
+            const isHindiQuery = /[\u0900-\u097F]/.test(demoScenario.title || text);
+            addMessage({
+              text: demoScenario.confirmPrompt || (isHindiQuery ? "कृपया विवरण की पुष्टि करें:" : "Please confirm details:"),
+              isBot: true,
+              action: demoScenario.id === 12 ? "DEMO_CONFIRM_LOCATION_HI" : "DEMO_CONFIRM_TRIP_HI",
+              intent: null,
+              payload: { scenarioId: demoScenario.id }
+            });
+          } else {
+            const resp = demoScenario.getResponse();
+            addMessage({
+              text: resp.summary,
+              isBot: true,
+              action: "DEMO_RESULT",
+              intent: null,
+              payload: resp
+            });
+            const dummyCtx: ResolvedContext = {
+              locationId: "demo-loc",
+              locationName: resp.mapName || "Selected Harbour",
+              dateTime: new Date(),
+              timeDescription: "tomorrow evening",
+              boatType: profile.vesselType || "motorized",
+              inferred: { location: false, dateTime: true, boatType: true },
+              originalQuery: text
+            };
+            commitConversationContext({
+              query: text,
+              intent: demoScenario.id === 3 ? "WAVE_HEIGHT" : demoScenario.id === 4 ? "WIND_FORECAST" : demoScenario.id === 5 || demoScenario.id === 6 || demoScenario.id === 12 ? "NEAREST_PFZ" : demoScenario.id === 7 ? "SST_CONDITIONS" : demoScenario.id === 9 ? "SAFE_ROUTE" : demoScenario.id === 10 || demoScenario.id === 13 ? "TRIP_PLANNING" : "SAFETY_TOMORROW",
+              resolvedContext: dummyCtx,
+              decision: {} as any
+            });
+          }
+        }, 400);
+        return;
+      }
     }
 
     let type: AnalysisType = "general";
