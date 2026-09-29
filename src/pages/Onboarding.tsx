@@ -2,19 +2,16 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { useProfile } from "../store/profile";
-import type { Language } from "../store/profile";
-import { SUPPORTED_LANGUAGES } from "../data/languages";
 import { MapPin, Search, Loader2 } from "lucide-react";
 
 export function Onboarding() {
   const navigate = useNavigate();
-  const { setProfile } = useProfile();
+  const { profile, setProfile } = useProfile();
 
   const [step, setStep] = useState(1);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [location, setLocation] = useState("");
-  const [language, setLanguage] = useState<Language | "">("");
   const [boatType, setBoatType] = useState("");
   const [isGuestFlow, setIsGuestFlow] = useState(false);
   const [isDemoMode, setIsDemoMode] = useState(false);
@@ -254,10 +251,6 @@ export function Onboarding() {
     }
   };
 
-  const handleLanguageSubmit = () => {
-    setStep(5);
-  };
-
   const handleBoatSubmit = () => {
     console.log("Onboarding saving profile:", JSON.stringify({ location, boatType, gpsCoords }));
     setProfile({
@@ -266,7 +259,7 @@ export function Onboarding() {
       locationMode: location === "Current location" ? "gps" : "manual",
       coordinates: gpsCoords || undefined,
       vesselType: boatType,
-      language: language as Language,
+      language: profile.language || "en",
       phoneVerified: !isGuestFlow,
       isGuest: isGuestFlow,
     });
@@ -467,28 +460,6 @@ export function Onboarding() {
         )}
 
         {step === 4 && (
-          <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
-            <div>
-              <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Choose your language</h1>
-              <p className="text-slate-500">Select the language you want TARANG to use.</p>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {SUPPORTED_LANGUAGES.map(lang => (
-                <button
-                  key={lang.id}
-                  onClick={() => setLanguage(lang.id)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all ${language === lang.id ? 'border-ocean-500 bg-ocean-50 text-ocean-700 font-bold shadow-sm' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'}`}
-                >
-                  <div className="font-bold">{lang.native}</div>
-                  <div className="text-xs text-slate-500">{lang.label}</div>
-                </button>
-              ))}
-            </div>
-            <Button size="lg" className="w-full h-14 text-base mt-4" onClick={handleLanguageSubmit} disabled={!language}>Continue</Button>
-          </div>
-        )}
-
-        {step === 5 && (
           <div className="animate-in fade-in slide-in-from-right-4 space-y-6">
             <div>
               <h1 className="text-2xl font-extrabold text-slate-900 mb-2">What type of boat do you use?</h1>
