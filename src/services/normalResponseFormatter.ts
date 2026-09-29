@@ -122,9 +122,49 @@ export function formatNormalResponse(
     return response;
   }
 
+  // Handle direct parameter queries
+  const isDirectParameterQuery = intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SST_CONDITIONS', 'MLD_CONDITIONS', 'D20_CONDITIONS', 'CURRENT_COASTAL_CONDITIONS', 'CHLOROPHYLL_ZONE'].includes(i)) && 
+    !intents.some(i => ['SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'WHY_NOT_RECOMMENDED', 'WHY_RECOMMENDED', 'TRIP_PLANNING', 'BEST_FISHING_ZONE', 'NEAREST_PFZ'].includes(i));
+
+  if (isDirectParameterQuery) {
+    if (!env) return `I'm sorry, I don't have the current environmental data for ${context.locationName}.`;
+    
+    let timeStr = context.timeDescription ? context.timeDescription.charAt(0).toUpperCase() + context.timeDescription.slice(1) : "Today";
+    let response = `${timeStr} in ${context.locationName}:\n`;
+    let items = [];
+
+    if (intents.includes('WIND_FORECAST') && env.windSpeedKmph !== null) {
+      items.push(`• Wind speed: ${env.windSpeedKmph} km/h`);
+    }
+    if (intents.includes('WAVE_HEIGHT') && env.significantWaveHeightM !== null) {
+      items.push(`• Wave height: ${env.significantWaveHeightM} m`);
+    }
+    if (intents.includes('SST_CONDITIONS') && env.seaSurfaceTemperatureC !== null) {
+      items.push(`• SST: ${env.seaSurfaceTemperatureC} °C`);
+    }
+    if (intents.includes('MLD_CONDITIONS') && env.mixedLayerDepthM !== null) {
+      items.push(`• Mixed Layer Depth: ${env.mixedLayerDepthM} m`);
+    }
+    if (intents.includes('D20_CONDITIONS') && env.d20DepthM !== null) {
+      items.push(`• D20 Depth: ${env.d20DepthM} m`);
+    }
+    if (intents.includes('CURRENT_COASTAL_CONDITIONS') && env.surfaceCurrentSpeedMs !== null) {
+      items.push(`• Surface current: ${env.surfaceCurrentSpeedMs} m/s`);
+    }
+    if (intents.includes('CHLOROPHYLL_ZONE') && env.chlorophyllMgM3 !== null) {
+      items.push(`• Chlorophyll: ${env.chlorophyllMgM3} mg/m³`);
+    }
+
+    if (items.length > 0) {
+      response += items.join("\n");
+      response += "\n\nThese values are based on the forecast for " + timeStr.toLowerCase() + ".";
+      return response;
+    }
+  }
+
   // Handle direct recommendation intents
-  const isDirectRecommendation = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
-  const isGeneralWeather = intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i));
+  const isDirectRecommendation = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i)) && !isDirectParameterQuery;
+  const isGeneralWeather = intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i)) && !isDirectParameterQuery;
 
 
   const isSafe = decision.riskBand === 'SAFE';
