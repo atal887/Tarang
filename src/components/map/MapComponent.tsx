@@ -86,8 +86,8 @@ export function MapComponent({
   };
 
   return (
-    <div className={cn("w-full h-full relative z-0", className)}>
-      <MapContainer center={center} zoom={zoom} className="w-full h-full bg-slate-50" zoomControl={false}>
+    <div className={cn("w-full h-full relative z-0 min-h-[192px]", className)}>
+      <MapContainer center={center} zoom={zoom} className="w-full h-full min-h-[192px] bg-slate-50" zoomControl={false} style={{ height: '100%', width: '100%' }}>
         <TileLayer
           attribution='&copy; OpenStreetMap contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

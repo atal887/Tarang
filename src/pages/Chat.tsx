@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { type IntentCategory } from "../data/questionBank";
 import { Send, Edit2, Info, Map as MapIcon, RefreshCw, MapPin, Plus, Microscope, Cpu, AlertTriangle, ArrowRight } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { ChatBubble } from "../components/ui/ChatBubble";
@@ -139,6 +140,8 @@ export function Chat() {
         let resolvedContext: ResolvedContext;
         let isCompoundOrdinal = false;
         let ordinalTargetName = "";
+        let finalIntents: IntentCategory[] = [];
+        let inheritedIntent: IntentCategory[] | null = null;
 
         if (followUp.type === 'RESOLVED') {
           resolvedContext = followUp.context;
@@ -164,11 +167,18 @@ export function Chat() {
           ordinalTargetName = followUp.candidate.facilityName;
         } else {
           // NOT_FOLLOW_UP: standard fresh resolution
-          const intents = detectIntent(currentText, "English");
-          if (intents.includes('UNKNOWN') && intents.length === 1 && !hasExplicitLocationInQuery(currentText) && !isVesselOnlyChange(currentText)) {
-            addMessage({ text: "Could you please elaborate on your question a little more so I can help you accurately?", isBot: true, action: null, intent: null });
-            return;
+          let intents = detectIntent(currentText, "English");
+          if (intents.includes('UNKNOWN') && intents.length === 1) {
+            const lastBotMsgWithIntent = [...messages].reverse().find(m => m.isBot && m.intent && m.intent !== 'UNKNOWN');
+            if (lastBotMsgWithIntent && lastBotMsgWithIntent.intent) {
+               intents = [lastBotMsgWithIntent.intent as IntentCategory];
+               inheritedIntent = intents;
+            } else if (!hasExplicitLocationInQuery(currentText) && !isVesselOnlyChange(currentText)) {
+              addMessage({ text: "Could you please elaborate on your question a little more so I can help you accurately?", isBot: true, action: null, intent: null });
+              return;
+            }
           }
+          finalIntents = intents;
 
           if (intents.includes('LOCATION_CHECK') && !hasExplicitLocationInQuery(currentText)) {
             setPendingLocationCheck(true, currentText, "LOCATION_CHECK");
@@ -182,16 +192,19 @@ export function Chat() {
             defaultBoatType: profile.vesselType
           });
         }
+        
+        if (followUp.type !== 'NOT_FOLLOW_UP') {
+          finalIntents = detectIntent(currentText, "English");
+        }
 
-        const intents = detectIntent(currentText, "English");
-        const isLocationCheck = intents.includes("LOCATION_CHECK");
+        const isLocationCheck = finalIntents.includes("LOCATION_CHECK");
         
         addMessage({
           text: isLocationCheck ? "Please confirm the location you are asking about:" : "Sure! Let's confirm your details for this trip:",
           isBot: true,
           action: "context_confirm",
           intent: isLocationCheck ? "LOCATION_CHECK" : null,
-          payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }
+          payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName, __inheritedIntent: inheritedIntent }
         });
       } catch (error) {
         console.error("[CHAT] Context resolving error", error);
@@ -202,12 +215,14 @@ export function Chat() {
     }, duration);
   };
 
-  const handleConfirmContext = (rawCtx: ResolvedContext & { __isCompoundOrdinal?: boolean; __ordinalTargetName?: string }, fallbackConsent = false, silent = false) => {
+  const handleConfirmContext = (rawCtx: ResolvedContext & { __isCompoundOrdinal?: boolean; __ordinalTargetName?: string, __inheritedIntent?: IntentCategory[] | null }, fallbackConsent = false, silent = false) => {
     const isCompoundOrdinal = rawCtx.__isCompoundOrdinal;
     const ordinalTargetName = rawCtx.__ordinalTargetName;
+    const inheritedIntent = rawCtx.__inheritedIntent;
     const _ctx = { ...rawCtx };
     delete (_ctx as any).__isCompoundOrdinal;
     delete (_ctx as any).__ordinalTargetName;
+    delete (_ctx as any).__inheritedIntent;
 
     console.log("[CHAT] handleConfirmContext called", _ctx, fallbackConsent, silent);
     if (!silent) {
@@ -247,7 +262,10 @@ export function Chat() {
       console.log("[CHAT] decision", decision);
       setLatestDecision({ decision, context: _ctx });
       
-      const intents = detectIntent(_ctx.originalQuery, "English");
+      let intents = detectIntent(_ctx.originalQuery, "English");
+      if (inheritedIntent) {
+        intents = inheritedIntent;
+      }
       console.log("[CHAT] intents", intents);
       console.log("[CHAT] activeMode", activeMode);
 
@@ -562,36 +580,45 @@ export function Chat() {
                       data-productivity-band={isMarine ? rec.productivityEvaluation?.productivityBand : undefined}
                       data-productivity-factors={isMarine ? JSON.stringify(rec.productivityEvaluation?.factors) : undefined}
                     >
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-2">
-                        <div className="flex items-start gap-2">
-                          <MapPin className="w-4 h-4 text-ocean-600 mt-0.5 shrink-0" />
-                          <div>
-                            <div className="font-semibold text-slate-800 text-sm leading-tight mb-0.5">
-                              {idx + 1}. {name}
+                      <div className="flex w-full items-start gap-3 mb-2">
+                        <div className="w-8 h-8 rounded-full bg-ocean-50 border border-ocean-100 flex items-center justify-center shrink-0 mt-0.5">
+                          <MapPin className="w-4 h-4 text-ocean-600" />
+                        </div>
+                        <div className="flex-1 w-full">
+                          <div className="font-semibold text-slate-800 text-sm mb-1.5 leading-tight">
+                            {idx + 1}. {name}
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-y-2 gap-x-4 mb-3 border-t border-slate-50 pt-2">
+                            <div className="text-[11px] text-slate-500 flex flex-col gap-0.5">
+                              <span className="text-[9px] uppercase tracking-wider opacity-70">Distance</span>
+                              <span className="font-medium text-slate-700">{dist} km</span>
                             </div>
-                            <div className="text-xs text-slate-500 mb-1">
-                              Distance: <span className="font-bold">{dist} km</span>
-                            </div>
-                            <div className="text-xs text-slate-500 mb-2">
-                              Risk Score: <span className="font-bold text-slate-800">{rec.riskScore || 'N/A'}/100</span>
-                              <span className={`ml-2 text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
-                                {rec.riskBand}
-                              </span>
+                            <div className="text-[11px] text-slate-500 flex flex-col gap-0.5">
+                              <span className="text-[9px] uppercase tracking-wider opacity-70">Risk Score</span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-medium text-slate-700">{rec.riskScore || 'N/A'}/100</span>
+                                <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
+                                  {rec.riskBand}
+                                </span>
+                              </div>
                             </div>
                             {isMarine && rec.productivityEvaluation && (
-                              <div className="text-xs text-slate-600 mt-0.5 mb-2">
-                                <span className="font-medium">Fishing Potential:</span> {rec.productivityEvaluation.productivityScore}/100 &bull; {rec.productivityEvaluation.productivityBand}
+                              <div className="text-[11px] text-slate-500 flex flex-col gap-0.5 col-span-2 mt-0.5">
+                                <span className="text-[9px] uppercase tracking-wider opacity-70">Fishing Potential</span>
+                                <span className="font-medium text-slate-700">{rec.productivityEvaluation.productivityScore}/100 &bull; {rec.productivityEvaluation.productivityBand}</span>
                               </div>
                             )}
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              className="text-[10px] py-0.5 h-7"
-                              onClick={() => setActiveMapLocation({ coords: [rec.latitude, rec.longitude], name })}
-                            >
-                              <MapIcon className="w-3 h-3 mr-1" /> View on Map
-                            </Button>
                           </div>
+                          
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="text-xs w-full py-1 h-8 bg-slate-50/50 hover:bg-slate-100/80 transition-colors"
+                            onClick={() => setActiveMapLocation({ coords: [rec.latitude, rec.longitude], name })}
+                          >
+                            <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" /> View on Map
+                          </Button>
                         </div>
                       </div>
                       
