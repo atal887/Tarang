@@ -70,8 +70,8 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
       { regex: /\b(chlorophyll|plankton|food\s+for\s+fish|water\s+green)\b/i, intent: "CHLOROPHYLL_ZONE" },
 
       // Fishing / Productivity (General) - Put this before Safety so 'best conditions for fishing' isn't hijacked by 'conditions'
-      { regex: /(?=.*\b(nearest|closest)\b)(?=.*\b(pfz|fishing\s+zone)\b)/i, intent: "NEAREST_PFZ" },
-      { regex: /(?=.*\b(best|good)\b)(?=.*\b(fishing|zone|area|place)\b)/i, intent: "BEST_FISHING_ZONE" },
+      { regex: /(?=.*\b(nearest|closest|top)\b)(?=.*\b(pfz|fishing\s+zone|fishing\s+location|location|locations)\b)/i, intent: "NEAREST_PFZ" },
+      { regex: /(?=.*\b(best|good|top)\b)(?=.*\b(fishing|zone|area|place|location|locations)\b)/i, intent: "BEST_FISHING_ZONE" },
       { regex: /\bwhere\s+(should\s+i|can\s+i|am\s+i\s+likely\s+to)\s+(fish|go\s+for\s+fishing|get\s+better\s+fishing)\b/i, intent: "BEST_FISHING_ZONE" },
       { regex: /\b(better|more)\s+(fishing\s+potential|productive)\b/i, intent: "BEST_FISHING_ZONE" },
       { regex: /\bpfz\b/i, intent: "NEAREST_PFZ" },

@@ -43,10 +43,14 @@ export function formatNormalResponse(
 
   // Direct Inland Area Handling
   if (!isMarine) {
+    const isDirectRecommendation = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
     if (intents.includes("TRIP_PLANNING")) {
       return `Since ${context.locationName} is an inland location, marine trip planning is not applicable. However, here are some nearby fishing areas you can explore:`;
     }
-    return `Since ${context.locationName} is an inland location, here are the nearest suitable fishing areas based on safety and conditions:`;
+    if (isDirectRecommendation) {
+      return `Since ${context.locationName} is an inland location, here are the nearest suitable fishing areas based on safety and conditions:`;
+    }
+    return `Note: ${context.locationName} is an inland location, so marine conditions do not apply.`;
   }
 
   const vesselType = context.boatType.replace('_', ' ');
@@ -147,13 +151,6 @@ export function formatNormalResponse(
     let weatherSummary = `Overall conditions ${timeContext} at ${context.locationName} are ${isSafe ? 'favourable' : 'not recommended'} for your ${vesselType}.`;
     if (hasWind && hasWave) {
       weatherSummary += ` Wind is ${env.windSpeedKmph} km/h and waves are ${env.significantWaveHeightM} m.`;
-    }
-
-    if (decision.marineRecommendations && decision.marineRecommendations.length > 0) {
-      weatherSummary += `\n\nWould you like to know the specific weather conditions for some major ports or fishing areas nearby? Here are the top recommendations:\n`;
-      decision.marineRecommendations.slice(0, 3).forEach((rec, i) => {
-        weatherSummary += `${i + 1}. ${rec.facilityName} (${rec.distanceKm.toFixed(1)} km away) - Risk: ${rec.riskScore}/100\n`;
-      });
     }
 
     return weatherSummary;

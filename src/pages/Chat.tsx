@@ -315,7 +315,7 @@ export function Chat() {
           console.log("[CHAT] formatting normal response");
           const responseText = formatNormalResponse(intents, _ctx, decision);
           
-          let actionToSet = "DECISION_RESULT";
+          let actionToSet: string | null = null;
           const ctxState = getConversationContext();
           const lastContext = ctxState.lastResolvedContext;
           const shouldConfirm = _ctx.inferred.location && (!lastContext || lastContext.locationName !== _ctx.locationName);
@@ -323,11 +323,9 @@ export function Chat() {
           if (shouldConfirm) {
             actionToSet = "context_confirm";
           } else {
-            const isRec = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE'].includes(i));
-            const isWeatherWithRecs = (decision.marineRecommendations && decision.marineRecommendations.length > 0 && intents.some(i => ['WIND_FORECAST', 'WAVE_HEIGHT', 'SAFETY_TOMORROW', 'BOAT_SAFETY', 'SAFETY_ANALYSIS', 'CURRENT_COASTAL_CONDITIONS'].includes(i)));
-            
-            if (isRec || isWeatherWithRecs) {
-              actionToSet = "VIEW_MAP_FISHING";
+            const isExplicitRec = intents.some(i => ['BEST_FISHING_ZONE', 'NEAREST_PFZ', 'CHLOROPHYLL_ZONE', 'TRIP_PLANNING'].includes(i));
+            if (isExplicitRec) {
+              actionToSet = "DECISION_RESULT"; // Triggers recommendations UI
             }
           }
 
@@ -538,7 +536,7 @@ export function Chat() {
         ctx = (msg.payload as any).context;
       }
       
-      if ((msg.intent === "TRIP_PLANNING" || msg.intent === "LOCATION_CHECK") && ctx) {
+      if (msg.intent === "TRIP_PLANNING" && ctx) {
         const coords = getLocationCoordinates(ctx.locationId);
         if (coords) {
           const zones: any[] = [
