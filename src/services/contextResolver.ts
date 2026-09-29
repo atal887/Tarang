@@ -526,8 +526,22 @@ function buildMergedContext(
   };
 }
 
-export function getLocationCoordinates(id: string): [number, number] | null {
-  const loc = locations.find((l: any) => l.place_id === id);
+export function getLocationCoordinates(idOrName: string): [number, number] | null {
+  if (!idOrName) return null;
+  const loc = locations.find((l: any) => l.locationId === idOrName || l.place_id === idOrName || (l.canonicalDisplayName && l.canonicalDisplayName.toLowerCase().includes(idOrName.toLowerCase())));
   if (loc && loc.latitude && loc.longitude) return [loc.latitude, loc.longitude];
+
+  // Known city fallback coordinates
+  const nameLower = idOrName.toLowerCase();
+  if (nameLower.includes("kochi") || nameLower.includes("cochin")) return [9.93, 76.26];
+  if (nameLower.includes("mumbai")) return [18.92, 72.83];
+  if (nameLower.includes("veraval")) return [20.90, 70.37];
+  if (nameLower.includes("porbandar")) return [21.64, 69.60];
+  if (nameLower.includes("mangrol")) return [21.12, 70.11];
+  if (nameLower.includes("mangalore") || nameLower.includes("mangaluru")) return [12.87, 74.84];
+  if (nameLower.includes("chennai")) return [13.12, 80.29];
+  if (nameLower.includes("vizag") || nameLower.includes("visakhapatnam")) return [17.69, 83.30];
+  if (nameLower.includes("kavaratti") || nameLower.includes("lakshadweep")) return [10.57, 72.64];
+
   return null;
 }
