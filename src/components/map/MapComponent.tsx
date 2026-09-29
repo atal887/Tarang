@@ -3,6 +3,20 @@ import "leaflet/dist/leaflet.css";
 
 import L from 'leaflet';
 import { cn } from "../../lib/utils";
+import { useEffect } from "react";
+import { useMap } from "react-leaflet";
+
+function MapResizer() {
+  const map = useMap();
+  useEffect(() => {
+    // Leaflet often fails to calculate size when dynamically unhidden
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [map]);
+  return null;
+}
 
 const createCustomIcon = (type: "start" | "destination" | "boat" | "default") => {
   let iconHtml = '';
@@ -93,6 +107,7 @@ export function MapComponent({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           className="map-tiles-filter"
         />
+        <MapResizer />
         
         {zones.map(z => {
           const style = getZoneStyle(z.type);

@@ -126,7 +126,14 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
     
     // Simple word intersection
     for (const w of queryWords) {
-      if (bankWords.some(bw => bw.includes(w) || w.includes(bw))) {
+      if (bankWords.some(bw => {
+        const cleanBw = bw.replace(/[^a-z0-9]/gi, '');
+        if (cleanBw === w) return true;
+        if (cleanBw.length > 4 && w.length > 4) {
+          return cleanBw.startsWith(w) || w.startsWith(cleanBw);
+        }
+        return false;
+      })) {
         score++;
       }
     }
@@ -142,19 +149,11 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
     
     // Strict threshold: to avoid "Why?" matching randomly, require strong match.
     // For single word queries, score must be 1.0 (exact match with a long word).
-    // Let's set a higher bar to avoid false positives.
-    if (combinedScore > maxScore && score >= 1) {
-      // Don't let single-word ambiguous queries fuzzy match randomly
-      if (queryWords.length === 1 && queryWords[0].replace(/[^a-z]/gi, '') === 'why') {
-        continue;
-      }
-      
+    if (combinedScore > maxScore && score >= 2) {
       maxScore = combinedScore;
       bestMatch = item.intent;
     }
   }
   
-  // Need at least a raw score of 1 and normalized > 0 to match.
-  // We'll enforce that maxScore must be > 1.2 to be confident, UNLESS it's an exact match handled earlier.
-  return maxScore > 1.2 ? [bestMatch as IntentCategory] : ["UNKNOWN"];
+  return maxScore > 1.5 ? [bestMatch as IntentCategory] : ["UNKNOWN"];
 }
