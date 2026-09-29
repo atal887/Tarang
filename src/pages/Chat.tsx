@@ -7,7 +7,7 @@ import { AnalysisLoader, type AnalysisType } from "../components/ui/AnalysisLoad
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useProfile } from "../store/profile";
 import { useChatStore, type Message } from "../store/chatStore";
-import { resolveFishermanContext, resolveFollowUpContext, hasExplicitLocationInQuery, isVesselOnlyChange, type ResolvedContext } from "../services/contextResolver";
+import { resolveFishermanContext, resolveFollowUpContext, hasExplicitLocationInQuery, isVesselOnlyChange, extractLocationsFromQuery, type ResolvedContext } from "../services/contextResolver";
 import { evaluateFishermanContext, type DecisionResult } from "../services/decisionEngine";
 import { detectIntent } from "../services/intentService";
 import { formatNormalResponse } from "../services/normalResponseFormatter";
@@ -95,6 +95,93 @@ export function Chat() {
       return;
     }
 
+    const qLower = text.toLowerCase();
+    const isComparisonQuery = qLower.includes("compare") || qLower.includes(" vs ") || qLower.includes("versus") || qLower.includes("difference");
+
+    // Switch to Research Mode automatically if query is a comparison
+    if (isComparisonQuery && activeMode !== "Research") {
+      setActiveMode("Research");
+    }
+
+    // Researcher / Comparison Mode Handling
+    if (activeMode === "Research" || isComparisonQuery) {
+      const demoResearcherScenario = findDemoResearcherScenario(text);
+      if (demoResearcherScenario) {
+        setAnalysis({ active: true, type: "general", duration: 400 });
+        setTimeout(() => {
+          setAnalysis({ active: false, type: null, duration: 0 });
+          isProcessingMessageRef.current = false;
+          
+          addMessage({
+            text: demoResearcherScenario.summaryMarkdown,
+            isBot: true,
+            action: "DEMO_RESEARCHER_RESULT",
+            intent: null,
+            payload: demoResearcherScenario
+          });
+        }, 400);
+        return;
+      }
+
+      // Dynamic Location Extraction for Comparison Queries
+      if (isComparisonQuery) {
+        const detectedLocs = extractLocationsFromQuery(text);
+        setAnalysis({ active: true, type: "general", duration: 400 });
+        setTimeout(() => {
+          setAnalysis({ active: false, type: null, duration: 0 });
+          isProcessingMessageRef.current = false;
+
+          if (detectedLocs.length >= 2) {
+            const loc1 = detectedLocs[0];
+            const loc2 = detectedLocs[1];
+            const title = `${loc1.name.split(' ')[0]} vs ${loc2.name.split(' ')[0]} — Marine Condition Comparison`;
+            
+            const dynamicScenario = {
+              id: 99,
+              matches: () => true,
+              title,
+              queryPattern: text,
+              tableData: [
+                { factor: "Wave Height", val1: loc1.waveHeight || "1.4 m", val2: loc2.waveHeight || "1.2 m" },
+                { factor: "Wind Speed", val1: loc1.windSpeed || "15 km/h", val2: loc2.windSpeed || "14 km/h" },
+                { factor: "SST", val1: loc1.sst || "28.5°C", val2: loc2.sst || "29.0°C" },
+                { factor: "Risk Score", val1: `${loc1.riskScore || 30}/100`, val2: `${loc2.riskScore || 25}/100` }
+              ],
+              interpretation: `${loc1.name} and ${loc2.name} show distinct marine profiles. ${loc1.name} has ${loc1.waveHeight || "1.4m"} wave height and ${loc1.riskBand || "SAFE"} risk level (${loc1.riskScore || 30}/100), while ${loc2.name} exhibits ${loc2.waveHeight || "1.2m"} wave height and ${loc2.riskBand || "SAFE"} risk level (${loc2.riskScore || 25}/100). Both locations offer valuable insights for research and decision making.`,
+              summaryMarkdown: `**${title}**\n\nSide-by-side marine condition analysis for **${loc1.name}** and **${loc2.name}**.`,
+              visualizationType: 'SIDE_BY_SIDE' as const,
+              customPayload: {
+                locations: [loc1, loc2]
+              }
+            };
+
+            addMessage({
+              text: dynamicScenario.summaryMarkdown,
+              isBot: true,
+              action: "DEMO_RESEARCHER_RESULT",
+              intent: null,
+              payload: dynamicScenario
+            });
+          } else if (detectedLocs.length === 1) {
+            addMessage({
+              text: `I detected **${detectedLocs[0].name}**. Please specify the second port or location you would like to compare for marine conditions.`,
+              isBot: true,
+              action: null,
+              intent: null
+            });
+          } else {
+            addMessage({
+              text: "Which two ports or locations would you like to compare for marine conditions?",
+              isBot: true,
+              action: null,
+              intent: null
+            });
+          }
+        }, 400);
+        return;
+      }
+    }
+
     // 0. Check for 10 static Fisherman Demo Scenarios in Normal mode
     const demoScenario = activeMode === "Normal" ? findDemoScenario(text) : undefined;
     if (demoScenario) {
@@ -140,26 +227,6 @@ export function Chat() {
       return;
     }
 
-    // 0.5. Check for 5 static Researcher Demo Scenarios in Research mode
-    const demoResearcherScenario = activeMode === "Research" ? findDemoResearcherScenario(text) : undefined;
-    if (demoResearcherScenario) {
-      setAnalysis({ active: true, type: "general", duration: 400 });
-      setTimeout(() => {
-        setAnalysis({ active: false, type: null, duration: 0 });
-        isProcessingMessageRef.current = false;
-        
-        addMessage({
-          text: demoResearcherScenario.summaryMarkdown,
-          isBot: true,
-          action: "DEMO_RESEARCHER_RESULT",
-          intent: null,
-          payload: demoResearcherScenario
-        });
-      }, 400);
-      return;
-    }
-
-    const qLower = text.toLowerCase();
     let type: AnalysisType = "general";
     
     if (qLower.includes("3-day") || qLower.includes("trip")) {

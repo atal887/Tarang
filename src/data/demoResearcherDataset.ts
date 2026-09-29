@@ -32,7 +32,37 @@ export const RESEARCHER_DEMO_SCENARIOS: DemoResearcherScenario[] = [
     ],
     interpretation: "Mumbai shows stronger wind and higher waves, resulting in higher operational risk. Kochi has calmer sea conditions, while Mumbai shows higher chlorophyll concentration, which may indicate comparatively better biological productivity.",
     summaryMarkdown: `**Mumbai vs Kochi — Marine Condition Comparison**\n\nMumbai shows stronger wind and higher waves, resulting in higher operational risk. Kochi has calmer sea conditions, while Mumbai shows higher chlorophyll concentration, which may indicate comparatively better biological productivity.`,
-    visualizationType: 'SIDE_BY_SIDE'
+    visualizationType: 'SIDE_BY_SIDE',
+    customPayload: {
+      locations: [
+        {
+          name: "Mumbai Port (Sassoon Dock)",
+          district: "Mumbai",
+          state: "Maharashtra",
+          coords: [18.92, 72.83] as [number, number],
+          waveHeight: "1.8 m",
+          windSpeed: "19 km/h SW",
+          sst: "28.4°C",
+          weather: "Partly Cloudy",
+          riskBand: "CAUTION",
+          riskScore: 48,
+          suitability: "Higher wave height (1.8m) and wind speed (19 km/h) create moderate operational risk. High chlorophyll concentration (0.72 mg/m³) indicates strong biological productivity."
+        },
+        {
+          name: "Kochi Harbour (Thoppumpady)",
+          district: "Ernakulam",
+          state: "Kerala",
+          coords: [9.93, 76.26] as [number, number],
+          waveHeight: "1.2 m",
+          windSpeed: "14 km/h SW",
+          sst: "29.1°C",
+          weather: "Clear / Fair",
+          riskBand: "SAFE",
+          riskScore: 28,
+          suitability: "Calm marine conditions with 1.2m waves and 14 km/h wind. Highly suitable for all vessel types with minimal operational risk."
+        }
+      ]
+    }
   },
   // 2. Compare two ports near Mumbai (Bhaucha Dhakka vs Sassoon Dock)
   {
@@ -53,6 +83,34 @@ export const RESEARCHER_DEMO_SCENARIOS: DemoResearcherScenario[] = [
       ports: [
         { name: "Bhaucha Dhakka (Ferry Wharf)", coords: [18.95, 72.85] as [number, number] },
         { name: "Sassoon Dock Fishing Harbour", coords: [18.92, 72.83] as [number, number] }
+      ],
+      locations: [
+        {
+          name: "Bhaucha Dhakka (Ferry Wharf)",
+          district: "Mumbai",
+          state: "Maharashtra",
+          coords: [18.95, 72.85] as [number, number],
+          waveHeight: "1.2 m",
+          windSpeed: "14 km/h WNW",
+          sst: "28.6°C",
+          weather: "Clear / Fair",
+          riskBand: "SAFE",
+          riskScore: 26,
+          suitability: "Sheltered harbor location with low 1.2m waves and mild winds. Excellent safety profile."
+        },
+        {
+          name: "Sassoon Dock Fishing Harbour",
+          district: "Mumbai",
+          state: "Maharashtra",
+          coords: [18.92, 72.83] as [number, number],
+          waveHeight: "1.5 m",
+          windSpeed: "17 km/h WNW",
+          sst: "28.5°C",
+          weather: "Partly Cloudy",
+          riskBand: "CAUTION",
+          riskScore: 38,
+          suitability: "Slightly more exposed to open bay swell with 1.5m wave height. Moderate risk level."
+        }
       ]
     }
   },

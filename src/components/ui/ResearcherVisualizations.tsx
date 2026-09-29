@@ -133,7 +133,7 @@ export const ResearcherVisualizations: React.FC<Props> = ({ scenario }) => {
         {/* 1. Side-by-Side Comparison Chart */}
         {scenario.visualizationType === 'SIDE_BY_SIDE' && (
           <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="text-xs font-bold text-slate-700 mb-2">Mumbai vs Kochi Environmental Metrics</div>
+            <div className="text-xs font-bold text-slate-700 mb-2">{scenario.title}</div>
             {[
               { label: 'Wave Height (m)', val1: 1.8, val2: 1.2, max: 2.5, unit: 'm' },
               { label: 'Wind Speed (km/h)', val1: 19, val2: 14, max: 25, unit: 'km/h' },
@@ -160,6 +160,69 @@ export const ResearcherVisualizations: React.FC<Props> = ({ scenario }) => {
               <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-slate-700 rounded-sm"></span> Mumbai</span>
               <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-ocean-600 rounded-sm"></span> Kochi</span>
             </div>
+          </div>
+        )}
+
+        {/* Location Comparison Cards with View on Map for Both Locations */}
+        {scenario.customPayload?.locations && scenario.customPayload.locations.length > 0 && (
+          <div className="space-y-3 pt-2">
+            <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">Location & Port Side-by-Side Comparison</div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {scenario.customPayload.locations.map((loc: any, idx: number) => {
+                const isSafe = loc.riskBand === 'SAFE';
+                const isCaution = loc.riskBand === 'CAUTION';
+                const isMapActive = activeMapPort && activeMapPort.name === loc.name;
+
+                return (
+                  <div key={idx} className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm space-y-2.5 flex flex-col justify-between">
+                    <div className="space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <div className="font-bold text-slate-900 text-sm">{loc.name}</div>
+                          <div className="text-[11px] text-slate-500">{loc.district ? `${loc.district}, ${loc.state}` : ''}</div>
+                        </div>
+                        <span className={`shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded ${isSafe ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : isCaution ? 'bg-amber-100 text-amber-800 border border-amber-200' : 'bg-rose-100 text-rose-800 border border-rose-200'}`}>
+                          {loc.riskBand} ({loc.riskScore}/100)
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                        <div><span className="text-[9px] text-slate-400 font-bold block uppercase">Wave Height</span><span className="font-semibold text-slate-800">{loc.waveHeight}</span></div>
+                        <div><span className="text-[9px] text-slate-400 font-bold block uppercase">Wind Speed</span><span className="font-semibold text-slate-800">{loc.windSpeed}</span></div>
+                        <div><span className="text-[9px] text-slate-400 font-bold block uppercase">SST</span><span className="font-semibold text-slate-800">{loc.sst}</span></div>
+                        <div><span className="text-[9px] text-slate-400 font-bold block uppercase">Weather</span><span className="font-semibold text-slate-800">{loc.weather}</span></div>
+                      </div>
+
+                      {loc.suitability && (
+                        <div className="text-xs text-slate-600 bg-slate-50/70 p-2 rounded-lg border border-slate-100 leading-relaxed">
+                          <strong className="text-slate-800">Fishing Suitability:</strong> {loc.suitability}
+                        </div>
+                      )}
+                    </div>
+
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full text-xs bg-slate-50 hover:bg-slate-100 transition-colors py-1.5 h-9 font-semibold"
+                      onClick={() => setActiveMapPort(isMapActive ? null : { coords: loc.coords, name: loc.name })}
+                    >
+                      <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+                      {isMapActive ? "Hide Map" : `View ${loc.name.split(' ')[0]} on Map`}
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {activeMapPort && (
+              <div className="h-52 border border-slate-200 rounded-xl overflow-hidden relative mt-3 shadow-sm">
+                <MapComponent
+                  center={activeMapPort.coords}
+                  zoom={12}
+                  zones={[{ id: "map-active-loc", center: activeMapPort.coords, radius: 3000, type: "fishing", label: activeMapPort.name }]}
+                />
+              </div>
+            )}
           </div>
         )}
 
