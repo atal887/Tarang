@@ -234,7 +234,9 @@ export interface DemoScenario {
   id: number;
   matches: (q: string) => boolean;
   title: string;
-  requiresPortSelection: boolean;
+  requiresPortSelection?: boolean;
+  requiresConfirmation?: boolean;
+  confirmPrompt?: string;
   ports?: DemoPort[];
   zones?: DemoFishingZone[];
   getResponse: (portName?: string, boatType?: string) => {
@@ -246,11 +248,106 @@ export interface DemoScenario {
   };
 }
 
+// ── 5. Mumbai Hindi Ports ──────────────────────────────────────────────────
+export const MUMBAI_HINDI_DEMO_PORTS: DemoPort[] = [
+  {
+    id: "mumbai-sassoon-hi",
+    name: "ससून डॉक मछली पकड़ने का बंदरगाह",
+    district: "मुंबई",
+    state: "महाराष्ट्र",
+    lat: 18.92,
+    lng: 72.83,
+    distanceKm: 2.5,
+    riskScore: 22,
+    riskBand: "SAFE",
+    waveHeight: "1.0 मीटर",
+    windSpeed: "12 किमी/घंटा",
+    windDir: "दक्षिण-पश्चिम",
+    suitability: "अनुकूल परिस्थितियां। कम लहरों के साथ शांत समुद्री क्षेत्र।"
+  },
+  {
+    id: "mumbai-bhaucha-hi",
+    name: "भाऊचा धक्का (फेरी घाट)",
+    district: "मुंबई",
+    state: "महाराष्ट्र",
+    lat: 18.95,
+    lng: 72.85,
+    distanceKm: 4.8,
+    riskScore: 26,
+    riskBand: "SAFE",
+    waveHeight: "1.2 मीटर",
+    windSpeed: "14 किमी/घंटा",
+    windDir: "दक्षिण-पश्चिम",
+    suitability: "शांत समुद्री स्थिति। मोटर चालित और पारंपरिक नावों के लिए आदर्श।"
+  },
+  {
+    id: "mumbai-versova-hi",
+    name: "वर्सोवा मछली पकड़ने का बंदरगाह",
+    district: "मुंबई",
+    state: "महाराष्ट्र",
+    lat: 19.13,
+    lng: 72.81,
+    distanceKm: 18.2,
+    riskScore: 42,
+    riskBand: "CAUTION",
+    waveHeight: "1.7 मीटर",
+    windSpeed: "19 किमी/घंटा",
+    windDir: "पश्चिम-दक्षिण-पश्चिम",
+    suitability: "मुहाने के पास हल्की लहरें। छोटी नौकाओं को थोड़ी सावधानी बरतनी चाहिए।"
+  }
+];
+
+// ── 6. Kochi Hindi Fishing Zones ───────────────────────────────────────────
+export const KOCHI_HINDI_DEMO_ZONES: DemoFishingZone[] = [
+  {
+    id: "zone-chellanam-hi",
+    name: "चेलनम अपतटीय क्षेत्र (Chellanam Offshore Zone)",
+    nearPort: "थोपमपडी मछली पकड़ने का बंदरगाह",
+    lat: 9.82,
+    lng: 76.20,
+    distanceKm: 14.5,
+    direction: "दक्षिण-पश्चिम",
+    riskScore: 25,
+    riskBand: "SAFE",
+    productivityScore: 88,
+    productivityBand: "High",
+    suitability: "उच्च क्लोरोफिल घनत्व। 1.0 मीटर की शांत लहरों में प्रचुर सरडाइन और मैकेरल मछली।"
+  },
+  {
+    id: "zone-vypin-reef-hi",
+    name: "वाइपीन रीफ बाहरी किनारा (Vypin Reef Outer Edge)",
+    nearPort: "वाइपीन मछली पकड़ने का बंदरगाह",
+    lat: 10.02,
+    lng: 76.15,
+    distanceKm: 11.2,
+    direction: "पश्चिम",
+    riskScore: 28,
+    riskBand: "SAFE",
+    productivityScore: 82,
+    productivityBand: "High",
+    suitability: "झींगा और रीफ मछलियों की अच्छी संभावना। मध्यम धाराएं, आसान नौकायन।"
+  },
+  {
+    id: "zone-munambam-deep-hi",
+    name: "मुनंबम तटीय क्षेत्र (Munambam Deep Coastal Zone)",
+    nearPort: "मुनंबम मछली पकड़ने का बंदरगाह",
+    lat: 10.22,
+    lng: 76.10,
+    distanceKm: 22.0,
+    direction: "उत्तर-पश्चिम",
+    riskScore: 32,
+    riskBand: "SAFE",
+    productivityScore: 79,
+    productivityBand: "Moderate",
+    suitability: "यंत्रीकृत ट्रॉलरों के लिए उपयुक्त गहरा क्षेत्र। कम लहर की ऊंचाई (1.1 मीटर)।"
+  }
+];
+
 export const DEMO_SCENARIOS: DemoScenario[] = [
   // 1. Is it safe to go fishing tomorrow from Mumbai?
   {
     id: 1,
-    matches: (q: string) => /safe\s+to\s+go\s+fishing\s+tomorrow\s+from\s+mumbai/i.test(q) || (q.includes("safe") && q.includes("tomorrow") && q.includes("mumbai")),
+    matches: (q: string) => /safe\s+to\s+go\s+fishing\s+tomorrow\s+from\s+mumbai/i.test(q) || (q.includes("safe") && q.includes("tomorrow") && q.includes("mumbai") && !q.includes("मुंबई")),
     title: "Fishing Safety Tomorrow (Mumbai)",
     requiresPortSelection: true,
     ports: MUMBAI_DEMO_PORTS,
@@ -539,6 +636,126 @@ Smooth entry into Kavaratti Lagoon Jetty. Safe sheltered docking.
 **Recommendation:** Start early on Day 1, keep monitoring sea updates before deep channel crossings, and enjoy high catch potential along the reef edges.`,
         mapCoords: [10.56688, 72.64203],
         mapName: "Kavaratti Harbour Jetty"
+      };
+    }
+  },
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // HINDI DEMO SCENARIOS (11, 12, 13)
+  // ──────────────────────────────────────────────────────────────────────────
+
+  // 11. क्या कल मुंबई से मछली पकड़ने जाना सुरक्षित है?
+  {
+    id: 11,
+    matches: (q: string) => (q.includes("मुंबई") || q.includes("mumbai")) && (q.includes("सुरक्षित") || q.includes("मछली पकड़ने")) && (q.includes("कल") || q.includes("सुरक्षा")),
+    title: "समुद्री सुरक्षा पूर्वानुमान — मुंबई",
+    requiresPortSelection: true,
+    ports: MUMBAI_HINDI_DEMO_PORTS,
+    getResponse: (portName = "ससून डॉक मछली पकड़ने का बंदरगाह") => {
+      const port = MUMBAI_HINDI_DEMO_PORTS.find(p => p.name.includes(portName)) || MUMBAI_HINDI_DEMO_PORTS[0];
+      return {
+        summary: `समुद्री सुरक्षा पूर्वानुमान
+${port.name}, मुंबई
+
+कल ${port.name} से समुद्र में मछली पकड़ने जाना पूरी तरह सुरक्षित और अनुकूल है।
+
+मौसम और समुद्री स्थिति:
+• लहर की ऊंचाई: ${port.waveHeight}
+• हवा की गति: ${port.windSpeed} (${port.windDir})
+• मौसम: साफ आसमान और शांत समुद्र
+• जोखिम स्तर: सुरक्षित (${port.riskScore}/100)
+• नाव की उपयुक्तता: मोटर चालित और पारंपरिक नावों के लिए पूरी तरह अनुकूल
+
+मछुआरों के लिए जानकारी:
+समुद्र में कम लहरें और हल्की हवा होने के कारण नाव का संतुलन बना रहेगा। आप बिना किसी जोखिम के मछली पकड़ने जा सकते हैं।
+
+सिफारिश:
+कल सुबह के समय प्रस्थान करना सबसे अच्छा रहेगा। सुबह के समय जाल बिछाना सुरक्षित और सुविधाजनक रहेगा।`,
+        ports: [port],
+        mapCoords: [port.lat, port.lng],
+        mapName: port.name
+      };
+    }
+  },
+
+  // 12. मेरे पास के सबसे अच्छे मछली पकड़ने वाले क्षेत्र कहाँ हैं?
+  {
+    id: 12,
+    matches: (q: string) => (q.includes("पास") || q.includes("नजदीक") || q.includes("नज़दीक")) && (q.includes("क्षेत्र") || q.includes("जगह") || q.includes("मछली")),
+    title: "निकटतम सर्वोत्तम मछली पकड़ने के क्षेत्र",
+    requiresConfirmation: true,
+    confirmPrompt: "स्थान की पुष्टि: क्या आप अपने प्रस्थान स्थल (थोपमपडी / कोच्चि क्षेत्र) के 3 नजदीकी मछली पकड़ने वाले क्षेत्र देखना चाहते हैं?",
+    zones: KOCHI_HINDI_DEMO_ZONES,
+    getResponse: () => {
+      return {
+        summary: `स्थान की पुष्टि के बाद 3 नजदीकी उपयुक्त मछली पकड़ने वाले क्षेत्र:
+
+1. चेलनम अपतटीय क्षेत्र (Chellanam Offshore Zone)
+• दूरी: 14.5 किमी (दक्षिण-पश्चिम)
+• मछली पकड़ने की स्थिति: सरडाइन और मैकेरल मछली की सर्वाधिक सघनता। शांत 1.0 मीटर लहरें।
+• जोखिम स्तर: सुरक्षित (25/100)
+
+2. वाइपीन रीफ बाहरी किनारा (Vypin Reef Outer Edge)
+• दूरी: 11.2 किमी (पश्चिम)
+• मछली पकड़ने की स्थिति: झींगा और रीफ मछलियों की उत्तम संभावना। आसान नौकायन।
+• जोखिम स्तर: सुरक्षित (28/100)
+
+3. मुनंबम तटीय क्षेत्र (Munambam Deep Coastal Zone)
+• दूरी: 22.0 किमी (उत्तर-पश्चिम)
+• मछली पकड़ने की स्थिति: यंत्रीकृत ट्रॉलरों के लिए उपयुक्त गहरा क्षेत्र, शांत समुद्र।
+• जोखिम स्तर: सुरक्षित (32/100)
+
+सिफारिश: चेलनम अपतटीय क्षेत्र कल उच्च उपज और सुरक्षित यात्रा के लिए सबसे उत्तम विकल्प है।`,
+        zones: KOCHI_HINDI_DEMO_ZONES,
+        mapCoords: [KOCHI_HINDI_DEMO_ZONES[0].lat, KOCHI_HINDI_DEMO_ZONES[0].lng],
+        mapName: KOCHI_HINDI_DEMO_ZONES[0].name
+      };
+    }
+  },
+
+  // 13. मैं कोच्चि से 3 दिन के लिए मछली पकड़ने जाना चाहता हूँ। मेरे लिए सुरक्षित यात्रा की योजना बनाओ।
+  {
+    id: 13,
+    matches: (q: string) => (q.includes("कोच्चि") || q.includes("3 दिन") || q.includes("3-दिन") || q.includes("तीन दिन")) && (q.includes("योजना") || q.includes("यात्रा") || q.includes("मछली")),
+    title: "कोच्चि से 3-दिवसीय सुरक्षित मछली पकड़ने की योजना",
+    requiresConfirmation: true,
+    confirmPrompt: `सुरक्षित यात्रा योजना बनाने के लिए कृपया अपने विवरण की पुष्टि करें:
+
+• प्रस्थान स्थान: कोच्चि (थोपमपडी बंदरगाह)
+• गंतव्य: लक्षद्वीप समुद्री क्षेत्र
+• नाव का प्रकार: मोटर चालित नाव
+• जाने का समय: कल सुबह 06:00 बजे
+• यात्रा की अवधि: 3 दिन
+
+क्या आप 3-दिवसीय सुरक्षित यात्रा योजना देखना चाहते हैं?`,
+    getResponse: () => {
+      return {
+        summary: `कोच्चि से 3-दिवसीय दिन-वार सुरक्षित यात्रा योजना:
+
+दिन 1 — कोच्चि से चेल्लनम तट (45 किमी)
+• मौसम: साफ आसमान
+• समुद्री स्थिति: शांत समुद्र, लहर की ऊंचाई 1.0 से 1.2 मीटर, हवा 12 से 15 किमी/घंटा
+• सुरक्षित अवधि: सुबह 06:00 बजे से शाम 05:00 बजे तक (सुरक्षित प्रस्थान अवधि)
+• उपयुक्त मछली पकड़ने का क्षेत्र: चेल्लनम अपतटीय बैंक
+• वापसी मार्ग: तटीय सुरक्षित मार्ग से थोपमपडी बंदरगाह
+
+दिन 2 — 9-डिग्री चैनल के पास (120 किमी)
+• मौसम: हल्का बादली
+• समुद्री स्थिति: मध्यम लहरें 1.3 से 1.4 मीटर, हवा 15 किमी/घंटा
+• सावधानी अवधि: सुबह 06:00 बजे से दोपहर 02:00 बजे तक (दोपहर बाद सावधानी बरतें)
+• उपयुक्त मछली पकड़ने का क्षेत्र: रीफ बाहरी किनारा (ट्यूना और मैकेरल)
+• वापसी मार्ग: चैनल सुरक्षित नौकायन मार्ग
+
+दिन 3 — सुरक्षित वापसी और आगमन (80 किमी)
+• मौसम: साफ और सुहाना
+• समुद्री स्थिति: लहरें घट कर 1.1 मीटर
+• सुरक्षित अवधि: पूरा दिन (सुरक्षित आगमन अवधि)
+• उपयुक्त मछली पकड़ने का क्षेत्र: तटीय क्षेत्र
+• वापसी मार्ग: थोपमपडी बंदरगाह सुरक्षित आगमन
+
+सिफारिश: यात्रा के दौरान मौसम अलर्ट का ध्यान रखें और सुरक्षित मार्ग का पालन करें।`,
+        mapCoords: [10.56688, 72.64203],
+        mapName: "सुरक्षित मार्ग (कोच्चि से लक्षद्वीप)"
       };
     }
   }

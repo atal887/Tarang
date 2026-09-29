@@ -239,12 +239,24 @@ export function Chat() {
         isProcessingMessageRef.current = false;
 
         if (demoScenario.requiresPortSelection && demoScenario.ports) {
+          const isHindiQuery = /[\u0900-\u097F]/.test(demoScenario.title || text);
           addMessage({
-            text: `Please select the port or harbour you are departing from:`,
+            text: isHindiQuery
+              ? `आप किस बंदरगाह से जाना चाहते हैं? कृपया नीचे दिए गए बंदरगाहों में से चुनें:`
+              : `Please select the port or harbour you are departing from:`,
             isBot: true,
             action: "DEMO_PORT_SELECT",
             intent: null,
             payload: { scenarioId: demoScenario.id, ports: demoScenario.ports }
+          });
+        } else if (demoScenario.requiresConfirmation) {
+          const isHindiQuery = /[\u0900-\u097F]/.test(demoScenario.title || text);
+          addMessage({
+            text: demoScenario.confirmPrompt || (isHindiQuery ? "कृपया विवरण की पुष्टि करें:" : "Please confirm details:"),
+            isBot: true,
+            action: demoScenario.id === 12 ? "DEMO_CONFIRM_LOCATION_HI" : "DEMO_CONFIRM_TRIP_HI",
+            intent: null,
+            payload: { scenarioId: demoScenario.id }
           });
         } else {
           const resp = demoScenario.getResponse();
@@ -266,7 +278,7 @@ export function Chat() {
           };
           commitConversationContext({
             query: text,
-            intent: demoScenario.id === 3 ? "WAVE_HEIGHT" : demoScenario.id === 4 ? "WIND_FORECAST" : demoScenario.id === 5 || demoScenario.id === 6 ? "NEAREST_PFZ" : demoScenario.id === 7 ? "SST_CONDITIONS" : demoScenario.id === 9 ? "SAFE_ROUTE" : demoScenario.id === 10 ? "TRIP_PLANNING" : "SAFETY_TOMORROW",
+            intent: demoScenario.id === 3 ? "WAVE_HEIGHT" : demoScenario.id === 4 ? "WIND_FORECAST" : demoScenario.id === 5 || demoScenario.id === 6 || demoScenario.id === 12 ? "NEAREST_PFZ" : demoScenario.id === 7 ? "SST_CONDITIONS" : demoScenario.id === 9 ? "SAFE_ROUTE" : demoScenario.id === 10 || demoScenario.id === 13 ? "TRIP_PLANNING" : "SAFETY_TOMORROW",
             resolvedContext: dummyCtx,
             decision: {} as any
           });
@@ -536,8 +548,9 @@ export function Chat() {
   const handleSelectDemoPort = (scenarioId: number, portName: string) => {
     const scenario = DEMO_SCENARIOS.find(s => s.id === scenarioId);
     if (scenario) {
+      const isHindi = scenario.id === 11 || /[\u0900-\u097F]/.test(scenario.title);
       updateLastMessageAction("DEMO_PORT_SELECT_DONE");
-      addMessage({ text: `Selected Port: ${portName}`, isBot: false, action: null, intent: null });
+      addMessage({ text: isHindi ? `चयनित बंदरगाह: ${portName}` : `Selected Port: ${portName}`, isBot: false, action: null, intent: null });
       
       const resp = scenario.getResponse(portName, profile.vesselType);
       addMessage({
@@ -560,6 +573,44 @@ export function Chat() {
       commitConversationContext({
         query: scenario.title,
         intent: scenario.id === 3 ? "WAVE_HEIGHT" : scenario.id === 4 ? "WIND_FORECAST" : scenario.id === 7 ? "SST_CONDITIONS" : "SAFETY_TOMORROW",
+        resolvedContext: dummyCtx,
+        decision: {} as any
+      });
+    }
+  };
+
+  const handleConfirmDemoScenario = (scenarioId: number) => {
+    const scenario = DEMO_SCENARIOS.find(s => s.id === scenarioId);
+    if (scenario) {
+      if (scenarioId === 12) {
+        updateLastMessageAction("DEMO_CONFIRM_LOCATION_HI_DONE");
+        addMessage({ text: "स्थान की पुष्टि की गई: थोपमपडी / कोच्चि क्षेत्र", isBot: false, action: null, intent: null });
+      } else if (scenarioId === 13) {
+        updateLastMessageAction("DEMO_CONFIRM_TRIP_HI_DONE");
+        addMessage({ text: "यात्रा विवरण की पुष्टि की गई: कोच्चि से 3-दिवसीय यात्रा", isBot: false, action: null, intent: null });
+      }
+      
+      const resp = scenario.getResponse();
+      addMessage({
+        text: resp.summary,
+        isBot: true,
+        action: "DEMO_RESULT",
+        intent: null,
+        payload: resp
+      });
+
+      const dummyCtx: ResolvedContext = {
+        locationId: "demo-loc-hi",
+        locationName: resp.mapName || "Kochi",
+        dateTime: new Date(),
+        timeDescription: "tomorrow",
+        boatType: profile.vesselType || "motorized",
+        inferred: { location: false, dateTime: true, boatType: true },
+        originalQuery: scenario.title
+      };
+      commitConversationContext({
+        query: scenario.title,
+        intent: scenarioId === 12 ? "NEAREST_PFZ" : "TRIP_PLANNING",
         resolvedContext: dummyCtx,
         decision: {} as any
       });
@@ -873,11 +924,53 @@ export function Chat() {
         }
       } else if (msg.action === "RESEARCH_RESULT" && msg.payload) {
         elements.push(<ResearchCard key="research-result" payload={msg.payload} />);
+      } else if (msg.action === "DEMO_CONFIRM_LOCATION_HI" && msg.payload) {
+        elements.push(
+          <div key="demo-loc-hi" className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-3 text-left">
+            <div className="grid grid-cols-2 gap-3 text-xs text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <div><span className="text-slate-400 block uppercase font-bold text-[10px]">प्रस्थान स्थान</span><span className="font-semibold text-slate-900">थोपमपडी बंदरगाह, कोच्चि</span></div>
+              <div><span className="text-slate-400 block uppercase font-bold text-[10px]">खोज दायरा</span><span className="font-semibold text-slate-900">3 नजदीकी क्षेत्र</span></div>
+            </div>
+            <Button className="w-full font-bold h-10 text-sm" onClick={() => handleConfirmDemoScenario(msg.payload.scenarioId)}>
+              स्थान की पुष्टि करें और क्षेत्र दिखाएं
+            </Button>
+          </div>
+        );
+      } else if (msg.action === "DEMO_CONFIRM_LOCATION_HI_DONE") {
+        elements.push(
+          <div key="demo-loc-hi-done" className="bg-slate-50 rounded-xl border border-slate-200 p-3 mt-3 text-xs text-slate-500 text-left flex items-center gap-2">
+            <Info className="w-4 h-4 text-slate-400 shrink-0" /> स्थान की पुष्टि की गई: थोपमपडी बंदरगाह, कोच्चि
+          </div>
+        );
+      } else if (msg.action === "DEMO_CONFIRM_TRIP_HI" && msg.payload) {
+        elements.push(
+          <div key="demo-trip-hi" className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-3 text-left">
+            <div className="grid grid-cols-2 gap-3 text-xs text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <div><span className="text-slate-400 block uppercase font-bold text-[10px]">प्रस्थान स्थान</span><span className="font-semibold text-slate-900">कोच्चि (थोपमपडी)</span></div>
+              <div><span className="text-slate-400 block uppercase font-bold text-[10px]">गंतव्य</span><span className="font-semibold text-slate-900">लक्षद्वीप समुद्री क्षेत्र</span></div>
+              <div><span className="text-slate-400 block uppercase font-bold text-[10px]">नाव का प्रकार</span><span className="font-semibold text-slate-900">मोटर चालित नाव</span></div>
+              <div><span className="text-slate-400 block uppercase font-bold text-[10px]">जाने का समय</span><span className="font-semibold text-slate-900">कल सुबह 06:00 बजे</span></div>
+              <div className="col-span-2 border-t border-slate-200 pt-2"><span className="text-slate-400 block uppercase font-bold text-[10px]">यात्रा की अवधि</span><span className="font-semibold text-slate-900">3 दिन (दिन-वार योजना)</span></div>
+            </div>
+            <Button className="w-full font-bold h-10 text-sm" onClick={() => handleConfirmDemoScenario(msg.payload.scenarioId)}>
+              हाँ, 3-दिवसीय सुरक्षित यात्रा योजना बनाएं
+            </Button>
+          </div>
+        );
+      } else if (msg.action === "DEMO_CONFIRM_TRIP_HI_DONE") {
+        elements.push(
+          <div key="demo-trip-hi-done" className="bg-slate-50 rounded-xl border border-slate-200 p-3 mt-3 text-xs text-slate-500 text-left flex items-center gap-2">
+            <Info className="w-4 h-4 text-slate-400 shrink-0" /> 3-दिवसीय यात्रा विवरण की पुष्टि की गई
+          </div>
+        );
       } else if (msg.action === "DEMO_PORT_SELECT" && msg.payload) {
         const { scenarioId, ports } = msg.payload;
+        const isHindiPorts = ports && ports.length > 0 && /[\u0900-\u097F]/.test(ports[0].name);
         elements.push(
           <div key="demo-port-select" className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-3 text-left">
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Select Port for Forecast:</div>
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              {isHindiPorts ? "पूर्वानुमान के लिए बंदरगाह चुनें:" : "Select Port for Forecast:"}
+            </div>
             <div className="flex flex-col gap-2">
               {ports.map((p: any) => (
                 <button
@@ -887,9 +980,11 @@ export function Chat() {
                 >
                   <div>
                     <div className="font-semibold text-sm text-slate-900 group-hover:text-ocean-700">{p.name}</div>
-                    <div className="text-xs text-slate-500">{p.district}, {p.state} &bull; {p.distanceKm} km</div>
+                    <div className="text-xs text-slate-500">{p.district}, {p.state} &bull; {p.distanceKm} {isHindiPorts ? "किमी" : "km"}</div>
                   </div>
-                  <span className="text-xs font-bold text-ocean-600 bg-white px-2.5 py-1 rounded-md border border-ocean-100 shadow-sm shrink-0">Select & Proceed</span>
+                  <span className="text-xs font-bold text-ocean-600 bg-white px-2.5 py-1 rounded-md border border-ocean-100 shadow-sm shrink-0">
+                    {isHindiPorts ? "चयन करें" : "Select & Proceed"}
+                  </span>
                 </button>
               ))}
             </div>
@@ -898,18 +993,21 @@ export function Chat() {
       } else if (msg.action === "DEMO_PORT_SELECT_DONE") {
         elements.push(
           <div key="demo-port-done" className="bg-slate-50 rounded-xl border border-slate-200 p-3 mt-3 space-y-1 text-xs text-slate-500 text-left">
-            <div className="flex items-center gap-2"><Info className="w-3.5 h-3.5 text-slate-400"/> Port selection confirmed.</div>
+            <div className="flex items-center gap-2"><Info className="w-3.5 h-3.5 text-slate-400"/> बंदरगाह का चयन पुष्टि किया गया।</div>
           </div>
         );
       } else if (msg.action === "DEMO_RESULT" && msg.payload) {
         const { ports, zones, mapCoords, mapName } = msg.payload;
         const items = ports || zones;
+        const isHindiUI = (items && items.length > 0 && /[\u0900-\u097F]/.test(items[0].name || items[0].suitability || '')) || (mapName && /[\u0900-\u097F]/.test(mapName));
         
         if (items && items.length > 0) {
           elements.push(
             <div key="demo-items" className="space-y-3 mt-4 text-left">
               <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-slate-200 pb-2">
-                {ports ? "Location & Harbour Details" : "Fishing Zones & Areas"}
+                {isHindiUI
+                  ? (ports ? "बंदरगाह विवरण" : "मछली पकड़ने के क्षेत्र")
+                  : (ports ? "Location & Harbour Details" : "Fishing Zones & Areas")}
               </h4>
               <div className="flex flex-col gap-3">
                 {items.map((item: any, idx: number) => {
@@ -919,6 +1017,14 @@ export function Chat() {
                   const lng = item.lng;
                   const name = item.name;
                   const isMapActive = activeMapLocation && activeMapLocation.name === name;
+
+                  const riskLabel = isHindiUI
+                    ? (isSafe ? 'सुरक्षित' : isCaution ? 'सावधानी' : 'खतरा')
+                    : item.riskBand;
+
+                  const prodLabel = isHindiUI
+                    ? (item.productivityBand === 'High' ? 'उच्च' : item.productivityBand === 'Moderate' ? 'मध्यम' : 'कम')
+                    : item.productivityBand;
 
                   return (
                     <div key={idx} className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-sm space-y-2">
@@ -930,18 +1036,49 @@ export function Chat() {
                           <div className="font-bold text-slate-900 text-sm leading-snug">
                             {items.length > 1 ? `${idx + 1}. ` : ''}{name}
                           </div>
-                          <div className="text-[11px] text-slate-500">{item.district || item.nearPort ? `${item.district || item.nearPort} area` : ''}</div>
+                          <div className="text-[11px] text-slate-500">
+                            {item.district || item.nearPort ? `${item.district || item.nearPort} ${isHindiUI ? 'क्षेत्र' : 'area'}` : ''}
+                          </div>
                           
                           <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100 my-2">
-                            <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Distance</span><span className="font-semibold text-slate-800">{item.distanceKm} km</span></div>
-                            <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Risk Level</span>
+                            <div>
+                              <span className="text-[9px] text-slate-400 block uppercase font-bold">
+                                {isHindiUI ? "दूरी" : "Distance"}
+                              </span>
+                              <span className="font-semibold text-slate-800">{item.distanceKm} {isHindiUI ? "किमी" : "km"}</span>
+                            </div>
+                            <div>
+                              <span className="text-[9px] text-slate-400 block uppercase font-bold">
+                                {isHindiUI ? "जोखिम स्तर" : "Risk Level"}
+                              </span>
                               <span className={`inline-block text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
-                                {item.riskBand} ({item.riskScore}/100)
+                                {riskLabel} ({item.riskScore}/100)
                               </span>
                             </div>
-                            {item.waveHeight && <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Wave Height</span><span className="font-semibold text-slate-800">{item.waveHeight}</span></div>}
-                            {item.windSpeed && <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Wind Speed</span><span className="font-semibold text-slate-800">{item.windSpeed} {item.windDir || ''}</span></div>}
-                            {item.productivityScore && <div className="col-span-2 border-t border-slate-200 pt-1 mt-0.5"><span className="text-[9px] text-slate-400 block uppercase font-bold">Fishing Potential</span><span className="font-semibold text-ocean-700">{item.productivityScore}/100 &bull; {item.productivityBand}</span></div>}
+                            {item.waveHeight && (
+                              <div>
+                                <span className="text-[9px] text-slate-400 block uppercase font-bold">
+                                  {isHindiUI ? "लहर की ऊंचाई" : "Wave Height"}
+                                </span>
+                                <span className="font-semibold text-slate-800">{item.waveHeight}</span>
+                              </div>
+                            )}
+                            {item.windSpeed && (
+                              <div>
+                                <span className="text-[9px] text-slate-400 block uppercase font-bold">
+                                  {isHindiUI ? "हवा की गति" : "Wind Speed"}
+                                </span>
+                                <span className="font-semibold text-slate-800">{item.windSpeed} {item.windDir || ''}</span>
+                              </div>
+                            )}
+                            {item.productivityScore && (
+                              <div className="col-span-2 border-t border-slate-200 pt-1 mt-0.5">
+                                <span className="text-[9px] text-slate-400 block uppercase font-bold">
+                                  {isHindiUI ? "मछली पकड़ने की संभावना" : "Fishing Potential"}
+                                </span>
+                                <span className="font-semibold text-ocean-700">{item.productivityScore}/100 &bull; {prodLabel}</span>
+                              </div>
+                            )}
                           </div>
 
                           {item.suitability && (
@@ -952,10 +1089,13 @@ export function Chat() {
                             <Button 
                               size="sm" 
                               variant="outline" 
-                              className="text-xs flex-1 py-1 h-8 bg-slate-50 hover:bg-slate-100 transition-colors"
+                              className="text-xs flex-1 py-1 h-8 bg-slate-50 hover:bg-slate-100 transition-colors font-semibold"
                               onClick={() => setActiveMapLocation(isMapActive ? null : { coords: [lat, lng], name })}
                             >
-                              <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" /> {isMapActive ? "Hide Map" : "View on Map"}
+                              <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+                              {isHindiUI
+                                ? (isMapActive ? "मानचित्र छिपाएं" : "मानचित्र पर देखें")
+                                : (isMapActive ? "Hide Map" : "View on Map")}
                             </Button>
                             <Button
                               size="sm"
@@ -963,7 +1103,7 @@ export function Chat() {
                               className="text-xs px-2 py-1 h-8 text-ocean-600 hover:bg-ocean-50"
                               onClick={() => navigate(`/map?lat=${lat}&lng=${lng}&name=${encodeURIComponent(name)}&mode=fishing`)}
                             >
-                              Full Map &rarr;
+                              {isHindiUI ? "पूरा मानचित्र →" : "Full Map →"}
                             </Button>
                           </div>
                         </div>
@@ -987,6 +1127,7 @@ export function Chat() {
             </div>
           );
         } else if (mapCoords && mapName) {
+          const isHindiMap = /[\u0900-\u097F]/.test(mapName);
           const isMapActive = activeMapLocation && activeMapLocation.name === mapName;
           elements.push(
             <div key="demo-single-map" className="mt-3 text-left">
@@ -994,10 +1135,13 @@ export function Chat() {
                 <Button 
                   size="sm" 
                   variant="outline" 
-                  className="text-xs flex-1 py-1.5 bg-slate-50 hover:bg-slate-100"
+                  className="text-xs flex-1 py-1.5 bg-slate-50 hover:bg-slate-100 font-semibold"
                   onClick={() => setActiveMapLocation(isMapActive ? null : { coords: mapCoords, name: mapName })}
                 >
-                  <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" /> {isMapActive ? "Hide Map" : `View ${mapName} on Map`}
+                  <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+                  {isHindiMap
+                    ? (isMapActive ? "मानचित्र छिपाएं" : `मानचित्र पर देखें`)
+                    : (isMapActive ? "Hide Map" : `View ${mapName} on Map`)}
                 </Button>
                 <Button
                   size="sm"
@@ -1005,7 +1149,7 @@ export function Chat() {
                   className="text-xs px-3 py-1.5 text-ocean-600 hover:bg-ocean-50"
                   onClick={() => navigate(`/map?lat=${mapCoords[0]}&lng=${mapCoords[1]}&name=${encodeURIComponent(mapName)}&mode=fishing`)}
                 >
-                  Full Map &rarr;
+                  {isHindiMap ? "पूरा मानचित्र →" : "Full Map →"}
                 </Button>
               </div>
               {isMapActive && (
