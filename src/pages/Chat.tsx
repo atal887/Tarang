@@ -220,6 +220,11 @@ export function Chat() {
     const ordinalTargetName = rawCtx.__ordinalTargetName;
     const inheritedIntent = rawCtx.__inheritedIntent;
     const _ctx = { ...rawCtx };
+    
+    if (typeof _ctx.dateTime === 'string') {
+      _ctx.dateTime = new Date(_ctx.dateTime);
+    }
+    
     delete (_ctx as any).__isCompoundOrdinal;
     delete (_ctx as any).__ordinalTargetName;
     delete (_ctx as any).__inheritedIntent;
