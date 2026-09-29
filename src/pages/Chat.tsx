@@ -24,6 +24,7 @@ import { getLocationEnvironment } from "../data/environmentResolver";
 import { locationData as oldLocationData } from "../data/demoData";
 import { MapComponent } from "../components/map/MapComponent";
 import { getLocationCoordinates } from "../services/contextResolver";
+import { findDemoScenario, DEMO_SCENARIOS } from "../data/demoFishermanDataset";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -88,6 +89,51 @@ export function Chat() {
     if (text === "I want to plan a 3-day fishing trip starting tomorrow.") {
       triggerDemoConfirmation();
       isProcessingMessageRef.current = false;
+      return;
+    }
+
+    // 0. Check for 10 static Fisherman Demo Scenarios in Normal mode
+    const demoScenario = activeMode === "Normal" ? findDemoScenario(text) : undefined;
+    if (demoScenario) {
+      setAnalysis({ active: true, type: "general", duration: 400 });
+      setTimeout(() => {
+        setAnalysis({ active: false, type: null, duration: 0 });
+        isProcessingMessageRef.current = false;
+
+        if (demoScenario.requiresPortSelection && demoScenario.ports) {
+          addMessage({
+            text: `Please select the port or harbour you are departing from:`,
+            isBot: true,
+            action: "DEMO_PORT_SELECT",
+            intent: null,
+            payload: { scenarioId: demoScenario.id, ports: demoScenario.ports }
+          });
+        } else {
+          const resp = demoScenario.getResponse();
+          addMessage({
+            text: resp.summary,
+            isBot: true,
+            action: "DEMO_RESULT",
+            intent: null,
+            payload: resp
+          });
+          const dummyCtx: ResolvedContext = {
+            locationId: "demo-loc",
+            locationName: resp.mapName || "Selected Harbour",
+            dateTime: new Date(),
+            timeDescription: "tomorrow evening",
+            boatType: profile.vesselType || "motorized",
+            inferred: { location: false, dateTime: true, boatType: true },
+            originalQuery: text
+          };
+          commitConversationContext({
+            query: text,
+            intent: demoScenario.id === 3 ? "WAVE_HEIGHT" : demoScenario.id === 4 ? "WIND_FORECAST" : demoScenario.id === 5 || demoScenario.id === 6 ? "NEAREST_PFZ" : demoScenario.id === 7 ? "SST_CONDITIONS" : demoScenario.id === 9 ? "SAFE_ROUTE" : demoScenario.id === 10 ? "TRIP_PLANNING" : "SAFETY_TOMORROW",
+            resolvedContext: dummyCtx,
+            decision: {} as any
+          });
+        }
+      }, 400);
       return;
     }
 
@@ -350,6 +396,39 @@ export function Chat() {
     }
   };
 
+  const handleSelectDemoPort = (scenarioId: number, portName: string) => {
+    const scenario = DEMO_SCENARIOS.find(s => s.id === scenarioId);
+    if (scenario) {
+      updateLastMessageAction("DEMO_PORT_SELECT_DONE");
+      addMessage({ text: `Selected Port: ${portName}`, isBot: false, action: null, intent: null });
+      
+      const resp = scenario.getResponse(portName, profile.vesselType);
+      addMessage({
+        text: resp.summary,
+        isBot: true,
+        action: "DEMO_RESULT",
+        intent: null,
+        payload: resp
+      });
+
+      const dummyCtx: ResolvedContext = {
+        locationId: "demo-loc",
+        locationName: portName,
+        dateTime: new Date(),
+        timeDescription: "tomorrow evening",
+        boatType: profile.vesselType || "motorized",
+        inferred: { location: false, dateTime: true, boatType: true },
+        originalQuery: scenario.title
+      };
+      commitConversationContext({
+        query: scenario.title,
+        intent: scenario.id === 3 ? "WAVE_HEIGHT" : scenario.id === 4 ? "WIND_FORECAST" : scenario.id === 7 ? "SST_CONDITIONS" : "SAFETY_TOMORROW",
+        resolvedContext: dummyCtx,
+        decision: {} as any
+      });
+    }
+  };
+
   const triggerDemoConfirmation = () => {
     setAnalysis({ active: true, type: "general", duration: 3000 });
     setTimeout(() => {
@@ -500,11 +579,9 @@ export function Chat() {
               <Button className="flex-1" onClick={() => handleConfirmContext(ctx)}>
                 Apply & Proceed
               </Button>
-              {!isLocCheck && (
-                <Button variant="outline" className="flex-1" onClick={() => setEditContext({ active: true, context: ctx })}>
-                  <Edit2 className="w-3 h-3 mr-2" /> Edit Details
-                </Button>
-              )}
+              <Button variant="outline" className="flex-1" onClick={() => setEditContext({ active: true, context: ctx })}>
+                <Edit2 className="w-3 h-3 mr-2" /> Edit Details
+              </Button>
             </div>
           </div>
         );
@@ -659,6 +736,155 @@ export function Chat() {
         }
       } else if (msg.action === "RESEARCH_RESULT" && msg.payload) {
         elements.push(<ResearchCard key="research-result" payload={msg.payload} />);
+      } else if (msg.action === "DEMO_PORT_SELECT" && msg.payload) {
+        const { scenarioId, ports } = msg.payload;
+        elements.push(
+          <div key="demo-port-select" className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-3 text-left">
+            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Select Port for Forecast:</div>
+            <div className="flex flex-col gap-2">
+              {ports.map((p: any) => (
+                <button
+                  key={p.id}
+                  onClick={() => handleSelectDemoPort(scenarioId, p.name)}
+                  className="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50 hover:bg-ocean-50 hover:border-ocean-300 text-left transition-all group"
+                >
+                  <div>
+                    <div className="font-semibold text-sm text-slate-900 group-hover:text-ocean-700">{p.name}</div>
+                    <div className="text-xs text-slate-500">{p.district}, {p.state} &bull; {p.distanceKm} km</div>
+                  </div>
+                  <span className="text-xs font-bold text-ocean-600 bg-white px-2.5 py-1 rounded-md border border-ocean-100 shadow-sm shrink-0">Select & Proceed</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      } else if (msg.action === "DEMO_PORT_SELECT_DONE") {
+        elements.push(
+          <div key="demo-port-done" className="bg-slate-50 rounded-xl border border-slate-200 p-3 mt-3 space-y-1 text-xs text-slate-500 text-left">
+            <div className="flex items-center gap-2"><Info className="w-3.5 h-3.5 text-slate-400"/> Port selection confirmed.</div>
+          </div>
+        );
+      } else if (msg.action === "DEMO_RESULT" && msg.payload) {
+        const { ports, zones, mapCoords, mapName } = msg.payload;
+        const items = ports || zones;
+        
+        if (items && items.length > 0) {
+          elements.push(
+            <div key="demo-items" className="space-y-3 mt-4 text-left">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 border-b border-slate-200 pb-2">
+                {ports ? "Location & Harbour Details" : "Fishing Zones & Areas"}
+              </h4>
+              <div className="flex flex-col gap-3">
+                {items.map((item: any, idx: number) => {
+                  const isSafe = item.riskBand === 'SAFE';
+                  const isCaution = item.riskBand === 'CAUTION';
+                  const lat = item.lat;
+                  const lng = item.lng;
+                  const name = item.name;
+                  const isMapActive = activeMapLocation && activeMapLocation.name === name;
+
+                  return (
+                    <div key={idx} className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-sm space-y-2">
+                      <div className="flex items-start gap-2.5">
+                        <div className="w-7 h-7 rounded-full bg-ocean-50 border border-ocean-100 flex items-center justify-center shrink-0 mt-0.5">
+                          <MapPin className="w-3.5 h-3.5 text-ocean-600" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-slate-900 text-sm leading-snug">
+                            {items.length > 1 ? `${idx + 1}. ` : ''}{name}
+                          </div>
+                          <div className="text-[11px] text-slate-500">{item.district || item.nearPort ? `${item.district || item.nearPort} area` : ''}</div>
+                          
+                          <div className="grid grid-cols-2 gap-2 text-xs text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-100 my-2">
+                            <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Distance</span><span className="font-semibold text-slate-800">{item.distanceKm} km</span></div>
+                            <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Risk Level</span>
+                              <span className={`inline-block text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
+                                {item.riskBand} ({item.riskScore}/100)
+                              </span>
+                            </div>
+                            {item.waveHeight && <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Wave Height</span><span className="font-semibold text-slate-800">{item.waveHeight}</span></div>}
+                            {item.windSpeed && <div><span className="text-[9px] text-slate-400 block uppercase font-bold">Wind Speed</span><span className="font-semibold text-slate-800">{item.windSpeed} {item.windDir || ''}</span></div>}
+                            {item.productivityScore && <div className="col-span-2 border-t border-slate-200 pt-1 mt-0.5"><span className="text-[9px] text-slate-400 block uppercase font-bold">Fishing Potential</span><span className="font-semibold text-ocean-700">{item.productivityScore}/100 &bull; {item.productivityBand}</span></div>}
+                          </div>
+
+                          {item.suitability && (
+                            <p className="text-xs text-slate-600 leading-relaxed mb-2 bg-slate-50/50 p-2 rounded border border-slate-100">{item.suitability}</p>
+                          )}
+
+                          <div className="flex gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="text-xs flex-1 py-1 h-8 bg-slate-50 hover:bg-slate-100 transition-colors"
+                              onClick={() => setActiveMapLocation(isMapActive ? null : { coords: [lat, lng], name })}
+                            >
+                              <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" /> {isMapActive ? "Hide Map" : "View on Map"}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-xs px-2 py-1 h-8 text-ocean-600 hover:bg-ocean-50"
+                              onClick={() => navigate(`/map?lat=${lat}&lng=${lng}&name=${encodeURIComponent(name)}&mode=fishing`)}
+                            >
+                              Full Map &rarr;
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {isMapActive && (
+                        <div className="h-48 border border-slate-200 rounded-lg overflow-hidden relative mt-2">
+                          <MapComponent 
+                            center={[lat, lng]} 
+                            zoom={12} 
+                            zones={[
+                              { id: "demo-z", center: [lat, lng], radius: 2500, type: "fishing", label: name }
+                            ]} 
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        } else if (mapCoords && mapName) {
+          const isMapActive = activeMapLocation && activeMapLocation.name === mapName;
+          elements.push(
+            <div key="demo-single-map" className="mt-3 text-left">
+              <div className="flex gap-2">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="text-xs flex-1 py-1.5 bg-slate-50 hover:bg-slate-100"
+                  onClick={() => setActiveMapLocation(isMapActive ? null : { coords: mapCoords, name: mapName })}
+                >
+                  <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" /> {isMapActive ? "Hide Map" : `View ${mapName} on Map`}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-xs px-3 py-1.5 text-ocean-600 hover:bg-ocean-50"
+                  onClick={() => navigate(`/map?lat=${mapCoords[0]}&lng=${mapCoords[1]}&name=${encodeURIComponent(mapName)}&mode=fishing`)}
+                >
+                  Full Map &rarr;
+                </Button>
+              </div>
+              {isMapActive && (
+                <div className="h-48 border border-slate-200 rounded-lg overflow-hidden relative mt-2">
+                  <MapComponent 
+                    center={mapCoords} 
+                    zoom={11} 
+                    zones={[
+                      { id: "demo-zone-single", center: mapCoords, radius: 3000, type: "fishing", label: mapName }
+                    ]} 
+                  />
+                </div>
+              )}
+            </div>
+          );
+        }
       }
     }
     

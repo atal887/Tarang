@@ -104,7 +104,17 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
   }
   
   // 3. Multilingual keyword/fuzzy matching
-  const queryWords = q.split(/\s+/).filter(w => w.length > 2);
+  const STOP_AND_LOCATION_WORDS = new Set([
+    'mumbai', 'delhi', 'kochi', 'cochin', 'chennai', 'veraval', 'lakshadweep', 'kavaratti',
+    'agatti', 'minicoi', 'vypin', 'thoppumpady', 'munambam', 'sassoon', 'kasimedu',
+    'what', 'about', 'how', 'is', 'it', 'are', 'the', 'a', 'an', 'this', 'that', 'there', 'here',
+    'area', 'place', 'location', 'spot'
+  ]);
+
+  const queryWords = q.split(/\s+/).filter(w => {
+    const clean = w.replace(/[^a-z0-9]/gi, '');
+    return clean.length > 2 && !STOP_AND_LOCATION_WORDS.has(clean);
+  });
   let bestMatch = "UNKNOWN";
   let maxScore = 0;
   

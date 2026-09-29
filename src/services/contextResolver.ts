@@ -328,6 +328,36 @@ export function resolveFollowUpContext(
     return buildMergedContext(query, q, convCtx, defaultBoatType, inheritVessel ? ['location', 'vessel'] : ['location']);
   }
 
+  // Rule 4.5: Explicit location change follow-up (e.g. "What about Mumbai?", "And Kochi?", "What about Veraval?")
+  if (hasNewLoc && hasPriorCtx) {
+    const freshIntents = detectIntent(query, "English");
+    const isUnknownOrLocationOnly = freshIntents.includes('UNKNOWN') || freshIntents.includes('LOCATION_CHECK') || q.startsWith('what about') || q.startsWith('how about') || q.startsWith('and ');
+    
+    if (isUnknownOrLocationOnly) {
+      const newCtx = resolveFishermanContext({
+        query,
+        defaultLocationName: convCtx.lastLocationName || defaultBoatType,
+        defaultBoatType: convCtx.lastBoatType || defaultBoatType
+      });
+
+      return {
+        type: 'RESOLVED',
+        context: {
+          ...newCtx,
+          dateTime: convCtx.lastDateTime ? new Date(convCtx.lastDateTime) : newCtx.dateTime,
+          timeDescription: convCtx.lastTimeDescription || newCtx.timeDescription,
+          boatType: convCtx.lastBoatType || newCtx.boatType,
+          inferred: {
+            location: false,
+            dateTime: true,
+            boatType: true
+          }
+        },
+        inheritedFrom: ['intent', 'dateTime', 'vessel']
+      };
+    }
+  }
+
   // Rule 5: Vessel-only change, short query
   if (isShortQuery(query) && isVesselOnlyChange(q) && !hasNewLoc && hasPriorCtx) {
     return buildMergedContext(query, q, convCtx, defaultBoatType, ['location', 'dateTime']);

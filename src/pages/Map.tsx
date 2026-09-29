@@ -6,6 +6,8 @@ import { useProfile } from "../store/profile";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ShieldCheck, Route, Clock, ArrowRight, Anchor, Navigation2, AlertTriangle, Lock } from "lucide-react";
 
+import type { MapMarker, MapZone, MapRoute } from "../components/map/MapComponent";
+
 export function Map() {
   const { profile } = useProfile();
   const navigate = useNavigate();
@@ -157,7 +159,7 @@ export function Map() {
   };
 
   // ── Build markers / zones / routes from location-specific data ─────────────
-  const getMapData = () => {
+  const getMapData = (): { markers: MapMarker[]; zones: MapZone[]; routes: MapRoute[] } => {
     let harbourMarker = { id: "1", position: mapCfg.harbour, label: `${profile.location} Harbour`, type: "start" as const };
     if (gpsPos) {
       harbourMarker = { id: "gps", position: gpsPos, label: profile.locationMode === "manual" ? profile.location : "Your current location", type: "start" as const };
@@ -197,16 +199,39 @@ export function Map() {
     }
   };
 
+  const paramLat = searchParams.get("lat");
+  const paramLng = searchParams.get("lng");
+  const paramName = searchParams.get("name");
+
+  let customCenter: [number, number] | null = null;
+  if (paramLat && paramLng && !isNaN(parseFloat(paramLat)) && !isNaN(parseFloat(paramLng))) {
+    customCenter = [parseFloat(paramLat), parseFloat(paramLng)];
+  }
+
   const mapData = getMapData();
-  const mapCenter = gpsPos ? gpsPos : mapCfg.centre;
+  if (customCenter) {
+    const customMarker = {
+      id: "custom-target",
+      position: customCenter,
+      label: paramName || "Selected Location",
+      type: "destination" as const
+    };
+    mapData.markers = [customMarker, ...mapData.markers];
+    mapData.zones = [
+      { id: "custom-z", center: customCenter, radius: 3000, type: "safe" as const, label: paramName || "Target Zone" },
+      ...mapData.zones
+    ];
+  }
+
+  const mapCenter = customCenter ? customCenter : (gpsPos ? gpsPos : mapCfg.centre);
 
   return (
-    <div className="flex flex-col h-full bg-slate-50 relative">
+    <div className="flex flex-col h-full bg-slate-50 relative min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)]">
       {renderPanel()}
-      <div className="flex-1 w-full h-full relative z-0">
+      <div className="flex-1 w-full h-full relative z-0 min-h-[400px]">
         <MapComponent
           center={mapCenter}
-          zoom={mapCfg.zoom}
+          zoom={customCenter ? 12 : mapCfg.zoom}
           mode={mode as any}
           markers={mapData.markers}
           zones={mapData.zones}
