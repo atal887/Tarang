@@ -25,7 +25,9 @@ import { locationData as oldLocationData } from "../data/demoData";
 import { MapComponent } from "../components/map/MapComponent";
 import { getLocationCoordinates } from "../services/contextResolver";
 import { findDemoScenario, DEMO_SCENARIOS } from "../data/demoFishermanDataset";
+import { findDemoResearcherScenario } from "../data/demoResearcherDataset";
 import { FormattedMessage } from "../components/ui/FormattedMessage";
+import { ResearcherVisualizations } from "../components/ui/ResearcherVisualizations";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -134,6 +136,25 @@ export function Chat() {
             decision: {} as any
           });
         }
+      }, 400);
+      return;
+    }
+
+    // 0.5. Check for 5 static Researcher Demo Scenarios in Research mode
+    const demoResearcherScenario = activeMode === "Research" ? findDemoResearcherScenario(text) : undefined;
+    if (demoResearcherScenario) {
+      setAnalysis({ active: true, type: "general", duration: 400 });
+      setTimeout(() => {
+        setAnalysis({ active: false, type: null, duration: 0 });
+        isProcessingMessageRef.current = false;
+        
+        addMessage({
+          text: demoResearcherScenario.summaryMarkdown,
+          isBot: true,
+          action: "DEMO_RESEARCHER_RESULT",
+          intent: null,
+          payload: demoResearcherScenario
+        });
       }, 400);
       return;
     }
@@ -886,6 +907,8 @@ export function Chat() {
             </div>
           );
         }
+      } else if (msg.action === "DEMO_RESEARCHER_RESULT" && msg.payload) {
+        elements.push(<ResearcherVisualizations key="demo-researcher-vis" scenario={msg.payload} />);
       }
     }
     
