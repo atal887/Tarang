@@ -575,60 +575,62 @@ export function Chat() {
                   const isSafe = rec.riskBand === 'SAFE';
                   const isCaution = rec.riskBand === 'CAUTION';
                   
+                  const riskScoreRound = rec.riskScore != null ? Math.round(rec.riskScore) : 'N/A';
+                  const prodScoreRound = isMarine && rec.productivityEvaluation ? Math.round(rec.productivityEvaluation.productivityScore) : null;
+                  
                   return (
                     <div 
                       key={idx} 
-                      className="bg-white border border-slate-200 p-3 rounded-lg shadow-sm"
+                      className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col gap-4 w-full"
                       data-productivity-score={isMarine ? rec.productivityEvaluation?.productivityScore : undefined}
                       data-productivity-band={isMarine ? rec.productivityEvaluation?.productivityBand : undefined}
                       data-productivity-factors={isMarine ? JSON.stringify(rec.productivityEvaluation?.factors) : undefined}
                     >
-                      <div className="flex w-full items-start gap-3 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-ocean-50 border border-ocean-100 flex items-center justify-center shrink-0 mt-0.5">
-                          <MapPin className="w-4 h-4 text-ocean-600" />
+                      <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+                        <div className="w-10 h-10 rounded-full bg-ocean-50 border border-ocean-100 flex items-center justify-center shrink-0">
+                          <MapPin className="w-5 h-5 text-ocean-600" />
                         </div>
-                        <div className="flex-1 w-full">
-                          <div className="font-semibold text-slate-800 text-sm mb-1.5 leading-tight">
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-slate-800 text-base leading-tight truncate">
                             {idx + 1}. {name}
                           </div>
-                          
-                          <div className="grid grid-cols-2 gap-y-2 gap-x-4 mb-3 border-t border-slate-50 pt-2">
-                            <div className="text-[11px] text-slate-500 flex flex-col gap-0.5">
-                              <span className="text-[9px] uppercase tracking-wider opacity-70">Distance</span>
-                              <span className="font-medium text-slate-700">{dist} km</span>
-                            </div>
-                            <div className="text-[11px] text-slate-500 flex flex-col gap-0.5">
-                              <span className="text-[9px] uppercase tracking-wider opacity-70">Risk Score</span>
-                              <div className="flex items-center gap-1.5">
-                                <span className="font-medium text-slate-700">{rec.riskScore || 'N/A'}/100</span>
-                                <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
-                                  {rec.riskBand}
-                                </span>
-                              </div>
-                            </div>
-                            {isMarine && rec.productivityEvaluation && (
-                              <div className="text-[11px] text-slate-500 flex flex-col gap-0.5 col-span-2 mt-0.5">
-                                <span className="text-[9px] uppercase tracking-wider opacity-70">Fishing Potential</span>
-                                <span className="font-medium text-slate-700">{rec.productivityEvaluation.productivityScore}/100 &bull; {rec.productivityEvaluation.productivityBand}</span>
-                              </div>
-                            )}
+                          <div className="text-sm text-slate-500 mt-0.5 truncate">
+                            Distance: {dist} km
                           </div>
-                          
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="text-xs w-full py-1 h-8 bg-slate-50/50 hover:bg-slate-100/80 transition-colors"
-                            onClick={() => setActiveMapLocation({ coords: [rec.latitude, rec.longitude], name })}
-                          >
-                            <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" /> View on Map
-                          </Button>
                         </div>
                       </div>
-                      
+
+                      <div className="flex flex-col gap-2.5">
+                        <div className="flex justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-100">
+                          <span className="text-xs font-bold text-slate-500 uppercase tracking-wider shrink-0">Risk</span>
+                          <div className="flex items-center text-sm truncate ml-2">
+                            <span className="font-bold text-slate-800">{riskScoreRound}/100</span>
+                            <span className={`ml-1.5 font-bold ${isSafe ? 'text-status-safeText' : isCaution ? 'text-status-cautionText' : 'text-status-dangerText'}`}>
+                              &bull; {rec.riskBand}
+                            </span>
+                          </div>
+                        </div>
+                        {isMarine && rec.productivityEvaluation && (
+                          <div className="flex justify-between items-center bg-ocean-50/30 p-3 rounded-lg border border-ocean-100">
+                            <span className="text-xs font-bold text-ocean-700 uppercase tracking-wider shrink-0">Fishing Potential</span>
+                            <div className="flex items-center text-sm truncate ml-2">
+                              <span className="font-bold text-ocean-800">{prodScoreRound}/100</span>
+                              <span className="ml-1.5 font-bold text-ocean-800">
+                                &bull; {rec.productivityEvaluation.productivityBand}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="text-sm text-slate-700 leading-relaxed italic border-l-[3px] border-slate-200 pl-3">
+                        "{rec.suitability}"
+                      </div>
+
                       {(() => {
                         const mapCoords = (activeMapLocation && activeMapLocation.name === name) ? activeMapLocation.coords : null;
                         return mapCoords ? (
-                          <div className="mt-2 h-48 border border-slate-200 rounded-lg overflow-hidden relative">
+                          <div className="w-full h-48 border border-slate-200 rounded-lg overflow-hidden relative">
                             <MapComponent 
                               center={mapCoords} 
                               zoom={12} 
@@ -639,10 +641,15 @@ export function Chat() {
                           </div>
                         ) : null;
                       })()}
-                      
-                      <div className="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100 mt-2">
-                        {rec.suitability}
-                      </div>
+
+                      <Button 
+                        size="default" 
+                        variant="outline" 
+                        className="w-full font-semibold border-slate-200 hover:bg-slate-50 text-slate-700 mt-1 h-11"
+                        onClick={() => setActiveMapLocation({ coords: [rec.latitude, rec.longitude], name })}
+                      >
+                        <MapIcon className="w-4 h-4 mr-2 text-slate-500" /> View on Map
+                      </Button>
                     </div>
                   );
                 })}

@@ -19,7 +19,7 @@ export function formatNormalResponse(
   const evalMonth = (currentMonth === 9 || currentMonth === 10) ? currentMonth + 1 : 10;
   const env = getLocationEnvironment(context.locationId, evalMonth);
 
-  const isMarine = env?.waveApplicability !== 'not_applicable_inland' && env?.fisheriesType !== 'inland';
+  const isMarine = env ? (env.waveApplicability !== 'not_applicable_inland' && env.fisheriesType !== 'inland') : false;
   const hasMarineRecs = decision.marineRecommendations && decision.marineRecommendations.length > 0;
   
   const topMarine = hasMarineRecs ? decision.marineRecommendations![0] : null;
@@ -30,12 +30,12 @@ export function formatNormalResponse(
     
     if (isMarine) {
       if (isInlandQuery && !isMarineQuery) {
-        return `No, ${context.locationName} is a marine/coastal location, not an inland area.`;
+        return `No, ${context.locationName} is a marine/coastal location.`;
       }
       return `Yes, ${context.locationName} is a marine/coastal location.`;
     } else {
       if (isMarineQuery && !isInlandQuery) {
-        return `No, ${context.locationName} is an inland location, not a marine area.`;
+        return `No, ${context.locationName} is an inland location.`;
       }
       return `Yes, ${context.locationName} is an inland location.`;
     }
