@@ -87,40 +87,40 @@ export const DEMO_DIGITAL_TWIN_SCENARIOS: DemoDigitalTwinScenario[] = [
       ]
     }
   },
-  // 2. What happens if the wind speed increases from 14 km/h to 28 km/h at Mumbai Port?
+  // 2. What happens if the wind speed increases at Mumbai Port / Sassoon Dock?
   {
     id: 2,
-    matches: (q: string) => (q.includes("mumbai") && q.includes("wind") && (q.includes("28") || q.includes("increase"))),
-    title: "Digital Twin Simulation — Wind Speed Surge (+14 km/h) at Mumbai Port",
+    matches: (q: string) => ((q.includes("mumbai") || q.includes("sassoon")) && q.includes("wind") && (q.includes("28") || q.includes("32") || q.includes("increase"))),
+    title: "Digital Twin Simulation — Wind Speed Surge (+13 km/h) at Mumbai Sassoon Dock",
     locationName: "Mumbai Port (Sassoon Dock)",
     district: "Mumbai",
     state: "Maharashtra",
     coords: [18.92, 72.83],
-    before: { waveHeight: "1.8 m", windSpeed: "14 km/h", sst: "28.4°C", riskScore: 38, riskBand: "SAFE / CAUTION" },
-    changed: { paramName: "Wind Speed", changeText: "14 km/h → 28 km/h (+14 km/h)", description: "Simulated offshore wind speed doubling from gentle breeze to fresh gale force." },
-    after: { waveHeight: "2.4 m", windSpeed: "28 km/h", sst: "28.4°C", riskScore: 68, riskBand: "DANGER / HIGH RISK" },
-    affectedFactors: ["Wind Speed (+100%)", "Secondary Wave Build-up (+0.6m wind swell)", "Operational Risk Score (+30 pts)", "Net Drift & Navigation Drift (+120%)"],
+    before: { waveHeight: "1.8 m", windSpeed: "19 km/h", sst: "28.4°C", riskScore: 38, riskBand: "SAFE / CAUTION" },
+    changed: { paramName: "Wind Speed", changeText: "19 km/h → 32 km/h (+13 km/h)", description: "Simulated offshore wind speed increase from moderate breeze to fresh gale force." },
+    after: { waveHeight: "2.5 m", windSpeed: "32 km/h", sst: "28.4°C", riskScore: 68, riskBand: "DANGER / HIGH RISK" },
+    affectedFactors: ["Wind Speed (+68%)", "Secondary Wave Build-up (+0.7m wind swell)", "Operational Risk Score (+30 pts)", "Net Drift & Navigation Drift (+120%)"],
     boatSuitability: {
       nonMotorized: { before: "🟡 CAUTION", after: "⛔ STRICTLY PROHIBITED — Extreme drift hazard", status: "PROHIBITED" },
-      motorized: { before: "🟡 CAUTION", after: "⛔ HIGH DANGER — Do not venture offshore", status: "PROHIBITED" },
+      motorized: { before: "🟢 SAFE", after: "⛔ HIGH DANGER — Do not venture offshore", status: "PROHIBITED" },
       mechanized: { before: "🟢 SAFE", after: "🟡 EXTREME CAUTION — Only experienced crew with storm gear", status: "CAUTION" }
     },
-    fishingSuitabilityChange: "Fishing suitability drops by 60%. Strong wind drift renders purse seine and gillnet deployment unmanageable.",
+    fishingSuitabilityChange: "Fishing suitability drops by 60%. Strong wind drift renders purse seine and gillnet deployment unmanageable near Sassoon Dock.",
     chartData: {
       comparisonBar: [
-        { metric: "Wind Speed (km/h)", Baseline: 14, Simulated: 28 },
-        { metric: "Wave Height (m)", Baseline: 1.8, Simulated: 2.4 },
+        { metric: "Wind Speed (km/h)", Baseline: 19, Simulated: 32 },
+        { metric: "Wave Height (m)", Baseline: 1.8, Simulated: 2.5 },
         { metric: "Risk Score (/100)", Baseline: 38, Simulated: 68 }
       ],
       vesselLimits: [
-        { vessel: "Non-Motorized (Canoe)", Limit: 25, Baseline: 14, Simulated: 28 },
-        { vessel: "Motorized (<12m)", Limit: 35, Baseline: 14, Simulated: 28 },
-        { vessel: "Mechanized (>12m)", Limit: 50, Baseline: 14, Simulated: 28 }
+        { vessel: "Non-Motorized (Canoe)", Limit: 25, Baseline: 19, Simulated: 32 },
+        { vessel: "Motorized (<12m)", Limit: 35, Baseline: 19, Simulated: 32 },
+        { vessel: "Mechanized (>12m)", Limit: 50, Baseline: 19, Simulated: 32 }
       ],
       riskMatrix: [
-        { category: "Drift Hazard", Baseline: 30, Simulated: 85 },
-        { category: "Wave Stress", Baseline: 45, Simulated: 75 },
-        { category: "Port Return Safety", Baseline: 80, Simulated: 40 },
+        { category: "Drift Hazard", Baseline: 35, Simulated: 88 },
+        { category: "Wave Stress", Baseline: 45, Simulated: 78 },
+        { category: "Port Return Safety", Baseline: 80, Simulated: 42 },
         { category: "Safety Score", Baseline: 62, Simulated: 32 }
       ]
     }
@@ -128,7 +128,7 @@ export const DEMO_DIGITAL_TWIN_SCENARIOS: DemoDigitalTwinScenario[] = [
   // 3. What happens if I increase the wave height and wind speed and decrease the SST at Kochi Harbour?
   {
     id: 3,
-    matches: (q: string) => (q.includes("kochi") && (q.includes("decrease") || q.includes("sst") || (q.includes("wave") && q.includes("wind")))),
+    matches: (q: string) => (q.includes("kochi") && (q.includes("sst") || (q.includes("wave") && q.includes("wind")))),
     title: "Digital Twin Multi-Factor Simulation — Compound Environmental Shock at Kochi Harbour",
     locationName: "Kochi Harbour (Thoppumpady)",
     district: "Ernakulam",
@@ -179,6 +179,101 @@ export const DEMO_DIGITAL_TWIN_SCENARIOS: DemoDigitalTwinScenario[] = [
         { vessel: "Non-Motorized Canoe", BaselineRisk: 30, SimulatedRisk: 95 },
         { vessel: "Small Motorized Boat", BaselineRisk: 28, SimulatedRisk: 82 },
         { vessel: "Mechanized Trawler", BaselineRisk: 22, SimulatedRisk: 55 }
+      ]
+    }
+  },
+  // 4. What happens if I increase the wave height from 1.8 m to 2.6 m at Mumbai Sassoon Dock?
+  {
+    id: 4,
+    matches: (q: string) => ((q.includes("mumbai") || q.includes("sassoon")) && q.includes("wave") && !q.includes("sst")),
+    title: "Digital Twin Simulation — Wave Height Spike (+0.8 m) at Mumbai Sassoon Dock",
+    locationName: "Mumbai Port (Sassoon Dock)",
+    district: "Mumbai",
+    state: "Maharashtra",
+    coords: [18.92, 72.83],
+    before: { waveHeight: "1.8 m", windSpeed: "19 km/h", sst: "28.4°C", riskScore: 38, riskBand: "SAFE / CAUTION" },
+    changed: { paramName: "Wave Height", changeText: "1.8 m → 2.6 m (+0.8 m)", description: "Simulated wave swell escalation of +0.8m over baseline conditions." },
+    after: { waveHeight: "2.6 m", windSpeed: "19 km/h", sst: "28.4°C", riskScore: 66, riskBand: "HIGH RISK / CAUTION" },
+    affectedFactors: ["Significant Wave Height (+44%)", "Operational Risk Score (+28 pts)", "Small Craft Stability (-65%)", "Fishing Gear Handling (-40%)"],
+    boatSuitability: {
+      nonMotorized: { before: "🟡 CAUTION", after: "⛔ PROHIBITED — High risk of capsizing in 2.6m waves", status: "PROHIBITED" },
+      motorized: { before: "🟢 SAFE", after: "🟡 EXTREME CAUTION — Restricted within harbour mouth", status: "CAUTION" },
+      mechanized: { before: "🟢 SAFE", after: "🟢 SAFE — Manageable for >12m trawlers with caution", status: "SAFE" }
+    },
+    fishingSuitabilityChange: "Overall fishing suitability drops by 40%. Heavy swell near Sassoon Dock approach makes purse seine and gillnet deployment hazardous.",
+    chartData: {
+      comparisonBar: [
+        { metric: "Wave Height (m)", Baseline: 1.8, Simulated: 2.6 },
+        { metric: "Wind Speed (km/h)", Baseline: 19, Simulated: 19 },
+        { metric: "Risk Score (/100)", Baseline: 38, Simulated: 66 }
+      ],
+      vesselLimits: [
+        { vessel: "Non-Motorized (Canoe)", Limit: 0.6, Baseline: 1.8, Simulated: 2.6 },
+        { vessel: "Motorized (<12m)", Limit: 1.4, Baseline: 1.8, Simulated: 2.6 },
+        { vessel: "Mechanized (>12m)", Limit: 2.4, Baseline: 1.8, Simulated: 2.6 }
+      ],
+      productivityImpact: [
+        { factor: "Gear Handling", Baseline: 80, Simulated: 40 },
+        { factor: "Vessel Stability", Baseline: 85, Simulated: 30 },
+        { factor: "Biological Potential", Baseline: 78, Simulated: 78 },
+        { factor: "Overall Yield Index", Baseline: 80, Simulated: 48 }
+      ]
+    }
+  },
+  // 5. What happens if I increase wave height & wind speed and decrease SST at Mumbai Sassoon Dock?
+  {
+    id: 5,
+    matches: (q: string) => ((q.includes("mumbai") || q.includes("sassoon")) && (q.includes("sst") || (q.includes("wave") && q.includes("wind")))),
+    title: "Digital Twin Multi-Factor Simulation — Monsoon Compound Shock at Mumbai Sassoon Dock",
+    locationName: "Mumbai Port (Sassoon Dock)",
+    district: "Mumbai",
+    state: "Maharashtra",
+    coords: [18.92, 72.83],
+    before: { waveHeight: "1.8 m", windSpeed: "19 km/h", sst: "28.4°C", riskScore: 38, riskBand: "SAFE / CAUTION" },
+    changed: {
+      paramName: "Monsoon Compound Shock (Wave + Wind + SST)",
+      changeText: "Wave: 1.8m → 2.8m (+1.0m) | Wind: 19 → 36 km/h (+17 km/h) | SST: 28.4°C → 25.8°C (-2.6°C)",
+      description: "Simulated monsoon storm front event with severe wave escalation, strong wind gusts, and coastal upwelling SST cooling."
+    },
+    after: { waveHeight: "2.8 m", windSpeed: "36 km/h", sst: "25.8°C", riskScore: 82, riskBand: "SEVERE DANGER / STORM STATE" },
+    affectedFactors: [
+      "Significant Wave Height (+55%)",
+      "Wind Speed (+89%)",
+      "Sea Surface Temperature (-2.6°C upwelling drop)",
+      "Combined Operational Risk (+44 pts)",
+      "Vessel Safety Margin (-75%)"
+    ],
+    boatSuitability: {
+      nonMotorized: { before: "🟡 CAUTION", after: "⛔ SEVERE DANGER — PROHIBITED", status: "PROHIBITED" },
+      motorized: { before: "🟢 SAFE", after: "⛔ SEVERE DANGER — PROHIBITED", status: "PROHIBITED" },
+      mechanized: { before: "🟢 SAFE", after: "🟡 HIGH CAUTION — Severe weather warning active", status: "CAUTION" }
+    },
+    fishingSuitabilityChange: "Combined fishing suitability drops by 80%. Severe swell, strong wind drift, and SST cooling render offshore fishing operations from Sassoon Dock unviable.",
+    combinedEffectDetails: {
+      waveDeltaRisk: 22,
+      windDeltaRisk: 18,
+      sstDeltaRisk: 4,
+      totalRiskShift: 44,
+      explanation: "Compound effect calculation: Wave elevation (+1.0m) adds +22 risk points, Wind surge (+17 km/h) adds +18 risk points, and Thermal Upwelling (-2.6°C drop) adds +4 thermal risk points. Total Risk jumps from 38/100 (SAFE/CAUTION) to 82/100 (SEVERE DANGER)."
+    },
+    chartData: {
+      waterfallRisk: [
+        { stage: "Baseline State", Risk: 38, fill: "#10b981" },
+        { stage: "+1.0m Wave Delta", Risk: 60, fill: "#0ea5e9" },
+        { stage: "+17 km/h Wind Delta", Risk: 78, fill: "#f59e0b" },
+        { stage: "-2.6°C SST Cooling", Risk: 82, fill: "#ef4444" }
+      ],
+      combinedRadar: [
+        { subject: "Wave Exposure", Baseline: 35, Simulated: 90 },
+        { subject: "Wind Exposure", Baseline: 38, Simulated: 92 },
+        { subject: "Thermal Shock", Baseline: 20, Simulated: 70 },
+        { subject: "Vessel Risk", Baseline: 38, Simulated: 82 },
+        { subject: "Gear Safety", Baseline: 80, Simulated: 20 }
+      ],
+      vesselImpact: [
+        { vessel: "Non-Motorized Canoe", BaselineRisk: 40, SimulatedRisk: 98 },
+        { vessel: "Small Motorized Boat", BaselineRisk: 35, SimulatedRisk: 88 },
+        { vessel: "Mechanized Trawler", BaselineRisk: 28, SimulatedRisk: 62 }
       ]
     }
   }

@@ -82,7 +82,7 @@ export function DigitalTwinUI() {
   // Local state for dropdowns & sliders
   const [selectedState, setSelectedState] = useState<string>("Kerala");
   const [selectedPort, setSelectedPort] = useState<string>("Kochi");
-  const [localMods, setLocalMods] = useState<Partial<EnvironmentalConditions>>({});
+  const [localMods, setLocalMods] = useState<Partial<EnvironmentalConditions>>(() => getPortBaseline("Kochi"));
 
   // Resolve Baseline whenever selectedPort changes
   const activeBaseline = getPortBaseline(selectedPort);
@@ -141,33 +141,33 @@ export function DigitalTwinUI() {
     }));
   };
 
-  // Quick Preset Scenario Handlers
+  // Quick Preset Scenario Handlers (Dynamically relative to active selected port baseline)
   const applyPresetScenario = (scenarioType: 'wave' | 'wind' | 'sst' | 'chlorophyll' | 'current' | 'compound') => {
     const base = activeBaseline;
     let newMods: Partial<EnvironmentalConditions> = { ...base };
 
     switch (scenarioType) {
       case 'wave':
-        newMods.significantWaveHeightM = 2.0;
+        newMods.significantWaveHeightM = Number((base.significantWaveHeightM + 0.8).toFixed(1));
         break;
       case 'wind':
-        newMods.windSpeedKmph = 28;
+        newMods.windSpeedKmph = Math.round(base.windSpeedKmph + 14);
         break;
       case 'sst':
-        newMods.seaSurfaceTemperatureC = 27.0;
+        newMods.seaSurfaceTemperatureC = Number((base.seaSurfaceTemperatureC - 2.1).toFixed(1));
         break;
       case 'chlorophyll':
-        newMods.chlorophyllMgM3 = 0.90;
+        newMods.chlorophyllMgM3 = Number((base.chlorophyllMgM3 + 0.42).toFixed(2));
         break;
       case 'current':
-        newMods.surfaceCurrentSpeedMs = 1.20;
+        newMods.surfaceCurrentSpeedMs = Number((base.surfaceCurrentSpeedMs + 0.90).toFixed(2));
         break;
       case 'compound':
-        newMods.significantWaveHeightM = 2.2;
-        newMods.windSpeedKmph = 32;
-        newMods.seaSurfaceTemperatureC = 25.5;
-        newMods.surfaceCurrentSpeedMs = 1.20;
-        newMods.chlorophyllMgM3 = 0.90;
+        newMods.significantWaveHeightM = Number((base.significantWaveHeightM + 1.0).toFixed(1));
+        newMods.windSpeedKmph = Math.round(base.windSpeedKmph + 18);
+        newMods.seaSurfaceTemperatureC = Number((base.seaSurfaceTemperatureC - 3.6).toFixed(1));
+        newMods.surfaceCurrentSpeedMs = Number((base.surfaceCurrentSpeedMs + 0.90).toFixed(2));
+        newMods.chlorophyllMgM3 = Number((base.chlorophyllMgM3 + 0.42).toFixed(2));
         break;
     }
 
@@ -356,8 +356,13 @@ export function DigitalTwinUI() {
 
       {/* QUICK PRESET DEMO SCENARIOS BAR */}
       <div className="bg-white p-3.5 rounded-2xl border border-indigo-100 shadow-sm space-y-2">
-        <div className="text-xs font-bold text-indigo-900 uppercase tracking-wider flex items-center gap-1.5">
-          <Zap className="w-4 h-4 text-indigo-600" /> Quick Demo Scenarios (Select to Test):
+        <div className="text-xs font-bold text-indigo-900 uppercase tracking-wider flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+          <span className="flex items-center gap-1.5">
+            <Zap className="w-4 h-4 text-indigo-600" /> Quick Demo Scenarios ({selectedPort}):
+          </span>
+          <span className="text-[10px] text-slate-500 font-semibold">
+            Baseline: Wave {activeBaseline.significantWaveHeightM}m | Wind {activeBaseline.windSpeedKmph}km/h | SST {activeBaseline.seaSurfaceTemperatureC}°C | Current {activeBaseline.surfaceCurrentSpeedMs}m/s
+          </span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           <button
@@ -365,7 +370,7 @@ export function DigitalTwinUI() {
             className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-ocean-50 hover:border-ocean-300 text-left transition-all group"
           >
             <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🌊 Wave Spike</div>
-            <div className="text-[10px] text-slate-500">1.2m &rarr; 2.0m</div>
+            <div className="text-[10px] text-slate-500">{activeBaseline.significantWaveHeightM}m &rarr; {(activeBaseline.significantWaveHeightM + 0.8).toFixed(1)}m</div>
           </button>
 
           <button
@@ -373,7 +378,7 @@ export function DigitalTwinUI() {
             className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-amber-50 hover:border-amber-300 text-left transition-all group"
           >
             <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">💨 Wind Surge</div>
-            <div className="text-[10px] text-slate-500">14 &rarr; 28 km/h</div>
+            <div className="text-[10px] text-slate-500">{activeBaseline.windSpeedKmph} &rarr; {Math.round(activeBaseline.windSpeedKmph + 14)} km/h</div>
           </button>
 
           <button
@@ -381,7 +386,7 @@ export function DigitalTwinUI() {
             className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-rose-50 hover:border-rose-300 text-left transition-all group"
           >
             <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🌡️ SST Drop</div>
-            <div className="text-[10px] text-slate-500">29.1°C &rarr; 27°C</div>
+            <div className="text-[10px] text-slate-500">{activeBaseline.seaSurfaceTemperatureC}°C &rarr; {(activeBaseline.seaSurfaceTemperatureC - 2.1).toFixed(1)}°C</div>
           </button>
 
           <button
@@ -389,7 +394,7 @@ export function DigitalTwinUI() {
             className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 text-left transition-all group"
           >
             <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🟢 Chlorophyll</div>
-            <div className="text-[10px] text-slate-500">0.48 &rarr; 0.9 mg/m³</div>
+            <div className="text-[10px] text-slate-500">{activeBaseline.chlorophyllMgM3} &rarr; {(activeBaseline.chlorophyllMgM3 + 0.42).toFixed(2)} mg/m³</div>
           </button>
 
           <button
@@ -397,7 +402,7 @@ export function DigitalTwinUI() {
             className="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 text-left transition-all group"
           >
             <div className="text-[11px] font-bold text-slate-800 flex items-center gap-1">🌊 Current Surge</div>
-            <div className="text-[10px] text-slate-500">0.3 &rarr; 1.2 m/s</div>
+            <div className="text-[10px] text-slate-500">{activeBaseline.surfaceCurrentSpeedMs} &rarr; {(activeBaseline.surfaceCurrentSpeedMs + 0.90).toFixed(2)} m/s</div>
           </button>
 
           <button

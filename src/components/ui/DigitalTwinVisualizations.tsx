@@ -175,8 +175,8 @@ export const DigitalTwinVisualizations: React.FC<Props> = ({ scenario }) => {
           <Layers className="w-4 h-4 text-indigo-600" /> Simulation Interactive Graphs (3 Charts)
         </div>
 
-        {/* SCENARIO 1 CHARTS */}
-        {scenario.id === 1 && (
+        {/* SCENARIO 1 & 4 CHARTS (Wave Height Spike) */}
+        {(scenario.id === 1 || scenario.id === 4) && (
           <div className="space-y-6">
             {/* Chart 1: Before vs After Bar */}
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
@@ -212,7 +212,7 @@ export const DigitalTwinVisualizations: React.FC<Props> = ({ scenario }) => {
                     <Tooltip content={<CustomTooltip />} />
                     <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
                     <Bar dataKey="Limit" name="Safe Limit (m)" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Simulated" name="Simulated Wave (2.0m)" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Simulated" name={`Simulated Wave (${scenario.after.waveHeight})`} fill="#ef4444" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -277,7 +277,7 @@ export const DigitalTwinVisualizations: React.FC<Props> = ({ scenario }) => {
                     <Tooltip content={<CustomTooltip />} />
                     <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
                     <Bar dataKey="Limit" name="Wind Limit (km/h)" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="Simulated" name="Simulated Wind (28 km/h)" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Simulated" name={`Simulated Wind (${scenario.after.windSpeed})`} fill="#ef4444" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -305,8 +305,8 @@ export const DigitalTwinVisualizations: React.FC<Props> = ({ scenario }) => {
           </div>
         )}
 
-        {/* SCENARIO 3 CHARTS */}
-        {scenario.id === 3 && (
+        {/* SCENARIO 3 & 5 CHARTS (Compound Shock) */}
+        {(scenario.id === 3 || scenario.id === 5) && (
           <div className="space-y-6">
             {/* Chart 1: Multi-Factor Risk Waterfall */}
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
