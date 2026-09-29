@@ -2,17 +2,137 @@ import React, { useState } from 'react';
 import type { DemoResearcherScenario } from '../../data/demoResearcherDataset';
 import { FormattedMessage } from './FormattedMessage';
 import { MapComponent } from '../map/MapComponent';
-import { MapIcon, BarChart2, TrendingUp, ScatterChart as ScatterIcon, Navigation } from 'lucide-react';
+import { MapIcon, BarChart2, TrendingUp, ScatterChart as ScatterIcon, Navigation, ShieldAlert, Award, Layers } from 'lucide-react';
 import { Button } from './Button';
+import {
+  ResponsiveContainer,
+  BarChart, Bar,
+  LineChart, Line,
+  AreaChart, Area,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, Cell
+} from 'recharts';
 
 interface Props {
   scenario: DemoResearcherScenario;
 }
 
+// Custom Glassmorphic Tooltip for Recharts
+const CustomRechartsTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-slate-900/95 text-white p-3 rounded-lg shadow-xl border border-slate-700/60 text-xs backdrop-blur-md z-50">
+        <div className="font-bold text-ocean-400 mb-1 border-b border-slate-700/60 pb-1">{label || payload[0].name}</div>
+        <div className="space-y-1 mt-1">
+          {payload.map((item: any, idx: number) => (
+            <div key={idx} className="flex items-center justify-between gap-3 text-slate-200">
+              <span className="flex items-center gap-1.5 font-medium">
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color || item.fill }}></span>
+                {item.name}:
+              </span>
+              <span className="font-bold text-white">{item.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 export const ResearcherVisualizations: React.FC<Props> = ({ scenario }) => {
   const [activeMapPort, setActiveMapPort] = useState<{ coords: [number, number]; name: string } | null>(null);
   const [selectedTrendMetric, setSelectedTrendMetric] = useState<'all' | 'wave' | 'wind' | 'sst'>('all');
   const [activeRouteIndex, setActiveRouteIndex] = useState<number | null>(null);
+
+  // Hardcoded Data Arrays for Recharts
+
+  // Scenario 1 Data
+  const s1BarData = [
+    { name: 'Wave Height (m)', Mumbai: 1.8, Kochi: 1.2 },
+    { name: 'Wind Speed (km/h)', Mumbai: 19, Kochi: 14 },
+    { name: 'SST (°C)', Mumbai: 28.4, Kochi: 29.1 },
+    { name: 'Chlorophyll (mg/m³ x10)', Mumbai: 7.2, Kochi: 4.8 },
+    { name: 'Risk Score (/100)', Mumbai: 48, Kochi: 28 }
+  ];
+
+  const s1RadarData = [
+    { subject: 'Wave Safety', Mumbai: 52, Kochi: 75 },
+    { subject: 'Wind Safety', Mumbai: 55, Kochi: 72 },
+    { subject: 'SST Potential', Mumbai: 80, Kochi: 88 },
+    { subject: 'Chlorophyll', Mumbai: 85, Kochi: 55 },
+    { subject: 'PFZ Probability', Mumbai: 70, Kochi: 65 }
+  ];
+
+  const s1RiskData = [
+    { location: 'Mumbai Port', OperationalRisk: 48, ProductivityIndex: 78 },
+    { location: 'Kochi Harbour', OperationalRisk: 28, ProductivityIndex: 62 }
+  ];
+
+  // Scenario 2 Data
+  const s2BarData = [
+    { factor: 'Wave Height (m)', BhauchaDhakka: 1.2, SassoonDock: 1.5 },
+    { factor: 'Wind Speed (km/h)', BhauchaDhakka: 14, SassoonDock: 17 },
+    { factor: 'Risk Score (/100)', BhauchaDhakka: 26, SassoonDock: 38 }
+  ];
+
+  const s2RadarData = [
+    { subject: 'Swell Shelter', BhauchaDhakka: 88, SassoonDock: 70 },
+    { subject: 'Wind Protection', BhauchaDhakka: 82, SassoonDock: 68 },
+    { subject: 'Tidal Access', BhauchaDhakka: 90, SassoonDock: 85 },
+    { subject: 'Safety Margin', BhauchaDhakka: 74, SassoonDock: 62 },
+    { subject: 'Thermal Profile', BhauchaDhakka: 80, SassoonDock: 79 }
+  ];
+
+  const s2RiskData = [
+    { port: 'Bhaucha Dhakka', RiskScore: 26, SafeThreshold: 35 },
+    { port: 'Sassoon Dock', RiskScore: 38, SafeThreshold: 35 }
+  ];
+
+  // Scenario 3 Data
+  const s3TrendData = [
+    { day: 'Day 1', WaveHeight: 1.1, WindSpeed: 12, SST: 29.2 },
+    { day: 'Day 2', WaveHeight: 1.3, WindSpeed: 15, SST: 29.1 },
+    { day: 'Day 3', WaveHeight: 1.6, WindSpeed: 19, SST: 28.9 }
+  ];
+
+  const s3AreaData = [
+    { day: 'Day 1', SeaStressIndex: 25, Wave: 1.1, Wind: 12 },
+    { day: 'Day 2', SeaStressIndex: 42, Wave: 1.3, Wind: 15 },
+    { day: 'Day 3', SeaStressIndex: 68, Wave: 1.6, Wind: 19 }
+  ];
+
+  // Scenario 4 Data
+  const s4ScatterData = [
+    { name: 'Kochi Fishing Grounds', x: 0.48, y: 28, z: 29.1, fill: '#10b981' },
+    { name: 'Kavaratti Fishing Grounds', x: 0.63, y: 31, z: 29.4, fill: '#0ea5e9' },
+    { name: 'Veraval Fishing Grounds', x: 0.72, y: 46, z: 28.4, fill: '#ef4444' }
+  ];
+
+  const s4FactorData = [
+    { area: 'Kochi', SST: 29.1, Chlorophyll: 4.8, Wave: 1.2, Risk: 28 },
+    { area: 'Kavaratti', SST: 29.4, Chlorophyll: 6.3, Wave: 1.3, Risk: 31 },
+    { area: 'Veraval', SST: 28.4, Chlorophyll: 7.2, Wave: 1.7, Risk: 46 }
+  ];
+
+  const s4RankingData = [
+    { area: 'Kavaratti Grounds', SuitabilityScore: 82, SafetyScore: 69 },
+    { area: 'Kochi Grounds', SuitabilityScore: 74, SafetyScore: 72 },
+    { area: 'Veraval Grounds', SuitabilityScore: 79, SafetyScore: 54 }
+  ];
+
+  // Scenario 5 Data
+  const s5RiskDistanceData = [
+    { route: 'Route 1 (Coastal)', DistanceKm: 42, RiskScore: 29 },
+    { route: 'Route 2 (Offshore)', DistanceKm: 31, RiskScore: 52 },
+    { route: 'Route 3 (Sheltered)', DistanceKm: 47, RiskScore: 24 }
+  ];
+
+  const s5ExposureData = [
+    { route: 'Route 1 (Coastal)', WaveExposure: 1.2, WindExposure: 14 },
+    { route: 'Route 2 (Offshore)', WaveExposure: 1.8, WindExposure: 22 },
+    { route: 'Route 3 (Sheltered)', WaveExposure: 1.1, WindExposure: 11 }
+  ];
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-4 md:p-5 shadow-sm space-y-6 text-left my-3 w-full">
@@ -22,7 +142,7 @@ export const ResearcherVisualizations: React.FC<Props> = ({ scenario }) => {
           <BarChart2 className="w-5 h-5 text-ocean-600 shrink-0" />
           {scenario.title}
         </h3>
-        <div className="text-xs text-slate-500 mt-1">TARANG Researcher Mode Analysis</div>
+        <div className="text-xs text-slate-500 mt-1">TARANG Researcher Mode Multi-Chart Analysis</div>
       </div>
 
       {/* Structured Table */}
@@ -126,44 +246,439 @@ export const ResearcherVisualizations: React.FC<Props> = ({ scenario }) => {
         <FormattedMessage content={scenario.interpretation} />
       </div>
 
-      {/* Interactive Visualizations */}
-      <div className="space-y-4 pt-2 border-t border-slate-100">
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Interactive Visualization</div>
+      {/* Interactive Visualizations Section */}
+      <div className="space-y-6 pt-2 border-t border-slate-100">
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+          <Layers className="w-4 h-4 text-ocean-600" />
+          Interactive Visualizations ({scenario.id === 1 || scenario.id === 2 || scenario.id === 3 || scenario.id === 4 || scenario.id === 5 ? '3 Graphs Available' : '2 Graphs Available'})
+        </div>
 
-        {/* 1. Side-by-Side Comparison Chart */}
-        {scenario.visualizationType === 'SIDE_BY_SIDE' && (
-          <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="text-xs font-bold text-slate-700 mb-2">{scenario.title}</div>
-            {[
-              { label: 'Wave Height (m)', val1: 1.8, val2: 1.2, max: 2.5, unit: 'm' },
-              { label: 'Wind Speed (km/h)', val1: 19, val2: 14, max: 25, unit: 'km/h' },
-              { label: 'SST (°C)', val1: 28.4, val2: 29.1, max: 35, unit: '°C' },
-              { label: 'Chlorophyll (mg/m³)', val1: 0.72, val2: 0.48, max: 1.0, unit: 'mg/m³' },
-              { label: 'Risk Score (/100)', val1: 48, val2: 28, max: 100, unit: '' },
-            ].map((item, i) => (
-              <div key={i} className="space-y-1">
-                <div className="flex justify-between text-[11px] font-semibold text-slate-600">
-                  <span>{item.label}</span>
-                  <span><span className="text-slate-900 font-bold">Mumbai: {item.val1}</span> vs <span className="text-ocean-700 font-bold">Kochi: {item.val2}</span></span>
+        {/* ========================================================= */}
+        {/* SCENARIO 1: Mumbai vs Kochi Comparison */}
+        {/* ========================================================= */}
+        {scenario.id === 1 && (
+          <div className="space-y-6">
+            {/* Graph 1: Grouped Bar Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <BarChart2 className="w-4 h-4 text-slate-700" /> 1. Environmental Factors Side-by-Side
                 </div>
-                <div className="grid grid-cols-2 gap-2 h-4">
-                  <div className="bg-slate-200 rounded-full overflow-hidden h-full flex justify-end">
-                    <div className="bg-slate-700 h-full rounded-full transition-all duration-500" style={{ width: `${(item.val1 / item.max) * 100}%` }}></div>
-                  </div>
-                  <div className="bg-slate-200 rounded-full overflow-hidden h-full">
-                    <div className="bg-ocean-600 h-full rounded-full transition-all duration-500" style={{ width: `${(item.val2 / item.max) * 100}%` }}></div>
-                  </div>
-                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Grouped Bar</span>
               </div>
-            ))}
-            <div className="flex justify-center gap-6 pt-2 text-xs font-semibold">
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-slate-700 rounded-sm"></span> Mumbai</span>
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-ocean-600 rounded-sm"></span> Kochi</span>
+              <div className="h-64 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s1BarData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#475569', fontWeight: 600 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} />
+                    <Bar dataKey="Mumbai" fill="#334155" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Kochi" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 2: Dual Multi-Factor Radar Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Layers className="w-4 h-4 text-indigo-600" /> 2. Multi-Factor Environmental Radar Profile
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Radar Chart</span>
+              </div>
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="65%" data={s1RadarData}>
+                    <PolarGrid stroke="#cbd5e1" />
+                    <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                    <Radar name="Mumbai" dataKey="Mumbai" stroke="#475569" fill="#475569" fillOpacity={0.25} />
+                    <Radar name="Kochi" dataKey="Kochi" stroke="#0284c7" fill="#0284c7" fillOpacity={0.35} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 3: Risk vs Productivity Trade-Off Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <ShieldAlert className="w-4 h-4 text-emerald-600" /> 3. Operational Risk vs Biological Productivity
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Composed Chart</span>
+              </div>
+              <div className="h-60 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s1RiskData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="location" tick={{ fontSize: 11, fill: '#334155', fontWeight: 700 }} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
+                    <ReferenceLine y={40} label={{ value: 'Risk Limit (40)', fill: '#ef4444', fontSize: 10, position: 'top' }} stroke="#ef4444" strokeDasharray="3 3" />
+                    <Bar dataKey="OperationalRisk" name="Operational Risk (/100)" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="ProductivityIndex" name="Productivity Index (/100)" fill="#10b981" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Location Comparison Cards with View on Map for Both Locations */}
+        {/* ========================================================= */}
+        {/* SCENARIO 2: Ports near Mumbai Comparison */}
+        {/* ========================================================= */}
+        {scenario.id === 2 && (
+          <div className="space-y-6">
+            {/* Graph 1: Grouped Bar Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <BarChart2 className="w-4 h-4 text-ocean-600" /> 1. Port Marine Conditions (Bhaucha vs Sassoon)
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Grouped Bar</span>
+              </div>
+              <div className="h-64 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s2BarData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="factor" tick={{ fontSize: 10, fill: '#475569', fontWeight: 600 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '8px' }} />
+                    <Bar dataKey="BhauchaDhakka" name="Bhaucha Dhakka" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="SassoonDock" name="Sassoon Dock" fill="#d97706" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 2: Port Protection Radar */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Layers className="w-4 h-4 text-emerald-600" /> 2. Port Shelter & Protection Radar
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Radar Chart</span>
+              </div>
+              <div className="h-64 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="65%" data={s2RadarData}>
+                    <PolarGrid stroke="#cbd5e1" />
+                    <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                    <Radar name="Bhaucha Dhakka" dataKey="BhauchaDhakka" stroke="#0ea5e9" fill="#0ea5e9" fillOpacity={0.3} />
+                    <Radar name="Sassoon Dock" dataKey="SassoonDock" stroke="#d97706" fill="#d97706" fillOpacity={0.3} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 3: Operational Risk Threshold */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <ShieldAlert className="w-4 h-4 text-amber-600" /> 3. Operational Risk Score vs Threshold
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Risk Bar</span>
+              </div>
+              <div className="h-60 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s2RiskData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="port" tick={{ fontSize: 11, fill: '#334155', fontWeight: 700 }} />
+                    <YAxis domain={[0, 50]} tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <ReferenceLine y={30} label={{ value: 'Safe Limit (30)', fill: '#10b981', fontSize: 10, position: 'top' }} stroke="#10b981" strokeDasharray="3 3" />
+                    <Bar dataKey="RiskScore" name="Risk Score (/100)">
+                      <Cell fill="#10b981" />
+                      <Cell fill="#f59e0b" />
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* SCENARIO 3: 3-Day Environmental Trend — Kochi */}
+        {/* ========================================================= */}
+        {scenario.id === 3 && (
+          <div className="space-y-6">
+            {/* Graph 1: Interactive Multi-Line Trend */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <TrendingUp className="w-4 h-4 text-ocean-600" /> 1. 3-Day Environmental Trajectory (Interactive)
+                </div>
+                <div className="flex gap-1">
+                  {(['all', 'wave', 'wind', 'sst'] as const).map(tab => (
+                    <button
+                      key={tab}
+                      onClick={() => setSelectedTrendMetric(tab)}
+                      className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase transition-all ${selectedTrendMetric === tab ? 'bg-ocean-600 text-white shadow-sm' : 'bg-slate-200 text-slate-600 hover:bg-slate-300'}`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="h-64 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={s3TrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#334155', fontWeight: 700 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
+                    {(selectedTrendMetric === 'all' || selectedTrendMetric === 'wave') && (
+                      <Line type="monotone" dataKey="WaveHeight" name="Wave Height (m)" stroke="#0ea5e9" strokeWidth={3} dot={{ r: 5 }} />
+                    )}
+                    {(selectedTrendMetric === 'all' || selectedTrendMetric === 'wind') && (
+                      <Line type="monotone" dataKey="WindSpeed" name="Wind Speed (km/h)" stroke="#f59e0b" strokeWidth={3} dot={{ r: 5 }} />
+                    )}
+                    {(selectedTrendMetric === 'all' || selectedTrendMetric === 'sst') && (
+                      <Line type="monotone" dataKey="SST" name="SST (°C)" stroke="#f43f5e" strokeWidth={3} dot={{ r: 5 }} />
+                    )}
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 2: Cumulative Sea Stress Area Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Layers className="w-4 h-4 text-sky-600" /> 2. Marine Condition Stress Index Buildup
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Area Chart</span>
+              </div>
+              <div className="h-60 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={s3AreaData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorStress" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#0284c7" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#0284c7" stopOpacity={0.1}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#334155', fontWeight: 700 }} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Area type="monotone" dataKey="SeaStressIndex" name="Combined Sea Stress Index" stroke="#0284c7" fillOpacity={1} fill="url(#colorStress)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 3: Daily Factor Comparison Bar */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <BarChart2 className="w-4 h-4 text-amber-600" /> 3. Day-by-Day Factor Magnitude Breakdown
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Grouped Bar</span>
+              </div>
+              <div className="h-60 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s3TrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#334155', fontWeight: 700 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
+                    <Bar dataKey="WaveHeight" name="Wave (m)" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="WindSpeed" name="Wind (km/h)" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* SCENARIO 4: Fishing Area Potential (Kochi vs Kavaratti vs Veraval) */}
+        {/* ========================================================= */}
+        {scenario.id === 4 && (
+          <div className="space-y-6">
+            {/* Graph 1: Trade-Off Scatter / Bubble Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <ScatterIcon className="w-4 h-4 text-ocean-600" /> 1. Productivity vs Risk Scatter Analysis
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Scatter Plot</span>
+              </div>
+              <p className="text-[11px] text-slate-500">X = Chlorophyll (mg/m³) &bull; Y = Operational Risk Score (/100) &bull; Bubble = Fishing Ground</p>
+              <div className="h-64 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ScatterChart margin={{ top: 10, right: 20, left: -20, bottom: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis type="number" dataKey="x" name="Chlorophyll" unit=" mg/m³" domain={[0.3, 0.8]} tick={{ fontSize: 10, fill: '#475569' }} />
+                    <YAxis type="number" dataKey="y" name="Risk Score" domain={[20, 60]} tick={{ fontSize: 10, fill: '#475569' }} />
+                    <ZAxis type="number" dataKey="z" range={[100, 300]} name="SST" unit="°C" />
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomRechartsTooltip />} />
+                    <Scatter name="Fishing Grounds" data={s4ScatterData}>
+                      {s4ScatterData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                      ))}
+                    </Scatter>
+                  </ScatterChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 2: Multi-Factor Environmental Comparison */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <BarChart2 className="w-4 h-4 text-emerald-600" /> 2. Environmental Indicators Comparison
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Grouped Bar</span>
+              </div>
+              <div className="h-64 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s4FactorData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="area" tick={{ fontSize: 11, fill: '#334155', fontWeight: 700 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
+                    <Bar dataKey="SST" name="SST (°C)" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Chlorophyll" name="Chlorophyll (x10)" fill="#10b981" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Risk" name="Risk Score (/100)" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 3: Location Ranking Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-indigo-600" /> 3. Overall Location Ranking Index
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Rank Bar</span>
+              </div>
+              <div className="h-60 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart layout="vertical" data={s4RankingData} margin={{ top: 10, right: 20, left: 20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: '#475569' }} />
+                    <YAxis type="category" dataKey="area" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '4px' }} />
+                    <Bar dataKey="SuitabilityScore" name="Productivity Index" fill="#0284c7" radius={[0, 4, 4, 0]} />
+                    <Bar dataKey="SafetyScore" name="Safety Margin" fill="#10b981" radius={[0, 4, 4, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* SCENARIO 5: Route Comparison (Mumbai Fishing Trip) */}
+        {/* ========================================================= */}
+        {scenario.id === 5 && (
+          <div className="space-y-6">
+            {/* Graph 1: Route Map Component */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+              <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <Navigation className="w-4 h-4 text-ocean-600" /> 1. Interactive Route Trajectory Map
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                {scenario.tableData.map((r, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveRouteIndex(activeRouteIndex === idx ? null : idx)}
+                    className={`flex-1 p-2.5 rounded-lg border text-left text-xs transition-all ${activeRouteIndex === idx ? 'bg-white border-ocean-500 ring-2 ring-ocean-200 shadow-sm' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
+                  >
+                    <div className="font-bold flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: r.color }}></span>
+                      {r.route}
+                    </div>
+                    <div className="text-[11px] text-slate-500 mt-1">
+                      {r.distanceKm} km &bull; Risk: <strong>{r.risk}/100</strong>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              <div className="h-64 border border-slate-200 rounded-xl overflow-hidden relative bg-white shadow-sm">
+                <MapComponent
+                  center={[18.86, 72.80]}
+                  zoom={10}
+                  routes={scenario.tableData.filter((_, idx) => activeRouteIndex === null || activeRouteIndex === idx).map(r => ({
+                    id: r.route,
+                    positions: r.positions,
+                    color: r.color
+                  }))}
+                  markers={[
+                    { id: "start", position: [18.92, 72.83], label: "Mumbai Port (Sassoon Dock)", type: "start" },
+                    { id: "dest", position: [18.80, 72.70], label: "Alibaug Fishing Zone", type: "destination" }
+                  ]}
+                />
+              </div>
+            </div>
+
+            {/* Graph 2: Distance vs Risk Bar Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <BarChart2 className="w-4 h-4 text-slate-700" /> 2. Route Distance vs Operational Risk Trade-Off
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Grouped Bar</span>
+              </div>
+              <div className="h-64 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s5RiskDistanceData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="route" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
+                    <Bar dataKey="DistanceKm" name="Distance (km)" fill="#0284c7" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="RiskScore" name="Risk Score (/100)" fill="#ef4444" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Graph 3: Environmental Exposure Chart */}
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <ShieldAlert className="w-4 h-4 text-sky-600" /> 3. Environmental Wave & Wind Exposure Score
+                </div>
+                <span className="text-[10px] text-slate-500 font-semibold bg-white px-2 py-0.5 rounded border border-slate-200">Exposure Chart</span>
+              </div>
+              <div className="h-60 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={s5ExposureData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="route" tick={{ fontSize: 10, fill: '#334155', fontWeight: 600 }} />
+                    <YAxis tick={{ fontSize: 10, fill: '#475569' }} />
+                    <Tooltip content={<CustomRechartsTooltip />} />
+                    <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '6px' }} />
+                    <Bar dataKey="WaveExposure" name="Wave Exposure (m)" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="WindExposure" name="Wind Exposure Index" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dynamic Location Comparison Cards (for Scenario 1, 2, or custom location pairs) */}
         {scenario.customPayload?.locations && scenario.customPayload.locations.length > 0 && (
           <div className="space-y-3 pt-2">
             <div className="text-xs font-bold text-slate-700 uppercase tracking-wider">Location & Port Side-by-Side Comparison</div>
@@ -223,179 +738,6 @@ export const ResearcherVisualizations: React.FC<Props> = ({ scenario }) => {
                 />
               </div>
             )}
-          </div>
-        )}
-
-        {/* 2. Grouped Bar Chart & Map for Ports */}
-        {scenario.visualizationType === 'GROUPED_BAR' && (
-          <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="text-xs font-bold text-slate-700">Port Conditions Comparison</div>
-            {[
-              { label: 'Wave Height', bhaucha: 1.2, sassoon: 1.5, max: 2.0, unit: 'm' },
-              { label: 'Wind Speed', bhaucha: 14, sassoon: 17, max: 25, unit: 'km/h' },
-              { label: 'Risk Score', bhaucha: 26, sassoon: 38, max: 100, unit: '' },
-            ].map((metric, i) => (
-              <div key={i} className="space-y-1">
-                <div className="flex justify-between text-xs font-semibold text-slate-700">
-                  <span>{metric.label}</span>
-                  <span className="text-[11px] text-slate-500">Bhaucha: {metric.bhaucha}{metric.unit} | Sassoon: {metric.sassoon}{metric.unit}</span>
-                </div>
-                <div className="space-y-1">
-                  <div className="h-3.5 bg-slate-200 rounded-full overflow-hidden flex">
-                    <div className="bg-ocean-500 h-full transition-all duration-500" style={{ width: `${(metric.bhaucha / metric.max) * 100}%` }}></div>
-                  </div>
-                  <div className="h-3.5 bg-slate-200 rounded-full overflow-hidden flex">
-                    <div className="bg-amber-600 h-full transition-all duration-500" style={{ width: `${(metric.sassoon / metric.max) * 100}%` }}></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-center gap-6 pt-1 text-xs font-semibold">
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-ocean-500 rounded-sm"></span> Bhaucha Dhakka</span>
-              <span className="flex items-center gap-1.5"><span className="w-3 h-3 bg-amber-600 rounded-sm"></span> Sassoon Dock</span>
-            </div>
-
-            {/* Map Interactions */}
-            <div className="border-t border-slate-200 pt-3">
-              <div className="text-xs font-bold text-slate-700 mb-2">View Ports on Map</div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                {scenario.customPayload?.ports?.map((p: any, idx: number) => (
-                  <Button
-                    key={idx}
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 text-xs bg-white hover:bg-slate-100"
-                    onClick={() => setActiveMapPort(activeMapPort?.name === p.name ? null : { coords: p.coords, name: p.name })}
-                  >
-                    <MapIcon className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-                    {activeMapPort?.name === p.name ? `Hide ${p.name}` : `View ${p.name}`}
-                  </Button>
-                ))}
-              </div>
-              {activeMapPort && (
-                <div className="h-48 border border-slate-200 rounded-lg overflow-hidden relative mt-3">
-                  <MapComponent
-                    center={activeMapPort.coords}
-                    zoom={13}
-                    zones={[{ id: "port-z", center: activeMapPort.coords, radius: 2000, type: "safe", label: activeMapPort.name }]}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* 3. 3-Day Trend Line Chart */}
-        {scenario.visualizationType === 'TREND_LINE' && (
-          <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="flex items-center justify-between">
-              <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                <TrendingUp className="w-4 h-4 text-ocean-600" /> 3-Day Trend Analysis
-              </div>
-              <div className="flex gap-1">
-                {(['all', 'wave', 'wind', 'sst'] as const).map(tab => (
-                  <button
-                    key={tab}
-                    onClick={() => setSelectedTrendMetric(tab)}
-                    className={`px-2 py-1 rounded text-[10px] font-bold uppercase transition-all ${selectedTrendMetric === tab ? 'bg-ocean-600 text-white' : 'bg-slate-200 text-slate-600 hover:bg-slate-300'}`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Timeline Bars */}
-            <div className="grid grid-cols-3 gap-3 text-center">
-              {scenario.tableData.map((d, i) => (
-                <div key={i} className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
-                  <div className="text-xs font-bold text-slate-800 border-b border-slate-100 pb-1 mb-2">{d.day}</div>
-                  <div className="space-y-1.5 text-xs">
-                    {(selectedTrendMetric === 'all' || selectedTrendMetric === 'wave') && (
-                      <div className="bg-sky-50 p-1 rounded text-sky-900 font-bold">🌊 {d.waveText}</div>
-                    )}
-                    {(selectedTrendMetric === 'all' || selectedTrendMetric === 'wind') && (
-                      <div className="bg-amber-50 p-1 rounded text-amber-900 font-bold">💨 {d.windText}</div>
-                    )}
-                    {(selectedTrendMetric === 'all' || selectedTrendMetric === 'sst') && (
-                      <div className="bg-rose-50 p-1 rounded text-rose-900 font-bold">🌡️ {d.sstText}</div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 4. Bubble / Scatter Chart */}
-        {scenario.visualizationType === 'BUBBLE_SCATTER' && (
-          <div className="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <ScatterIcon className="w-4 h-4 text-ocean-600" /> Productivity vs Risk Scatter Analysis
-            </div>
-            <p className="text-[11px] text-slate-500">X = Chlorophyll (mg/m³) &bull; Y = Risk Score (/100) &bull; Size = SST (°C)</p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-              {scenario.tableData.map((item, idx) => {
-                const bubbleColor = item.risk < 30 ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : item.risk < 40 ? 'bg-amber-50 border-amber-300 text-amber-900' : 'bg-rose-50 border-rose-300 text-rose-900';
-                return (
-                  <div key={idx} className={`p-3.5 rounded-xl border ${bubbleColor} shadow-sm space-y-1.5 flex flex-col justify-between`}>
-                    <div className="font-bold text-xs border-b border-slate-200/60 pb-1">{item.area}</div>
-                    <div className="text-[11px] space-y-1">
-                      <div><span className="text-slate-500">Chlorophyll:</span> <strong>{item.chloText}</strong></div>
-                      <div><span className="text-slate-500">Risk Score:</span> <strong>{item.risk}/100</strong></div>
-                      <div><span className="text-slate-500">SST:</span> <strong>{item.sstText}</strong></div>
-                      <div><span className="text-slate-500">Wave Exp:</span> <strong>{item.waveText}</strong></div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* 5. Route Map & Route Comparison */}
-        {scenario.visualizationType === 'ROUTE_MAP_COMPARISON' && (
-          <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
-            <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-              <Navigation className="w-4 h-4 text-ocean-600" /> Route Environmental Exposure Map
-            </div>
-
-            {/* Interactive Route Buttons */}
-            <div className="flex flex-col sm:flex-row gap-2">
-              {scenario.tableData.map((r, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveRouteIndex(activeRouteIndex === idx ? null : idx)}
-                  className={`flex-1 p-2.5 rounded-lg border text-left text-xs transition-all ${activeRouteIndex === idx ? 'bg-white border-ocean-500 ring-2 ring-ocean-200 shadow-sm' : 'bg-white border-slate-200 hover:bg-slate-100'}`}
-                >
-                  <div className="font-bold flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: r.color }}></span>
-                    {r.route}
-                  </div>
-                  <div className="text-[11px] text-slate-500 mt-1">
-                    {r.distanceKm} km &bull; Risk: <strong>{r.risk}/100</strong>
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Map Container */}
-            <div className="h-64 border border-slate-200 rounded-xl overflow-hidden relative bg-white">
-              <MapComponent
-                center={[18.86, 72.80]}
-                zoom={10}
-                routes={scenario.tableData.filter((_, idx) => activeRouteIndex === null || activeRouteIndex === idx).map(r => ({
-                  id: r.route,
-                  positions: r.positions,
-                  color: r.color
-                }))}
-                markers={[
-                  { id: "start", position: [18.92, 72.83], label: "Mumbai Port (Sassoon Dock)", type: "start" },
-                  { id: "dest", position: [18.80, 72.70], label: "Alibaug Fishing Zone", type: "destination" }
-                ]}
-              />
-            </div>
           </div>
         )}
       </div>
