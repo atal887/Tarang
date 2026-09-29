@@ -9,6 +9,7 @@ export interface DigitalTwinState {
   modified: EnvironmentalConditions | null;
   context: ResolvedContext | null;
   predictions: DecisionResult | null;
+  baselineDecision: DecisionResult | null;
   isSimulating: boolean;
 }
 
@@ -18,6 +19,7 @@ let globalTwinState: DigitalTwinState = {
   modified: null,
   context: null,
   predictions: null,
+  baselineDecision: null,
   isSimulating: false,
 };
 

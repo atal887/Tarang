@@ -40,6 +40,7 @@ export function Chat() {
   const [analysis, setAnalysis] = useState<{ active: boolean; type: AnalysisType | null; duration: number }>({ active: false, type: null, duration: 0 });
   const [editContext, setEditContext] = useState<{ active: boolean; context: ResolvedContext | null }>({ active: false, context: null });
   const [showModeMenu, setShowModeMenu] = useState(false);
+  const [activeMapLocation, setActiveMapLocation] = useState<{ coords: [number, number], name: string } | null>(null);
   
   // Use a ref to track if we are currently processing a flow/query to prevent strict mode double firing
   const isProcessingUrlParams = useRef(false);
@@ -183,18 +184,15 @@ export function Chat() {
         }
 
         const intents = detectIntent(currentText, "English");
-        if (intents.includes("LOCATION_CHECK")) {
-          // Bypass confirmation completely for LOCATION_CHECK
-          handleConfirmContext({ ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }, false, true);
-        } else {
-          addMessage({
-            text: "Sure! Let's confirm your details for this trip:",
-            isBot: true,
-            action: "context_confirm",
-            intent: null,
-            payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }
-          });
-        }
+        const isLocationCheck = intents.includes("LOCATION_CHECK");
+        
+        addMessage({
+          text: isLocationCheck ? "Please confirm the location you are asking about:" : "Sure! Let's confirm your details for this trip:",
+          isBot: true,
+          action: "context_confirm",
+          intent: isLocationCheck ? "LOCATION_CHECK" : null,
+          payload: { ...resolvedContext, __isCompoundOrdinal: isCompoundOrdinal, __ordinalTargetName: ordinalTargetName }
+        });
       } catch (error) {
         console.error("[CHAT] Context resolving error", error);
       } finally {
@@ -462,20 +460,30 @@ export function Chat() {
         );
       } else if (msg.action === "context_confirm") {
         const ctx: ResolvedContext = msg.payload;
+        const isLocCheck = msg.intent === "LOCATION_CHECK";
+        
         elements.push(
           <div key="context-confirm" className="bg-white rounded-xl border border-slate-200 p-4 mt-3 shadow-sm space-y-4 text-left">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
-              <div><span className="text-slate-400 block text-xs uppercase mb-1">Location</span><span className="font-semibold text-slate-900">{ctx.locationName}</span></div>
-              <div><span className="text-slate-400 block text-xs uppercase mb-1">Boat Type</span><span className="font-semibold text-slate-900 capitalize">{ctx.boatType.replace('_', ' ')}</span></div>
-              <div><span className="text-slate-400 block text-xs uppercase mb-1">Time</span><span className="font-semibold text-slate-900 capitalize">{ctx.timeDescription}</span></div>
-            </div>
+            {isLocCheck ? (
+              <div className="text-sm text-slate-700">
+                You are asking about: <span className="font-semibold text-slate-900">{ctx.locationName}</span>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700">
+                <div><span className="text-slate-400 block text-xs uppercase mb-1">Location</span><span className="font-semibold text-slate-900">{ctx.locationName}</span></div>
+                <div><span className="text-slate-400 block text-xs uppercase mb-1">Boat Type</span><span className="font-semibold text-slate-900 capitalize">{ctx.boatType.replace('_', ' ')}</span></div>
+                <div><span className="text-slate-400 block text-xs uppercase mb-1">Time</span><span className="font-semibold text-slate-900 capitalize">{ctx.timeDescription}</span></div>
+              </div>
+            )}
             <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-slate-100">
               <Button className="flex-1" onClick={() => handleConfirmContext(ctx)}>
                 Apply & Proceed
               </Button>
-              <Button variant="outline" className="flex-1" onClick={() => setEditContext({ active: true, context: ctx })}>
-                <Edit2 className="w-3 h-3 mr-2" /> Edit Details
-              </Button>
+              {!isLocCheck && (
+                <Button variant="outline" className="flex-1" onClick={() => setEditContext({ active: true, context: ctx })}>
+                  <Edit2 className="w-3 h-3 mr-2" /> Edit Details
+                </Button>
+              )}
             </div>
           </div>
         );
@@ -543,7 +551,6 @@ export function Chat() {
                 {recs.map((rec: any, idx: number) => {
                   const name = isMarine ? rec.facilityName : rec.spotName;
                   const dist = rec.distanceKm.toFixed(1);
-                  const isFallback = !isMarine && rec.isFallback;
                   const isSafe = rec.riskBand === 'SAFE';
                   const isCaution = rec.riskBand === 'CAUTION';
                   
@@ -555,32 +562,60 @@ export function Chat() {
                       data-productivity-band={isMarine ? rec.productivityEvaluation?.productivityBand : undefined}
                       data-productivity-factors={isMarine ? JSON.stringify(rec.productivityEvaluation?.factors) : undefined}
                     >
-                      <div className="flex justify-between items-start mb-2">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-2">
                         <div className="flex items-start gap-2">
                           <MapPin className="w-4 h-4 text-ocean-600 mt-0.5 shrink-0" />
                           <div>
-                            <div className="font-semibold text-slate-800 text-sm leading-tight mb-0.5">{name}</div>
-                            <div className="text-xs text-slate-500">{dist} km {isFallback && "(Fallback Option)"}</div>
+                            <div className="font-semibold text-slate-800 text-sm leading-tight mb-0.5">
+                              {idx + 1}. {name}
+                            </div>
+                            <div className="text-xs text-slate-500 mb-1">
+                              Distance: <span className="font-bold">{dist} km</span>
+                            </div>
+                            <div className="text-xs text-slate-500 mb-2">
+                              Risk Score: <span className="font-bold text-slate-800">{rec.riskScore || 'N/A'}/100</span>
+                              <span className={`ml-2 text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
+                                {rec.riskBand}
+                              </span>
+                            </div>
                             {isMarine && rec.productivityEvaluation && (
-                              <div className="text-xs text-slate-600 mt-0.5">
+                              <div className="text-xs text-slate-600 mt-0.5 mb-2">
                                 <span className="font-medium">Fishing Potential:</span> {rec.productivityEvaluation.productivityScore}/100 &bull; {rec.productivityEvaluation.productivityBand}
                               </div>
                             )}
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="text-[10px] py-0.5 h-7"
+                              onClick={() => setActiveMapLocation({ coords: [rec.latitude, rec.longitude], name })}
+                            >
+                              <MapIcon className="w-3 h-3 mr-1" /> View on Map
+                            </Button>
                           </div>
                         </div>
-                        <div className={`text-[10px] font-bold uppercase px-2 py-1 rounded shrink-0 ml-2 ${isSafe ? 'bg-status-safeBg text-status-safeText' : isCaution ? 'bg-status-cautionBg text-status-cautionText' : 'bg-status-dangerBg text-status-dangerText'}`}>
-                          {rec.riskBand}
-                        </div>
                       </div>
-                      <div className="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100">
+                      
+                      {(() => {
+                        const mapCoords = (activeMapLocation && activeMapLocation.name === name) ? activeMapLocation.coords : null;
+                        return mapCoords ? (
+                          <div className="mt-2 h-48 border border-slate-200 rounded-lg overflow-hidden relative">
+                            <MapComponent 
+                              center={mapCoords} 
+                              zoom={12} 
+                              zones={[
+                                { id: "rec", center: mapCoords, radius: 2000, type: "fishing", label: name }
+                              ]} 
+                            />
+                          </div>
+                        ) : null;
+                      })()}
+                      
+                      <div className="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100 mt-2">
                         {rec.suitability}
                       </div>
                     </div>
                   );
                 })}
-              </div>
-              <div className="text-[11px] text-slate-400 italic pt-1">
-                Recommendations are selected using safety, fishing suitability, and distance.
               </div>
             </div>
           );
