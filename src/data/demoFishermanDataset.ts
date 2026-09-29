@@ -2,6 +2,7 @@
  * demoFishermanDataset.ts
  * Hardcoded realistic fisherman demo dataset for TARANG Default Mode.
  * Contains 10 exact scenarios with actual place names & coordinates from TARANG dataset.
+ * Written in a natural, friendly, conversational style for fishermen.
  */
 
 export interface DemoPort {
@@ -256,7 +257,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     getResponse: (portName = "Sassoon Dock Fishing Harbour") => {
       const port = MUMBAI_DEMO_PORTS.find(p => p.name.toLowerCase().includes(portName.toLowerCase())) || MUMBAI_DEMO_PORTS[0];
       return {
-        summary: `**Fishing Safety Forecast**\n**${port.name}, Mumbai**\n\n**Key Conditions**\n* **Safety:** 🟢 **SAFE** (Risk Score: ${port.riskScore}/100)\n* **Wave Height:** ${port.waveHeight}\n* **Wind Speed:** ${port.windSpeed} ${port.windDir}\n* **Weather:** Clear skies with 9 km visibility\n\n**What This Means**\nSea conditions off ${port.name} remain calm and stable throughout the day. Shallow, sheltered coastal waters ensure minimal boat pitching.\n\n**Recommendation**\nFully safe to proceed for motorized and mechanized boats. Non-motorized canoes can operate safely within 3 km of shore.`,
+        summary: `### 🌊 Fishing Safety Forecast
+**${port.name}, Mumbai**
+
+Sea conditions off **${port.name}** tomorrow look **calm and favourable** for fishing.
+
+Waves will stay low around **${port.waveHeight}** with a light south-westerly wind at **${port.windSpeed} ${port.windDir}**. Weather is clear with good visibility, so sea movement will be gentle without heavy rolling.
+
+🟢 **Overall Assessment:** Safe for motorized and mechanized boats. Non-motorized canoes can operate comfortably within 3 km of the coastline.
+
+**Recommendation:** It is safe to head out tomorrow. Setting nets in the morning will give you smooth, hassle-free operations.`,
         ports: [port],
         mapCoords: [port.lat, port.lng],
         mapName: port.name
@@ -272,7 +282,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     ports: MUMBAI_DEMO_PORTS,
     getResponse: () => {
       return {
-        summary: `**Safest Fishing Ports Forecast**\n**Mumbai Coastal Sector**\n\n**Key Conditions**\n* **Top Safe Port:** 🟢 Sassoon Dock Fishing Harbour (Risk Score: 22/100)\n* **Secondary Port:** 🟢 Bhaucha Dhakka / Ferry Wharf (Risk Score: 26/100)\n* **Caution Area:** 🟡 Versova Fishing Harbour (Risk Score: 42/100)\n* **General Sea State:** Low swell (1.0m – 1.2m) across southern harbour channels\n\n**What This Means**\nSouth Mumbai ports offer sheltered launching conditions with low wave action. Northern inlets like Versova experience slight tidal chop.\n\n**Recommendation**\nSassoon Dock and Bhaucha Dhakka are recommended for all vessel types tomorrow.`,
+        summary: `### ⚓ Safest Fishing Ports Near Mumbai Tomorrow
+**Mumbai Coastal Sector**
+
+If you are deciding where to launch from near Mumbai tomorrow, the southern harbours offer the most sheltered water:
+
+🟢 **Sassoon Dock Fishing Harbour:** Safest choice tomorrow. Waves are low at **1.0 m** and winds are gentle (**12 km/h SW**).
+🟢 **Bhaucha Dhakka (Ferry Wharf):** Very calm bay waters with **1.2 m** waves. Great option for motorized and traditional boats.
+🟡 **Versova Fishing Harbour:** Expect slight tidal chop near the mouth (**1.7 m** waves, **19 km/h** wind). Exercise extra care if using small canoes.
+
+**Recommendation:** Sassoon Dock and Bhaucha Dhakka are your best launch options for a smooth trip tomorrow.`,
         ports: MUMBAI_DEMO_PORTS,
         mapCoords: [MUMBAI_DEMO_PORTS[0].lat, MUMBAI_DEMO_PORTS[0].lng],
         mapName: MUMBAI_DEMO_PORTS[0].name
@@ -289,7 +308,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     getResponse: (portName = "Thoppumpady Fishing Harbour") => {
       const port = KOCHI_DEMO_PORTS.find(p => p.name.toLowerCase().includes(portName.toLowerCase())) || KOCHI_DEMO_PORTS[0];
       return {
-        summary: `**Wave Height Report**\n**${port.name}, Kochi**\n\n**Key Conditions**\n* **Safety:** 🟢 **SAFE** (Risk Score: ${port.riskScore}/100)\n* **Wave Height:** ${port.waveHeight}\n* **Wind Speed:** ${port.windSpeed} ${port.windDir}\n* **Weather:** Sunny, smooth surface waters\n\n**What This Means**\nA wave height of ${port.waveHeight} is smooth and comfortable. Your boat will experience minimal roll and pitch inside and outside the channel.\n\n**Recommendation**\nExcellent conditions for all boat types including traditional canoes, motorized craft, and mechanized trawlers.`,
+        summary: `### 🌊 Wave Height Report
+**${port.name}, Kochi**
+
+Waves at **${port.name}** tomorrow will be very gentle, holding around **${port.waveHeight}** with a smooth swell period.
+
+🟢 **Favourable conditions:** This low wave height means minimal boat pitching and very comfortable movement on the water.
+
+**What this means:** Whether you are going out in a traditional canoe, a motorized boat, or a mechanized trawler, the sea will be calm and easy to navigate inside and outside the channel.
+
+**Recommendation:** Ideal day for setting nets or line fishing without worrying about rough seas.`,
         ports: [port],
         mapCoords: [port.lat, port.lng],
         mapName: port.name
@@ -306,7 +334,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     getResponse: (portName = "Sassoon Dock Fishing Harbour") => {
       const port = MUMBAI_DEMO_PORTS.find(p => p.name.toLowerCase().includes(portName.toLowerCase())) || MUMBAI_DEMO_PORTS[0];
       return {
-        summary: `**Wind Speed & Direction Report**\n**${port.name}, Mumbai**\n\n**Key Conditions**\n* **Safety:** 🟢 **SAFE**\n* **Wave Height:** ${port.waveHeight}\n* **Wind Speed:** ${port.windSpeed} ${port.windDir} (~7 knots)\n* **Weather:** Clear sky, good visibility\n\n**What This Means**\nA 14 km/h south-westerly wind creates minor surface ripples without dangerous wave chop.\n\n**Recommendation**\nNet deployment and line dropping will remain stable without heavy wind drift. Safe to operate.`,
+        summary: `### 💨 Wind Forecast
+**${port.name}, Mumbai**
+
+Wind speed off **${port.name}** tomorrow is forecast at **${port.windSpeed}** (~7 knots) coming from the **${port.windDir}**, with occasional light gusts up to 17 km/h.
+
+🟢 **Favourable breeze:** A ${port.windSpeed} wind creates light surface ripples but no steep waves or heavy drift.
+
+**What this means:** Your boat will stay steady while setting nets or dropping lines, and you won't get pushed off course by strong wind pressure.
+
+**Recommendation:** Wind conditions are safe and comfortable for fishing all through the morning and afternoon.`,
         ports: [port],
         mapCoords: [port.lat, port.lng],
         mapName: port.name
@@ -322,7 +359,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     zones: KOCHI_DEMO_ZONES,
     getResponse: () => {
       return {
-        summary: `**Nearest Fishing Zones Forecast**\n**Kochi Offshore Sector**\n\n**Key Conditions**\n* **Top Zone:** 🟢 Chellanam Offshore Bank (14.5 km SW)\n* **Secondary Zone:** 🟢 Vypin Reef Outer Edge (11.2 km W)\n* **Deep Zone:** 🟢 Munambam Deep Coastal Edge (22.0 km NW)\n* **General Sea State:** Wave height 1.0m – 1.1m\n\n**What This Means**\nHigh chlorophyll satellite signals indicate heavy sardine and mackerel feeding activity near Chellanam and Vypin.\n\n**Recommendation**\nChellanam Offshore Bank is the safest and most productive target zone for motorized craft tomorrow.`,
+        summary: `### 🎣 Top Fishing Zones Near Kochi Tomorrow
+**Kochi Offshore Sector**
+
+Satellite ocean data shows strong fish activity and clear water conditions at three main spots off Kochi tomorrow:
+
+🟢 **Chellanam Offshore Bank** (14.5 km SW): Highest sardine & mackerel concentration. Waves are calm around **1.0 m**.
+🟢 **Vypin Reef Outer Edge** (11.2 km W): Good potential for reef fish and prawns. Easy 11 km run from harbour.
+🟢 **Munambam Deep Coastal Edge** (22.0 km NW): Suitable deeper grounds for trawlers with low **1.1 m** waves.
+
+**Recommendation:** Chellanam Offshore Bank is your top choice for a high-yield, safe trip tomorrow.`,
         zones: KOCHI_DEMO_ZONES,
         mapCoords: [KOCHI_DEMO_ZONES[0].lat, KOCHI_DEMO_ZONES[0].lng],
         mapName: KOCHI_DEMO_ZONES[0].name
@@ -351,7 +397,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
         suitability: "High plankton bloom detected. Ideal for sardine, ribbonfish & squid catch."
       };
       return {
-        summary: `**Potential Fishing Zone (PFZ) Report**\n**Veraval Offshore PFZ (Sutrapada Grounds)**\n\n**Key Conditions**\n* **Safety:** 🟢 **SAFE** (Risk Score: ${veravalZone.riskScore}/100)\n* **Wave Height:** 0.9 m\n* **Wind Speed:** 12 km/h WNW\n* **Weather:** Clear skies (Sea Temp: 27.8 °C)\n\n**What This Means**\nSatellite ocean color maps show a dense chlorophyll bloom off Sutrapada with calm waves and mild currents.\n\n**Recommendation**\nHighly recommended zone for motorized gillnetters and trawlers seeking sardine, ribbonfish, and squid.`,
+        summary: `### 🐟 Potential Fishing Zone (PFZ)
+**Veraval Offshore PFZ (Sutrapada Grounds)**
+
+The top recommended fishing zone off Veraval tomorrow is **Veraval Offshore PFZ (Sutrapada Coastal Grounds)**, located about **12.8 km South-East** of Veraval Harbour.
+
+🟢 **Favourable Fishing Spot:** High plankton density and stable **27.8 °C** sea surface temperature have drawn large schools of sardine, ribbonfish, and squid to this area.
+
+**Sea Conditions:** Waves are gentle at **0.9 m** with mild winds (**12 km/h WNW**).
+
+**Recommendation:** Highly recommended zone for motorized gillnetters and trawlers. Head 12.8 km South-East toward Sutrapada grounds for best catch potential.`,
         zones: [veravalZone],
         mapCoords: [veravalZone.lat, veravalZone.lng],
         mapName: veravalZone.name
@@ -368,7 +423,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     getResponse: (portName = "Thoppumpady Fishing Harbour") => {
       const port = KOCHI_DEMO_PORTS.find(p => p.name.toLowerCase().includes(portName.toLowerCase())) || KOCHI_DEMO_PORTS[0];
       return {
-        summary: `**Sea Surface Temperature (SST) Report**\n**${port.name}, Kochi**\n\n**Key Conditions**\n* **Safety:** 🟢 **SAFE**\n* **Sea Temperature:** 28.4 °C\n* **Wave Height:** ${port.waveHeight}\n* **Weather:** Clear sky, stable ocean layer\n\n**What This Means**\nA water temperature of 28.4 °C is optimal for coastal fish activity. The thermocline at 18m draws mackerel and sardine schools to surface waters.\n\n**Recommendation**\nSurface net setting and trolling off Kochi will yield optimal catch under these thermal conditions.`,
+        summary: `### 🌡️ Sea Surface Temperature Report
+**${port.name}, Kochi**
+
+The sea surface temperature off **${port.name}** is currently **28.4 °C**, with the thermocline layer steady at **18 meters** depth.
+
+🟢 **Good thermal balance:** 28.4 °C is an optimal water temperature that keeps coastal fish active and feeding near the surface.
+
+**What this means:** Because the cooler deep water meets warm surface water at 18m, mackerel and sardine schools are swimming closer to surface nets.
+
+**Recommendation:** Great conditions for surface net setting and trolling off Kochi today and tomorrow.`,
         ports: [port],
         mapCoords: [port.lat, port.lng],
         mapName: port.name
@@ -384,7 +448,16 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     ports: CHENNAI_DEMO_PORTS,
     getResponse: () => {
       return {
-        summary: `**Safest Fishing Ports Forecast**\n**Chennai Coastal Sector**\n\n**Key Conditions**\n* **Top Safe Port:** 🟢 Kasimedu / Chennai Harbour (Risk Score: 20/100)\n* **Secondary Port:** 🟢 Thiruvottriyur Kuppam Harbour (Risk Score: 24/100)\n* **Caution Area:** 🟡 Ennore Port Harbour (Risk Score: 38/100)\n* **General Sea State:** Wave height 0.9m – 1.1m\n\n**What This Means**\nKasimedu and Thiruvottriyur offer protected harbour basins with low easterly swell. Ennore experiences moderate outer chop.\n\n**Recommendation**\nKasimedu is the safest launch and docking facility near Chennai tomorrow.`,
+        summary: `### ⚓ Safest Fishing Ports Near Chennai Tomorrow
+**Chennai Coastal Sector**
+
+Here is how sea conditions compare across Chennai harbours tomorrow:
+
+🟢 **Kasimedu (Chennai Fishing Harbour):** Safest launch point. Protected breakwater with low **0.9 m** waves and **11 km/h** easterly breeze.
+🟢 **Thiruvottriyur Kuppam Harbour:** Calm coastal waters (**1.1 m** waves). Very safe for motorized gillnetters.
+🟡 **Ennore Port Harbour:** Moderate swell outside the channel (**1.5 m** waves, **18 km/h** wind). Small canoes should stay close to shore.
+
+**Recommendation:** Kasimedu Harbour offers the safest, smoothest departure near Chennai tomorrow.`,
         ports: CHENNAI_DEMO_PORTS,
         mapCoords: [CHENNAI_DEMO_PORTS[0].lat, CHENNAI_DEMO_PORTS[0].lng],
         mapName: CHENNAI_DEMO_PORTS[0].name
@@ -409,7 +482,14 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
         conditions: "Wave 1.0m, Wind 13 km/h SW, low swell."
       };
       return {
-        summary: `**Safest Route Navigation Forecast**\n**Mumbai Port (Sassoon Dock) → Alibaug Offshore PFZ**\n\n**Key Conditions**\n* **Safety:** 🟢 **SAFE** (Risk Score: 21/100)\n* **Wave Height:** 1.0 m\n* **Wind Speed:** 13 km/h SW\n* **Weather:** Clear navigation path (21.6 km | 1h 25m)\n\n**What This Means**\nThis path steers 3.5 km clear of JNPT commercial shipping channels and avoids shallow mudbanks off Colaba Shoals.\n\n**Recommendation**\nFollow the south-southwest coastal corridor for optimal fuel efficiency and safe navigation.`,
+        summary: `### 🛥️ Safe Navigation Route
+**Mumbai Port (Sassoon Dock) → Alibaug Offshore Fishing Zone**
+
+🟢 **Safe Route:** Waves along this path are low at **1.0 m** with light **13 km/h** south-westerly winds. Estimated travel time is **1 hour 25 minutes** over a distance of **21.6 km**.
+
+**Why this route is safer:** This path steers **3.5 km clear** of the main JNPT commercial ship traffic and avoids the shallow reef rocks near Colaba Shoals.
+
+**Recommendation:** Follow the south-southwest coastal channel for a smooth, fuel-efficient voyage.`,
         mapCoords: routeInfo.destCoords,
         mapName: routeInfo.destination
       };
@@ -423,7 +503,40 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     requiresPortSelection: false,
     getResponse: () => {
       return {
-        summary: `**4-Day Fishing Trip Plan**\n**Kochi Port → Lakshadweep Archipelago**\n\n**Key Conditions**\n* **Trip Safety:** 🟢 **SAFE** (Risk Score: 28/100)\n* **Wave Height:** 1.0m – 1.4m across 9-Degree Channel\n* **Wind Speed:** 12 – 15 km/h WNW\n* **Weather:** Clear passage, low swell corridor (~355 km)\n\n**What This Means**\nStable atmospheric pressure and low monsoon swell make the 9-Degree Channel corridor safe for multi-day passage.\n\n**Recommendation**\nDepart Thoppumpady by 06:00 AM on Day 1. Focus tuna fishing during morning hours on Day 2 and Day 3. Dock at Kavaratti Lagoon Jetty on Day 4.`,
+        summary: `### 🛥️ Your 4-Day Fishing Plan
+**Kochi → Lakshadweep Archipelago**
+
+Based on weather, wind, and sea conditions across the 9-Degree Channel, this 4-day trip looks **generally safe and favourable**.
+
+### 📍 Day 1 — Kochi to Chellanam Pass (45 km)
+**Departure:** Thoppumpady Harbour, early morning  
+**Sea:** Wave height around 1.0–1.2 m  
+**Wind:** 12–15 km/h  
+🟢 **Good conditions for departure**  
+
+The sea is expected to remain calm during the first leg. Starting early will help you travel during the most favourable morning window.
+
+### 🎣 Day 2 — Fishing near 9-Degree Channel (120 km)
+**Sea:** Around 1.3 m waves  
+**Wind:** 15 km/h WNW  
+🟢 **Suitable for tuna fishing**  
+
+High tuna and skipjack activity along the oceanic drop-off. Morning hours offer the smoothest fishing window before mild afternoon swells.
+
+### 🎣 Day 3 — Fishing near Kalpeni Outer Reef (110 km)
+**Sea:** Around 1.4 m waves  
+**Wind:** Moderate swell  
+🟡 **Use normal caution**  
+
+Conditions remain manageable. Prefer fishing closer to the sheltered reef edge between 06:00 AM and 02:00 PM.
+
+### 🛥️ Day 4 — Kavaratti Lagoon Arrival (80 km)
+**Sea:** Wave height drops to 1.1 m  
+🟢 **Safe sheltered approach**  
+
+Smooth entry into Kavaratti Lagoon Jetty. Safe sheltered docking.
+
+**Recommendation:** Start early on Day 1, keep monitoring sea updates before deep channel crossings, and enjoy high catch potential along the reef edges.`,
         mapCoords: [10.56688, 72.64203],
         mapName: "Kavaratti Harbour Jetty"
       };
