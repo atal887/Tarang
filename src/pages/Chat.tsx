@@ -25,6 +25,7 @@ import { locationData as oldLocationData } from "../data/demoData";
 import { MapComponent } from "../components/map/MapComponent";
 import { getLocationCoordinates } from "../services/contextResolver";
 import { findDemoScenario, DEMO_SCENARIOS } from "../data/demoFishermanDataset";
+import { FormattedMessage } from "../components/ui/FormattedMessage";
 
 export function Chat() {
   const navigate = useNavigate();
@@ -934,7 +935,7 @@ export function Chat() {
             <ChatBubble 
               text={
                 <div className="flex flex-col gap-3">
-                  {msg.text}
+                  {typeof msg.text === "string" ? <FormattedMessage content={msg.text} /> : msg.text}
                   {renderDynamicComponent(msg)}
                 </div>
               } 
