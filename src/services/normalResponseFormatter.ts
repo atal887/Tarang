@@ -24,9 +24,29 @@ export function formatNormalResponse(
   
   const topMarine = hasMarineRecs ? decision.marineRecommendations![0] : null;
 
+  if (intents.includes("LOCATION_CHECK")) {
+    const isMarineQuery = context.originalQuery.toLowerCase().match(/(marine|coastal|coast)/);
+    const isInlandQuery = context.originalQuery.toLowerCase().match(/(inland)/);
+    
+    if (isMarine) {
+      if (isInlandQuery && !isMarineQuery) {
+        return `No, ${context.locationName} is a marine/coastal location, not an inland area.`;
+      }
+      return `Yes, ${context.locationName} is a marine/coastal location.`;
+    } else {
+      if (isMarineQuery && !isInlandQuery) {
+        return `No, ${context.locationName} is an inland location, not a marine area.`;
+      }
+      return `Yes, ${context.locationName} is an inland location.`;
+    }
+  }
+
   // Direct Inland Area Handling
   if (!isMarine) {
-    return `Yes, ${context.locationName} is an inland area. Marine conditions and fishing zones are not applicable here.`;
+    if (intents.includes("TRIP_PLANNING")) {
+      return `Since ${context.locationName} is an inland location, marine trip planning is not applicable. However, here are some nearby fishing areas you can explore:`;
+    }
+    return `Since ${context.locationName} is an inland location, here are the nearest suitable fishing areas based on safety and conditions:`;
   }
 
   const vesselType = context.boatType.replace('_', ' ');

@@ -26,8 +26,8 @@ export function detectIntent(query: string, language: SupportedLanguage): Intent
       { regex: /\bwhy\s+is\s+this\s+(zone|area)\s+productive\b/i, intent: "PRODUCTIVITY_ANALYSIS" },
       
       // Location checking
-      { regex: /\b(is\s+this|is\s+it)\s+(area|place|location)?\s*(inland|marine|on\s+the\s+coast)\b/i, intent: "LOCATION_CHECK" },
-      { regex: /\b(is\s+this\s+an\s+inland\s+area|is\s+this\s+location\s+suitable\s+for\s+marine\s+operations)\b/i, intent: "LOCATION_CHECK" },
+      { regex: /\b(is\s+[a-z\s]+|is\s+this|is\s+it)\s*(a|an)?\s*(area|place|location)?\s*(inland|marine|coastal|on\s+the\s+coast)\b/i, intent: "LOCATION_CHECK" },
+      { regex: /\b(is\s+[a-z\s]+\s+an\s+inland\s+area|is\s+[a-z\s]+\s+location\s+suitable\s+for\s+marine\s+operations)\b/i, intent: "LOCATION_CHECK" },
 
       // Methodology & Data
       { regex: /\bhow\s+is\s+(the\s+)?safety\s+calculated\b/i, intent: "SAFETY_METHODOLOGY" },
